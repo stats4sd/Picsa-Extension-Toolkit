@@ -466,7 +466,7 @@ class AppModuleInjector extends import0.NgModuleInjector<import1.AppModule> {
     return this.__DeepLinker_84;
   }
   get _KoboApi_85():import48.KoboApi {
-    if ((this.__KoboApi_85 == (null as any))) { (this.__KoboApi_85 = new import48.KoboApi(this._Http_51)); }
+    if ((this.__KoboApi_85 == (null as any))) { (this.__KoboApi_85 = new import48.KoboApi(this._Http_51,this._Platform_21)); }
     return this.__KoboApi_85;
   }
   get _Storage_86():import49.Storage {

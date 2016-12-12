@@ -15,10 +15,10 @@ export class HomePage {
 
   constructor(public navCtrl: NavController) {
     this.buttons=[
-      {name:' Picsa Manual', color:'primary', icon:'book',link:PicsaManualPage},
-      {name:' Q&A', color:'secondary', icon:'chatbubbles', link:QandAPage},
-      {name:' Record Data', color:'danger', icon:'create', link:RecordDataPage},
-      {name:' View Data', color:'dark', icon:'stats', link:ViewDataPage},
+      {name:' Picsa Manual', color:'picsa-manual', icon:'book',link:PicsaManualPage, text:''},
+      {name:' Q&A', color:'picsa-qanda', icon:'chatbubbles', link:QandAPage},
+      {name:' Record Data', color:'picsa-record', icon:'create', link:RecordDataPage},
+      {name:' View Data', color:'picsa-view', icon:'stats', link:ViewDataPage},
     ]
   }
 

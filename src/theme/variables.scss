@@ -1,7 +1,7 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/v2/theming/
 @import "ionic.globals";
-@import "../pages/picsa-manual/picsa-manual";
+
 
 // Shared Variables
 // --------------------------------------------------
@@ -22,11 +22,12 @@
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+  primary: #387ef5,
+  picsa-manual:    #387ef5,
+  picsa-qanda:  #32db64,
+  picsa-record:     #f53d3d,
+  picsa-view:       #222,
+  picsa-dark: #ff7716,
 );
 
 
