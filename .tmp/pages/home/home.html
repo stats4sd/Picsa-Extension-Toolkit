@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>PICSA Extension Toolkit</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngFor="let button of buttons" [navPush]="button.link">
+    <button ion-button color="{{button.color}}" round icon-left block>
+      <ion-icon name="{{button.icon}}"></ion-icon>
+      {{button.name}}
+    </button>
+
+  </div>
+</ion-content>
