@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.picsaextensiontoolkit357263" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>picsa-extension-toolkit</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="com.stats4sd.picsaextensiontoolkit" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>PICSA Extension Toolkit</name>
+    <description>For use by extension officers working with PICSA training materials</description>
+    <author email="cclarke@stats4sd.org" href="http://stats4sd.org/">Statistics for Sustainable Development</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
