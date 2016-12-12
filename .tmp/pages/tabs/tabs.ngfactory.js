@@ -105,36 +105,23 @@ var _View_TabsPage0 = (function (_super) {
         this._appEl_2.initComponent(this._Tab_2_4.context, [], compView_2);
         compView_2.create(this._Tab_2_4.context, [], null);
         this._text_3 = this.renderer.createText(null, '\n  ', null);
-        this._el_4 = this.renderer.createElement(null, 'ion-tab', null);
-        this.renderer.setElementAttribute(this._el_4, 'role', 'tabpanel');
-        this.renderer.setElementAttribute(this._el_4, 'tabIcon', 'information-circle');
-        this.renderer.setElementAttribute(this._el_4, 'tabTitle', 'About');
-        this._appEl_4 = new import3.AppElement(4, 0, this, this._el_4);
-        var compView_4 = import11.viewFactory_Tab0(this.viewUtils, this.injector(4), this._appEl_4);
-        this._Tab_4_4 = new import11.Wrapper_Tab(this._Tabs_0_4.context, this.parentInjector.get(import14.App), this.parentInjector.get(import15.Config), this.parentInjector.get(import19.Keyboard), new import16.ElementRef(this._el_4), this.parentInjector.get(import20.NgZone), this.renderer, this.parentInjector.get(import21.ComponentFactoryResolver), compView_4.ref, this.parentInjector.get(import22.GestureController), this.parentInjector.get(import23.TransitionController), this.parentInjector.get(import18.DeepLinker, null));
-        this._appEl_4.initComponent(this._Tab_4_4.context, [], compView_4);
-        compView_4.create(this._Tab_4_4.context, [], null);
-        this._text_5 = this.renderer.createText(null, '\n', null);
+        this._text_4 = this.renderer.createText(null, '\n', null);
         compView_0.create(this._Tabs_0_4.context, [[].concat([
                 this._text_1,
                 this._el_2,
                 this._text_3,
-                this._el_4,
-                this._text_5
+                this._text_4
             ])], null);
-        this._text_6 = this.renderer.createText(parentRenderNode, '\n', null);
+        this._text_5 = this.renderer.createText(parentRenderNode, '\n', null);
         this._expr_3 = import7.UNINITIALIZED;
         this._expr_4 = import7.UNINITIALIZED;
-        this._expr_8 = import7.UNINITIALIZED;
-        this._expr_9 = import7.UNINITIALIZED;
         this.init([], [
             this._el_0,
             this._text_1,
             this._el_2,
             this._text_3,
-            this._el_4,
-            this._text_5,
-            this._text_6
+            this._text_4,
+            this._text_5
         ], [], []);
         return null;
   ***REMOVED***;
@@ -142,10 +129,7 @@ var _View_TabsPage0 = (function (_super) {
         if (((token === import24.Tab) && (2 === requestNodeIndex))) {
             return this._Tab_2_4.context;
       ***REMOVED***
-        if (((token === import24.Tab) && (4 === requestNodeIndex))) {
-            return this._Tab_4_4.context;
-      ***REMOVED***
-        if (((token === import25.Tabs) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 5)))) {
+        if (((token === import25.Tabs) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 4)))) {
             return this._Tabs_0_4.context;
       ***REMOVED***
         return notFoundResult;
@@ -159,13 +143,6 @@ var _View_TabsPage0 = (function (_super) {
         var currVal_2 = 'home';
         this._Tab_2_4.check_tabIcon(currVal_2, throwOnChange, false);
         this._Tab_2_4.detectChangesInternal(this, this._el_2, throwOnChange);
-        var currVal_5 = this.context.tab2Root;
-        this._Tab_4_4.check_root(currVal_5, throwOnChange, false);
-        var currVal_6 = 'About';
-        this._Tab_4_4.check_tabTitle(currVal_6, throwOnChange, false);
-        var currVal_7 = 'information-circle';
-        this._Tab_4_4.check_tabIcon(currVal_7, throwOnChange, false);
-        this._Tab_4_4.detectChangesInternal(this, this._el_4, throwOnChange);
         this.detectContentChildrenChanges(throwOnChange);
         var currVal_3 = this._Tab_2_4.context._tabId;
         if (import4.checkBinding(throwOnChange, this._expr_3, currVal_3)) {
@@ -176,16 +153,6 @@ var _View_TabsPage0 = (function (_super) {
         if (import4.checkBinding(throwOnChange, this._expr_4, currVal_4)) {
             this.renderer.setElementAttribute(this._el_2, 'aria-labelledby', ((currVal_4 == null) ? null : currVal_4.toString()));
             this._expr_4 = currVal_4;
-      ***REMOVED***
-        var currVal_8 = this._Tab_4_4.context._tabId;
-        if (import4.checkBinding(throwOnChange, this._expr_8, currVal_8)) {
-            this.renderer.setElementAttribute(this._el_4, 'id', ((currVal_8 == null) ? null : currVal_8.toString()));
-            this._expr_8 = currVal_8;
-      ***REMOVED***
-        var currVal_9 = this._Tab_4_4.context._btnId;
-        if (import4.checkBinding(throwOnChange, this._expr_9, currVal_9)) {
-            this.renderer.setElementAttribute(this._el_4, 'aria-labelledby', ((currVal_9 == null) ? null : currVal_9.toString()));
-            this._expr_9 = currVal_9;
       ***REMOVED***
         this.detectViewChildrenChanges(throwOnChange);
         if (!throwOnChange) {

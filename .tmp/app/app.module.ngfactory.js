@@ -17,595 +17,737 @@ import * as import5 from '@angular/http/src/http_module';
 import * as import6 from '@angular/forms/src/directives';
 import * as import7 from '@angular/forms/src/form_providers';
 import * as import8 from 'ionic-angular/module';
-import * as import9 from '@angular/common/src/localization';
-import * as import10 from 'ionic-angular/util/ionic-error-handler';
-import * as import11 from 'ionic-angular/components/app/app';
-import * as import12 from '@angular/core/src/application_init';
-import * as import13 from '@angular/core/src/testability/testability';
-import * as import14 from '@angular/core/src/application_ref';
-import * as import15 from '@angular/core/src/linker/compiler';
-import * as import16 from 'ionic-angular/gestures/gesture-config';
-import * as import17 from '@angular/platform-browser/src/dom/events/event_manager';
-import * as import18 from '@angular/platform-browser/src/dom/shared_styles_host';
-import * as import19 from '@angular/platform-browser/src/dom/dom_renderer';
-import * as import20 from '@angular/platform-browser/src/security/dom_sanitization_service';
-import * as import21 from '@angular/core/src/linker/view_utils';
-import * as import22 from '@angular/platform-browser/src/browser/title';
-import * as import23 from '@angular/http/src/backends/browser_xhr';
-import * as import24 from '@angular/http/src/base_response_options';
-import * as import25 from '@angular/http/src/backends/xhr_backend';
-import * as import26 from '@angular/http/src/base_request_options';
-import * as import27 from '@angular/forms/src/directives/radio_control_value_accessor';
-import * as import28 from '@angular/forms/src/form_builder';
-import * as import29 from 'ionic-angular/components/action-sheet/action-sheet';
-import * as import30 from 'ionic-angular/components/alert/alert';
-import * as import31 from 'ionic-angular/util/events';
-import * as import32 from 'ionic-angular/util/form';
-import * as import33 from 'ionic-angular/util/haptic';
-import * as import34 from 'ionic-angular/gestures/gesture-controller';
-import * as import35 from 'ionic-angular/util/keyboard';
-import * as import36 from 'ionic-angular/components/loading/loading';
-import * as import37 from '@angular/common/src/location/location';
-import * as import38 from 'ionic-angular/components/menu/menu-controller';
-import * as import39 from 'ionic-angular/components/modal/modal';
-import * as import40 from 'ionic-angular/components/picker/picker';
-import * as import41 from 'ionic-angular/components/popover/popover';
-import * as import42 from 'ionic-angular/components/tap-click/tap-click';
-import * as import43 from 'ionic-angular/components/toast/toast';
-import * as import44 from 'ionic-angular/transitions/transition-controller';
-import * as import46 from '../node_modules/ionic-angular/components/action-sheet/action-sheet-component.ngfactory';
-import * as import47 from '../node_modules/ionic-angular/components/alert/alert-component.ngfactory';
-import * as import48 from '../node_modules/ionic-angular/components/app/app-root.ngfactory';
-import * as import49 from '../node_modules/ionic-angular/components/loading/loading-component.ngfactory';
-import * as import50 from '../node_modules/ionic-angular/components/modal/modal-component.ngfactory';
-import * as import51 from '../node_modules/ionic-angular/components/picker/picker-component.ngfactory';
-import * as import52 from '../node_modules/ionic-angular/components/popover/popover-component.ngfactory';
-import * as import53 from '../node_modules/ionic-angular/components/toast/toast-component.ngfactory';
-import * as import54 from './app.component.ngfactory';
-import * as import55 from '../pages/about/about.ngfactory';
-import * as import56 from '../pages/home/home.ngfactory';
-import * as import57 from '../pages/tabs/tabs.ngfactory';
-import * as import58 from '../pages/picsa-manual/picsa-manual.ngfactory';
-import * as import59 from '@angular/core/src/application_tokens';
-import * as import60 from '@angular/platform-browser/src/dom/events/dom_events';
-import * as import61 from '@angular/platform-browser/src/dom/events/key_events';
-import * as import62 from '@angular/platform-browser/src/dom/events/hammer_gestures';
-import * as import63 from '@angular/core/src/zone/ng_zone';
-import * as import64 from '@angular/platform-browser/src/dom/debug/ng_probe';
-import * as import65 from './app.component';
-import * as import66 from '@angular/common/src/location/platform_location';
-import * as import67 from '@angular/common/src/location/location_strategy';
-import * as import68 from 'ionic-angular/navigation/url-serializer';
-import * as import69 from 'ionic-angular/navigation/deep-linker';
-import * as import70 from 'ionic-angular/platform/query-params';
-import * as import71 from 'ionic-angular/platform/platform-registry';
-import * as import72 from 'ionic-angular/platform/platform';
-import * as import73 from 'ionic-angular/config/config';
-import * as import74 from 'ionic-angular/config/mode-registry';
-import * as import75 from 'ionic-angular/transitions/transition-registry';
-import * as import76 from '@angular/core/src/console';
-import * as import77 from '@angular/core/src/i18n/tokens';
-import * as import78 from '@angular/core/src/error_handler';
-import * as import79 from '@angular/platform-browser/src/dom/dom_tokens';
-import * as import80 from '@angular/platform-browser/src/dom/animation_driver';
-import * as import81 from '@angular/core/src/render/api';
-import * as import82 from '@angular/core/src/security';
-import * as import83 from '@angular/core/src/change_detection/differs/iterable_differs';
-import * as import84 from '@angular/core/src/change_detection/differs/keyvalue_differs';
-import * as import85 from '@angular/http/src/interfaces';
-import * as import86 from '@angular/http/src/http';
-import * as import87 from 'ionic-angular/components/app/app-root';
+import * as import9 from 'angularfire2/angularfire2';
+import * as import10 from '@angular/common/src/localization';
+import * as import11 from 'ionic-angular/util/ionic-error-handler';
+import * as import12 from 'ionic-angular/components/app/app';
+import * as import13 from '@angular/core/src/application_init';
+import * as import14 from '@angular/core/src/testability/testability';
+import * as import15 from '@angular/core/src/application_ref';
+import * as import16 from '@angular/core/src/linker/compiler';
+import * as import17 from 'ionic-angular/gestures/gesture-config';
+import * as import18 from '@angular/platform-browser/src/dom/events/event_manager';
+import * as import19 from '@angular/platform-browser/src/dom/shared_styles_host';
+import * as import20 from '@angular/platform-browser/src/dom/dom_renderer';
+import * as import21 from '@angular/platform-browser/src/security/dom_sanitization_service';
+import * as import22 from '@angular/core/src/linker/view_utils';
+import * as import23 from '@angular/platform-browser/src/browser/title';
+import * as import24 from '@angular/http/src/backends/browser_xhr';
+import * as import25 from '@angular/http/src/base_response_options';
+import * as import26 from '@angular/http/src/backends/xhr_backend';
+import * as import27 from '@angular/http/src/base_request_options';
+import * as import28 from '@angular/forms/src/directives/radio_control_value_accessor';
+import * as import29 from '@angular/forms/src/form_builder';
+import * as import30 from 'angularfire2/auth/auth';
+import * as import31 from 'angularfire2/database/database';
+import * as import32 from 'ionic-angular/components/action-sheet/action-sheet';
+import * as import33 from 'ionic-angular/components/alert/alert';
+import * as import34 from 'ionic-angular/util/events';
+import * as import35 from 'ionic-angular/util/form';
+import * as import36 from 'ionic-angular/util/haptic';
+import * as import37 from 'ionic-angular/gestures/gesture-controller';
+import * as import38 from 'ionic-angular/util/keyboard';
+import * as import39 from 'ionic-angular/components/loading/loading';
+import * as import40 from '@angular/common/src/location/location';
+import * as import41 from 'ionic-angular/components/menu/menu-controller';
+import * as import42 from 'ionic-angular/components/modal/modal';
+import * as import43 from 'ionic-angular/components/picker/picker';
+import * as import44 from 'ionic-angular/components/popover/popover';
+import * as import45 from 'ionic-angular/components/tap-click/tap-click';
+import * as import46 from 'ionic-angular/components/toast/toast';
+import * as import47 from 'ionic-angular/transitions/transition-controller';
+import * as import48 from '../providers/kobo-api';
+import * as import49 from '@ionic/storage/es2015/storage';
+import * as import51 from '../node_modules/ionic-angular/components/action-sheet/action-sheet-component.ngfactory';
+import * as import52 from '../node_modules/ionic-angular/components/alert/alert-component.ngfactory';
+import * as import53 from '../node_modules/ionic-angular/components/app/app-root.ngfactory';
+import * as import54 from '../node_modules/ionic-angular/components/loading/loading-component.ngfactory';
+import * as import55 from '../node_modules/ionic-angular/components/modal/modal-component.ngfactory';
+import * as import56 from '../node_modules/ionic-angular/components/picker/picker-component.ngfactory';
+import * as import57 from '../node_modules/ionic-angular/components/popover/popover-component.ngfactory';
+import * as import58 from '../node_modules/ionic-angular/components/toast/toast-component.ngfactory';
+import * as import59 from './app.component.ngfactory';
+import * as import60 from '../pages/qanda/qanda.ngfactory';
+import * as import61 from '../pages/home/home.ngfactory';
+import * as import62 from '../pages/tabs/tabs.ngfactory';
+import * as import63 from '../pages/picsa-manual/picsa-manual.ngfactory';
+import * as import64 from '../pages/view-data/view-data.ngfactory';
+import * as import65 from '../pages/record-data/record-data.ngfactory';
+import * as import66 from '../pages/record-data/form-popup/form-popup.ngfactory';
+import * as import67 from '@angular/core/src/application_tokens';
+import * as import68 from '@angular/platform-browser/src/dom/events/dom_events';
+import * as import69 from '@angular/platform-browser/src/dom/events/key_events';
+import * as import70 from '@angular/platform-browser/src/dom/events/hammer_gestures';
+import * as import71 from '@angular/core/src/zone/ng_zone';
+import * as import72 from '@angular/platform-browser/src/dom/debug/ng_probe';
+import * as import73 from './app.component';
+import * as import74 from '@angular/common/src/location/platform_location';
+import * as import75 from '@angular/common/src/location/location_strategy';
+import * as import76 from 'ionic-angular/navigation/url-serializer';
+import * as import77 from 'ionic-angular/navigation/deep-linker';
+import * as import78 from 'ionic-angular/platform/query-params';
+import * as import79 from 'ionic-angular/platform/platform-registry';
+import * as import80 from 'ionic-angular/platform/platform';
+import * as import81 from 'ionic-angular/config/config';
+import * as import82 from 'ionic-angular/config/mode-registry';
+import * as import83 from 'ionic-angular/transitions/transition-registry';
+import * as import84 from '@angular/core/src/console';
+import * as import85 from '@angular/core/src/i18n/tokens';
+import * as import86 from '@angular/core/src/error_handler';
+import * as import87 from '@angular/platform-browser/src/dom/dom_tokens';
+import * as import88 from '@angular/platform-browser/src/dom/animation_driver';
+import * as import89 from '@angular/core/src/render/api';
+import * as import90 from '@angular/core/src/security';
+import * as import91 from '@angular/core/src/change_detection/differs/iterable_differs';
+import * as import92 from '@angular/core/src/change_detection/differs/keyvalue_differs';
+import * as import93 from '@angular/http/src/interfaces';
+import * as import94 from '@angular/http/src/http';
+import * as import95 from 'angularfire2/tokens';
+import * as import96 from 'angularfire2/auth/auth_backend';
+import * as import97 from 'ionic-angular/components/app/app-root';
 var AppModuleInjector = (function (_super) {
     __extends(AppModuleInjector, _super);
     function AppModuleInjector(parent) {
         _super.call(this, parent, [
-            import46.ActionSheetCmpNgFactory,
-            import47.AlertCmpNgFactory,
-            import48.IonicAppNgFactory,
-            import49.LoadingCmpNgFactory,
-            import50.ModalCmpNgFactory,
-            import51.PickerCmpNgFactory,
-            import52.PopoverCmpNgFactory,
-            import53.ToastCmpNgFactory,
-            import54.MyAppNgFactory,
-            import54.MyAppNgFactory,
-            import55.AboutPageNgFactory,
-            import56.HomePageNgFactory,
-            import57.TabsPageNgFactory,
-            import58.PicsaManualPageNgFactory,
-            import48.IonicAppNgFactory
-        ], [import48.IonicAppNgFactory]);
+            import51.ActionSheetCmpNgFactory,
+            import52.AlertCmpNgFactory,
+            import53.IonicAppNgFactory,
+            import54.LoadingCmpNgFactory,
+            import55.ModalCmpNgFactory,
+            import56.PickerCmpNgFactory,
+            import57.PopoverCmpNgFactory,
+            import58.ToastCmpNgFactory,
+            import59.MyAppNgFactory,
+            import59.MyAppNgFactory,
+            import60.QandAPageNgFactory,
+            import61.HomePageNgFactory,
+            import62.TabsPageNgFactory,
+            import63.PicsaManualPageNgFactory,
+            import64.ViewDataPageNgFactory,
+            import65.RecordDataPageNgFactory,
+            import66.FormPopupNgFactory,
+            import53.IonicAppNgFactory
+        ], [import53.IonicAppNgFactory]);
   ***REMOVED***
-    Object.defineProperty(AppModuleInjector.prototype, "_LOCALE_ID_9", {
+    Object.defineProperty(AppModuleInjector.prototype, "_LOCALE_ID_10", {
         get: function () {
-            if ((this.__LOCALE_ID_9 == null)) {
-                (this.__LOCALE_ID_9 = 'en-US');
+            if ((this.__LOCALE_ID_10 == null)) {
+                (this.__LOCALE_ID_10 = 'en-US');
           ***REMOVED***
-            return this.__LOCALE_ID_9;
+            return this.__LOCALE_ID_10;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_NgLocalization_10", {
+    Object.defineProperty(AppModuleInjector.prototype, "_NgLocalization_11", {
         get: function () {
-            if ((this.__NgLocalization_10 == null)) {
-                (this.__NgLocalization_10 = new import9.NgLocaleLocalization(this._LOCALE_ID_9));
+            if ((this.__NgLocalization_11 == null)) {
+                (this.__NgLocalization_11 = new import10.NgLocaleLocalization(this._LOCALE_ID_10));
           ***REMOVED***
-            return this.__NgLocalization_10;
+            return this.__NgLocalization_11;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_ApplicationRef_27", {
+    Object.defineProperty(AppModuleInjector.prototype, "_ApplicationRef_28", {
         get: function () {
-            if ((this.__ApplicationRef_27 == null)) {
-                (this.__ApplicationRef_27 = this._ApplicationRef__26);
+            if ((this.__ApplicationRef_28 == null)) {
+                (this.__ApplicationRef_28 = this._ApplicationRef__27);
           ***REMOVED***
-            return this.__ApplicationRef_27;
+            return this.__ApplicationRef_28;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Compiler_28", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Compiler_29", {
         get: function () {
-            if ((this.__Compiler_28 == null)) {
-                (this.__Compiler_28 = new import15.Compiler());
+            if ((this.__Compiler_29 == null)) {
+                (this.__Compiler_29 = new import16.Compiler());
           ***REMOVED***
-            return this.__Compiler_28;
+            return this.__Compiler_29;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_APP_ID_29", {
+    Object.defineProperty(AppModuleInjector.prototype, "_APP_ID_30", {
         get: function () {
-            if ((this.__APP_ID_29 == null)) {
-                (this.__APP_ID_29 = import59._appIdRandomProviderFactory());
+            if ((this.__APP_ID_30 == null)) {
+                (this.__APP_ID_30 = import67._appIdRandomProviderFactory());
           ***REMOVED***
-            return this.__APP_ID_29;
+            return this.__APP_ID_30;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_DOCUMENT_30", {
+    Object.defineProperty(AppModuleInjector.prototype, "_DOCUMENT_31", {
         get: function () {
-            if ((this.__DOCUMENT_30 == null)) {
-                (this.__DOCUMENT_30 = import4._document());
+            if ((this.__DOCUMENT_31 == null)) {
+                (this.__DOCUMENT_31 = import4._document());
           ***REMOVED***
-            return this.__DOCUMENT_30;
+            return this.__DOCUMENT_31;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_HAMMER_GESTURE_CONFIG_31", {
+    Object.defineProperty(AppModuleInjector.prototype, "_HAMMER_GESTURE_CONFIG_32", {
         get: function () {
-            if ((this.__HAMMER_GESTURE_CONFIG_31 == null)) {
-                (this.__HAMMER_GESTURE_CONFIG_31 = new import16.IonicGestureConfig());
+            if ((this.__HAMMER_GESTURE_CONFIG_32 == null)) {
+                (this.__HAMMER_GESTURE_CONFIG_32 = new import17.IonicGestureConfig());
           ***REMOVED***
-            return this.__HAMMER_GESTURE_CONFIG_31;
+            return this.__HAMMER_GESTURE_CONFIG_32;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_EVENT_MANAGER_PLUGINS_32", {
+    Object.defineProperty(AppModuleInjector.prototype, "_EVENT_MANAGER_PLUGINS_33", {
         get: function () {
-            if ((this.__EVENT_MANAGER_PLUGINS_32 == null)) {
-                (this.__EVENT_MANAGER_PLUGINS_32 = [
-                    new import60.DomEventsPlugin(),
-                    new import61.KeyEventsPlugin(),
-                    new import62.HammerGesturesPlugin(this._HAMMER_GESTURE_CONFIG_31)
+            if ((this.__EVENT_MANAGER_PLUGINS_33 == null)) {
+                (this.__EVENT_MANAGER_PLUGINS_33 = [
+                    new import68.DomEventsPlugin(),
+                    new import69.KeyEventsPlugin(),
+                    new import70.HammerGesturesPlugin(this._HAMMER_GESTURE_CONFIG_32)
                 ]);
           ***REMOVED***
-            return this.__EVENT_MANAGER_PLUGINS_32;
+            return this.__EVENT_MANAGER_PLUGINS_33;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_EventManager_33", {
+    Object.defineProperty(AppModuleInjector.prototype, "_EventManager_34", {
         get: function () {
-            if ((this.__EventManager_33 == null)) {
-                (this.__EventManager_33 = new import17.EventManager(this._EVENT_MANAGER_PLUGINS_32, this.parent.get(import63.NgZone)));
+            if ((this.__EventManager_34 == null)) {
+                (this.__EventManager_34 = new import18.EventManager(this._EVENT_MANAGER_PLUGINS_33, this.parent.get(import71.NgZone)));
           ***REMOVED***
-            return this.__EventManager_33;
+            return this.__EventManager_34;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_DomSharedStylesHost_34", {
+    Object.defineProperty(AppModuleInjector.prototype, "_DomSharedStylesHost_35", {
         get: function () {
-            if ((this.__DomSharedStylesHost_34 == null)) {
-                (this.__DomSharedStylesHost_34 = new import18.DomSharedStylesHost(this._DOCUMENT_30));
+            if ((this.__DomSharedStylesHost_35 == null)) {
+                (this.__DomSharedStylesHost_35 = new import19.DomSharedStylesHost(this._DOCUMENT_31));
           ***REMOVED***
-            return this.__DomSharedStylesHost_34;
+            return this.__DomSharedStylesHost_35;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_AnimationDriver_35", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AnimationDriver_36", {
         get: function () {
-            if ((this.__AnimationDriver_35 == null)) {
-                (this.__AnimationDriver_35 = import4._resolveDefaultAnimationDriver());
+            if ((this.__AnimationDriver_36 == null)) {
+                (this.__AnimationDriver_36 = import4._resolveDefaultAnimationDriver());
           ***REMOVED***
-            return this.__AnimationDriver_35;
+            return this.__AnimationDriver_36;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_DomRootRenderer_36", {
+    Object.defineProperty(AppModuleInjector.prototype, "_DomRootRenderer_37", {
         get: function () {
-            if ((this.__DomRootRenderer_36 == null)) {
-                (this.__DomRootRenderer_36 = new import19.DomRootRenderer_(this._DOCUMENT_30, this._EventManager_33, this._DomSharedStylesHost_34, this._AnimationDriver_35));
+            if ((this.__DomRootRenderer_37 == null)) {
+                (this.__DomRootRenderer_37 = new import20.DomRootRenderer_(this._DOCUMENT_31, this._EventManager_34, this._DomSharedStylesHost_35, this._AnimationDriver_36));
           ***REMOVED***
-            return this.__DomRootRenderer_36;
+            return this.__DomRootRenderer_37;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_RootRenderer_37", {
+    Object.defineProperty(AppModuleInjector.prototype, "_RootRenderer_38", {
         get: function () {
-            if ((this.__RootRenderer_37 == null)) {
-                (this.__RootRenderer_37 = import64._createConditionalRootRenderer(this._DomRootRenderer_36, this.parent.get(import64.NgProbeToken, null)));
+            if ((this.__RootRenderer_38 == null)) {
+                (this.__RootRenderer_38 = import72._createConditionalRootRenderer(this._DomRootRenderer_37, this.parent.get(import72.NgProbeToken, null)));
           ***REMOVED***
-            return this.__RootRenderer_37;
+            return this.__RootRenderer_38;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_DomSanitizer_38", {
+    Object.defineProperty(AppModuleInjector.prototype, "_DomSanitizer_39", {
         get: function () {
-            if ((this.__DomSanitizer_38 == null)) {
-                (this.__DomSanitizer_38 = new import20.DomSanitizerImpl());
+            if ((this.__DomSanitizer_39 == null)) {
+                (this.__DomSanitizer_39 = new import21.DomSanitizerImpl());
           ***REMOVED***
-            return this.__DomSanitizer_38;
+            return this.__DomSanitizer_39;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Sanitizer_39", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Sanitizer_40", {
         get: function () {
-            if ((this.__Sanitizer_39 == null)) {
-                (this.__Sanitizer_39 = this._DomSanitizer_38);
+            if ((this.__Sanitizer_40 == null)) {
+                (this.__Sanitizer_40 = this._DomSanitizer_39);
           ***REMOVED***
-            return this.__Sanitizer_39;
+            return this.__Sanitizer_40;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_ViewUtils_40", {
+    Object.defineProperty(AppModuleInjector.prototype, "_ViewUtils_41", {
         get: function () {
-            if ((this.__ViewUtils_40 == null)) {
-                (this.__ViewUtils_40 = new import21.ViewUtils(this._RootRenderer_37, this._APP_ID_29, this._Sanitizer_39));
+            if ((this.__ViewUtils_41 == null)) {
+                (this.__ViewUtils_41 = new import22.ViewUtils(this._RootRenderer_38, this._APP_ID_30, this._Sanitizer_40));
           ***REMOVED***
-            return this.__ViewUtils_40;
+            return this.__ViewUtils_41;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_IterableDiffers_41", {
+    Object.defineProperty(AppModuleInjector.prototype, "_IterableDiffers_42", {
         get: function () {
-            if ((this.__IterableDiffers_41 == null)) {
-                (this.__IterableDiffers_41 = import3._iterableDiffersFactory());
+            if ((this.__IterableDiffers_42 == null)) {
+                (this.__IterableDiffers_42 = import3._iterableDiffersFactory());
           ***REMOVED***
-            return this.__IterableDiffers_41;
+            return this.__IterableDiffers_42;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_KeyValueDiffers_42", {
+    Object.defineProperty(AppModuleInjector.prototype, "_KeyValueDiffers_43", {
         get: function () {
-            if ((this.__KeyValueDiffers_42 == null)) {
-                (this.__KeyValueDiffers_42 = import3._keyValueDiffersFactory());
+            if ((this.__KeyValueDiffers_43 == null)) {
+                (this.__KeyValueDiffers_43 = import3._keyValueDiffersFactory());
           ***REMOVED***
-            return this.__KeyValueDiffers_42;
+            return this.__KeyValueDiffers_43;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_SharedStylesHost_43", {
+    Object.defineProperty(AppModuleInjector.prototype, "_SharedStylesHost_44", {
         get: function () {
-            if ((this.__SharedStylesHost_43 == null)) {
-                (this.__SharedStylesHost_43 = this._DomSharedStylesHost_34);
+            if ((this.__SharedStylesHost_44 == null)) {
+                (this.__SharedStylesHost_44 = this._DomSharedStylesHost_35);
           ***REMOVED***
-            return this.__SharedStylesHost_43;
+            return this.__SharedStylesHost_44;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Title_44", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Title_45", {
         get: function () {
-            if ((this.__Title_44 == null)) {
-                (this.__Title_44 = new import22.Title());
+            if ((this.__Title_45 == null)) {
+                (this.__Title_45 = new import23.Title());
           ***REMOVED***
-            return this.__Title_44;
+            return this.__Title_45;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_BrowserXhr_45", {
+    Object.defineProperty(AppModuleInjector.prototype, "_BrowserXhr_46", {
         get: function () {
-            if ((this.__BrowserXhr_45 == null)) {
-                (this.__BrowserXhr_45 = new import23.BrowserXhr());
+            if ((this.__BrowserXhr_46 == null)) {
+                (this.__BrowserXhr_46 = new import24.BrowserXhr());
           ***REMOVED***
-            return this.__BrowserXhr_45;
+            return this.__BrowserXhr_46;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_ResponseOptions_46", {
+    Object.defineProperty(AppModuleInjector.prototype, "_ResponseOptions_47", {
         get: function () {
-            if ((this.__ResponseOptions_46 == null)) {
-                (this.__ResponseOptions_46 = new import24.BaseResponseOptions());
+            if ((this.__ResponseOptions_47 == null)) {
+                (this.__ResponseOptions_47 = new import25.BaseResponseOptions());
           ***REMOVED***
-            return this.__ResponseOptions_46;
+            return this.__ResponseOptions_47;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_XSRFStrategy_47", {
+    Object.defineProperty(AppModuleInjector.prototype, "_XSRFStrategy_48", {
         get: function () {
-            if ((this.__XSRFStrategy_47 == null)) {
-                (this.__XSRFStrategy_47 = import5._createDefaultCookieXSRFStrategy());
+            if ((this.__XSRFStrategy_48 == null)) {
+                (this.__XSRFStrategy_48 = import5._createDefaultCookieXSRFStrategy());
           ***REMOVED***
-            return this.__XSRFStrategy_47;
+            return this.__XSRFStrategy_48;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_XHRBackend_48", {
+    Object.defineProperty(AppModuleInjector.prototype, "_XHRBackend_49", {
         get: function () {
-            if ((this.__XHRBackend_48 == null)) {
-                (this.__XHRBackend_48 = new import25.XHRBackend(this._BrowserXhr_45, this._ResponseOptions_46, this._XSRFStrategy_47));
+            if ((this.__XHRBackend_49 == null)) {
+                (this.__XHRBackend_49 = new import26.XHRBackend(this._BrowserXhr_46, this._ResponseOptions_47, this._XSRFStrategy_48));
           ***REMOVED***
-            return this.__XHRBackend_48;
+            return this.__XHRBackend_49;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_RequestOptions_49", {
+    Object.defineProperty(AppModuleInjector.prototype, "_RequestOptions_50", {
         get: function () {
-            if ((this.__RequestOptions_49 == null)) {
-                (this.__RequestOptions_49 = new import26.BaseRequestOptions());
+            if ((this.__RequestOptions_50 == null)) {
+                (this.__RequestOptions_50 = new import27.BaseRequestOptions());
           ***REMOVED***
-            return this.__RequestOptions_49;
+            return this.__RequestOptions_50;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Http_50", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Http_51", {
         get: function () {
-            if ((this.__Http_50 == null)) {
-                (this.__Http_50 = import5.httpFactory(this._XHRBackend_48, this._RequestOptions_49));
+            if ((this.__Http_51 == null)) {
+                (this.__Http_51 = import5.httpFactory(this._XHRBackend_49, this._RequestOptions_50));
           ***REMOVED***
-            return this.__Http_50;
+            return this.__Http_51;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_RadioControlRegistry_51", {
+    Object.defineProperty(AppModuleInjector.prototype, "_RadioControlRegistry_52", {
         get: function () {
-            if ((this.__RadioControlRegistry_51 == null)) {
-                (this.__RadioControlRegistry_51 = new import27.RadioControlRegistry());
+            if ((this.__RadioControlRegistry_52 == null)) {
+                (this.__RadioControlRegistry_52 = new import28.RadioControlRegistry());
           ***REMOVED***
-            return this.__RadioControlRegistry_51;
+            return this.__RadioControlRegistry_52;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_FormBuilder_52", {
+    Object.defineProperty(AppModuleInjector.prototype, "_FormBuilder_53", {
         get: function () {
-            if ((this.__FormBuilder_52 == null)) {
-                (this.__FormBuilder_52 = new import28.FormBuilder());
+            if ((this.__FormBuilder_53 == null)) {
+                (this.__FormBuilder_53 = new import29.FormBuilder());
           ***REMOVED***
-            return this.__FormBuilder_52;
+            return this.__FormBuilder_53;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_AppRootToken_53", {
+    Object.defineProperty(AppModuleInjector.prototype, "_FirebaseUserConfig_54", {
         get: function () {
-            if ((this.__AppRootToken_53 == null)) {
-                (this.__AppRootToken_53 = import65.MyApp);
+            if ((this.__FirebaseUserConfig_54 == null)) {
+                (this.__FirebaseUserConfig_54 = {
+                    apiKey: 'AIzaSyCHzsaVc4TuG3QMFjI_SKP1Px-E5QRglcM',
+                    authDomain: 'extension-toolkit.firebaseapp.com',
+                    databaseURL: 'https://extension-toolkit.firebaseio.com',
+                    storageBucket: 'extension-toolkit.appspot.com',
+                    messagingSenderId: '249750594240'
+              ***REMOVED***);
           ***REMOVED***
-            return this.__AppRootToken_53;
+            return this.__FirebaseUserConfig_54;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_DeepLinkConfigToken_54", {
+    Object.defineProperty(AppModuleInjector.prototype, "_FirebaseConfig_55", {
         get: function () {
-            if ((this.__DeepLinkConfigToken_54 == null)) {
-                (this.__DeepLinkConfigToken_54 = null);
+            if ((this.__FirebaseConfig_55 == null)) {
+                (this.__FirebaseConfig_55 = import9._getDefaultFirebase(this._FirebaseUserConfig_54));
           ***REMOVED***
-            return this.__DeepLinkConfigToken_54;
+            return this.__FirebaseConfig_55;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_ActionSheetController_55", {
+    Object.defineProperty(AppModuleInjector.prototype, "_FirebaseApp_56", {
         get: function () {
-            if ((this.__ActionSheetController_55 == null)) {
-                (this.__ActionSheetController_55 = new import29.ActionSheetController(this._App_22));
+            if ((this.__FirebaseApp_56 == null)) {
+                (this.__FirebaseApp_56 = import9._getFirebase(this._FirebaseConfig_55));
           ***REMOVED***
-            return this.__ActionSheetController_55;
+            return this.__FirebaseApp_56;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_AlertController_56", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AuthBackend_57", {
         get: function () {
-            if ((this.__AlertController_56 == null)) {
-                (this.__AlertController_56 = new import30.AlertController(this._App_22));
+            if ((this.__AuthBackend_57 == null)) {
+                (this.__AuthBackend_57 = import9._getAuthBackend(this._FirebaseApp_56));
           ***REMOVED***
-            return this.__AlertController_56;
+            return this.__AuthBackend_57;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Events_57", {
+    Object.defineProperty(AppModuleInjector.prototype, "_WindowLocation_58", {
         get: function () {
-            if ((this.__Events_57 == null)) {
-                (this.__Events_57 = new import31.Events());
+            if ((this.__WindowLocation_58 == null)) {
+                (this.__WindowLocation_58 = import9._getWindowLocation());
           ***REMOVED***
-            return this.__Events_57;
+            return this.__WindowLocation_58;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Form_58", {
+    Object.defineProperty(AppModuleInjector.prototype, "_FirebaseAuthConfig_59", {
         get: function () {
-            if ((this.__Form_58 == null)) {
-                (this.__Form_58 = new import32.Form());
+            if ((this.__FirebaseAuthConfig_59 == null)) {
+                (this.__FirebaseAuthConfig_59 = {
+                    provider: 4,
+                    method: 3
+              ***REMOVED***);
           ***REMOVED***
-            return this.__Form_58;
+            return this.__FirebaseAuthConfig_59;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Haptic_59", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AngularFireAuth_60", {
         get: function () {
-            if ((this.__Haptic_59 == null)) {
-                (this.__Haptic_59 = new import33.Haptic(this._Platform_20));
+            if ((this.__AngularFireAuth_60 == null)) {
+                (this.__AngularFireAuth_60 = new import30.AngularFireAuth(this._AuthBackend_57, this._WindowLocation_58, this._FirebaseAuthConfig_59));
           ***REMOVED***
-            return this.__Haptic_59;
+            return this.__AngularFireAuth_60;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_GestureController_60", {
+    Object.defineProperty(AppModuleInjector.prototype, "_FirebaseAuth_61", {
         get: function () {
-            if ((this.__GestureController_60 == null)) {
-                (this.__GestureController_60 = new import34.GestureController(this._App_22));
+            if ((this.__FirebaseAuth_61 == null)) {
+                (this.__FirebaseAuth_61 = this._AngularFireAuth_60);
           ***REMOVED***
-            return this.__GestureController_60;
+            return this.__FirebaseAuth_61;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Keyboard_61", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AngularFireDatabase_62", {
         get: function () {
-            if ((this.__Keyboard_61 == null)) {
-                (this.__Keyboard_61 = new import35.Keyboard(this._Config_21, this._Form_58, this.parent.get(import63.NgZone)));
+            if ((this.__AngularFireDatabase_62 == null)) {
+                (this.__AngularFireDatabase_62 = new import31.AngularFireDatabase(this._FirebaseConfig_55, this._FirebaseApp_56));
           ***REMOVED***
-            return this.__Keyboard_61;
+            return this.__AngularFireDatabase_62;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_LoadingController_62", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AngularFire_63", {
         get: function () {
-            if ((this.__LoadingController_62 == null)) {
-                (this.__LoadingController_62 = new import36.LoadingController(this._App_22));
+            if ((this.__AngularFire_63 == null)) {
+                (this.__AngularFire_63 = new import9.AngularFire(this._FirebaseConfig_55, this._AngularFireAuth_60, this._AngularFireDatabase_62));
           ***REMOVED***
-            return this.__LoadingController_62;
+            return this.__AngularFire_63;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_LocationStrategy_63", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AppRootToken_64", {
         get: function () {
-            if ((this.__LocationStrategy_63 == null)) {
-                (this.__LocationStrategy_63 = import8.provideLocationStrategy(this.parent.get(import66.PlatformLocation), this.parent.get(import67.APP_BASE_HREF, null), this._Config_21));
+            if ((this.__AppRootToken_64 == null)) {
+                (this.__AppRootToken_64 = import73.MyApp);
           ***REMOVED***
-            return this.__LocationStrategy_63;
+            return this.__AppRootToken_64;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_Location_64", {
+    Object.defineProperty(AppModuleInjector.prototype, "_DeepLinkConfigToken_65", {
         get: function () {
-            if ((this.__Location_64 == null)) {
-                (this.__Location_64 = new import37.Location(this._LocationStrategy_63));
+            if ((this.__DeepLinkConfigToken_65 == null)) {
+                (this.__DeepLinkConfigToken_65 = null);
           ***REMOVED***
-            return this.__Location_64;
+            return this.__DeepLinkConfigToken_65;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_MenuController_65", {
+    Object.defineProperty(AppModuleInjector.prototype, "_ActionSheetController_66", {
         get: function () {
-            if ((this.__MenuController_65 == null)) {
-                (this.__MenuController_65 = new import38.MenuController());
+            if ((this.__ActionSheetController_66 == null)) {
+                (this.__ActionSheetController_66 = new import32.ActionSheetController(this._App_23));
           ***REMOVED***
-            return this.__MenuController_65;
+            return this.__ActionSheetController_66;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_ModalController_66", {
+    Object.defineProperty(AppModuleInjector.prototype, "_AlertController_67", {
         get: function () {
-            if ((this.__ModalController_66 == null)) {
-                (this.__ModalController_66 = new import39.ModalController(this._App_22));
+            if ((this.__AlertController_67 == null)) {
+                (this.__AlertController_67 = new import33.AlertController(this._App_23));
           ***REMOVED***
-            return this.__ModalController_66;
+            return this.__AlertController_67;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_PickerController_67", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Events_68", {
         get: function () {
-            if ((this.__PickerController_67 == null)) {
-                (this.__PickerController_67 = new import40.PickerController(this._App_22));
+            if ((this.__Events_68 == null)) {
+                (this.__Events_68 = new import34.Events());
           ***REMOVED***
-            return this.__PickerController_67;
+            return this.__Events_68;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_PopoverController_68", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Form_69", {
         get: function () {
-            if ((this.__PopoverController_68 == null)) {
-                (this.__PopoverController_68 = new import41.PopoverController(this._App_22));
+            if ((this.__Form_69 == null)) {
+                (this.__Form_69 = new import35.Form());
           ***REMOVED***
-            return this.__PopoverController_68;
+            return this.__Form_69;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_TapClick_69", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Haptic_70", {
         get: function () {
-            if ((this.__TapClick_69 == null)) {
-                (this.__TapClick_69 = new import42.TapClick(this._Config_21, this._App_22, this.parent.get(import63.NgZone)));
+            if ((this.__Haptic_70 == null)) {
+                (this.__Haptic_70 = new import36.Haptic(this._Platform_21));
           ***REMOVED***
-            return this.__TapClick_69;
+            return this.__Haptic_70;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_ToastController_70", {
+    Object.defineProperty(AppModuleInjector.prototype, "_GestureController_71", {
         get: function () {
-            if ((this.__ToastController_70 == null)) {
-                (this.__ToastController_70 = new import43.ToastController(this._App_22));
+            if ((this.__GestureController_71 == null)) {
+                (this.__GestureController_71 = new import37.GestureController(this._App_23));
           ***REMOVED***
-            return this.__ToastController_70;
+            return this.__GestureController_71;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_TransitionController_71", {
+    Object.defineProperty(AppModuleInjector.prototype, "_Keyboard_72", {
         get: function () {
-            if ((this.__TransitionController_71 == null)) {
-                (this.__TransitionController_71 = new import44.TransitionController(this._Config_21));
+            if ((this.__Keyboard_72 == null)) {
+                (this.__Keyboard_72 = new import38.Keyboard(this._Config_22, this._Form_69, this.parent.get(import71.NgZone)));
           ***REMOVED***
-            return this.__TransitionController_71;
+            return this.__Keyboard_72;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_UrlSerializer_72", {
+    Object.defineProperty(AppModuleInjector.prototype, "_LoadingController_73", {
         get: function () {
-            if ((this.__UrlSerializer_72 == null)) {
-                (this.__UrlSerializer_72 = import68.setupUrlSerializer(this._DeepLinkConfigToken_54));
+            if ((this.__LoadingController_73 == null)) {
+                (this.__LoadingController_73 = new import39.LoadingController(this._App_23));
           ***REMOVED***
-            return this.__UrlSerializer_72;
+            return this.__LoadingController_73;
       ***REMOVED***,
         enumerable: true,
         configurable: true
   ***REMOVED***);
-    Object.defineProperty(AppModuleInjector.prototype, "_DeepLinker_73", {
+    Object.defineProperty(AppModuleInjector.prototype, "_LocationStrategy_74", {
         get: function () {
-            if ((this.__DeepLinker_73 == null)) {
-                (this.__DeepLinker_73 = import69.setupDeepLinker(this._App_22, this._UrlSerializer_72, this._Location_64));
+            if ((this.__LocationStrategy_74 == null)) {
+                (this.__LocationStrategy_74 = import8.provideLocationStrategy(this.parent.get(import74.PlatformLocation), this.parent.get(import75.APP_BASE_HREF, null), this._Config_22));
           ***REMOVED***
-            return this.__DeepLinker_73;
+            return this.__LocationStrategy_74;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_Location_75", {
+        get: function () {
+            if ((this.__Location_75 == null)) {
+                (this.__Location_75 = new import40.Location(this._LocationStrategy_74));
+          ***REMOVED***
+            return this.__Location_75;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_MenuController_76", {
+        get: function () {
+            if ((this.__MenuController_76 == null)) {
+                (this.__MenuController_76 = new import41.MenuController());
+          ***REMOVED***
+            return this.__MenuController_76;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_ModalController_77", {
+        get: function () {
+            if ((this.__ModalController_77 == null)) {
+                (this.__ModalController_77 = new import42.ModalController(this._App_23));
+          ***REMOVED***
+            return this.__ModalController_77;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_PickerController_78", {
+        get: function () {
+            if ((this.__PickerController_78 == null)) {
+                (this.__PickerController_78 = new import43.PickerController(this._App_23));
+          ***REMOVED***
+            return this.__PickerController_78;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_PopoverController_79", {
+        get: function () {
+            if ((this.__PopoverController_79 == null)) {
+                (this.__PopoverController_79 = new import44.PopoverController(this._App_23));
+          ***REMOVED***
+            return this.__PopoverController_79;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_TapClick_80", {
+        get: function () {
+            if ((this.__TapClick_80 == null)) {
+                (this.__TapClick_80 = new import45.TapClick(this._Config_22, this._App_23, this.parent.get(import71.NgZone)));
+          ***REMOVED***
+            return this.__TapClick_80;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_ToastController_81", {
+        get: function () {
+            if ((this.__ToastController_81 == null)) {
+                (this.__ToastController_81 = new import46.ToastController(this._App_23));
+          ***REMOVED***
+            return this.__ToastController_81;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_TransitionController_82", {
+        get: function () {
+            if ((this.__TransitionController_82 == null)) {
+                (this.__TransitionController_82 = new import47.TransitionController(this._Config_22));
+          ***REMOVED***
+            return this.__TransitionController_82;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_UrlSerializer_83", {
+        get: function () {
+            if ((this.__UrlSerializer_83 == null)) {
+                (this.__UrlSerializer_83 = import76.setupUrlSerializer(this._DeepLinkConfigToken_65));
+          ***REMOVED***
+            return this.__UrlSerializer_83;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_DeepLinker_84", {
+        get: function () {
+            if ((this.__DeepLinker_84 == null)) {
+                (this.__DeepLinker_84 = import77.setupDeepLinker(this._App_23, this._UrlSerializer_83, this._Location_75));
+          ***REMOVED***
+            return this.__DeepLinker_84;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_KoboApi_85", {
+        get: function () {
+            if ((this.__KoboApi_85 == null)) {
+                (this.__KoboApi_85 = new import48.KoboApi(this._Http_51));
+          ***REMOVED***
+            return this.__KoboApi_85;
+      ***REMOVED***,
+        enumerable: true,
+        configurable: true
+  ***REMOVED***);
+    Object.defineProperty(AppModuleInjector.prototype, "_Storage_86", {
+        get: function () {
+            if ((this.__Storage_86 == null)) {
+                (this.__Storage_86 = new import49.Storage());
+          ***REMOVED***
+            return this.__Storage_86;
       ***REMOVED***,
         enumerable: true,
         configurable: true
@@ -619,29 +761,30 @@ var AppModuleInjector = (function (_super) {
         this._FormsModule_5 = new import7.FormsModule();
         this._ReactiveFormsModule_6 = new import7.ReactiveFormsModule();
         this._IonicModule_7 = new import8.IonicModule();
-        this._AppModule_8 = new import1.AppModule();
-        this._ErrorHandler_11 = new import10.IonicErrorHandler();
-        this._ConfigToken_12 = null;
-        this._UrlToken_13 = import8.provideLocationHref();
-        this._QueryParams_14 = import70.setupQueryParams(this._UrlToken_13);
-        this._PlatformConfigToken_15 = import71.providePlatformConfigs();
-        this._UserAgentToken_16 = import8.provideUserAgent();
-        this._NavigatorPlatformToken_17 = import8.provideNavigatorPlatform();
-        this._DocumentDirToken_18 = import8.provideDocumentDirection();
-        this._DocLangToken_19 = import8.provideDocumentLang();
-        this._Platform_20 = import72.setupPlatform(this._PlatformConfigToken_15, this._QueryParams_14, this._UserAgentToken_16, this._NavigatorPlatformToken_17, this._DocumentDirToken_18, this._DocLangToken_19, this.parent.get(import63.NgZone));
-        this._Config_21 = import73.setupConfig(this._ConfigToken_12, this._QueryParams_14, this._Platform_20);
-        this._App_22 = new import11.App(this._Config_21, this._Platform_20);
-        this._APP_INITIALIZER_23 = [
-            import74.registerModeConfigs(this._Config_21),
-            import75.registerTransitions(this._Config_21),
-            import31.setupProvideEvents(this._Platform_20),
-            import42.setupTapClick(this._Config_21, this._App_22, this.parent.get(import63.NgZone))
+        this._AngularFireModule_8 = new import9.AngularFireModule();
+        this._AppModule_9 = new import1.AppModule();
+        this._ErrorHandler_12 = new import11.IonicErrorHandler();
+        this._ConfigToken_13 = null;
+        this._UrlToken_14 = import8.provideLocationHref();
+        this._QueryParams_15 = import78.setupQueryParams(this._UrlToken_14);
+        this._PlatformConfigToken_16 = import79.providePlatformConfigs();
+        this._UserAgentToken_17 = import8.provideUserAgent();
+        this._NavigatorPlatformToken_18 = import8.provideNavigatorPlatform();
+        this._DocumentDirToken_19 = import8.provideDocumentDirection();
+        this._DocLangToken_20 = import8.provideDocumentLang();
+        this._Platform_21 = import80.setupPlatform(this._PlatformConfigToken_16, this._QueryParams_15, this._UserAgentToken_17, this._NavigatorPlatformToken_18, this._DocumentDirToken_19, this._DocLangToken_20, this.parent.get(import71.NgZone));
+        this._Config_22 = import81.setupConfig(this._ConfigToken_13, this._QueryParams_15, this._Platform_21);
+        this._App_23 = new import12.App(this._Config_22, this._Platform_21);
+        this._APP_INITIALIZER_24 = [
+            import82.registerModeConfigs(this._Config_22),
+            import83.registerTransitions(this._Config_22),
+            import34.setupProvideEvents(this._Platform_21),
+            import45.setupTapClick(this._Config_22, this._App_23, this.parent.get(import71.NgZone))
         ];
-        this._ApplicationInitStatus_24 = new import12.ApplicationInitStatus(this._APP_INITIALIZER_23);
-        this._Testability_25 = new import13.Testability(this.parent.get(import63.NgZone));
-        this._ApplicationRef__26 = new import14.ApplicationRef_(this.parent.get(import63.NgZone), this.parent.get(import76.Console), this, this._ErrorHandler_11, this, this._ApplicationInitStatus_24, this.parent.get(import13.TestabilityRegistry, null), this._Testability_25);
-        return this._AppModule_8;
+        this._ApplicationInitStatus_25 = new import13.ApplicationInitStatus(this._APP_INITIALIZER_24);
+        this._Testability_26 = new import14.Testability(this.parent.get(import71.NgZone));
+        this._ApplicationRef__27 = new import15.ApplicationRef_(this.parent.get(import71.NgZone), this.parent.get(import84.Console), this, this._ErrorHandler_12, this, this._ApplicationInitStatus_25, this.parent.get(import14.TestabilityRegistry, null), this._Testability_26);
+        return this._AppModule_9;
   ***REMOVED***;
     AppModuleInjector.prototype.getInternal = function (token, notFoundResult) {
         if ((token === import2.CommonModule)) {
@@ -668,208 +811,247 @@ var AppModuleInjector = (function (_super) {
         if ((token === import8.IonicModule)) {
             return this._IonicModule_7;
       ***REMOVED***
+        if ((token === import9.AngularFireModule)) {
+            return this._AngularFireModule_8;
+      ***REMOVED***
         if ((token === import1.AppModule)) {
-            return this._AppModule_8;
+            return this._AppModule_9;
       ***REMOVED***
-        if ((token === import77.LOCALE_ID)) {
-            return this._LOCALE_ID_9;
+        if ((token === import85.LOCALE_ID)) {
+            return this._LOCALE_ID_10;
       ***REMOVED***
-        if ((token === import9.NgLocalization)) {
-            return this._NgLocalization_10;
+        if ((token === import10.NgLocalization)) {
+            return this._NgLocalization_11;
       ***REMOVED***
-        if ((token === import78.ErrorHandler)) {
-            return this._ErrorHandler_11;
+        if ((token === import86.ErrorHandler)) {
+            return this._ErrorHandler_12;
       ***REMOVED***
-        if ((token === import73.ConfigToken)) {
-            return this._ConfigToken_12;
+        if ((token === import81.ConfigToken)) {
+            return this._ConfigToken_13;
       ***REMOVED***
-        if ((token === import70.UrlToken)) {
-            return this._UrlToken_13;
+        if ((token === import78.UrlToken)) {
+            return this._UrlToken_14;
       ***REMOVED***
-        if ((token === import70.QueryParams)) {
-            return this._QueryParams_14;
+        if ((token === import78.QueryParams)) {
+            return this._QueryParams_15;
       ***REMOVED***
-        if ((token === import71.PlatformConfigToken)) {
-            return this._PlatformConfigToken_15;
+        if ((token === import79.PlatformConfigToken)) {
+            return this._PlatformConfigToken_16;
       ***REMOVED***
-        if ((token === import72.UserAgentToken)) {
-            return this._UserAgentToken_16;
+        if ((token === import80.UserAgentToken)) {
+            return this._UserAgentToken_17;
       ***REMOVED***
-        if ((token === import72.NavigatorPlatformToken)) {
-            return this._NavigatorPlatformToken_17;
+        if ((token === import80.NavigatorPlatformToken)) {
+            return this._NavigatorPlatformToken_18;
       ***REMOVED***
-        if ((token === import72.DocumentDirToken)) {
-            return this._DocumentDirToken_18;
+        if ((token === import80.DocumentDirToken)) {
+            return this._DocumentDirToken_19;
       ***REMOVED***
-        if ((token === import72.DocLangToken)) {
-            return this._DocLangToken_19;
+        if ((token === import80.DocLangToken)) {
+            return this._DocLangToken_20;
       ***REMOVED***
-        if ((token === import72.Platform)) {
-            return this._Platform_20;
+        if ((token === import80.Platform)) {
+            return this._Platform_21;
       ***REMOVED***
-        if ((token === import73.Config)) {
-            return this._Config_21;
+        if ((token === import81.Config)) {
+            return this._Config_22;
       ***REMOVED***
-        if ((token === import11.App)) {
-            return this._App_22;
+        if ((token === import12.App)) {
+            return this._App_23;
       ***REMOVED***
-        if ((token === import12.APP_INITIALIZER)) {
-            return this._APP_INITIALIZER_23;
+        if ((token === import13.APP_INITIALIZER)) {
+            return this._APP_INITIALIZER_24;
       ***REMOVED***
-        if ((token === import12.ApplicationInitStatus)) {
-            return this._ApplicationInitStatus_24;
+        if ((token === import13.ApplicationInitStatus)) {
+            return this._ApplicationInitStatus_25;
       ***REMOVED***
-        if ((token === import13.Testability)) {
-            return this._Testability_25;
+        if ((token === import14.Testability)) {
+            return this._Testability_26;
       ***REMOVED***
-        if ((token === import14.ApplicationRef_)) {
-            return this._ApplicationRef__26;
+        if ((token === import15.ApplicationRef_)) {
+            return this._ApplicationRef__27;
       ***REMOVED***
-        if ((token === import14.ApplicationRef)) {
-            return this._ApplicationRef_27;
+        if ((token === import15.ApplicationRef)) {
+            return this._ApplicationRef_28;
       ***REMOVED***
-        if ((token === import15.Compiler)) {
-            return this._Compiler_28;
+        if ((token === import16.Compiler)) {
+            return this._Compiler_29;
       ***REMOVED***
-        if ((token === import59.APP_ID)) {
-            return this._APP_ID_29;
+        if ((token === import67.APP_ID)) {
+            return this._APP_ID_30;
       ***REMOVED***
-        if ((token === import79.DOCUMENT)) {
-            return this._DOCUMENT_30;
+        if ((token === import87.DOCUMENT)) {
+            return this._DOCUMENT_31;
       ***REMOVED***
-        if ((token === import62.HAMMER_GESTURE_CONFIG)) {
-            return this._HAMMER_GESTURE_CONFIG_31;
+        if ((token === import70.HAMMER_GESTURE_CONFIG)) {
+            return this._HAMMER_GESTURE_CONFIG_32;
       ***REMOVED***
-        if ((token === import17.EVENT_MANAGER_PLUGINS)) {
-            return this._EVENT_MANAGER_PLUGINS_32;
+        if ((token === import18.EVENT_MANAGER_PLUGINS)) {
+            return this._EVENT_MANAGER_PLUGINS_33;
       ***REMOVED***
-        if ((token === import17.EventManager)) {
-            return this._EventManager_33;
+        if ((token === import18.EventManager)) {
+            return this._EventManager_34;
       ***REMOVED***
-        if ((token === import18.DomSharedStylesHost)) {
-            return this._DomSharedStylesHost_34;
+        if ((token === import19.DomSharedStylesHost)) {
+            return this._DomSharedStylesHost_35;
       ***REMOVED***
-        if ((token === import80.AnimationDriver)) {
-            return this._AnimationDriver_35;
+        if ((token === import88.AnimationDriver)) {
+            return this._AnimationDriver_36;
       ***REMOVED***
-        if ((token === import19.DomRootRenderer)) {
-            return this._DomRootRenderer_36;
+        if ((token === import20.DomRootRenderer)) {
+            return this._DomRootRenderer_37;
       ***REMOVED***
-        if ((token === import81.RootRenderer)) {
-            return this._RootRenderer_37;
+        if ((token === import89.RootRenderer)) {
+            return this._RootRenderer_38;
       ***REMOVED***
-        if ((token === import20.DomSanitizer)) {
-            return this._DomSanitizer_38;
+        if ((token === import21.DomSanitizer)) {
+            return this._DomSanitizer_39;
       ***REMOVED***
-        if ((token === import82.Sanitizer)) {
-            return this._Sanitizer_39;
+        if ((token === import90.Sanitizer)) {
+            return this._Sanitizer_40;
       ***REMOVED***
-        if ((token === import21.ViewUtils)) {
-            return this._ViewUtils_40;
+        if ((token === import22.ViewUtils)) {
+            return this._ViewUtils_41;
       ***REMOVED***
-        if ((token === import83.IterableDiffers)) {
-            return this._IterableDiffers_41;
+        if ((token === import91.IterableDiffers)) {
+            return this._IterableDiffers_42;
       ***REMOVED***
-        if ((token === import84.KeyValueDiffers)) {
-            return this._KeyValueDiffers_42;
+        if ((token === import92.KeyValueDiffers)) {
+            return this._KeyValueDiffers_43;
       ***REMOVED***
-        if ((token === import18.SharedStylesHost)) {
-            return this._SharedStylesHost_43;
+        if ((token === import19.SharedStylesHost)) {
+            return this._SharedStylesHost_44;
       ***REMOVED***
-        if ((token === import22.Title)) {
-            return this._Title_44;
+        if ((token === import23.Title)) {
+            return this._Title_45;
       ***REMOVED***
-        if ((token === import23.BrowserXhr)) {
-            return this._BrowserXhr_45;
+        if ((token === import24.BrowserXhr)) {
+            return this._BrowserXhr_46;
       ***REMOVED***
-        if ((token === import24.ResponseOptions)) {
-            return this._ResponseOptions_46;
+        if ((token === import25.ResponseOptions)) {
+            return this._ResponseOptions_47;
       ***REMOVED***
-        if ((token === import85.XSRFStrategy)) {
-            return this._XSRFStrategy_47;
+        if ((token === import93.XSRFStrategy)) {
+            return this._XSRFStrategy_48;
       ***REMOVED***
-        if ((token === import25.XHRBackend)) {
-            return this._XHRBackend_48;
+        if ((token === import26.XHRBackend)) {
+            return this._XHRBackend_49;
       ***REMOVED***
-        if ((token === import26.RequestOptions)) {
-            return this._RequestOptions_49;
+        if ((token === import27.RequestOptions)) {
+            return this._RequestOptions_50;
       ***REMOVED***
-        if ((token === import86.Http)) {
-            return this._Http_50;
+        if ((token === import94.Http)) {
+            return this._Http_51;
       ***REMOVED***
-        if ((token === import27.RadioControlRegistry)) {
-            return this._RadioControlRegistry_51;
+        if ((token === import28.RadioControlRegistry)) {
+            return this._RadioControlRegistry_52;
       ***REMOVED***
-        if ((token === import28.FormBuilder)) {
-            return this._FormBuilder_52;
+        if ((token === import29.FormBuilder)) {
+            return this._FormBuilder_53;
       ***REMOVED***
-        if ((token === import87.AppRootToken)) {
-            return this._AppRootToken_53;
+        if ((token === import95.FirebaseUserConfig)) {
+            return this._FirebaseUserConfig_54;
       ***REMOVED***
-        if ((token === import68.DeepLinkConfigToken)) {
-            return this._DeepLinkConfigToken_54;
+        if ((token === import95.FirebaseConfig)) {
+            return this._FirebaseConfig_55;
       ***REMOVED***
-        if ((token === import29.ActionSheetController)) {
-            return this._ActionSheetController_55;
+        if ((token === import95.FirebaseApp)) {
+            return this._FirebaseApp_56;
       ***REMOVED***
-        if ((token === import30.AlertController)) {
-            return this._AlertController_56;
+        if ((token === import96.AuthBackend)) {
+            return this._AuthBackend_57;
       ***REMOVED***
-        if ((token === import31.Events)) {
-            return this._Events_57;
+        if ((token === import95.WindowLocation)) {
+            return this._WindowLocation_58;
       ***REMOVED***
-        if ((token === import32.Form)) {
-            return this._Form_58;
+        if ((token === import95.FirebaseAuthConfig)) {
+            return this._FirebaseAuthConfig_59;
       ***REMOVED***
-        if ((token === import33.Haptic)) {
-            return this._Haptic_59;
+        if ((token === import30.AngularFireAuth)) {
+            return this._AngularFireAuth_60;
       ***REMOVED***
-        if ((token === import34.GestureController)) {
-            return this._GestureController_60;
+        if ((token === import30.FirebaseAuth)) {
+            return this._FirebaseAuth_61;
       ***REMOVED***
-        if ((token === import35.Keyboard)) {
-            return this._Keyboard_61;
+        if ((token === import31.AngularFireDatabase)) {
+            return this._AngularFireDatabase_62;
       ***REMOVED***
-        if ((token === import36.LoadingController)) {
-            return this._LoadingController_62;
+        if ((token === import9.AngularFire)) {
+            return this._AngularFire_63;
       ***REMOVED***
-        if ((token === import67.LocationStrategy)) {
-            return this._LocationStrategy_63;
+        if ((token === import97.AppRootToken)) {
+            return this._AppRootToken_64;
       ***REMOVED***
-        if ((token === import37.Location)) {
-            return this._Location_64;
+        if ((token === import76.DeepLinkConfigToken)) {
+            return this._DeepLinkConfigToken_65;
       ***REMOVED***
-        if ((token === import38.MenuController)) {
-            return this._MenuController_65;
+        if ((token === import32.ActionSheetController)) {
+            return this._ActionSheetController_66;
       ***REMOVED***
-        if ((token === import39.ModalController)) {
-            return this._ModalController_66;
+        if ((token === import33.AlertController)) {
+            return this._AlertController_67;
       ***REMOVED***
-        if ((token === import40.PickerController)) {
-            return this._PickerController_67;
+        if ((token === import34.Events)) {
+            return this._Events_68;
       ***REMOVED***
-        if ((token === import41.PopoverController)) {
-            return this._PopoverController_68;
+        if ((token === import35.Form)) {
+            return this._Form_69;
       ***REMOVED***
-        if ((token === import42.TapClick)) {
-            return this._TapClick_69;
+        if ((token === import36.Haptic)) {
+            return this._Haptic_70;
       ***REMOVED***
-        if ((token === import43.ToastController)) {
-            return this._ToastController_70;
+        if ((token === import37.GestureController)) {
+            return this._GestureController_71;
       ***REMOVED***
-        if ((token === import44.TransitionController)) {
-            return this._TransitionController_71;
+        if ((token === import38.Keyboard)) {
+            return this._Keyboard_72;
       ***REMOVED***
-        if ((token === import68.UrlSerializer)) {
-            return this._UrlSerializer_72;
+        if ((token === import39.LoadingController)) {
+            return this._LoadingController_73;
       ***REMOVED***
-        if ((token === import69.DeepLinker)) {
-            return this._DeepLinker_73;
+        if ((token === import75.LocationStrategy)) {
+            return this._LocationStrategy_74;
+      ***REMOVED***
+        if ((token === import40.Location)) {
+            return this._Location_75;
+      ***REMOVED***
+        if ((token === import41.MenuController)) {
+            return this._MenuController_76;
+      ***REMOVED***
+        if ((token === import42.ModalController)) {
+            return this._ModalController_77;
+      ***REMOVED***
+        if ((token === import43.PickerController)) {
+            return this._PickerController_78;
+      ***REMOVED***
+        if ((token === import44.PopoverController)) {
+            return this._PopoverController_79;
+      ***REMOVED***
+        if ((token === import45.TapClick)) {
+            return this._TapClick_80;
+      ***REMOVED***
+        if ((token === import46.ToastController)) {
+            return this._ToastController_81;
+      ***REMOVED***
+        if ((token === import47.TransitionController)) {
+            return this._TransitionController_82;
+      ***REMOVED***
+        if ((token === import76.UrlSerializer)) {
+            return this._UrlSerializer_83;
+      ***REMOVED***
+        if ((token === import77.DeepLinker)) {
+            return this._DeepLinker_84;
+      ***REMOVED***
+        if ((token === import48.KoboApi)) {
+            return this._KoboApi_85;
+      ***REMOVED***
+        if ((token === import49.Storage)) {
+            return this._Storage_86;
       ***REMOVED***
         return notFoundResult;
   ***REMOVED***;
     AppModuleInjector.prototype.destroyInternal = function () {
-        this._ApplicationRef__26.ngOnDestroy();
+        this._ApplicationRef__27.ngOnDestroy();
   ***REMOVED***;
     return AppModuleInjector;
 }(import0.NgModuleInjector));
