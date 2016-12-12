@@ -23,10 +23,19 @@ export class RecordDataPage {
   enketoLink:any;
 
   constructor(public koboApi:KoboApi, public nav:NavController, public modal:ModalController, public storage:Storage) {
-
+   console.log('accessing storage');
     this.storage.get('forms').then((forms)=>{
       if(forms){this.forms=(JSON.parse(forms))}
-      else{this.finished=false;this.getResults()}
+      else{
+          this.finished=false;
+          //add dummy form for testing
+          this.forms=[{
+              downloadable:false,
+              title:'Test Form',
+              date_modified:null,
+              eneketoLink:'https://test'
+        ***REMOVED***];
+          this.getResults()}
       console.log(this.forms)}
     )
 ***REMOVED***
