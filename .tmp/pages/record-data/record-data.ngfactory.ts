@@ -181,9 +181,9 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
   _text_43:any;
   _text_44:any;
   _text_45:any;
-  /*private*/ _expr_0:any;
   /*private*/ _expr_1:any;
-  /*private*/ _expr_7:any;
+  /*private*/ _expr_2:any;
+  /*private*/ _expr_8:any;
   _pipe_date_0:import25.DatePipe;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage0,renderType_RecordDataPage,import8.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
@@ -195,6 +195,7 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
     this._text_1 = this.renderer.createText(this._el_0,'\n\n  ',(null as any));
     this._el_2 = this.renderer.createElement(this._el_0,'ion-navbar',(null as any));
     this.renderer.setElementAttribute(this._el_2,'class','toolbar');
+    this.renderer.setElementAttribute(this._el_2,'color','picsa-record');
     this._appEl_2 = new import3.AppElement(2,0,this,this._el_2);
     var compView_2:any = import17.viewFactory_Navbar0(this.viewUtils,this.injector(2),this._appEl_2);
     this._Navbar_2_4 = new import17.Wrapper_Navbar(this.parentInjector.get(import29.App),this.parentInjector.get(import28.ViewController,(null as any)),this.parentInjector.get(import12.NavController,(null as any)),this.parentInjector.get(import26.Config),new import27.ElementRef(this._el_2),this.renderer);
@@ -301,10 +302,10 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
     ]
     ,(null as any));
     this._text_45 = this.renderer.createText(parentRenderNode,'\n',(null as any));
-    this._expr_0 = import9.UNINITIALIZED;
     this._expr_1 = import9.UNINITIALIZED;
+    this._expr_2 = import9.UNINITIALIZED;
     var disposable_0:Function = this.renderer.listen(this._el_9,'click',this.eventHandler(this._handle_click_9_0.bind(this)));
-    this._expr_7 = import9.UNINITIALIZED;
+    this._expr_8 = import9.UNINITIALIZED;
     this._pipe_date_0 = new import25.DatePipe(this.parentInjector.get(import37.LOCALE_ID));
     this.init(([] as any[]),[
       this._el_0,
@@ -378,25 +379,27 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
   }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
+    const currVal_0:any = 'picsa-record';
+    this._Navbar_2_4.check_color(currVal_0,throwOnChange,false);
     this._Navbar_2_4.detectChangesInternal(this,this._el_2,throwOnChange);
     if (this._ToolbarTitle_4_4.detectChangesInternal(this,this._el_4,throwOnChange)) { this._appEl_4.componentView.markAsCheckOnce(); }
     this._ToolbarItem_7_3.detectChangesInternal(this,this._el_7,throwOnChange);
-    const currVal_3:boolean = !this.context.finished;
-    this._NgIf_11_6.check_ngIf(currVal_3,throwOnChange,false);
+    const currVal_4:boolean = !this.context.finished;
+    this._NgIf_11_6.check_ngIf(currVal_4,throwOnChange,false);
     this._NgIf_11_6.detectChangesInternal(this,this._anchor_11,throwOnChange);
-    const currVal_4:any = this.context.anyErrors;
-    this._NgIf_13_6.check_ngIf(currVal_4,throwOnChange,false);
+    const currVal_5:any = this.context.anyErrors;
+    this._NgIf_13_6.check_ngIf(currVal_5,throwOnChange,false);
     this._NgIf_13_6.detectChangesInternal(this,this._anchor_13,throwOnChange);
-    const currVal_5:any = (this.context.finished && !this.context.anyErrors);
-    this._NgIf_15_6.check_ngIf(currVal_5,throwOnChange,false);
+    const currVal_6:any = (this.context.finished && !this.context.anyErrors);
+    this._NgIf_15_6.check_ngIf(currVal_6,throwOnChange,false);
     this._NgIf_15_6.detectChangesInternal(this,this._anchor_15,throwOnChange);
-    const currVal_6:any = (this.context.finished || this.context.anyErrors);
-    this._NgIf_17_6.check_ngIf(currVal_6,throwOnChange,false);
+    const currVal_7:any = (this.context.finished || this.context.anyErrors);
+    this._NgIf_17_6.check_ngIf(currVal_7,throwOnChange,false);
     this._NgIf_17_6.detectChangesInternal(this,this._anchor_17,throwOnChange);
     if (this._Content_23_4.detectChangesInternal(this,this._el_23,throwOnChange)) { this._appEl_23.componentView.markAsCheckOnce(); }
     this._List_28_3.detectChangesInternal(this,this._el_28,throwOnChange);
-    const currVal_8:any = this.context.forms;
-    this._NgFor_30_6.check_ngForOf(currVal_8,throwOnChange,false);
+    const currVal_9:any = this.context.forms;
+    this._NgFor_30_6.check_ngForOf(currVal_9,throwOnChange,false);
     this._NgFor_30_6.detectChangesInternal(this,this._anchor_30,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     if (!throwOnChange) { if (this._query_Button_7_0.dirty) {
@@ -404,20 +407,20 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
       this._ToolbarItem_7_3.context._buttons = this._query_Button_7_0;
       this._query_Button_7_0.notifyOnChanges();
     } }
-    const currVal_0:any = this._Navbar_2_4.context._hidden;
-    if (import6.checkBinding(throwOnChange,this._expr_0,currVal_0)) {
-      this.renderer.setElementProperty(this._el_2,'hidden',currVal_0);
-      this._expr_0 = currVal_0;
-    }
-    const currVal_1:any = this._Navbar_2_4.context._sbPadding;
+    const currVal_1:any = this._Navbar_2_4.context._hidden;
     if (import6.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
-      this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_1);
+      this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
     }
-    const currVal_7:any = this._Content_23_4.context._sbPadding;
-    if (import6.checkBinding(throwOnChange,this._expr_7,currVal_7)) {
-      this.renderer.setElementClass(this._el_23,'statusbar-padding',currVal_7);
-      this._expr_7 = currVal_7;
+    const currVal_2:any = this._Navbar_2_4.context._sbPadding;
+    if (import6.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
+      this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
+      this._expr_2 = currVal_2;
+    }
+    const currVal_8:any = this._Content_23_4.context._sbPadding;
+    if (import6.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
+      this.renderer.setElementClass(this._el_23,'statusbar-padding',currVal_8);
+      this._expr_8 = currVal_8;
     }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }

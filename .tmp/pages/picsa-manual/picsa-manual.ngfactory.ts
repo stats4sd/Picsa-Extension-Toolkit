@@ -111,10 +111,10 @@ class _View_PicsaManualPage0 extends import1.AppView<import0.PicsaManualPage> {
   _NgIf_13_6:import16.Wrapper_NgIf;
   _text_14:any;
   _text_15:any;
-  /*private*/ _expr_0:any;
   /*private*/ _expr_1:any;
-  /*private*/ _expr_3:any;
+  /*private*/ _expr_2:any;
   /*private*/ _expr_4:any;
+  /*private*/ _expr_5:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_PicsaManualPage0,renderType_PicsaManualPage,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
   }
@@ -125,6 +125,7 @@ class _View_PicsaManualPage0 extends import1.AppView<import0.PicsaManualPage> {
     this._text_1 = this.renderer.createText(this._el_0,'\n\n  ',(null as any));
     this._el_2 = this.renderer.createElement(this._el_0,'ion-navbar',(null as any));
     this.renderer.setElementAttribute(this._el_2,'class','toolbar');
+    this.renderer.setElementAttribute(this._el_2,'color','primary');
     this._appEl_2 = new import3.AppElement(2,0,this,this._el_2);
     var compView_2:any = import12.viewFactory_Navbar0(this.viewUtils,this.injector(2),this._appEl_2);
     this._Navbar_2_4 = new import12.Wrapper_Navbar(this.parentInjector.get(import20.App),this.parentInjector.get(import19.ViewController,(null as any)),this.parentInjector.get(import8.NavController,(null as any)),this.parentInjector.get(import17.Config),new import18.ElementRef(this._el_2),this.renderer);
@@ -185,10 +186,10 @@ class _View_PicsaManualPage0 extends import1.AppView<import0.PicsaManualPage> {
     ]
     ,(null as any));
     this._text_15 = this.renderer.createText(parentRenderNode,'\n',(null as any));
-    this._expr_0 = import7.UNINITIALIZED;
     this._expr_1 = import7.UNINITIALIZED;
-    this._expr_3 = import7.UNINITIALIZED;
+    this._expr_2 = import7.UNINITIALIZED;
     this._expr_4 = import7.UNINITIALIZED;
+    this._expr_5 = import7.UNINITIALIZED;
     this.init(([] as any[]),[
       this._el_0,
       this._text_1,
@@ -222,35 +223,37 @@ class _View_PicsaManualPage0 extends import1.AppView<import0.PicsaManualPage> {
   }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
+    const currVal_0:any = 'primary';
+    this._Navbar_2_4.check_color(currVal_0,throwOnChange,false);
     this._Navbar_2_4.detectChangesInternal(this,this._el_2,throwOnChange);
     if (this._ToolbarTitle_4_4.detectChangesInternal(this,this._el_4,throwOnChange)) { this._appEl_4.componentView.markAsCheckOnce(); }
-    const currVal_2:any = 'book';
-    this._Icon_6_3.check_name(currVal_2,throwOnChange,false);
+    const currVal_3:any = 'book';
+    this._Icon_6_3.check_name(currVal_3,throwOnChange,false);
     this._Icon_6_3.detectChangesInternal(this,this._el_6,throwOnChange);
     if (this._Content_11_4.detectChangesInternal(this,this._el_11,throwOnChange)) { this._appEl_11.componentView.markAsCheckOnce(); }
-    const currVal_5:any = this.context.isPdf;
-    this._NgIf_13_6.check_ngIf(currVal_5,throwOnChange,false);
+    const currVal_6:any = this.context.isPdf;
+    this._NgIf_13_6.check_ngIf(currVal_6,throwOnChange,false);
     this._NgIf_13_6.detectChangesInternal(this,this._anchor_13,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
-    const currVal_0:any = this._Navbar_2_4.context._hidden;
-    if (import4.checkBinding(throwOnChange,this._expr_0,currVal_0)) {
-      this.renderer.setElementProperty(this._el_2,'hidden',currVal_0);
-      this._expr_0 = currVal_0;
-    }
-    const currVal_1:any = this._Navbar_2_4.context._sbPadding;
+    const currVal_1:any = this._Navbar_2_4.context._hidden;
     if (import4.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
-      this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_1);
+      this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
     }
-    const currVal_3:any = this._Icon_6_3.context._hidden;
-    if (import4.checkBinding(throwOnChange,this._expr_3,currVal_3)) {
-      this.renderer.setElementClass(this._el_6,'hide',currVal_3);
-      this._expr_3 = currVal_3;
+    const currVal_2:any = this._Navbar_2_4.context._sbPadding;
+    if (import4.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
+      this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
+      this._expr_2 = currVal_2;
     }
-    const currVal_4:any = this._Content_11_4.context._sbPadding;
+    const currVal_4:any = this._Icon_6_3.context._hidden;
     if (import4.checkBinding(throwOnChange,this._expr_4,currVal_4)) {
-      this.renderer.setElementClass(this._el_11,'statusbar-padding',currVal_4);
+      this.renderer.setElementClass(this._el_6,'hide',currVal_4);
       this._expr_4 = currVal_4;
+    }
+    const currVal_5:any = this._Content_11_4.context._sbPadding;
+    if (import4.checkBinding(throwOnChange,this._expr_5,currVal_5)) {
+      this.renderer.setElementClass(this._el_11,'statusbar-padding',currVal_5);
+      this._expr_5 = currVal_5;
     }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }

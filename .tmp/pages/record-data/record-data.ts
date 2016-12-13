@@ -18,29 +18,22 @@ export class RecordDataPage {
   results: any = [];
   anyErrors: boolean;
   finished: boolean=true;
-  forms:any;
-  generating:boolean;
+  forms:any=[];
   enketoLink:any;
 
   constructor(public koboApi:KoboApi, public nav:NavController, public modal:ModalController, public storage:Storage) {
-   console.log('accessing storage');
-    this.storage.get('forms').then((forms)=>{
-      if(forms){this.forms=(JSON.parse(forms))}
-      else{
-          this.finished=false;
-          //add dummy form for testing
-          this.forms=[{
-              downloadable:false,
-              title:'Test Form',
-              date_modified:null,
-              eneketoLink:'https://test'
-          }];
-          this.getResults()}
-      console.log(this.forms)}
-    )
+    this.storage.get('forms').then((forms)=> {
+        if (forms) {
+            this.forms = (JSON.parse(forms))
+        }
+        else {
+            this.finished = false;
+            this.getForms()
+        }
+    })
   }
 
-  getResults(){
+  getForms(){
     this.anyErrors=false;
     this.koboApi.koboRequest('https://kc.kobotoolbox.org/api/v1/forms').subscribe(
         result =>this.forms = result,
@@ -87,7 +80,7 @@ export class RecordDataPage {
   refresh(){
     console.log('refreshing');
     this.finished=false;
-    this.getResults();
+    this.getForms();
   }
 
 
