@@ -142,10 +142,10 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
   _text_22:any;
   _text_23:any;
   _text_24:any;
-  /*private*/ _expr_0:any;
   /*private*/ _expr_1:any;
   /*private*/ _expr_2:any;
-  /*private*/ _expr_5:any;
+  /*private*/ _expr_3:any;
+  /*private*/ _expr_7:any;
   _pipe_async_0:import24.AsyncPipe;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_QandAPage0,renderType_QandAPage,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
@@ -157,6 +157,7 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     this._text_1 = this.renderer.createText(this._el_0,'\n  ',(null as any));
     this._el_2 = this.renderer.createElement(this._el_0,'ion-navbar',(null as any));
     this.renderer.setElementAttribute(this._el_2,'class','toolbar');
+    this.renderer.setElementAttribute(this._el_2,'color','picsa-qanda');
     this._appEl_2 = new import3.AppElement(2,0,this,this._el_2);
     var compView_2:any = import15.viewFactory_Navbar0(this.viewUtils,this.injector(2),this._appEl_2);
     this._Navbar_2_4 = new import15.Wrapper_Navbar(this.parentInjector.get(import28.App),this.parentInjector.get(import27.ViewController,(null as any)),this.parentInjector.get(import8.NavController,(null as any)),this.parentInjector.get(import25.Config),new import26.ElementRef(this._el_2),this.renderer);
@@ -197,6 +198,7 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     this._query_Button_11_0 = new import19.QueryList<any>();
     this._text_12 = this.renderer.createText(this._el_11,'\n    ',(null as any));
     this._el_13 = this.renderer.createElement(this._el_11,'button',(null as any));
+    this.renderer.setElementAttribute(this._el_13,'color','picsa-dark');
     this.renderer.setElementAttribute(this._el_13,'icon-only','');
     this.renderer.setElementAttribute(this._el_13,'ion-button','');
     this._appEl_13 = new import3.AppElement(13,11,this,this._el_13);
@@ -240,11 +242,11 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     ]
     ,(null as any));
     this._text_24 = this.renderer.createText(parentRenderNode,'\n',(null as any));
-    this._expr_0 = import7.UNINITIALIZED;
     this._expr_1 = import7.UNINITIALIZED;
     this._expr_2 = import7.UNINITIALIZED;
+    this._expr_3 = import7.UNINITIALIZED;
     var disposable_0:Function = this.renderer.listen(this._el_13,'click',this.eventHandler(this._handle_click_13_0.bind(this)));
-    this._expr_5 = import7.UNINITIALIZED;
+    this._expr_7 = import7.UNINITIALIZED;
     this._pipe_async_0 = new import24.AsyncPipe(this.ref);
     this.init(([] as any[]),[
       this._el_0,
@@ -292,18 +294,22 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
   detectChangesInternal(throwOnChange:boolean):void {
     const valUnwrapper:any = new import7.ValueUnwrapper();
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
+    const currVal_0:any = 'picsa-qanda';
+    this._Navbar_2_4.check_color(currVal_0,throwOnChange,false);
     this._Navbar_2_4.detectChangesInternal(this,this._el_2,throwOnChange);
     if (this._ToolbarTitle_4_4.detectChangesInternal(this,this._el_4,throwOnChange)) { this._appEl_4.componentView.markAsCheckOnce(); }
     if (this._Content_9_4.detectChangesInternal(this,this._el_9,throwOnChange)) { this._appEl_9.componentView.markAsCheckOnce(); }
     this._ToolbarItem_11_3.detectChangesInternal(this,this._el_11,throwOnChange);
+    const currVal_5:any = 'picsa-dark';
+    this._Button_13_4.check_color(currVal_5,throwOnChange,false);
     if (this._Button_13_4.detectChangesInternal(this,this._el_13,throwOnChange)) { this._appEl_13.componentView.markAsCheckOnce(); }
-    const currVal_4:any = 'add';
-    this._Icon_15_3.check_name(currVal_4,throwOnChange,false);
+    const currVal_6:any = 'add';
+    this._Icon_15_3.check_name(currVal_6,throwOnChange,false);
     this._Icon_15_3.detectChangesInternal(this,this._el_15,throwOnChange);
     this._List_19_3.detectChangesInternal(this,this._el_19,throwOnChange);
     valUnwrapper.reset();
-    const currVal_6:any = valUnwrapper.unwrap(this._pipe_async_0.transform(this.context.discussions));
-    this._NgFor_21_6.check_ngForOf(currVal_6,throwOnChange,valUnwrapper.hasWrappedValue);
+    const currVal_8:any = valUnwrapper.unwrap(this._pipe_async_0.transform(this.context.discussions));
+    this._NgFor_21_6.check_ngForOf(currVal_8,throwOnChange,valUnwrapper.hasWrappedValue);
     this._NgFor_21_6.detectChangesInternal(this,this._anchor_21,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     if (!throwOnChange) {
@@ -314,25 +320,25 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     ***REMOVED***
       if ((this.numberOfChecks === 0)) { this._Button_13_4.context.ngAfterContentInit(); }
   ***REMOVED***
-    const currVal_0:any = this._Navbar_2_4.context._hidden;
-    if (import4.checkBinding(throwOnChange,this._expr_0,currVal_0)) {
-      this.renderer.setElementProperty(this._el_2,'hidden',currVal_0);
-      this._expr_0 = currVal_0;
-  ***REMOVED***
-    const currVal_1:any = this._Navbar_2_4.context._sbPadding;
+    const currVal_1:any = this._Navbar_2_4.context._hidden;
     if (import4.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
-      this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_1);
+      this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
   ***REMOVED***
-    const currVal_2:any = this._Content_9_4.context._sbPadding;
+    const currVal_2:any = this._Navbar_2_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
-      this.renderer.setElementClass(this._el_9,'statusbar-padding',currVal_2);
+      this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
       this._expr_2 = currVal_2;
   ***REMOVED***
-    const currVal_5:any = this._Icon_15_3.context._hidden;
-    if (import4.checkBinding(throwOnChange,this._expr_5,currVal_5)) {
-      this.renderer.setElementClass(this._el_15,'hide',currVal_5);
-      this._expr_5 = currVal_5;
+    const currVal_3:any = this._Content_9_4.context._sbPadding;
+    if (import4.checkBinding(throwOnChange,this._expr_3,currVal_3)) {
+      this.renderer.setElementClass(this._el_9,'statusbar-padding',currVal_3);
+      this._expr_3 = currVal_3;
+  ***REMOVED***
+    const currVal_7:any = this._Icon_15_3.context._hidden;
+    if (import4.checkBinding(throwOnChange,this._expr_7,currVal_7)) {
+      this.renderer.setElementClass(this._el_15,'hide',currVal_7);
+      this._expr_7 = currVal_7;
   ***REMOVED***
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }
