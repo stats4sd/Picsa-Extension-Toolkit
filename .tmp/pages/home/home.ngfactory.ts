@@ -222,7 +222,7 @@ class _View_HomePage0 extends import1.AppView<import0.HomePage> {
     this.renderer.setElementAttribute(this._el_23,'name','information-circle');
     this.renderer.setElementAttribute(this._el_23,'role','img');
     this._Icon_23_3 = new import17.Wrapper_Icon(this.parentInjector.get(import20.Config),new import21.ElementRef(this._el_23),this.renderer);
-    this._text_24 = this.renderer.createText(this._el_23,'Version 0.1.0',(null as any));
+    this._text_24 = this.renderer.createText(this._el_23,'Version 0.1.1',(null as any));
     this._text_25 = this.renderer.createText(this._el_21,'\n    ',(null as any));
     this._text_26 = this.renderer.createText(this._el_17,'\n\n  ',(null as any));
     this._text_27 = this.renderer.createText((null as any),'\n\n\n',(null as any));

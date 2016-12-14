@@ -97,7 +97,10 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
   /*private*/ _appEl_9:import3.AppElement;
   _Content_9_4:import14.Wrapper_Content;
   _text_10:any;
-  _text_11:any;
+  _el_11:any;
+  _text_12:any;
+  _text_13:any;
+  _text_14:any;
   /*private*/ _expr_1:any;
   /*private*/ _expr_2:any;
   /*private*/ _expr_3:any;
@@ -145,14 +148,23 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
     var compView_9:any = import14.viewFactory_Content0(this.viewUtils,this.injector(9),this._appEl_9);
     this._Content_9_4 = new import14.Wrapper_Content(this.parentInjector.get(import15.Config),new import16.ElementRef(this._el_9),this.renderer,this.parentInjector.get(import18.App),this.parentInjector.get(import20.Keyboard),this.parentInjector.get(import21.NgZone),this.parentInjector.get(import17.ViewController,(null as any)),this.parentInjector.get(import22.Tabs,(null as any)));
     this._appEl_9.initComponent(this._Content_9_4.context,([] as any[]),compView_9);
-    this._text_10 = this.renderer.createText((null as any),'\n\n',(null as any));
+    this._text_10 = this.renderer.createText((null as any),'\n  ',(null as any));
+    this._el_11 = this.renderer.createElement((null as any),'div',(null as any));
+    this.renderer.setElementAttribute(this._el_11,'id','mapid');
+    this._text_12 = this.renderer.createText(this._el_11,'Map',(null as any));
+    this._text_13 = this.renderer.createText((null as any),'\n\n',(null as any));
     compView_9.create(this._Content_9_4.context,[
       ([] as any[]),
-      ([] as any[]).concat([this._text_10]),
+      ([] as any[]).concat([
+        this._text_10,
+        this._el_11,
+        this._text_13
+      ]
+      ),
       ([] as any[])
     ]
     ,(null as any));
-    this._text_11 = this.renderer.createText(parentRenderNode,'\n',(null as any));
+    this._text_14 = this.renderer.createText(parentRenderNode,'\n',(null as any));
     this._expr_1 = import7.UNINITIALIZED;
     this._expr_2 = import7.UNINITIALIZED;
     this._expr_3 = import7.UNINITIALIZED;
@@ -168,7 +180,10 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
       this._text_8,
       this._el_9,
       this._text_10,
-      this._text_11
+      this._el_11,
+      this._text_12,
+      this._text_13,
+      this._text_14
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
@@ -177,7 +192,7 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
     if (((token === import23.ToolbarTitle) && ((4 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._ToolbarTitle_4_4.context; }
     if (((token === import24.Navbar) && ((2 <= requestNodeIndex) && (requestNodeIndex <= 6)))) { return this._Navbar_2_4.context; }
     if (((token === import19.Header) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 7)))) { return this._Header_0_3.context; }
-    if (((token === import25.Content) && ((9 <= requestNodeIndex) && (requestNodeIndex <= 10)))) { return this._Content_9_4.context; }
+    if (((token === import25.Content) && ((9 <= requestNodeIndex) && (requestNodeIndex <= 13)))) { return this._Content_9_4.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
