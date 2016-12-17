@@ -45,4 +45,5 @@
     </platform>
     <plugin name="cordova-plugin-statusbar" spec="~2.2.1" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
+    <plugin name="cordova-plugin-file" spec="~4.3.1" />
 </widget>

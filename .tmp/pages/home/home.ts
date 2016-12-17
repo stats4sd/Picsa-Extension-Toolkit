@@ -12,7 +12,6 @@ import {ViewDataPage} from "../view-data/view-data";
 export class HomePage {
   buttons:any;
 
-
   constructor(public navCtrl: NavController) {
     this.buttons=[
       {name:' Picsa Manual', color:'picsa-manual', icon:'book',link:PicsaManualPage, text:''},

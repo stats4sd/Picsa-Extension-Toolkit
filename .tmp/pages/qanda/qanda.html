@@ -6,15 +6,14 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-buttons end>
-    <button ion-button icon-only (click)="addDiscussion()" color="picsa-dark">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-buttons>
-  <ion-list>
-    <ion-item *ngFor="let discussion of discussions | async" (click)="showOptions(discussion.$key, discussion.title)">
-      {{discussion.title}}
-    </ion-item>
-  </ion-list>
+<ion-content>
+  <div class="centre-content">
+    <div class="centre-button" *ngFor="let button of buttons" [navPush]="button.link" >
+      <button ion-button block outline icon-left color="{{button.color}}">
+        <ion-icon name="{{button.icon}}"></ion-icon>
+        {{button.name}}
+      </button>
+      <br>
+    </div>
+  </div>
 </ion-content>

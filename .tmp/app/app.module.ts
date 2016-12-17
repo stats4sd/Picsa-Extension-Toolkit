@@ -12,6 +12,8 @@ import { ViewDataPage } from '../pages/view-data/view-data';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import {KoboApi} from "../providers/kobo-api";
 import {FormPopup} from "../pages/record-data/form-popup/form-popup";
+import {ForumPage} from "../pages/qanda/forum/forum";
+import {VideosPage} from "../pages/qanda/videos/videos";
 // AF2 Settings
 export const firebaseConfig = {
   apiKey: "AIzaSyCHzsaVc4TuG3QMFjI_SKP1Px-E5QRglcM",
@@ -35,7 +37,9 @@ const myFirebaseAuthConfig = {
     PicsaManualPage,
     ViewDataPage,
     RecordDataPage,
-    FormPopup
+    FormPopup,
+    ForumPage,
+    VideosPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -50,7 +54,9 @@ const myFirebaseAuthConfig = {
     PicsaManualPage,
     ViewDataPage,
     RecordDataPage,
-    FormPopup
+    FormPopup,
+    ForumPage,
+    VideosPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, Storage]
 })
