@@ -19,7 +19,11 @@ export class VideosPage {
     ]
     if (this.platform.is('mobile')) {
       this.fs= cordova.file.dataDirectory;
-      File.checkDir(this.fs, 'mydir').then(_ => console.log('yay')).catch(err => console.log('boooh'));
+      File.checkDir(this.fs, 'videos').then(res =>
+      console.log(res))
+      .catch(err => 
+      console.log(err)
+      );
     }
     else{console.log('working in browser?')}
 
