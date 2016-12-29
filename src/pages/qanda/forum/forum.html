@@ -1,20 +1,20 @@
 <ion-header>
   <ion-navbar color="picsa-qanda">
     <ion-title>
-      "Q&A - Forum"
+      Discussion Forum
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-buttons end>
-    <button ion-button icon-only (click)="addDiscussion()" color="picsa-dark">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-buttons>
+  <ion-fab top right edge>
+    <button ion-fab mini color="picsa-dark" (click)="addDiscussion()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
   <ion-list>
-    <ion-item *ngFor="let discussion of discussions | async" (click)="showOptions(discussion.$key, discussion.title)">
+    <ion-item *ngFor="let discussion of discussions | async" (click)="openDiscussion(discussion)">
       {{discussion.title}}
+      <p>29/12/16 13:00</p>
+      <ion-badge item-right>2 unread</ion-badge>
     </ion-item>
   </ion-list>
 </ion-content>
