@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import {NavController, AlertController, ActionSheetController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {AngularFireService} from '../../../providers/angular-fire-service';
-import {ForumDiscussionPage} from './forum-discussion-page/forum-discussion-page'
+import {ForumDiscussionPage} from './forum-discussion-page/forum-discussion-page';
 @Component({
   selector: 'page-forum',
   templateUrl: 'forum.html'
