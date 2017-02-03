@@ -14,7 +14,10 @@ import {KoboApi} from "../providers/kobo-api";
 import {FileService} from "../providers/file-service";
 import {FormPopup} from "../pages/record-data/form-popup/form-popup";
 import {ForumPage} from "../pages/qanda/forum/forum";
+import {ForumDiscussionPage} from "../pages/qanda/forum/forum-discussion-page/forum-discussion-page";
 import {VideosPage} from "../pages/qanda/videos/videos";
+import {YoutubeService} from '../providers/youtube-service';
+import {AngularFireService} from '../providers/angular-fire-service';
 // AF2 Settings
 export const firebaseConfig = {
   apiKey: "AIzaSyCHzsaVc4TuG3QMFjI_SKP1Px-E5QRglcM",
@@ -40,7 +43,8 @@ const myFirebaseAuthConfig = {
     RecordDataPage,
     FormPopup,
     ForumPage,
-    VideosPage
+    VideosPage,
+    ForumDiscussionPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -57,8 +61,13 @@ const myFirebaseAuthConfig = {
     RecordDataPage,
     FormPopup,
     ForumPage,
-    VideosPage
+    VideosPage,
+    ForumDiscussionPage
   ],
+<<<<<<< HEAD
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, Storage, FileService]
+=======
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, Storage, YoutubeService, AngularFireService]
+>>>>>>> d472e0482f5e9fbe4e02d336cff84aa86cf7cc88
 })
 export class AppModule {}
