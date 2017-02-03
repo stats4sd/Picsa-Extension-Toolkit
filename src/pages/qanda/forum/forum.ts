@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import {NavController, AlertController, ActionSheetController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AngularFireService} from '../../../providers/angular-fire-service';
+import {ForumDiscussionPage} from './forum-discussion-page/forum-discussion-page';
 @Component({
   selector: 'page-forum',
   templateUrl: 'forum.html'
@@ -9,13 +11,17 @@ import {AngularFire, FirebaseListObservable} from 'angularfire2';
 export class ForumPage {
 discussions: FirebaseListObservable<any>;
 
-  constructor(public navCtrl: NavController, af:AngularFire, public alertCtrl:AlertController, public actionSheetCtrl: ActionSheetController) {
-    this.discussions=af.database.list('/discussions');
+  constructor(public navCtrl: NavController, afService:AngularFireService, public alertCtrl:AlertController, public actionSheetCtrl: ActionSheetController) {
+    this.discussions=afService.bindData('/discussions');
+***REMOVED***
+
+  openDiscussion(discussion){
+    this.navCtrl.push(ForumDiscussionPage,discussion)
 ***REMOVED***
 
   addDiscussion(){
     let prompt = this.alertCtrl.create({
-      title: 'Discussion',
+      title: 'Add new discussion',
       message: "Enter a title for the discussion",
       inputs: [
         {
