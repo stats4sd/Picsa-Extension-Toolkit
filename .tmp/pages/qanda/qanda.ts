@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, AlertController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {ForumPage} from './forum/forum';
 import {VideosPage} from './videos/videos';
 

@@ -46,4 +46,7 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.2.1" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <plugin name="cordova-plugin-file" spec="~4.3.1" />
+    <allow-navigation href="http://192.168.0.11:8000" />
+    <allow-navigation href="http://192.168.56.1:8000" />
+    <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
 </widget>
