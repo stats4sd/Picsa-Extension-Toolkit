@@ -11,6 +11,7 @@ import { ViewDataPage } from '../pages/view-data/view-data';
 // Import the AF2 Module
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import {KoboApi} from "../providers/kobo-api";
+import {FileService} from "../providers/file-service";
 import {FormPopup} from "../pages/record-data/form-popup/form-popup";
 import {ForumPage} from "../pages/qanda/forum/forum";
 import {VideosPage} from "../pages/qanda/videos/videos";
@@ -58,6 +59,6 @@ const myFirebaseAuthConfig = {
     ForumPage,
     VideosPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, Storage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, Storage, FileService]
 })
 export class AppModule {}
