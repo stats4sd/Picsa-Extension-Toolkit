@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
-
+import { Events, Platform } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen'
+import { StatusBar } from '@ionic-native/status-bar';
 import { HomePage } from '../pages/home/home';
 declare var FCMPlugin
 
@@ -10,26 +10,28 @@ declare var FCMPlugin
 })
 export class MyApp {
   rootPage = HomePage;
+  constructor(
+    public platform: Platform,
+    public events: Events,
+    public splashScreen: SplashScreen,
+  ) {
+  }
 
-  constructor(platform: Platform) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      Splashscreen.hide();
-      if(platform.is('android')){
-          FCMPlugin.getToken(
-          function(token){
+  platformReady() {
+    // Call any initial plugins when ready
+    this.platform.ready().then(() => {
+      this.splashScreen.hide();
+      if (this.platform.is('android')) {
+        FCMPlugin.getToken(
+          function (token) {
             console.log('subscribing to fcm topic "chris"')
             FCMPlugin.subscribeToTopic('chris');
           },
-          function(err){
+          function (err) {
             console.log('error retrieving token: ' + err);
           }
-      )    
+        )
       }
-    
-
     });
   }
 }

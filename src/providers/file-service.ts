@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Platform} from "ionic-angular";
-import { File } from 'ionic-native';
+import { File } from '@ionic-native/file';
 declare let cordova: any;
 declare let window:any
 
@@ -12,7 +12,7 @@ export class FileService {
   mainPlatform:string;
   fs:any;
 
-  constructor(public http: Http, public platform:Platform) {
+  constructor(public http: Http, public platform:Platform, public file:File) {
     this.checkPlatform();
     if(this.mainPlatform=='mobile'){
       this.fs= cordova.file.dataDirectory;
@@ -29,7 +29,7 @@ export class FileService {
     if(this.fs){
       console.log('listing directory')
       return new Promise((resolve, reject) =>{
-        File.listDir(this.fs,path).then(res=>
+        this.file.listDir(this.fs,path).then(res=>
         resolve(res)
       ).catch(err=>
       resolve(err))      
@@ -41,7 +41,7 @@ export class FileService {
     if(this.fs){
       console.log('creating directory: '+name)
       return new Promise((resolve,reject)=>{
-        File.createDir(this.fs,name,false).then(res =>
+        this.file.createDir(this.fs,name,false).then(res =>
           resolve(res)
       ).catch(err=>
       resolve(err))
@@ -52,9 +52,9 @@ export class FileService {
   createFile(filepath,filename:string,data:any,replace:boolean){
     if(this.fs){
         return new Promise((resolve,reject)=>{
-          File.createFile(this.fs+filepath,filename,true).then(res=>{
+          this.file.createFile(this.fs+filepath,filename,true).then(res=>{
             console.log('file created')
-          File.writeFile(this.fs+filepath, filename, data,{}).then(res => 
+          this.file.writeFile(this.fs+filepath, filename, data,{}).then(res => 
           resolve('file written')
         ).catch(err=> resolve(err))
       }).catch(err=>{console.log('file could not be created');resolve(err)})
