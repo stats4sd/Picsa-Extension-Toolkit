@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { File } from 'ionic-native';
+import { File } from '@ionic-native/file';
 import {Platform} from "ionic-angular";
-<<<<<<< HEAD
 import {FileService} from "../../../providers/file-service"
-declare let cordova: any;
-
-=======
 import {Http} from '@angular/http'
 import {YoutubeService} from '../../../providers/youtube-service'
-//declare let cordova: any;
->>>>>>> d472e0482f5e9fbe4e02d336cff84aa86cf7cc88
+declare let cordova: any;
+
 
 @Component({
   selector: 'page-videos',
@@ -32,14 +28,15 @@ export class VideosPage {
   player;
   activeVideo;
 
-<<<<<<< HEAD
-  constructor(public navCtrl: NavController, public platform:Platform, fileService:FileService) {
-    this.videos=[
+  constructor(public navCtrl: NavController, public platform: Platform, fileService: FileService, public http: Http, public file:File, public ytPlayer: YoutubeService) {
+    this.videos = [
       {
-        name:'034 Women in extension - ENGLISH.mp4',
-        size:66.49,
-        downloadURL:'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Videos%2F034%20Women%20in%20extension%20-%20ENGLISH.mp4?alt=media&token=9a539872-b55e-42c5-890b-d918e72959c8',
-        youtubeURL:'https://youtu.be/M_s9PGklENo',
+        name: 'Women in extension',
+        file: '034 Women in extension - ENGLISH.mp4',
+        image: 'assets/test.png',
+        description: 'Test description',
+        youtubeURL: '',
+        link: 'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Videos%2F034%20Women%20in%20extension%20-%20ENGLISH.mp4?alt=media&token=9a539872-b55e-42c5-890b-d918e72959c8',
     ***REMOVED***
     ]
     if (this.platform.is('mobile')) {
@@ -54,19 +51,7 @@ export class VideosPage {
           err=>console.log(err))
   ***REMOVED***
     else{console.log('working in browser?')}
-
-=======
-  constructor(public http: Http, public navCtrl: NavController, public platform:Platform,  public ytPlayer: YoutubeService) {
-    this.videos=[
-      {
-        name:'Women in extension',
-        file:'034 Women in extension - ENGLISH.mp4',
-        image:'assets/test.png',
-        description:'Test description',
-        youtubeURL:'',
-        link:'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Videos%2F034%20Women%20in%20extension%20-%20ENGLISH.mp4?alt=media&token=9a539872-b55e-42c5-890b-d918e72959c8',
-    ***REMOVED***
-    ]
+  
     // if (this.platform.is('mobile')) {
     //   this.fs= cordova.file.dataDirectory;
     //   File.checkDir(this.fs, 'videos').then(res =>
@@ -77,20 +62,18 @@ export class VideosPage {
     // }
     // else{console.log('working in browser?')}
     this.fetchData();
->>>>>>> d472e0482f5e9fbe4e02d336cff84aa86cf7cc88
 ***REMOVED***
 
   ionViewDidLoad() {
     console.log('Hello VideosPage Page');
 ***REMOVED***
 
-<<<<<<< HEAD
   testFileFunction(){
     console.log('running test file function)')
     console.log(cordova.file);
-    File.listDir(this.fs,'videos').then(res=>
+    this.file.listDir(this.fs,'videos').then(res=>
     console.log(res));
-    File.createFile(this.fs+'/videos','test.txt',true).then(res =>
+    this.file.createFile(this.fs+'/videos','test.txt',true).then(res =>
     this.fileCheck(res))
 
 ***REMOVED***
@@ -108,11 +91,9 @@ export class VideosPage {
   fileCheck(res){
     console.log('running file check');
     console.log(res)
-    File.listDir(this.fs,'videos')
+    this.file.listDir(this.fs,'videos')
 ***REMOVED***
 
-}
-=======
   fetchData(): void {
     let url = 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&channelId=' + this.channelID + '&q=' + this.searchQuery + '&type=video&order=viewCount&maxResults=' + this.maxResults + '&key=' + this.googleToken;
     if(this.pageToken) {
@@ -139,4 +120,3 @@ export class VideosPage {
       this.ytPlayer.launchPlayer(post.id, post.snippet.title);
 ***REMOVED***
 }
->>>>>>> d472e0482f5e9fbe4e02d336cff84aa86cf7cc88

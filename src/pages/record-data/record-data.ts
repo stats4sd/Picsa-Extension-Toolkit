@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import {KoboApi} from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
 import {ModalController} from "ionic-angular"
-import {Storage} from '@ionic/storage'
+import { Storage } from '@ionic/storage';
 import {FormPopup} from "./form-popup/form-popup";
 
 
@@ -11,7 +11,7 @@ import {FormPopup} from "./form-popup/form-popup";
 @Component({
   selector: 'page-record-data',
   templateUrl: 'record-data.html',
-  providers:[KoboApi, Storage]
+  providers:[KoboApi]
 })
 
 export class RecordDataPage {
@@ -21,7 +21,7 @@ export class RecordDataPage {
   forms:any=[];
   enketoLink:any;
 
-  constructor(public koboApi:KoboApi, public nav:NavController, public modal:ModalController, public storage:Storage) {
+  constructor(public koboApi:KoboApi, public nav:NavController, public modal:ModalController, private storage:Storage) {
     this.storage.get('forms').then((forms)=> {
         if (forms) {
             this.forms = (JSON.parse(forms))

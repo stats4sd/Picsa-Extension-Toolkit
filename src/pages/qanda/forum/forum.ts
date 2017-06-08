@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import {NavController, AlertController, ActionSheetController} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import {AngularFireService} from '../../../providers/angular-fire-service';
 import {ForumDiscussionPage} from './forum-discussion-page/forum-discussion-page';
 @Component({

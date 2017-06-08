@@ -1,6 +1,6 @@
 import {Http, URLSearchParams, Response } from '@angular/http';
 import { Injectable} from '@angular/core';
-import { window } from '@angular/platform-browser/src/facade/browser';
+// import { window } from '@angular/platform-browser/src/facade/browser';
 
 
 @Injectable()
@@ -20,20 +20,21 @@ export class YoutubeService {
 ***REMOVED***
 
   createPlayer(videoId): void {
-    this.youtube.player= new window.YT.Player(this.youtube.playerId, {
-      height: this.youtube.playerHeight,
-      width: this.youtube.playerWidth,
-      videoId: videoId,
-      playerVars: {
-        rel: 0,
-        showinfo: 0,
-        modestbranding:1
-    ***REMOVED***,
-      events: {
-            'onReady': this.onPlayerReady,
-            'onStateChange': this.onPlayerStateChange
-        ***REMOVED***
-  ***REMOVED***);
+    // const YT = window['YT']
+    // this.youtube.player= YT.Player(this.youtube.playerId, {
+    //   height: this.youtube.playerHeight,
+    //   width: this.youtube.playerWidth,
+    //   videoId: videoId,
+    //   playerVars: {
+    //     rel: 0,
+    //     showinfo: 0,
+    //     modestbranding:1
+    // ***REMOVED***,
+    //   events: {
+    //         'onReady': this.onPlayerReady,
+    //         'onStateChange': this.onPlayerStateChange
+    //     ***REMOVED***
+    // });
     console.log('youtube player created');
     console.log(this.youtube.player);
 ***REMOVED***
@@ -65,12 +66,12 @@ export class YoutubeService {
          this.loadPlayer();
     ***REMOVED***
   ***REMOVED***;
-    if (window.YT && window.YT.Player) {
-            console.log('Youtube Player is ready');
-         this.youtube.ready = true;
-         this.youtube.playerId = 'placeholder';
-         this.loadPlayer();
-  ***REMOVED***
+    // if (window.YT && window.YT.Player) {
+    //         console.log('Youtube Player is ready');
+    //      this.youtube.ready = true;
+    //      this.youtube.playerId = 'placeholder';
+    //      this.loadPlayer();
+    // }
 ***REMOVED***
 
   launchPlayer(id, title):void {
