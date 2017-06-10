@@ -18,6 +18,7 @@ import { FormPopup } from "../pages/record-data/form-popup/form-popup";
 import { ForumPage } from "../pages/qanda/forum/forum";
 import { ForumDiscussionPage } from "../pages/qanda/forum/forum-discussion-page/forum-discussion-page";
 import { VideosPage } from "../pages/qanda/videos/videos";
+import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -27,6 +28,7 @@ import {KoboApi} from "../providers/kobo-api";
 import {FileService} from "../providers/file-service";
 import {YoutubeService} from '../providers/youtube-service';
 import {AngularFireService} from '../providers/angular-fire-service';
+import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -50,6 +52,7 @@ export const firebaseConfig = {
     ForumPage,
     VideosPage,
     ForumDiscussionPage,
+    ClimateToolPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -74,10 +77,12 @@ export const firebaseConfig = {
     FormPopup,
     ForumPage,
     VideosPage,
-    ForumDiscussionPage
+    ForumDiscussionPage,
+    ClimateToolPage
   ],
 
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, AngularFireService, FileService, SplashScreen, File]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, AngularFireService, FileService, SplashScreen, File,
+    C3ChartProvider]
 
 })
 export class AppModule {}
