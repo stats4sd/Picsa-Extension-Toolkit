@@ -1,43 +1,38 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import {AngularFireService} from '../../../../providers/angular-fire-service';
+import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
 
-/*
-  Generated class for the ForumDiscussionPage page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-forum-discussion',
   templateUrl: 'forum-discussion-page.html'
 })
 export class ForumDiscussionPage {
-  discussion:any;
-  messages: FirebaseListObservable<any>;
-  newMessage:any="";
+  discussion: any;
+  newMessage: any = "";
+  messages: AfoListObservable<any[]>;
+  messageDetail: AfoObjectObservable<any>;
 
-  constructor(public navCtrl: NavController, params:NavParams, afService:AngularFireService, public alertCtrl:AlertController) {
-    this.discussion=params.data
+  constructor(public navCtrl: NavController, params: NavParams, afoDatabase:AngularFireOfflineDatabase, public alertCtrl: AlertController) {
+    this.discussion = params.data
     console.log(this.discussion);
-    this.messages=afService.bindData('/messages/'+this.discussion.$key);
+    this.messages = afoDatabase.list('/messages/' + this.discussion.$key);
 ***REMOVED***
 
   ionViewDidLoad() {
 ***REMOVED***
 
-  postMessage(){
-    if(this.newMessage!="")
-    this.messages.push({
-        contents:this.newMessage,
-        title:'test'
+  postMessage() {
+    if (this.newMessage != "")
+      this.messages.push({
+        contents: this.newMessage,
+        title: 'test'
     ***REMOVED***);
-    this.newMessage=""
+    this.newMessage = ""
     console.log(this.messages)
 ***REMOVED***
 
-  addMessage(){
+  addMessage() {
     let prompt = this.alertCtrl.create({
       title: 'Add new discussion',
       message: "Enter a title for the discussion",

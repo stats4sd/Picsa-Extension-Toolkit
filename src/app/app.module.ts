@@ -23,11 +23,11 @@ import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireOfflineModule } from 'angularfire2-offline';
 // Providers
 import {KoboApi} from "../providers/kobo-api";
 import {FileService} from "../providers/file-service";
 import {YoutubeService} from '../providers/youtube-service';
-import {AngularFireService} from '../providers/angular-fire-service';
 import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 
 // AF2 Settings
@@ -59,6 +59,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFireOfflineModule,
     IonicStorageModule.forRoot({
       name: '__picsa',
   ***REMOVED***),
@@ -81,7 +82,7 @@ export const firebaseConfig = {
     ClimateToolPage
   ],
 
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, AngularFireService, FileService, SplashScreen, File,
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,
     C3ChartProvider]
 
 })
