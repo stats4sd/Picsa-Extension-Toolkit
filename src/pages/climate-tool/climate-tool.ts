@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import * as c3 from 'c3';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import {C3ChartProvider} from '../../providers/c3-chart/c3-chart'
 
-/**
- * Generated class for the ClimateToolPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-climate-tool',
@@ -15,21 +9,36 @@ import * as c3 from 'c3';
 })
 export class ClimateToolPage {
   chart: any;
+  sites:any;
+  selectedSite:string;
+  selectedChart:string;
+  columns=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log('c3?',c3)
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider) {
+
   }  
 
   ionViewDidLoad() {
-    this.chart = c3.generate({
-      bindto: '#chart',
-      data: {
-        columns: [
-          ['data1', 30, 200, 100, 400, 150, 250],
-          ['data2', 50, 20, 10, 40, 15, 25]
-        ]
-      }
-    });
+    this.c3Provider.generate()
+    this.sites=this.c3Provider.datasets
+    console.log('sites',this.sites)
+  }
+  ionViewDidEnter(){
+    this.menuCtrl.open();
+  }
+  siteChanged(){
+    this.c3Provider.setDataset(this.selectedSite)
+      .then(
+        res=>{
+          console.log('res',res);
+          this.columns=res[0]
+        },
+        err=>{console.log('error',err)
+        }
+      )  
+  }
+  selectChart(){
+    this.c3Provider.setChart(this.selectedChart)
   }
 
 }

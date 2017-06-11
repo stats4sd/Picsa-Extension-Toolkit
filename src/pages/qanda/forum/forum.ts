@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
-
 import {NavController, AlertController, ActionSheetController} from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import {AngularFireService} from '../../../providers/angular-fire-service';
+import { AngularFireOfflineDatabase,AfoListObservable,AfoObjectObservable } from 'angularfire2-offline/database';
 import {ForumDiscussionPage} from './forum-discussion-page/forum-discussion-page';
 @Component({
   selector: 'page-forum',
   templateUrl: 'forum.html'
 })
 export class ForumPage {
-discussions: FirebaseListObservable<any>;
+discussions: AfoListObservable<any[]>;
+discussionDetail: AfoObjectObservable<any>;
 
-  constructor(public navCtrl: NavController, afService:AngularFireService, public alertCtrl:AlertController, public actionSheetCtrl: ActionSheetController) {
-    this.discussions=afService.bindData('/discussions');
+  constructor(public navCtrl: NavController, afoDatabase: AngularFireOfflineDatabase, public alertCtrl:AlertController, public actionSheetCtrl: ActionSheetController) {
+    this.discussions=afoDatabase.list('/discussions');
   }
 
   openDiscussion(discussion){
