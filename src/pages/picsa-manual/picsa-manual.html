@@ -10,7 +10,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content (pinch)="pinchZoom($event)">
   <pdf-viewer [src]="pdfSrc" 
               [page]="page" 
               [original-size]="false" 
