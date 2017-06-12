@@ -41,6 +41,9 @@ export class PicsaManualPage {
   ionViewDidLoad() {
     console.log('ion view loaded')
   }
+  pinchZoom(e){
+    console.log('pinch zoomed',e)
+  }
   pdfLoaded() {
     console.log('pdf loaded')
     this.loader.dismiss()
