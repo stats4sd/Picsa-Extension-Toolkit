@@ -6,6 +6,8 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
+
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 // App pages
 import { MyApp } from './app.component';
 import { QandAPage } from '../pages/qanda/qanda';
@@ -52,7 +54,8 @@ export const firebaseConfig = {
     ForumPage,
     VideosPage,
     ForumDiscussionPage,
-    ClimateToolPage
+    ClimateToolPage,
+    PdfViewerComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -82,8 +85,7 @@ export const firebaseConfig = {
     ClimateToolPage
   ],
 
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,
-    C3ChartProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,C3ChartProvider]
 
 })
 export class AppModule {}

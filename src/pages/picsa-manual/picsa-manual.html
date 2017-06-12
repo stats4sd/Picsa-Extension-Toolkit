@@ -11,7 +11,11 @@
 
 
 <ion-content>
-  <div id="frameContainer" class="pdfViewerContainer" *ngIf="isPdf">
-    <iframe id="pdfViewer" src="assets/pdfjs/web/viewer.html" class="pdfViewerFrame" allowfullscreen> </iframe>
-  </div>
+  <pdf-viewer [src]="pdfSrc" 
+              [page]="page" 
+              [original-size]="false" 
+              style="display: block;"
+              [show-all]="true"
+              (after-load-complete)="pdfLoaded($event)"
+  ></pdf-viewer>
 </ion-content>
