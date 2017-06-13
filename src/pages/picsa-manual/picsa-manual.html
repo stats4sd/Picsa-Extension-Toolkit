@@ -10,12 +10,17 @@
 </ion-header>
 
 
-<ion-content (pinch)="pinchZoom($event)">
-  <pdf-viewer [src]="pdfSrc" 
+<ion-content>
+  <iframe id="pdfViewer" class="pdfViewerFrame" allowfullscreen src="assets/pdfjs/web/viewer.html?file=%2Fassets/picsa-field-manual.pdf"></iframe>
+  <!--<div id="frameContainer" class="pdfViewerContainer" *ngIf="isPdf">
+    <iframe id="pdfViewer" src="assets/pdfjs/web/viewer.html" class="pdfViewerFrame" allowfullscreen> </iframe>
+  </div>-->
+  <!--<pdf-viewer [src]="pdfSrc" 
               [page]="page" 
-              [original-size]="false" 
+              [original-size]="true" 
               style="display: block;"
               [show-all]="true"
+              [zoom]="zoom"
               (after-load-complete)="pdfLoaded($event)"
-  ></pdf-viewer>
+  ></pdf-viewer>-->
 </ion-content>
