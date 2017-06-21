@@ -26,7 +26,10 @@ export class ForumDiscussionPage {
     if (this.newMessage != "")
       this.messages.push({
         contents: this.newMessage,
-        title: 'test'
+        created: Date.now(),
+        user: 'user',
+        discussion: this.discussion.$key,
+        votes:0
     ***REMOVED***);
     this.newMessage = ""
     console.log(this.messages)

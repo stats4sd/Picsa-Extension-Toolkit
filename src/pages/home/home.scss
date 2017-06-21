@@ -1,26 +1,62 @@
 page-home {
-  button{
-    height: 100%!important;
-    word-wrap: break-word;
+  
+  ion-content{
+    height:100%;
+    overflow: hidden
 ***REMOVED***
-  .centre-button{
-    height: 90px;
-    background-color: white;
+  .content, .scroll-content{
+    background-color: color($colors, primary-wfp);
+    overflow: hidden;
 ***REMOVED***
-  .centre-content{
-    width: 90vw;
-    height: 380px;
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+  .title{
+    height: 33%;
+    display: flex;
+    flex-wrap: wrap;
 ***REMOVED***
-  .scroll-content{
-    background-color: rgba(247, 195, 101, 0.73);
+  .links{
+    height:67%;
 ***REMOVED***
-  .centred{
+  h1,h2{
+    width:100vw;
+    color: white;
+    opacity: 0.95;
     text-align: center;
 ***REMOVED***
+  h1{
+    font-size: 6em
+***REMOVED***
+  h2{
+    font-size: 3em
+***REMOVED***
+  button{
+    height:16.67%!important;
+    width: 100%!important;
+    word-wrap: break-word;
+    border: 1px solid white;
+    margin: 0!important;
+***REMOVED***
+  // button{
+  //   height: 100%!important;
+  //   word-wrap: break-word;
+  // }
+  // .centre-button{
+  //   height: 90px;
+  //   background-color: white;
+  // }
+  // .centre-content{
+  //   width: 90vw;
+  //   height: 380px;
+  //   position: absolute;
+  //   top:0;
+  //   bottom: 0;
+  //   left: 0;
+  //   right: 0;
+  //   margin: auto;
+  // }
+  // .scroll-content{
+  //   background-color: rgba(247, 195, 101, 0.73);
+  // }
+  // .centred{
+  //   text-align: center;
+  // }
 }

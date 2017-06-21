@@ -5,7 +5,8 @@ import {ForumPage} from '../qanda/forum/forum';
 import {PicsaManualPage} from "../picsa-manual/picsa-manual";
 import {RecordDataPage} from "../record-data/record-data";
 import {ViewDataPage} from "../view-data/view-data";
-import {ClimateToolPage} from "../climate-tool/climate-tool";
+import { ClimateToolPage } from "../climate-tool/climate-tool";
+import { ToolsPage } from "../tools/tools";
 
 @Component({
   selector: 'page-home',
@@ -21,7 +22,7 @@ export class HomePage {
       {name:' Videos', color:'picsa-videos', icon:'logo-youtube', link:VideosPage},
       {name:' Record Data', color:'picsa-record', icon:'create', link:RecordDataPage},
       { name: 'View Data', color: 'picsa-view', icon: 'stats', link: ViewDataPage },
-      { name: 'Tools', color: 'picsa-view', icon: 'toolbox', link: ClimateToolPage },
+      { name: 'Tools', color: 'picsa-view', icon: 'toolbox', link: ToolsPage },
     ]
 ***REMOVED***
 
