@@ -13,6 +13,11 @@
  * limitations under the License.
  */
 
+ /*hide unwanted buttons*/
+ #print, #download, #viewBookmark, #secondaryOpenFile, #documentProperties, #toggleHandTool{
+   display: none!important
+ }
+
 .textLayer {
   position: absolute;
   left: 0;

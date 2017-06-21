@@ -6,6 +6,7 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
+import { Network} from '@ionic-native/network';
 
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 // App pages
@@ -20,6 +21,8 @@ import { FormPopup } from "../pages/record-data/form-popup/form-popup";
 import { ForumPage } from "../pages/qanda/forum/forum";
 import { ForumDiscussionPage } from "../pages/qanda/forum/forum-discussion-page/forum-discussion-page";
 import { VideosPage } from "../pages/qanda/videos/videos";
+import { IframePage } from "../pages/iframe/iframe";
+import { ToolsPage } from "../pages/tools/tools";
 import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
@@ -31,6 +34,7 @@ import {KoboApi} from "../providers/kobo-api";
 import {FileService} from "../providers/file-service";
 import {YoutubeService} from '../providers/youtube-service';
 import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
+import { ForumServiceProvider } from '../providers/forum-service/forum-service';
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -55,7 +59,9 @@ export const firebaseConfig = {
     VideosPage,
     ForumDiscussionPage,
     ClimateToolPage,
-    PdfViewerComponent
+    PdfViewerComponent,
+    IframePage,
+    ToolsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -82,10 +88,13 @@ export const firebaseConfig = {
     ForumPage,
     VideosPage,
     ForumDiscussionPage,
-    ClimateToolPage
+    ClimateToolPage,
+    IframePage,
+    ToolsPage
   ],
 
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,C3ChartProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,C3ChartProvider, Network,
+    ForumServiceProvider]
 
 })
 export class AppModule {}

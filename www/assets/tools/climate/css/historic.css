@@ -1,0 +1,98 @@
+#filterImages img{
+	width:100px;
+	margin:1px;
+}
+#SeasonRainfall.selected{
+  border-color: #377eb8;
+}
+#LengthOfSeason.selected{
+  border-color: #e41a1c;
+}
+#SeasonStart.selected{
+  border-color: #984ea3;
+}
+#SeasonEnd.selected{
+  border-color: #4daf4a;
+}
+
+.selected{
+  box-shadow:0px 12px 22px 1px #333;
+  border: solid;
+}
+
+#sitePickerIcon img{
+	width:70px;
+	float:right;
+	margin:5px 0px 5px 10px;
+}
+
+.toolTip{
+  width: 100px;
+  background-color: #fdff7a;
+  font-size: larger;
+  border: 2px solid black;
+
+}
+
+.selectedStation{
+	border:thick #E47172;
+	border-radius:4px;
+	border-style:double;
+}
+#sites-button{
+	padding-top:10px;
+	margin-top:25px;
+}
+
+.ui-icon-wrench:after {
+	background-image: url("images/icons-png/wrench.png");
+}
+
+.c3-line {
+    stroke-width: 1px;
+}
+
+.c3-line-lineTool{
+	stroke-width: 3px!important;
+}
+
+#sites-button{
+	padding-bottom: 30px;
+	border-right-width: 1px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 30px;
+}
+
+#chartTools{
+  font-size: larger!important;
+}
+
+#mapContent{
+	padding:0px!important
+}
+
+.lineToolPicRepLeft,.lineToolPicRepRight{
+	border: 5px solid black;
+	padding-left: 20px;
+	display: inline;
+}
+.lineToolPicRepRight {
+	color: #9a2c04;
+	background-color: #9a2c04;
+}
+.lineToolPicRepLeft {
+	color: #25a234;
+	background-color: #25a234;
+}
+
+.c3 text{
+  font-size: larger;
+}
+
+/*expanded circle fill, outline (stroke) and outline width*/
+.c3-circle._expanded_{
+  /*fill: rgb(90, 50, 50)!important;*/
+  stroke: #000000 !important;
+  stroke-width: 2;
+}

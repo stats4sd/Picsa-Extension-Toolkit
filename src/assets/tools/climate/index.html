@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html><head>
+    <title>PICSA Analysis Tool</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <link href="css/PicsaTheme.css" rel="stylesheet" type="text/css"/>
+    <link href="jquery.mobile.structure-1.4.5.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery.mobile.icons-1.4.5.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="extensions/leaflet.css" rel="stylesheet" type="text/css">
+    <link href="css/c3.css" rel="stylesheet" type="text/css">
+
+    <link href="css/historic.css" rel="stylesheet" type="text/css">
+
+
+    <script src="jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="jquery.mobile-1.4.5.js" type="text/javascript"></script>
+    <script src="extensions/d3.js"></script>
+    <script src="extensions/c3.js"></script>
+    <script src="extensions/leaflet.js"></script>
+
+    <!--Custom functions  -->
+    <script src="js/generateChart.js"></script>
+    <script src="js/readData.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/sitePicker.js"></script>
+    <script src="js/tools.js"></script>
+
+
+</head>
+<body>
+<div data-role="page" id="historicClimate" data-theme="a">
+    <div data-role="header" data-position="fixed">
+        <h2>PICSA Analysis Tool</h2>
+        <!--<a href="index.html" data-icon="home" data-theme="a" data-ajax="false" class="ui-btn-right">Home</a>-->
+    </div>
+
+    <div data-role="content">
+        <div id="chartTitle">
+            <p>Welcome to the PICSA Historic Climate Analysis Tool</p>
+            <p>To start, please select a site using the data menu on the right</p>
+        </div>
+        <div id="chart" style="height:500px"></div>
+        <div id="chart2" style="height:500px"></div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#tool-panel" data-role="button" data-inline="false" data-icon="wrench" data-iconpos="top">Tools</a></li>
+                <li><a href="#right-panel" data-role="button" data-inline="false" data-icon="grid" data-iconpos="top">Data</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- End of footer -->
+
+    <!-- Data Selection Panel -->
+    <div data-role="panel" id="right-panel" data-position="right" data-display="overlay" >
+        <div id="sitePickerIcon" data-theme="b">
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="width:150px">
+                    <select name="sites" id="sites" data-native-menu="false" data-theme="b" >
+                        <option value="Select" data-placeholder="true">Select Site</option>
+                    </select>
+                </div>
+                <div class="ui-block-b siteImageContainer" style="width:90px" >
+                    <a href="#sitePicker"><img src="images/MapViewGhana.png" alt="" border="0"></a>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="graphSelect">
+            <p>
+                <strong>Select a graph to view</strong>
+                <a href="#popupInfo1" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">Learn more</a>
+            </p>
+            <div data-role="popup" id="popupInfo1" class="ui-content" data-theme="b" style="max-width:350px;">
+                  				<p><strong>Definitions</strong></p>
+                <p><strong>Seasonal Rainfall</strong> is the total amount of rainfall, measured in mm, from 1st April to 31st November</p>
+                <p><strong>Start of Rains</strong> is the first day after 1st April that gets 20mm of rainfall or more totalled over two consecutive days, but with no dry spell of 10 days or more in the next 21 days</p>
+                <p><strong>End of Rains</strong> is the first day after 1st October with a water balance of 0</p>
+                <p><strong>Season Length</strong> is the total number of days from the start of rains to the end of rains</p>
+            </div>
+            <div id="filterImages"></div>
+        </div>
+
+        <div id="months">
+            <div class="ui-grid-b">
+                <div class="ui-block-a"><button id="Jan" class="monthButton filter">Jan</button></div>
+                <div class="ui-block-b"><button id="Feb" class="monthButton filter">Feb</button></div>
+                <div class="ui-block-c"><button id="Mar" class="monthButton filter">Mar</button></div>
+                <div class="ui-block-a"><button id="Apr" class="monthButton filter">Apr</button></div>
+                <div class="ui-block-b"><button id="May" class="monthButton filter">May</button></div>
+                <div class="ui-block-c"><button id="Jun" class="monthButton filter">Jun</button></div>
+                <div class="ui-block-a"><button id="Jul" class="monthButton filter">Jul</button></div>
+                <div class="ui-block-b"><button id="Aug" class="monthButton filter">Aug</button></div>
+                <div class="ui-block-c"><button id="Sep" class="monthButton filter">Sep</button></div>
+                <div class="ui-block-a"><button id="Oct" class="monthButton filter">Oct</button></div>
+                <div class="ui-block-b"><button id="Nov" class="monthButton filter">Nov</button></div>
+                <div class="ui-block-c"><button id="Dec" class="monthButton filter">Dec</button></div>
+            </div>
+        </div>
+        <div id="seasons">
+            <p>
+                <strong>Select series to show</strong>
+                <a href="#popupInfo2" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">Learn more</a>
+            </p>
+            <div data-role="popup" id="popupInfo2" class="ui-content" data-theme="b" style="max-width:350px;">
+                <p><strong>Definitions</strong></p>
+                <p><strong>All</strong> displays totals for...</p>
+                <p><strong>Season A</strong> measures...</p>
+            </div>
+            <div class="ui-grid-a" >
+                <div class="ui-block-a"><button data-theme="b" id="All" class="seasonButton season">All</button></div>
+                <div class="ui-block-b"><button data-theme="b" id="SeasonA" class="seasonButton season">Season A</button></div>
+            </div>
+
+        </div>
+        <div >
+            <button data-icon="check" id="sidePanelClose">Save and Close</button>
+        </div>
+    </div>
+    <!-- End of Data Selection Panel -->
+
+    <!-- Tools side panel-->
+    <div data-role="panel" id="tool-panel" data-position="right" data-display="overlay">
+        <div class="chartTools">
+            <h3>Line Tool</h3>
+            <div data-role="fieldcontain">
+                <label for="number">Value:</label>
+                <input type="number" name="number" id="lineTool" value="" />
+            </div>
+            <div id='lineToolSummary'></div>
+            <div id="lineToolPicRep">
+                <fieldset class="ui-grid-a">
+                    <div id=lineToolPicRepLeft class="ui-block-a">
+
+                    </div>
+                    <div id=lineToolPicRepRight class="ui-block-b">
+
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <button data-icon="check" id="toolPanelClose">Update</button>
+
+    </div>
+    <!-- /panel -->
+
+</div>
+<!--end of page1-->
+
+<!--Site selection page-->
+<div data-role="page" id="sitePicker" data-theme="a">
+    <div data-role="content" id="mapContent">
+        <div id="map-canvas"></div>
+        <div id="CurrentLocation">Current Location Unavailable</div>
+
+    </div>
+    <div data-role="header" data-position="fixed">
+        PICSA App
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="" data-rel="back" data-icon="back" data-theme="g">Back</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div>
+<!--end of site selection page -->
+</div>
+
+<script type="text/javascript">
+    //create map locator
+    app.initialize()
+    //resize chart div so at least 400px but otherwise filling space
+    resizeChartDiv()
+
+    //create graphs and menus
+    Init()
+</script>
+
+
+
+</body>
+</html>

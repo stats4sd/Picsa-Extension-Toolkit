@@ -13,8 +13,8 @@
   <ion-list>
     <ion-item *ngFor="let discussion of discussions | async" (click)="openDiscussion(discussion)">
       {{discussion.title}}
-      <p>29/12/16 13:00</p>
-      <ion-badge item-right>2 unread</ion-badge>
+      <p>{{discussion.lastUpdated | date:'medium'}}</p>
+      <!--<ion-badge item-right>2 unread</ion-badge>-->
     </ion-item>
   </ion-list>
 </ion-content>
