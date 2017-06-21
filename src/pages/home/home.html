@@ -9,16 +9,18 @@
 
 
 <ion-content class='content'>
-    <div class="title">
-      <h1>PICSA</h1>
-      <h2>Extension Toolkit</h2>
+  <div class="title">
+    <h1>PICSA</h1>
+    <h2>Extension Toolkit</h2>
+  </div>
+  <div class="link-holder">
+    <div *ngFor="let link of links" [navPush]="link.page" color="primary" class="link">
+      <div class="flex">
+        <ion-icon name="{{link.icon}}"></ion-icon>
+        <div class="button-text">{{link.name}}</div>
+      </div>
     </div>
-    <div class="links">
-      <button *ngFor="let button of buttons" [navPush]="button.link" ion-button block icon-left color="primary-wfp">
-        <ion-icon name="{{button.icon}}"></ion-icon>
-        {{button.name}}
-      </button>
-    </div>
+  </div>
 
   <!--<div class="centre-content">
     <div class="centre-button" *ngFor="let button of buttons" [navPush]="button.link" >

@@ -13,16 +13,17 @@ import { ToolsPage } from "../tools/tools";
   templateUrl: 'home.html'
 })
 export class HomePage {
-  buttons:any;
+  links:any;
 
   constructor(public navCtrl: NavController) {
-    this.buttons=[
-      {name:' Picsa Manual', color:'picsa-manual', icon:'book',link:PicsaManualPage, text:''},
-      {name:' Discussions', color:'picsa-discussions', icon:'chatbubbles', link:ForumPage},
-      {name:' Videos', color:'picsa-videos', icon:'logo-youtube', link:VideosPage},
-      {name:' Record Data', color:'picsa-record', icon:'create', link:RecordDataPage},
-      { name: 'View Data', color: 'picsa-view', icon: 'stats', link: ViewDataPage },
-      { name: 'Tools', color: 'picsa-view', icon: 'toolbox', link: ToolsPage },
+    this.links=[
+      {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:PicsaManualPage, text:''},
+      { name: 'Tools', color: 'picsa-view', icon: 'tablet-portrait', page: ToolsPage },
+      {name:' Discussions', color:'picsa-discussions', icon:'chatbubbles', page:ForumPage},
+      {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
+      {name:' Record Data', color:'picsa-record', icon:'create', page:RecordDataPage},
+      { name: 'View Data', color: 'picsa-view', icon: 'stats', page: ViewDataPage },
+      
     ]
   }
 

@@ -14,7 +14,7 @@
  */
 
  /*hide unwanted buttons*/
- #print, #download, #viewBookmark, #secondaryOpenFile, #documentProperties, #toggleHandTool{
+ #print, #download, #viewBookmark, #secondaryOpenFile, #documentProperties, #toggleHandTool, #secondaryPresentationMode, #secondaryPrint, #secondaryDownload, #secondaryViewBookmark{
    display: none!important
  }
 

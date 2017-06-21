@@ -5,7 +5,7 @@ page-home {
     overflow: hidden
   }
   .content, .scroll-content{
-    background-color: color($colors, primary-wfp);
+    background-color: color($colors, primary);
     overflow: hidden;
   }
   .title{
@@ -13,8 +13,10 @@ page-home {
     display: flex;
     flex-wrap: wrap;
   }
-  .links{
+  .link-holder{
     height:67%;
+    display: block;
+    
   }
   h1,h2{
     width:100vw;
@@ -28,12 +30,29 @@ page-home {
   h2{
     font-size: 3em
   }
-  button{
+  .link{
     height:16.67%!important;
     width: 100%!important;
     word-wrap: break-word;
-    border: 1px solid white;
+    border-top: 1px solid white;
     margin: 0!important;
+    padding:0 20px 0 20px;
+    font-size: larger;
+    color: white;
+    opacity: 0.95
+  }
+  .flex{
+    display: flex;
+    height:100%;
+    align-items: center;
+  }
+  .button-text{
+    font-size: larger;
+    font-family: Helvetica, Arial, sans-serif;
+    padding-left: 10px;
+  }
+  ion-icon{
+    font-size: xx-large
   }
   // button{
   //   height: 100%!important;

@@ -7,7 +7,6 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
 import { Network} from '@ionic-native/network';
-
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 // App pages
 import { MyApp } from './app.component';

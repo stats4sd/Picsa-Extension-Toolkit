@@ -3,7 +3,6 @@ import { Events, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { StatusBar } from '@ionic-native/status-bar';
 import { HomePage } from '../pages/home/home';
-import {Network} from '@ionic-native/network'
 declare var FCMPlugin
 
 @Component({
@@ -15,7 +14,6 @@ export class MyApp {
     public platform: Platform,
     public events: Events,
     public splashScreen: SplashScreen,
-    public network:Network
   ) {
   }
 
