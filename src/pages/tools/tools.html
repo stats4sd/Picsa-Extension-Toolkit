@@ -1,22 +1,15 @@
-<!--
-  Generated template for the ToolsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>tools</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Tools</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-  <div *ngFor="let tool of tools" (click)="loadTool(tool)">
-    <img [src]="tool.image"> 
-    <div>{{tool.name}}</div>
+<ion-content>
+  <div class="flex">
+    <div *ngFor="let tool of tools" (click)="loadTool(tool)" class='tool'>
+      <img [src]="tool.image">
+      <div class="tool-text">{{tool.name}}</div>
+    </div>
   </div>
 
 </ion-content>
