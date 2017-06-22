@@ -20,7 +20,7 @@ export class HomePage {
       {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:PicsaManualPage, text:''},
       { name: 'Tools', color: 'picsa-view', icon: 'tablet-portrait', page: ToolsPage },
       {name:' Discussions', color:'picsa-discussions', icon:'chatbubbles', page:ForumPage},
-      {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
+      // {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
       {name:' Record Data', color:'picsa-record', icon:'create', page:RecordDataPage},
       { name: 'View Data', color: 'picsa-view', icon: 'stats', page: ViewDataPage },
       

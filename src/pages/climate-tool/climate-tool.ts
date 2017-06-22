@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-import {C3ChartProvider} from '../../providers/c3-chart/c3-chart'
+import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
+import { C3ChartProvider } from '../../providers/c3-chart/c3-chart';
 
 @IonicPage()
 @Component({
@@ -14,8 +14,8 @@ export class ClimateToolPage {
   selectedChart:string;
   columns=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider, private modalCtrl:ModalController) {
+    
 ***REMOVED***  
 
   ionViewDidLoad() {
@@ -24,7 +24,8 @@ export class ClimateToolPage {
     console.log('sites',this.sites)
 ***REMOVED***
   ionViewDidEnter(){
-    this.menuCtrl.open();
+    // this.menuCtrl.open();
+    this.selectSite();
 ***REMOVED***
   siteChanged(){
     this.c3Provider.setDataset(this.selectedSite)
@@ -39,6 +40,14 @@ export class ClimateToolPage {
 ***REMOVED***
   selectChart(){
     this.c3Provider.setChart(this.selectedChart)
+***REMOVED***
+  close() {
+    this.navCtrl.pop();
+***REMOVED***
+  selectSite() {
+    console.log('selecting site')
+    let profileModal = this.modalCtrl.create('SiteSelectPage', { userId: 8675309 });
+    profileModal.present();
 ***REMOVED***
 
 }

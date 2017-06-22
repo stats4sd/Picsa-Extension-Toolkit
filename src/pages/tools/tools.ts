@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {IframePage } from '../iframe/iframe'
+import { IframePage } from '../iframe/iframe';
+import {ClimateToolPage } from '../climate-tool/climate-tool'
 
-/**
- * Generated class for the ToolsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-tools',
@@ -19,7 +14,8 @@ export class ToolsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tools = [
       { name: 'Participatory Budget', image: 'assets/img/budget.png', url: 'assets/tools/budget/index.html' },
-      { name: 'Climate Tool', image: 'assets/img/climate.png', url: 'assets/tools/climate/index.html' } 
+      { name: 'Climate Tool', image: 'assets/img/climate.png', url: 'assets/tools/climate/index.html' }, 
+      { name: 'Climate Tool (Beta)', image: 'assets/img/climate-beta.png', url: 'assets/tools/climate/index.html', page: ClimateToolPage} 
     ]   
     
 ***REMOVED***
@@ -28,8 +24,12 @@ export class ToolsPage {
     console.log('ionViewDidLoad ToolsPage');
 ***REMOVED***
   loadTool(tool) {
-    console.log('tool',tool)
-  this.navCtrl.push(IframePage,tool)
+    console.log('tool', tool)
+    if (tool.page) { this.navCtrl.push(tool.page) }
+    else {
+      this.navCtrl.push(IframePage, tool)      
+  ***REMOVED***
+  
 ***REMOVED***
 
 }

@@ -22,5 +22,9 @@ module.exports = {
     copyC3Css: {
         src: './node_modules/c3/c3.css',
         dest: '{{BUILD}}'
+  ***REMOVED***,
+    copyLeafletCss: {
+        src: './node_modules/leaflet/dist/leaflet.css',
+        dest: '{{BUILD}}'
   ***REMOVED***
 }
