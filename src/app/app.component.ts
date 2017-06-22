@@ -10,18 +10,12 @@ declare var FCMPlugin
 })
 export class MyApp {
   rootPage = HomePage;
-  constructor(
-    public platform: Platform,
-    public events: Events,
-    public splashScreen: SplashScreen,
-  ) {
-***REMOVED***
-
-  platformReady() {
-    // Call any initial plugins when ready
-    this.platform.ready().then(() => {
-      this.splashScreen.hide();
-      if (this.platform.is('android')) {
+  constructor(platform: Platform, public events: Events, splashScreen: SplashScreen) {
+    platform.ready().then(() => {
+      setTimeout(() => {
+        splashScreen.hide();
+    ***REMOVED***, 100);
+      if (platform.is('android')) {
         FCMPlugin.getToken(
           function (token) {
             console.log('subscribing to fcm topic "chris"')
@@ -35,5 +29,4 @@ export class MyApp {
   ***REMOVED***);
 ***REMOVED***
   
-
 }
