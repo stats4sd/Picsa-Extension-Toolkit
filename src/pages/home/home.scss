@@ -31,7 +31,7 @@ page-home {
     font-size: 3em
   }
   .link{
-    height:16.67%!important;
+    height:calc(100%/5)!important;
     width: 100%!important;
     word-wrap: break-word;
     border-top: 1px solid white;
