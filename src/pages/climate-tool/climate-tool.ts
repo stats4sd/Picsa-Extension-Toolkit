@@ -10,12 +10,13 @@ import { C3ChartProvider } from '../../providers/c3-chart/c3-chart';
 export class ClimateToolPage {
   chart: any;
   sites:any;
-  selectedSite:string;
+  selectedSite:any;
   selectedChart:string;
+  availableCharts:any;
   columns=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider, private modalCtrl:ModalController) {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider, public modalCtrl:ModalController) {
+    this.selectedSite={SiteName:'Select A Site'}
   }  
 
   ionViewDidLoad() {
@@ -33,6 +34,7 @@ export class ClimateToolPage {
         res=>{
           console.log('res',res);
           this.columns=res[0]
+          this.setAvailableCharts(this.columns)
         },
         err=>{console.log('error',err)
         }
@@ -46,8 +48,21 @@ export class ClimateToolPage {
   }
   selectSite() {
     console.log('selecting site')
-    let profileModal = this.modalCtrl.create('SiteSelectPage', { userId: 8675309 });
+    let profileModal = this.modalCtrl.create('SiteSelectPage', { });
+    profileModal.onDidDismiss(data => {
+     console.log(data);
+     this.selectedSite=this.sites[0]
+     console.log('this.site',this.selectedSite)
+     this.siteChanged()
+   });
     profileModal.present();
   }
-
+  setAvailableCharts(list){
+    this.availableCharts=[
+      {name:"Seasonal Rainfail",image:"season-rainfall.png",column:"Total Rainfall SeasonA"},
+      {name:"Start of Season",image:"season-start.png",column:"StartSeason_A"},
+      {name:"End of Season",image:"season-end.png",column:"EndSeason_A"},
+      {name:"Length of Season",image:"season-length.png",column:"Length_of_Season_A"},
+    ]
+    }
 }

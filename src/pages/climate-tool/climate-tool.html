@@ -3,16 +3,24 @@
     <ion-title>climateTool</ion-title>
   </ion-navbar>
 </ion-header>-->
+
 <ion-fab right top>
   <button ion-fab mini color="light" (click)="close()"><ion-icon name="close"></ion-icon></button>
 </ion-fab>
 
 <ion-content padding>
+  <h1>{{selectedSite.SiteName}}</h1>
   <div id="chart"></div>
   <button ion-button menuToggle>Toggle Menu</button>
+
+  <div id="selectChart">
+    <div *ngFor="let chart of availableCharts">
+      {{chart.name}}
+    </div>
+  </div>
 </ion-content>
 
-<ion-menu [content]="content" [side]="right" [id]="siteMenu">
+<!--<ion-menu [content]="content" [side]="right" [id]="siteMenu">
   <ion-header>
     <ion-toolbar>
       <ion-title>Menu</ion-title>
@@ -42,6 +50,6 @@
       </button>
     </ion-list>
   </ion-content>
-</ion-menu>
+</ion-menu>-->
 
 <ion-nav id="nav" #content [root]="rootPage"></ion-nav>
