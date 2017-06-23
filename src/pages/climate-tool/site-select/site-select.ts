@@ -24,13 +24,25 @@ export class SiteSelectPage {
     var osm = new L.TileLayer(osmUrl, { minZoom: 1, maxZoom: 15, attribution: osmAttrib });
     // start the map in South-East England
     this.map.setView(new L.LatLng(-13.70, 33.21), 6);
-    this.map.addLayer(osm);
-    L.geoJson.ajax("assets/geoJson/Malawi-admin-1.geojson", {
+    // this.map.addLayer(osm);
+    var geojsonLayer = new L.geoJson.ajax("assets/geoJson/Malawi-admin-2-Blantyre.geojson", {
+      onEachFeature: this.showPopup,
       middleware: function (data) {
         console.log('middleware function')
         return data
       }
-    }).addTo(this.map)
+    })
+    geojsonLayer.addTo(this.map)
+    // console.log('geojson bounds',geojsonLayer.getBounds())
+    this.map.fitBounds([
+      [-16.01463, 34.71830], [-15.34875, 35.13236]
+    ])
+    
   }
+
+  showPopup(feature, layer) {
+    layer.bindPopup(feature.properties.NAME_2)
+  }
+  
 
 }
