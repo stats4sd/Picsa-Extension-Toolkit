@@ -23,6 +23,7 @@ import { VideosPage } from "../pages/qanda/videos/videos";
 import { IframePage } from "../pages/iframe/iframe";
 import { ToolsPage } from "../pages/tools/tools";
 import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
+import { CombinedRiskComponent } from '../pages/climate-tool/components/combined-risk/combined-risk';
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -34,6 +35,7 @@ import {FileService} from "../providers/file-service";
 import {YoutubeService} from '../providers/youtube-service';
 import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 import { ForumServiceProvider } from '../providers/forum-service/forum-service';
+
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -60,7 +62,8 @@ export const firebaseConfig = {
     ClimateToolPage,
     PdfViewerComponent,
     IframePage,
-    ToolsPage
+    ToolsPage,
+    CombinedRiskComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
