@@ -4,14 +4,17 @@
 
 <ion-content padding>
   <h1>{{selectedSite.SiteName}}</h1>
-  <div id="chart"></div>
+  <div id="chart" [hidden]="activeChart.name=='Combined Risk'"></div>
   <!--<button ion-button menuToggle>Toggle Menu</button>-->
+
+  <combined-risk *ngIf="activeChart.name=='Combined Risk'"></combined-risk>
 
   <div id="selectChart" class="flex" *ngIf="!showTools">
     <div *ngFor="let chart of availableCharts" (click)="setChart(chart)">
       <img src="{{chart.image}}" class="chart-image">
     </div>
   </div>
+  
 
   <div id="activeChart" class="flex" *ngIf="showTools">
     <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
@@ -69,36 +72,5 @@
 
 </ion-content>
 
-<!--<ion-menu [content]="content" [side]="right" [id]="siteMenu">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-list>
-        <ion-item>
-          <ion-label>Select Site</ion-label>
-          <ion-select [(ngModel)]="selectedSite" (ionChange)="siteChanged()">
-            <ion-option *ngFor="let site of sites" [value]="site">{{site.SiteName}}</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-      <ion-list>
-        <ion-item>
-          <ion-label>Select Chart</ion-label>
-          <ion-select [(ngModel)]="selectedChart" (ionChange)="selectChart()">
-            <ion-option *ngFor="let column of columns" [value]="column">{{column}}</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-
-      <button ion-item (click)="closeMenu()">
-        Close Menu
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>-->
 
 <ion-nav id="nav" #content [root]="rootPage"></ion-nav>

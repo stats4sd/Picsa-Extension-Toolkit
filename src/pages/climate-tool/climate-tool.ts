@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
 import { C3ChartProvider } from '../../providers/c3-chart/c3-chart';
-
+import { CombinedRiskComponent} from './components/combined-risk/combined-risk'
 
 @IonicPage()
 @Component({
@@ -12,30 +12,27 @@ export class ClimateToolPage{
 
   chart: any;
   sites:any;
-  selectedSite:any;
+  selectedSite: any = { SiteName: 'Select A Site' }
   selectedChart:string;
   availableCharts:any;
   showTools:boolean=false;
   lineToolValue:number;
   probabilities:any;
-  activeChart:any;
+  activeChart: any = { name:null};
   crops:any;
   selectedCrop:any={};
   columns=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider, public modalCtrl:ModalController) {
-    this.selectedSite={SiteName:'Select A Site'}
-    this.crops=[
-      {name:'Maize', waterMin:500, waterMax:800, waterAvg:650, image: "assets/img/crops/maize.jpg"},
-      {name:'Groundnuts', waterMin:500, waterMax:700, waterAvg:600,image: "assets/img/crops/groundnuts.jpg"},
-      {name:'Sorghum', waterMin:450, waterMax:650, waterAvg:550,image: "assets/img/crops/sorghum.jpg"},
-    ]
+    
   }
 
-    ionViewDidLoad() {
+  ionViewDidLoad() {
     // this.c3Provider.generate()
     this.sites=this.c3Provider.datasets
-    console.log('sites',this.sites)
+    console.log('sites', this.sites)
+    this.selectedSite 
+    this.crops = this.c3Provider.crops  
   }
   ionViewDidEnter(){
     // this.menuCtrl.open();
@@ -52,8 +49,9 @@ export class ClimateToolPage{
         }
       )  
   }
-  setChart(chart){
-    this.activeChart=chart
+  setChart(chart) {
+    this.activeChart = {};
+    this.activeChart = chart;
     console.log('activeChart',chart)
     this.c3Provider.setChart(chart)
     this.showTools=true;
@@ -69,9 +67,7 @@ export class ClimateToolPage{
   selectSite() {
     let profileModal = this.modalCtrl.create('SiteSelectPage', { });
     profileModal.onDidDismiss(data => {
-     console.log(data);
      this.selectedSite=this.sites[0]
-     console.log('this.site',this.selectedSite)
      this.siteChanged()
    });
     profileModal.present();
@@ -81,7 +77,8 @@ export class ClimateToolPage{
       {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",x:"Total Rainfall SeasonA",yFormat:"value",tools:{line:true}},
       {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"StartSeason_A",yFormat:"date",tools:{line:true}},
       {name:"End of Season",image:"assets/img/charts/season-end.png",x:"EndSeason_A",yFormat:"date",tools:{line:true}},
-      {name:"Length of Season",image:"assets/img/charts/season-length.png",x:"Length_of_Season_A",yFormat:"value",tools:{line:true}},
+      { name: "Length of Season", image: "assets/img/charts/season-length.png", x: "Length_of_Season_A", yFormat: "value", tools: { line: true } },
+      { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page:"CombinedRiskPage" },
     ]
   }
   lineToolValueChange(e?){
