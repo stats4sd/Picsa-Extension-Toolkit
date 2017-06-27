@@ -13,7 +13,8 @@ export class CombinedRiskComponent {
   startProbability: any = { reversePercentage: null };
   lengthProbability: any = { reversePercentage: null };
   selectedCrop: any = {};
-  dayValue:number
+  dayValue: number;
+  test: string = 'red';
 
   constructor(public c3Provider:C3ChartProvider) {
     this.plantDate = {min: 1, max: 16, value:5, step:1}
@@ -40,7 +41,6 @@ export class CombinedRiskComponent {
       this.crops[crop.index].lengthProbability = {reversePercentage:null};
       this.crops[crop.index].rainfallProbability = {reversePercentage:null};
     }
-    console.log('this.crops',this.crops)
   }
   plantDateChange(e) {
     //manually set 1 march as day 60 and multiple by 7.6 (rough number of days in 1/4 month)
@@ -56,7 +56,7 @@ export class CombinedRiskComponent {
         ]
       )
       this.crops[crop.index].rainfallProbability = this.c3Provider.calculateProbability([
-        { key:'Total Rainfall SeasonA', value:crop.waterAvg, operator:">=" }
+        { key:'Total Rainfall SeasonA', value:crop.waterAvg*(1+this.plantDate.value/16), operator:">=" }
       ]
       )
     }
