@@ -23,6 +23,7 @@ import { VideosPage } from "../pages/qanda/videos/videos";
 import { IframePage } from "../pages/iframe/iframe";
 import { ToolsPage } from "../pages/tools/tools";
 import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
+import { BudgetToolPage } from "../pages/budget-tool/budget-tool";
 import { CombinedRiskComponent } from '../pages/climate-tool/components/combined-risk/combined-risk';
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
@@ -60,6 +61,7 @@ export const firebaseConfig = {
     VideosPage,
     ForumDiscussionPage,
     ClimateToolPage,
+    BudgetToolPage,
     PdfViewerComponent,
     IframePage,
     ToolsPage,
@@ -91,6 +93,7 @@ export const firebaseConfig = {
     VideosPage,
     ForumDiscussionPage,
     ClimateToolPage,
+    BudgetToolPage,
     IframePage,
     ToolsPage
   ],
