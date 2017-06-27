@@ -56,6 +56,7 @@ export class C3ChartProvider {
         keys: {
           value: keys
       ***REMOVED***,
+        x:'Year',
         classes: { LineTool: 'LineTool' },
         color: function (color, d) {
           if (d.value >= this.lineToolValues[this.activeChart.x]) {

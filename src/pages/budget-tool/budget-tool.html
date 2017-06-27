@@ -1,9 +1,3 @@
-<!--
-  Generated template for the BudgetToolPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -13,12 +7,17 @@
 </ion-header>
 
 
-<ion-content>
-  <div *ngFor = "let timePeriod of budget; let i=index">
-    <div class='time-period'>Time Period:{{i}}</div>
-    <div class='activities block'>
-      <div class='card' *ngFor="let card of timePeriod.activities">{{card.id}}</div>
+<ion-content padding>
+  <div>Step 1: Select all of the activities you take part in</div>
+  <div class="flex">
+    <div class='card' *ngFor="let activity of data.activities; let i=index" (click)="highlight('activity',i)"  [class.highlight]="highlighted.activity[i]">
+      <div class="card-title">{{activity.Name}}</div>
+      <div class="image-holder"><img [src]="activity.Image"></div>
     </div>
   </div>
+  <button ion-button round icon-start><ion-icon name="arrow-forward"></ion-icon>Continue</button>
+
+
+
 
 </ion-content>
