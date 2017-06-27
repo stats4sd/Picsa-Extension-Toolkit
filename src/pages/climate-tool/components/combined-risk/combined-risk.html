@@ -9,16 +9,8 @@
   <ion-icon range-left name="calendar"></ion-icon>
   <!--<ion-icon range-right name="calendar"></ion-icon>-->
 </ion-range>
-<div *ngIf="startProbability.reversePercentage>-1">Rain has started in {{startProbability.percentage | percent:'1.0-0'}} of years by this time</div>
+<div *ngIf="startProbability.reversePercentage>-1" [style.background-color]="startProbability.color">Rain has started in <strong>{{startProbability.percentage | percent:'1.0-0'}}</strong> of years by this time</div>
 <br>
-<!--<div>What crop will you grow?</div>
-<div class="flex">
-  <div *ngFor="let crop of crops" (click)="setCrop(crop)">
-    <img src="{{crop.image}}" class="crop-image">
-    <div *ngIf="selectedCrop[crop.name]==undefined">{{crop.name}}</div>
-    <div class="selected-crop" *ngIf="selectedCrop[crop.name]!==undefined">{{crop.name}}</div>
-  </div>
-</div>-->
 
 <div id="cropTable" class="flex">
   <div *ngFor="let crop of crops" class="crop-table-column">
@@ -26,9 +18,9 @@
     <div>name: {{crop.name}}</div>
     <hr>
     <div>length: {{crop.lengthAvg}} days</div>
-    <div>The Season will be long enough {{crop.lengthProbability.percentage | percent:'1.0-0'}} of years</div>
+    <div [style.background-color]="crop.lengthProbability.color">The Season will be long enough {{crop.lengthProbability.percentage | percent:'1.0-0'}} of years</div>
     <hr>
     <div>water: {{crop.waterAvg}}</div>
-    <div>There will be enough water {{crop.rainfallProbability.percentage | percent:'1.0-0'}} of years</div>
+    <div [style.background-color]="crop.rainfallProbability.color">There will be enough water {{crop.rainfallProbability.percentage | percent:'1.0-0'}} of years</div>
   </div>
 </div>

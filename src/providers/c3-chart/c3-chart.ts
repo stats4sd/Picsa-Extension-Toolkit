@@ -182,10 +182,26 @@ export class C3ChartProvider {
       ***REMOVED***);
     ***REMOVED***
   ***REMOVED***
+    var percentage = data.length / length
+    var colors = {
+      0: '#BF7720',
+      10: '#B77A26',
+      20: '#AF7E2D',
+      30: '#A88134',
+      40: '#A0853B',
+      50: '#998942',
+      60: '#918C49',
+      70: '#899050',
+      80: '#829357',
+      90: '#7A975E',
+      100: '#739B65'
+  ***REMOVED***
+    var color = colors[Math.round(percentage*10)*10]
     return {
       results:data,
-      percentage: data.length / length,
-      reversePercentage: 1-data.length/length
+      percentage: percentage,
+      reversePercentage: 1 - percentage,
+      color : color
   ***REMOVED***
 
   //   //given a given variable tests number of items above and below the value
