@@ -1,0 +1,47 @@
+{
+	"definitions":{
+		"start":{
+			"from":{
+				"month":10,
+				"day":1
+			}
+		}
+	},
+	"sites": [
+		{
+			"name": "Chichiri",
+			"filename":"Chichiri.csv",
+			"filePath":"assets/datasets/Chichiri.csv",
+			"latitude": -15.796432,
+			"longitude": 35.026425
+		},
+		{
+			"name": "Chileka",
+			"filename": "Chileka.csv",
+			"filePath": "assets/datasets/Chileka.csv",
+			"latitude": -15.679203,
+			"longitude": 34.967697
+		},
+		{
+			"name": "Nchalo",
+			"filename": "Nchalo.csv",
+			"filePath": "assets/datasets/Nchalo.csv",
+			"latitude": -16.271592,
+			"longitude": 34.870694
+		},
+		{
+			"name": "Ngabu",
+			"filename": "Ngabu.csv",
+			"filePath": "assets/datasets/Ngabu.csv",
+			"latitude": -16.440474,
+			"longitude": 34.869314
+		},
+		{
+			"name": "Nsanje",
+			"filename": "Nsanje.csv",
+			"filePath": "assets/datasets/Nsanje.csv",
+			"latitude": -16.728820,
+			"longitude": 35.170874
+		}
+	]
+}

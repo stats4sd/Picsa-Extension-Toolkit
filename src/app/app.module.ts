@@ -36,6 +36,7 @@ import {FileService} from "../providers/file-service";
 import {YoutubeService} from '../providers/youtube-service';
 import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 import { ForumServiceProvider } from '../providers/forum-service/forum-service';
+import { MalawiDataProvider } from '../providers/c3-chart/malawi-data';
 
 
 // AF2 Settings
@@ -99,7 +100,8 @@ export const firebaseConfig = {
   ],
 
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,C3ChartProvider, Network,
-    ForumServiceProvider]
+    ForumServiceProvider,
+    MalawiDataProvider]
 
 })
 export class AppModule {}

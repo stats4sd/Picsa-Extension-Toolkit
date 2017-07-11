@@ -16,7 +16,14 @@ export class BudgetToolPage {
   budget: any;
   data:any;
   highlightActivity:any;
-  highlighted:any={activity:{}***REMOVED***
+  highlighted: any = { activity: {} ***REMOVED***
+  months: any = [
+    { name: 'January', activities: [] },
+    { name: 'February', activities: [] },
+    { name: 'March', activities: [] },
+    { name: 'April', activities: [] },
+    { name: 'May', activities: [] }
+  ]
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     var init = this.newTimePeriod
@@ -28,9 +35,10 @@ export class BudgetToolPage {
     console.log('budget', this.budget);
 ***REMOVED***
   highlight(type,i){
-    if(!this.highlighted[type]){this.highlighted[type]={}}
-    console.log('toggle highlight',type,i)
-    this.highlighted[type][i]=!this.highlighted[type][i]
+    // if(!this.highlighted[type]){this.highlighted[type]={}}
+    // this.highlighted[type][i] = !this.highlighted[type][i]
+    if (!this.data[type][i].selected) { this.data[type][i].selected = true }
+    else { this.data[type][i].selected = !this.data[type][i].selected }
 ***REMOVED***
 
   newTimePeriod() {

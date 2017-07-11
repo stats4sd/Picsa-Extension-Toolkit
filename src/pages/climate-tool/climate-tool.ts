@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
 import { C3ChartProvider } from '../../providers/c3-chart/c3-chart';
+import { MalawiDataProvider } from '../../providers/c3-chart/malawi-data';
 import { CombinedRiskComponent} from './components/combined-risk/combined-risk'
 
 @IonicPage()
@@ -23,7 +24,13 @@ export class ClimateToolPage{
   selectedCrop:any={***REMOVED***
   columns=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl:MenuController, public c3Provider:C3ChartProvider, public modalCtrl:ModalController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public menuCtrl: MenuController,
+    public c3Provider: C3ChartProvider,
+    public modalCtrl: ModalController,
+    public malawiData: MalawiDataProvider) {
     
 ***REMOVED***
 
@@ -66,8 +73,9 @@ export class ClimateToolPage{
 ***REMOVED***
   selectSite() {
     let profileModal = this.modalCtrl.create('SiteSelectPage', { });
-    profileModal.onDidDismiss(data => {
-     this.selectedSite=this.sites[0]
+    profileModal.onDidDismiss(site => {
+      console.log('site',site)
+     this.selectedSite=site
      this.siteChanged()
  ***REMOVED***);
     profileModal.present();

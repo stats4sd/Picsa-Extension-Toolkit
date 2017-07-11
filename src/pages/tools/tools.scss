@@ -1,9 +1,13 @@
 page-tools {
-    .flex{display: flex}
+    .flex{display: flex; flex-wrap: wrap}
 
     .tool{padding:20px}
 
     .tool-text{
         font-size: larger
+  ***REMOVED***
+    img{
+        height: 150px;
+        width: 150px;
   ***REMOVED***
 }
