@@ -1,6 +1,8 @@
 page-budget-tool {
     .flex{
         display: flex;
+    }
+    .wrap{
         flex-wrap: wrap;
     }
     .card{
@@ -10,6 +12,9 @@ page-budget-tool {
         height: 8em;
         padding: 5px;
         margin: 2px;
+    }
+    .time-period{
+        border: 2px solid black;
     }
     .image-holder{
         height: 100%

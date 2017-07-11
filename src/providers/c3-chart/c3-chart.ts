@@ -6,6 +6,7 @@ import { File } from '@ionic-native/file';
 import * as c3 from 'c3';
 import * as Papa from 'papaparse';
 import { Platform } from 'ionic-angular';
+
 declare let d3;
 
 @Injectable()
@@ -96,13 +97,28 @@ export class C3ChartProvider {
   }
   setDataset(site) {
     this.site = site
+    console.log('loading file', site.filePath)
+    //try to load cache first
+
+    //load from csv
     return new Promise((resolve, reject) => {
-      Papa.parse(site.FilePath, {
+      Papa.parse(site.filePath, {
         download: true,
         dynamicTyping: true,
         header: true,
         complete: function (res, file) {
-          this.site.data = res.data
+          var temp=[]
+          res.data.forEach((row, index) => {
+            var year = row.Year
+            delete row.Year
+            temp.push({
+              year: year,
+              rainfall: row
+            })
+          });
+          this.site.rawData = temp
+          //process data
+          this.processData()
           console.log('site', this.site)
           //create first dummy set
           this.generate('Total Rainfall SeasonA')
@@ -112,6 +128,12 @@ export class C3ChartProvider {
       }, )
     })
   }
+
+  processData() {
+    console.log('processing data')
+    console.log( new Date(2017,9,1).getDate())
+  }
+
   setChart(chart) {
     if (this.chart) {
       console.log('setting chart', chart.x)
@@ -240,43 +262,43 @@ var seriesColors = {
 
 let sampleDatasets = [
   {
-    "SiteName": "Babile", "Latitude": 10.519819, "Longitude": -2.835273, "FilePath": "assets/datasets/Babile.csv"
+    "SiteName": "Babile", "Latitude": 10.519819, "Longitude": -2.835273, "filePath": "assets/datasets/Babile.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Bole", "Latitude": 9.0333, "Longitude": -2.4833, "FilePath": "assets/datasets/Bole.csv"
+    "SiteName": "Bole", "Latitude": 9.0333, "Longitude": -2.4833, "filePath": "assets/datasets/Bole.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Damango", "Latitude": 9.0833, "Longitude": -1.8167, "FilePath": "assets/datasets/Damango.csv"
+    "SiteName": "Damango", "Latitude": 9.0833, "Longitude": -1.8167, "filePath": "assets/datasets/Damango.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Navrongo", "Latitude": 10.894025, "Longitude": -1.092147, "FilePath": "assets/datasets/Navrongo.csv"
+    "SiteName": "Navrongo", "Latitude": 10.894025, "Longitude": -1.092147, "filePath": "assets/datasets/Navrongo.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Salaga", "Latitude": 8.552529, "Longitude": -0.518694, "FilePath": "assets/datasets/Salaga.csv"
+    "SiteName": "Salaga", "Latitude": 8.552529, "Longitude": -0.518694, "filePath": "assets/datasets/Salaga.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Vea", "Latitude": 10.866667, "Longitude": -0.85, "FilePath": "assets/datasets/Vea.csv"
+    "SiteName": "Vea", "Latitude": 10.866667, "Longitude": -0.85, "filePath": "assets/datasets/Vea.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Wa", "Latitude": 10.060074, "Longitude": -2.509891, "FilePath": "assets/datasets/Wa.csv"
+    "SiteName": "Wa", "Latitude": 10.060074, "Longitude": -2.509891, "filePath": "assets/datasets/Wa.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Walewale", "Latitude": 10.35, "Longitude": -0.8, "FilePath": "assets/datasets/Walewale.csv"
+    "SiteName": "Walewale", "Latitude": 10.35, "Longitude": -0.8, "filePath": "assets/datasets/Walewale.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Yendi", "Latitude": 9.4450, "Longitude": -0.0093, "FilePath": "assets/datasets/Yendi.csv"
+    "SiteName": "Yendi", "Latitude": 9.4450, "Longitude": -0.0093, "filePath": "assets/datasets/Yendi.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
   {
-    "SiteName": "Zuarungu", "Latitude": 10.7961, "Longitude": -0.8080, "FilePath": "assets/datasets/Zuarungu.csv"
+    "SiteName": "Zuarungu", "Latitude": 10.7961, "Longitude": -0.8080, "filePath": "assets/datasets/Zuarungu.csv"
     , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
   },
 ]
