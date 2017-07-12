@@ -82,19 +82,19 @@ export class ClimateToolPage{
 ***REMOVED***
   setAvailableCharts(list){
     this.availableCharts=[
-      {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",x:"Total Rainfall SeasonA",yFormat:"value",tools:{line:true}},
-      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"StartSeason_A",yFormat:"date",tools:{line:true}},
-      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"EndSeason_A",yFormat:"date",tools:{line:true}},
-      { name: "Length of Season", image: "assets/img/charts/season-length.png", x: "Length_of_Season_A", yFormat: "value", tools: { line: true } },
+      {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",x:"Rainfall",yFormat:"value",tools:{line:true}},
+      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date",tools:{line:true}},
+      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date",tools:{line:true}},
+      { name: "Length of Season", image: "assets/img/charts/season-length.png", x: "Length", yFormat: "value", tools: { line: true } },
       { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page:"CombinedRiskPage" },
     ]
 ***REMOVED***
   lineToolValueChange(e?){
     //if manually input triggers event so deselect crop
     if(e!=undefined){this.selectedCrop={}}
-    console.log('e',e)
     this.c3Provider.setLineToolValue(this.lineToolValue)
     this.probabilities = this.c3Provider.calculateProbabilities(this.lineToolValue)
+    console.log('probabilities',this.probabilities)
 ***REMOVED***
   setCrop(crop){
     this.selectedCrop={}

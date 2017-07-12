@@ -4,8 +4,8 @@ page-climate-tool {
 	@media(max-width:767px){
 			.flex{
 				display: flex;
-				flex-wrap: wrap;
 			}
+			.wrap{flex-wrap: wrap}
 			.chart-image, .active-chart-image{
 				max-width:120px;
 				max-height: 120px;
@@ -144,6 +144,17 @@ page-climate-tool {
 		/*fill: rgb(90, 50, 50)!important;*/
 		stroke: #000000 !important;
 		stroke-width: 2;
+	}
+	.block{
+		outline: 1px solid black;
+		flex-grow: 1;
+		min-width: 10%;
+	}
+	.block.good{
+		background-color: #25a234;
+	}
+	.block.bad{
+		background-color: #9a2c04;
 	}
 
 }
