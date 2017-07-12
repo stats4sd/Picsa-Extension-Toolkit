@@ -22,7 +22,7 @@ export class C3ChartProvider {
   initialRender: boolean = true;
   crops: any;
   constructor(public http: Http, private file: File, private platform: Platform) {
-    this.activeChart.x = "Length_of_Season_A"
+    this.activeChart.x = "Rainfall"
     this.loadData()
     this.crops = [
       { index:0,name: 'Maize', waterMin: 500, waterMax: 800, waterAvg: 720, lengthAvg: 60, image: "assets/img/crops/maize.jpg" },
@@ -34,7 +34,7 @@ export class C3ChartProvider {
     if (this.platform.is('core')) {
       //use file api
       console.log('loading demo data')
-      this.datasets = sampleDatasets
+      
     }
     if (this.platform.is('mobile')) {
       //use cordova
@@ -46,13 +46,12 @@ export class C3ChartProvider {
 
   generate(x) {
     var s = this.site
-    console.log('s', s)
     var keys = []
-    for (let key in s.data[0]) { keys.push(key) }
+    for (let key in s.summaries[0]) { keys.push(key) }
     this.chart = c3.generate({
       bindto: '#chart',
       data: {
-        json: s.data,
+        json: s.summaries,
         hide: true,
         keys: {
           value: keys
@@ -107,31 +106,16 @@ export class C3ChartProvider {
         dynamicTyping: true,
         header: true,
         complete: function (res, file) {
-          var temp=[]
-          res.data.forEach((row, index) => {
-            var year = row.Year
-            delete row.Year
-            temp.push({
-              year: year,
-              rainfall: row
-            })
-          });
-          this.site.rawData = temp
+          this.site.summaries = res.data
           //process data
-          this.processData()
           console.log('site', this.site)
           //create first dummy set
-          this.generate('Total Rainfall SeasonA')
+          this.generate('Rainfall')
           resolve(this.site)
         }.bind(this),
         error: function (err) { reject(err) }
       }, )
     })
-  }
-
-  processData() {
-    console.log('processing data')
-    console.log( new Date(2017,9,1).getDate())
   }
 
   setChart(chart) {
@@ -141,13 +125,11 @@ export class C3ChartProvider {
       this.chart.hide();
       this.chart.legend.hide();
       this.chart.show(chart.x, {withLegend: true});
-      console.log('this.chart', this.chart)
-    //this.chart.show()
     }
   }
   setLineToolValue(value) {
     this.lineToolValues[this.activeChart.x] = value
-    var lineArray = Array(this.site.data.length).fill(value)
+    var lineArray = Array(this.site.summaries.length).fill(value)
     lineArray.unshift('LineTool')
     this.chart.load({
       columns: [lineArray],
@@ -164,25 +146,33 @@ export class C3ChartProvider {
         else { below++ }
       }
     }
-    var percentage = (above / (above + below) * 100);
-    var reversePercentage = (below / (above + below) * 100);
+    var percentage = (above / (above + below));
+    var reversePercentage = 1-percentage;
     var i = Math.round((below + above) / (above))
     var j = Math.round((below + above) / (below))
     if (above != 0 && above <= below) { ratio = [1, i - 1] }
     if (below != 0 && below <= above) { ratio = [j - 1, 1] }
+    var tens = {
+      above: Array(Math.round(percentage * 10)).fill(1),
+      below: Array(Math.round(reversePercentage * 10)).fill(-1),
+      value: Math.round(percentage*10)*10
+    }
     return {
       above: above,
       below: below,
       percentage: percentage,
       reversePercentage: reversePercentage,
-      ratio: ratio
+      ratio: ratio,
+      tens: tens
     }
   }
   calculateProbability(conditions) {
     //conditions are defined in format {key1:valueToTest1, key2:valueToTest2...}
-    var data = this.site.data
+    var data = this.site.summaries
+    console.log('data',data)
     //remove values where conditions aren't known - current assumes null values non-numerical (e.g. string or null, may want to change later)
     for (let condition of conditions) {
+      console.log('testing condition',condition)
       var key = condition.key;
       var value = condition.value
       data = data.filter(element => {
@@ -227,78 +217,13 @@ export class C3ChartProvider {
       color : color
     }
 
-  //   //given a given variable tests number of items above and below the value
-  //   //above translates to season starting later, more rainfall required  
-  //   let above = 0, below = 0, ratio = [0, 0], percentage = 0, reversePercentage = 0
-  //   let d = this.site.data
-  //   console.log('data', d)
-  //   for (let item of d) {
-  //     var test = item[columnName]
-  //     if (test != null && test != columnName) {
-  //       if (test >= value) { above++ }
-  //       if (test < value) { below++ }
-  //     }
-  //   }
-  //   percentage = (above / (above + below));
-  //   reversePercentage = 1 - percentage
-  //   console.log('percentag', percentage)
-  //   console.log('revers', reversePercentage)
-  //   return {
-  //     above: above,
-  //     below: below,
-  //     percentage: percentage,
-  //     reversePercentage: reversePercentage,
-  //     ratio: ratio
-  //   }
    }
 }
 
 var seriesColors = {
-  "Total Rainfall SeasonA": '#377eb8',
-  "StartSeason_A": '#e41a1c',
-  "EndSeason_A": '#984ea3',
-  "Length_of_Season_A": '#4daf4a',
+  "Rainfall": '#377eb8',
+  "Start": '#e41a1c',
+  "End": '#984ea3',
+  "Length": '#4daf4a',
 }
 
-let sampleDatasets = [
-  {
-    "SiteName": "Babile", "Latitude": 10.519819, "Longitude": -2.835273, "filePath": "assets/datasets/Babile.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Bole", "Latitude": 9.0333, "Longitude": -2.4833, "filePath": "assets/datasets/Bole.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Damango", "Latitude": 9.0833, "Longitude": -1.8167, "filePath": "assets/datasets/Damango.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Navrongo", "Latitude": 10.894025, "Longitude": -1.092147, "filePath": "assets/datasets/Navrongo.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Salaga", "Latitude": 8.552529, "Longitude": -0.518694, "filePath": "assets/datasets/Salaga.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Vea", "Latitude": 10.866667, "Longitude": -0.85, "filePath": "assets/datasets/Vea.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Wa", "Latitude": 10.060074, "Longitude": -2.509891, "filePath": "assets/datasets/Wa.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Walewale", "Latitude": 10.35, "Longitude": -0.8, "filePath": "assets/datasets/Walewale.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Yendi", "Latitude": 9.4450, "Longitude": -0.0093, "filePath": "assets/datasets/Yendi.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-  {
-    "SiteName": "Zuarungu", "Latitude": 10.7961, "Longitude": -0.8080, "filePath": "assets/datasets/Zuarungu.csv"
-    , "AvailableData": ["SeasonRainfall", "LengthOfSeason", "SeasonStart", "SeasonEnd"/*, "Temperature"*/]
-  },
-]

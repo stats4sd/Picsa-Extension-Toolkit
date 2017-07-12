@@ -51,12 +51,16 @@
     </div>
     <div id="risk" *ngIf="showRiskTool" class="tool-container">
       <h3>Risk</h3>
-      <div class="flex">
-        <div id="percentages">
+      <div id="blocks" class="flex">
+        <div class="block good" *ngFor="let block of probabilities.tens.above">1</div>
+        <div class="block bad" *ngFor="let block of probabilities.tens.below">-1</div>
+      </div>
+      <div class="flex wrap">
+        <div id="calculation">
           <div>Points Above: {{probabilities.above}}</div>
           <div>Points Below: {{probabilities.below}}</div>
           <br>
-          <div>{{probabilities.percentage}} of points above</div>
+          <div>{{probabilities.percentage | percent:'1.0-0'}} of points above</div>
         </div>
         <div id="people">
           <div>This is about ...</div>

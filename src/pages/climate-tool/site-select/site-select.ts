@@ -60,9 +60,8 @@ export class SiteSelectPage {
         var container = L.DomUtil.create('div');
         var btn = L.DomUtil.create('button', '', container)
         btn.setAttribute('type', 'button');
-        btn.innerHTML = 'Select '+site.name;
+        btn.innerHTML = '<div>'+site.name+'<br>Load Data</div>';
         var popup = L.popup().setContent(btn)
-
         L.DomEvent.on(btn, 'click', (btn) => {
           this.selectSite(site)
         });
