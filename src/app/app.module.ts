@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
 import { Network} from '@ionic-native/network';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 // App pages
 import { MyApp } from './app.component';
 import { QandAPage } from '../pages/qanda/qanda';
@@ -24,6 +25,7 @@ import { IframePage } from "../pages/iframe/iframe";
 import { ToolsPage } from "../pages/tools/tools";
 import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
 import { BudgetToolPage } from "../pages/budget-tool/budget-tool";
+import { BudgetCardPage } from "../pages/budget-tool/budget-card/budget-card";
 import { CombinedRiskComponent } from '../pages/climate-tool/components/combined-risk/combined-risk';
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
@@ -37,6 +39,7 @@ import {YoutubeService} from '../providers/youtube-service';
 import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 import { ForumServiceProvider } from '../providers/forum-service/forum-service';
 import { MalawiDataProvider } from '../providers/c3-chart/malawi-data';
+import { BudgetToolProvider } from '../providers/budget-tool/budget-tool';
 
 
 // AF2 Settings
@@ -66,7 +69,8 @@ export const firebaseConfig = {
     PdfViewerComponent,
     IframePage,
     ToolsPage,
-    CombinedRiskComponent
+    CombinedRiskComponent,
+    BudgetCardPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -78,7 +82,8 @@ export const firebaseConfig = {
       name: '__picsa',
     }),
     BrowserModule,
-    HttpModule
+    HttpModule,
+    CanvasWhiteboardModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -96,12 +101,14 @@ export const firebaseConfig = {
     ClimateToolPage,
     BudgetToolPage,
     IframePage,
-    ToolsPage
+    ToolsPage,
+    BudgetCardPage
   ],
 
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,C3ChartProvider, Network,
     ForumServiceProvider,
-    MalawiDataProvider]
+    MalawiDataProvider,
+    BudgetToolProvider]
 
 })
 export class AppModule {}

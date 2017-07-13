@@ -1,9 +1,16 @@
 page-budget-tool {
+    #budget{
+        padding: 10px;
+    }
     .flex{
         display: flex;
     }
     .wrap{
         flex-wrap: wrap;
+    }
+    .grow{
+        flex-grow: 1;
+        align-content: center;
     }
     .card{
         border: 2px solid black;
@@ -13,8 +20,45 @@ page-budget-tool {
         padding: 5px;
         margin: 2px;
     }
+    .card-image{
+        max-height: 100%;
+    }
+    .card-index{
+        position: absolute;
+        background: white;
+    }
+    .grid-card{
+        height: 100%;
+        width:100%;
+    }
     .time-period{
         border: 2px solid black;
+        flex-grow: 1;
+        height:90vh;
+    }
+    .row, .cell{
+        height: 15vh;
+        display: block; 
+    }
+    .top-row{
+        height:3vh;
+        line-height: 3vh;
+        font-size: 2vh;
+        text-align: center;
+    }
+    .cell{
+        border-bottom: 1px solid gray;
+    }
+    .cell-footer{
+        height: 2vh;
+        line-height: 1vh;
+        font-size: 2vh
+    }
+    .cell-main{
+        height:8vh;
+    }
+    .titles{
+        height: 90vh;
     }
     .image-holder{
         height: 100%

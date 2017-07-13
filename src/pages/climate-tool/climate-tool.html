@@ -9,14 +9,14 @@
 
   <combined-risk *ngIf="activeChart.name=='Combined Risk'"></combined-risk>
 
-  <div id="selectChart" class="flex" *ngIf="!showTools">
+  <div id="selectChart" class="flex wrap" *ngIf="!showTools">
     <div *ngFor="let chart of availableCharts" (click)="setChart(chart)">
       <img src="{{chart.image}}" class="chart-image">
     </div>
   </div>
-  
 
-  <div id="activeChart" class="flex" *ngIf="showTools">
+
+  <div id="activeChart" class="flex wrap" *ngIf="showTools">
     <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
     <div id="tools">
       <ion-list>
@@ -43,7 +43,7 @@
       <div>Or select a typical crop value</div>
       <div class="flex">
         <div *ngFor="let crop of crops" (click)="setCrop(crop)">
-          <img src="{{crop.image}}"  class="crop-image">
+          <img src="{{crop.image}}" class="crop-image">
           <div *ngIf="selectedCrop[crop.name]==undefined">{{crop.name}}</div>
           <div class="selected-crop" *ngIf="selectedCrop[crop.name]!==undefined">{{crop.name}}</div>
         </div>
@@ -53,25 +53,29 @@
       <h3>Risk</h3>
       <div id="blocks" class="flex">
         <div class="block good" *ngFor="let block of probabilities.tens.above">1</div>
-        <div class="block bad" *ngFor="let block of probabilities.tens.below">-1</div>
+        <div class="block bad" *ngFor="let block of probabilities.tens.below">1</div>
       </div>
+      <div>{{probabilities.tens.above.length}} out of 10</div>
       <div class="flex wrap">
         <div id="calculation">
+          <h3>Calculation</h3>
           <div>Points Above: {{probabilities.above}}</div>
-          <div>Points Below: {{probabilities.below}}</div>
+          <div>Total Points: {{probabilities.below+probabilities.above}}</div>
           <br>
-          <div>{{probabilities.percentage | percent:'1.0-0'}} of points above</div>
+          <div>
+            <div><sup>{{probabilities.above}}</sup>&frasl;<sub>{{probabilities.above+probabilities.below}}</sub> = {{probabilities.percentage | percent:'1.0-0'}}</div>
+          </div>
         </div>
-        <div id="people">
+          <!--<div id="people">
           <div>This is about ...</div>
           <div>{{probabilities.ratio[0]}}:{{probabilities.ratio[1]}}</div>
-        </div>
-        <div id="gauge">
+        </div>-->
+          <div id="gauge">
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
 </ion-content>
