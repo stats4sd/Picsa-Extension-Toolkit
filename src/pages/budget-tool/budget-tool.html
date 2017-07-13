@@ -1,43 +1,81 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>budgetTool</ion-title>
-  </ion-navbar>
-
-</ion-header>
+<ion-fab right top>
+  <button ion-fab mini color="light" (click)="close()"><ion-icon name="close"></ion-icon></button>
+</ion-fab>
 
 
-<ion-content padding>
+<ion-content>
+  <!--<canvas-whiteboard #canvasWhiteboard [drawButtonClass]="'drawButtonClass'" [drawButtonText]="'Draw'" [clearButtonClass]="'clearButtonClass'"
+    [clearButtonText]="'Clear'" [undoButtonText]="'Undo'" [undoButtonEnabled]="true" [redoButtonText]="'Redo'" [redoButtonEnabled]="true"
+    [colorPickerEnabled]="false" [saveDataButtonEnabled]="true" [saveDataButtonText]="'Save'" >
+  </canvas-whiteboard>-->
+  <div id="budget" class="flex">
+    <div id="titles" class="titles time-period">
+      <div class="cell top-row"></div>
+      <div class="cell" *ngFor="let title of rowTitles">{{title}}</div>
+    </div>
+    <div id="timePeriods" class="time-period" *ngFor="let period of budget">
+      <div class="time-period-title cell top-row">{{period.index}}</div>
+      <!--Activities-->
+      <div class="cell">
+        <div class="grid-card flex" >
+          <div *ngFor="let activity of period.activities; let i=index">
+            <div class="card-index" *ngIf="period.activities.length>1">{{i+1}}</div>
+            <img class="card-image" [src]="activity.Image">
+          </div>
+        </div>
+      </div>
+      <!--Inputs-->
+      <div class="cell">
+        <div class="grid-card flex">
+          <div *ngFor="let input of period.inputs; let i=index" class="grow">
+            <img class="card-image cell-main" [src]="input.Image">
+            <div class="cell-footer">{{input.quantity*input.cost}}</div>
+          </div>
+        </div>
+      </div>
+      <!--Family Labour-->
+      <div class="cell">
+        <div class="grid-card flex" *ngIf="period.familyLabour && period.familyLabour.days">
+          <div *ngFor="let person of period.familyLabour.people; let i=index">
+            <div>{{person}}</div>
+          </div>
+          <div>{{period.familyLabour.days}}</div>
+        </div>
+      </div>
+      <!--Outputs-->
+      <div class="cell">
+        <div class="grid-card flex">
+          <div *ngFor="let output of period.outputs; let i=index">
+            <img class="card-image cell-main" [src]="output.Image">
+            <div class="cell-footer">{{output.quantity}}</div>
+          </div>
+        </div>
+      </div>
+      <!--Consumed-->
+      <div class="cell">
+        <div class="grid-card flex">
+          <div *ngFor="let output of period.outputs; let i=index">
+            <img class="card-image cell-main" [src]="output.Image">
+            <div class="cell-footer">{{output.consumed}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div>Step 1: Select all of the activities you take part in</div>
   <div class="flex wrap">
     <div class='card' *ngFor="let activity of data.activities; let i=index" (click)="highlight('activities',i)" [class.highlight]="activity.selected">
       <div class="card-title">{{activity.Name}}</div>
       <div class="image-holder"><img [src]="activity.Image"></div>
     </div>
-    <button ion-button icon-left>
+    <button ion-button icon-left (click)="addCard()">
       <ion-icon name="add"></ion-icon>
         Add Another
     </button>
   </div>
   <button ion-button round icon-start><ion-icon name="arrow-forward"></ion-icon>Continue</button>
 
-  <div>Step 2: When do you do each? Drag the activitiy to the month</div>
-  <div class="flex">
-    <div *ngFor="let month of months" class="time-period">
-      <div>{{month.name}}</div>
-      <hr>
-      <div *ngFor="let activity of month.activities">
-        <div>{{activity.name}}</div>
-      </div>
-      <div class="card-holder card"></div>
-    </div>
-  </div>
-  <div class="available-cards flex wrap">
-    <div class='card' *ngFor="let activity of data.activities" [hidden]="!activity.selected">
-      <div class="card-title">{{activity.Name}}</div>
-      <div class="image-holder"><img [src]="activity.Image"></div>
-    </div>
-  </div>
 
 
 

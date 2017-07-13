@@ -148,13 +148,19 @@ page-climate-tool {
 	.block{
 		outline: 1px solid black;
 		flex-grow: 1;
-		min-width: 10%;
+		min-width: 15px;
 	}
 	.block.good{
-		background-color: #25a234;
+		background-color: #739B65;
+		color: #739B65;
 	}
 	.block.bad{
-		background-color: #9a2c04;
+		background-color: #BF7720;
+		color: #BF7720;
 	}
+	#calculation{
+		padding-top:15px
+	}
+
 
 }
