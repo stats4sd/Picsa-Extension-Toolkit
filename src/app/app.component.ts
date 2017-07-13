@@ -9,7 +9,7 @@ declare var FCMPlugin
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
+  rootPage = 'HomePage';
   constructor(platform: Platform, public events: Events, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       setTimeout(() => {

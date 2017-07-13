@@ -11,22 +11,19 @@ import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 // App pages
 import { MyApp } from './app.component';
-import { QandAPage } from '../pages/qanda/qanda';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-import { PicsaManualPage } from '../pages/picsa-manual/picsa-manual';
-import { RecordDataPage } from '../pages/record-data/record-data';
-import { ViewDataPage } from '../pages/view-data/view-data';
-import { FormPopup } from "../pages/record-data/form-popup/form-popup";
-import { ForumPage } from "../pages/qanda/forum/forum";
-import { ForumDiscussionPage } from "../pages/qanda/forum/forum-discussion-page/forum-discussion-page";
-import { VideosPage } from "../pages/qanda/videos/videos";
-import { IframePage } from "../pages/iframe/iframe";
-import { ToolsPage } from "../pages/tools/tools";
-import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
-import { BudgetToolPage } from "../pages/budget-tool/budget-tool";
-import { BudgetCardPage } from "../pages/budget-tool/budget-card/budget-card";
-import { CombinedRiskComponent } from '../pages/climate-tool/components/combined-risk/combined-risk';
+// import { QandAPage } from '../pages/qanda/qanda';
+// import { RecordDataPage } from '../pages/record-data/record-data';
+// import { ViewDataPage } from '../pages/view-data/view-data';
+// import { FormPopup } from "../pages/record-data/form-popup/form-popup";
+// import { ForumPage } from "../pages/qanda/forum/forum";
+// import { ForumDiscussionPage } from "../pages/qanda/forum/forum-discussion-page/forum-discussion-page";
+// import { VideosPage } from "../pages/qanda/videos/videos";
+// import { IframePage } from "../pages/iframe/iframe";
+// import { ToolsPage } from "../pages/tools/tools";
+// import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
+// import { BudgetToolPage } from "../pages/budget-tool/budget-tool";
+// import { CombinedRiskComponent } from '../pages/climate-tool/components/combined-risk/combined-risk';
+
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -54,23 +51,21 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    QandAPage,
-    HomePage,
-    TabsPage,
-    PicsaManualPage,
-    ViewDataPage,
-    RecordDataPage,
-    FormPopup,
-    ForumPage,
-    VideosPage,
-    ForumDiscussionPage,
-    ClimateToolPage,
-    BudgetToolPage,
-    PdfViewerComponent,
-    IframePage,
-    ToolsPage,
-    CombinedRiskComponent,
-    BudgetCardPage
+    // QandAPage,
+    // TabsPage,
+    // PicsaManualPage,
+    // ViewDataPage,
+    // RecordDataPage,
+    // FormPopup,
+    // ForumPage,
+    // VideosPage,
+    // ForumDiscussionPage,
+    // ClimateToolPage,
+    // BudgetToolPage,
+    // PdfViewerComponent,
+    // IframePage,
+    // ToolsPage,
+    // CombinedRiskComponent,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -88,24 +83,29 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    QandAPage,
-    HomePage,
-    TabsPage,
-    PicsaManualPage,
-    ViewDataPage,
-    RecordDataPage,
-    FormPopup,
-    ForumPage,
-    VideosPage,
-    ForumDiscussionPage,
-    ClimateToolPage,
-    BudgetToolPage,
-    IframePage,
-    ToolsPage,
-    BudgetCardPage
+    // QandAPage,
+    // TabsPage,
+    // PicsaManualPage,
+    // ViewDataPage,
+    // RecordDataPage,
+    // FormPopup,
+    // ForumPage,
+    // VideosPage,
+    // ForumDiscussionPage,
+    // ClimateToolPage,
+    // BudgetToolPage,
+    // IframePage,
+    // ToolsPage,
   ],
 
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, KoboApi, YoutubeService, FileService, SplashScreen, File,C3ChartProvider, Network,
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
+    KoboApi,
+    YoutubeService,
+    FileService,
+    SplashScreen,
+    File,
+    C3ChartProvider,
+    Network,
     ForumServiceProvider,
     MalawiDataProvider,
     BudgetToolProvider]
