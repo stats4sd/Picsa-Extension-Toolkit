@@ -23,7 +23,7 @@ export class BudgetToolProvider {
         ],
         outputs: [],
         familyLabour: {
-          people: ['m', 'm', 'f'],
+          people: 3,
           days:4
         },
       }
@@ -39,7 +39,7 @@ export class BudgetToolProvider {
         outputs: [
           { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity:6, consumed:1 },
         ],
-        familyLabour: [],
+        familyLabour: { people: 0, days: 0 },
 
       },
       {
@@ -51,7 +51,7 @@ export class BudgetToolProvider {
           { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
         ],
         outputs: [],
-        familyLabour: [],
+        familyLabour: {people:0,days:0},
 
       },
       {
@@ -63,7 +63,7 @@ export class BudgetToolProvider {
           { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
         ],
         outputs: [],
-        familyLabour: [],
+        familyLabour: { people: 0, days: 0 },
       },
       {
         index: 5,
@@ -74,7 +74,7 @@ export class BudgetToolProvider {
           { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
         ],
         outputs: [],
-        familyLabour: [],
+        familyLabour: { people: 0, days: 0 },
       },
       { index: 6 },
       { index: 7 },
