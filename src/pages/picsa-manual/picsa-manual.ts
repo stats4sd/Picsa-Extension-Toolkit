@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import * as pdfjsLib from 'pdfjs-dist';
 
-/*
-  Generated class for the PicsaManual page.
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+@IonicPage()
 @Component({
   selector: 'page-picsa-manual',
   templateUrl: 'picsa-manual.html',
@@ -26,7 +22,7 @@ export class PicsaManualPage {
 
   ionViewDidLoad() {
     console.log('Hello PicsaManualPage Page');
-    console.log('test 2')
+   
     // var data = new Uint8Array(fs.readFileSync('helloworld.pdf'));
   //   PDFJS.getDocument('assets/picsa-field-manual.pdf').then(function (pdfDocument) {
   //     console.log('Number of pages: ' + pdfDocument.numPages);

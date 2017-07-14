@@ -1,33 +1,31 @@
-import {Component} from '@angular/core';
-import {NavParams, ViewController} from 'ionic-angular';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser'
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 
-
-
+@IonicPage()
 @Component({
   selector: 'page-form-popup',
   templateUrl: 'form-popup.html',
 })
+export class FormPopupPage {
+    form: any;
+  enketoLink: SafeResourceUrl;
 
-export class FormPopup {
-  form:any;
-  enketoLink:SafeResourceUrl;
-
-  constructor(private params:NavParams, public viewCtrl:ViewController, private sanitizer:DomSanitizer) {
-    this.form=params.data.form;
+  constructor(private params: NavParams, public viewCtrl: ViewController, private sanitizer: DomSanitizer) {
+    this.form = params.data.form;
     //use sanitizer to avoid error unsafe resource url (trusted)
-    this.enketoLink=this.sanitizer.bypassSecurityTrustResourceUrl(this.form.enketoLink);
+    this.enketoLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.form.enketoLink);
     console.log(this.form);
   }
-  close(){
+  close() {
     //attempts to retrieve info from loaded iframe .... not working - need to access iframe.contents which requires same domain (check on mobile?)
-   /* var iframe:any = document.getElementById('form-iframe');
-    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-    console.log(innerDoc);
-    let pending=document.getElementsByClassName('offline-enabled__queue-length');
-    console.log(pending);
-    this.viewCtrl.dismiss(pending)
-    */
+    /* var iframe:any = document.getElementById('form-iframe');
+     var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+     console.log(innerDoc);
+     let pending=document.getElementsByClassName('offline-enabled__queue-length');
+     console.log(pending);
+     this.viewCtrl.dismiss(pending)
+     */
     this.viewCtrl.dismiss()
   }
 

@@ -1,0 +1,52 @@
+page-card-select {
+    .card{
+        border: 2px solid black;
+        border-radius: 5px;
+        width: 8em;
+        height: 8em;
+        padding: 5px;
+        margin: 2px;
+    }
+    .cards-container{
+        margin-top:28px
+    }
+    img{
+        max-height: 5em;
+    }
+    .card-title{
+        height: 2em;
+        line-height: 1em;        
+    }
+    .highlight{
+        background-color: #F8FDBF;
+        font-weight: 700;
+    }
+    .values-container{
+        width:200px;
+        height: 100%;
+        position: absolute;
+        background-color: wheat;
+        border: 2px solid black;
+        top: 0;
+        right:0;
+    }
+    .values-title{
+        font-weight: 700;
+        text-align: center;
+        align-self: center;
+        font-size: 2em;
+        max-width: 150px;
+    }
+    .image-icon{
+        height: 4em;
+        width:4em;
+    }
+    .image-icon-holder{
+        height: 4em;
+        width: 4em;
+    }
+    .person-icon{
+        font-size: 3em;
+        margin: 2px;
+    }
+}
