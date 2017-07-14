@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import {KoboApi} from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
 import {ModalController} from "ionic-angular"
 import { Storage } from '@ionic/storage';
-import {FormPopup} from "./form-popup/form-popup";
 
 
-
+@IonicPage()
 @Component({
   selector: 'page-record-data',
   templateUrl: 'record-data.html',
-  providers:[KoboApi]
 })
 
 export class RecordDataPage {
@@ -66,7 +64,7 @@ export class RecordDataPage {
 ***REMOVED***
 
   openForm(form) {
-    let modal = this.modal.create(FormPopup, {form: form}, {
+    let modal = this.modal.create('FormPopupPage', {form: form}, {
       showBackdrop: false,
       enableBackdropDismiss: false
   ***REMOVED***);
