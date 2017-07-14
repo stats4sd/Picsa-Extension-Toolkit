@@ -76,13 +76,7 @@ export class BudgetToolProvider {
         outputs: [],
         familyLabour: { people: 0, days: 0 },
       },
-      { index: 6 },
-      { index: 7 },
-      { index: 8 },
-      { index: 9 },
-      { index: 10 },
-      { index: 11 },
-      { index: 12 },
+      
     ]
   }
 
