@@ -83,8 +83,8 @@ export class ClimateToolPage{
   setAvailableCharts(list){
     this.availableCharts=[
       {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",x:"Rainfall",yFormat:"value",tools:{line:true}},
-      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date",tools:{line:true}},
-      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date",tools:{line:true}},
+      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date-from-July",tools:{line:true}},
+      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date-from-July",tools:{line:true}},
       { name: "Length of Season", image: "assets/img/charts/season-length.png", x: "Length", yFormat: "value", tools: { line: true } },
       { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page:"CombinedRiskPage" },
     ]
