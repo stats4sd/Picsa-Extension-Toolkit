@@ -48,7 +48,7 @@
         </div>
       </div>
       <!--Outputs-->
-      <div class="cell">
+      <div class="cell" (click)="edit('outputs',period)">
         <div class="grid-card flex">
           <div *ngFor="let output of period.outputs; let i=index">
             <img class="card-image cell-main" [src]="output.Image">
@@ -57,7 +57,7 @@
         </div>
       </div>
       <!--Consumed-->
-      <div class="cell">
+      <div class="cell" (click)="edit('consumed',period)">
         <div class="grid-card flex">
           <div *ngFor="let output of period.outputs; let i=index">
             <img class="card-image cell-main" [src]="output.Image">
