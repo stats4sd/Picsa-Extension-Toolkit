@@ -45,6 +45,7 @@ export class C3ChartProvider {
   }
 
   generate(x) {
+    console.log('active chart',this.activeChart)
     var s = this.site
     var keys = []
     for (let key in s.summaries[0]) { keys.push(key) }
@@ -67,6 +68,16 @@ export class C3ChartProvider {
           }
           return seriesColors[this.activeChart.x]
         }.bind(this)
+      },
+      axis: {
+        y: {
+          tick: {
+            format: function (d) {
+
+              return this.formatAxis(d, this.activeChart.yFormat)
+            }.bind(this)
+          }
+        }
       },
       legend: {
         hide:true
@@ -98,7 +109,6 @@ export class C3ChartProvider {
     this.site = site
     console.log('loading file', site.filePath)
     //try to load cache first
-
     //load from csv
     return new Promise((resolve, reject) => {
       Papa.parse(site.filePath, {
@@ -217,7 +227,22 @@ export class C3ChartProvider {
       color : color
     }
 
-   }
+  }
+  formatAxis(value, type) {
+    if (type == 'date-from-July') {
+      //181 based on local met +182 and -1 for index starting at 0
+      let dayNumber = (value + 181) % 366
+      //simply converts number to day rough date value (same method as local met office)
+      //initialise year
+      let d = new Date(2001, 0)
+      d.setDate(dayNumber)
+      var monthNames = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct","Nov", "Dec","Jan"];
+      var string = d.getDate()+'-'+monthNames[d.getMonth()]
+      return string
+    }
+    else if (type == 'value') { return value }
+    else return value
+  }
 }
 
 var seriesColors = {
