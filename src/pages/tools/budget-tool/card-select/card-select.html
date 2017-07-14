@@ -17,6 +17,10 @@
       <div class='card' *ngFor="let card of cards; let i=index" (click)="highlight(card,i)" [class.highlight]="selected[card.ID]">
         <div class="card-title">{{card.Name}}</div>
         <div class="image-holder"><img [src]="card.Image"></div>
+        <div class="card-value" *ngIf="selected[card.ID]" class="flex">
+          <div class="card-quantity" *ngIf="selected[card.ID].quantity>0">x{{selected[card.ID].quantity}}</div>
+          <div class="card-cost flex-basis-100" *ngIf="selected[card.ID].quantity>0"> MK {{selected[card.ID].cost}}</div>
+        </div>
       </div>
       <button ion-button icon-left (click)="addCard()">
       <ion-icon name="add"></ion-icon>
@@ -41,8 +45,11 @@
         <ion-label stacked>Unit cost (MK)</ion-label>
         <ion-input id="unitCost" [(ngModel)]="activeCard.cost" type="number"></ion-input>
       </ion-item>
+      <button ion-button outline color="danger" (click)="removeCard(activeCard)">Remove</button>
       <button ion-button (click)="updateValues(activeCard)">Update</button>
     </ion-list>
+  </div>
+  <div class="backdrop" *ngIf="showValues">
   </div>
   <!--family labour container-->
   <div class="family-labour-container" *ngIf="showFamilyLabour">
@@ -65,7 +72,15 @@
       </div>
       <hr>
       <h4>Total:{{period.familyLabour.days*period.familyLabour.people}}</h4>
-
+    </div>
+  </div>
+  <!--consumed container-->
+  <div class="consumed" *ngIf="showConsumed">
+    <div>
+      <h3>Consumed</h3>
+      <div *ngFor="let output of period.outputs">
+        <div>{{output.Name}}</div>
+      </div>
     </div>
   </div>
 </ion-content>

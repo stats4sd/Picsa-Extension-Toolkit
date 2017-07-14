@@ -11,12 +11,13 @@ page-card-select {
         margin-top:28px
     }
     img{
-        max-height: 5em;
+        height: 4.5em;
     }
     .card-title{
-        height: 2em;
+        height: 1.5em;
         line-height: 1em;        
     }
+    .card-value{height:1em}
     .highlight{
         background-color: #F8FDBF;
         font-weight: 700;
@@ -29,6 +30,7 @@ page-card-select {
         border: 2px solid black;
         top: 0;
         right:0;
+        z-index: 2;
     }
     .values-title{
         font-weight: 700;
@@ -48,5 +50,17 @@ page-card-select {
     .person-icon{
         font-size: 3em;
         margin: 2px;
+    }
+    .backdrop{
+        background-color: black;
+        position:absolute;
+        left:0;
+        width:100%;
+        height: 100%;
+        top:0;
+        opacity: 0.3
+    }
+    .card-cost{
+        text-align: right
     }
 }

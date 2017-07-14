@@ -15,6 +15,7 @@ export class BudgetToolPage {
   rowTitles:any=['Activities','Inputs','Family Labour','Outputs','Produce Consumed','Cash Balance']
   highlightActivity:any;
   highlighted: any = { activity: {} };
+  dotValue: number = 500;
 
   constructor(
     public navCtrl: NavController,
