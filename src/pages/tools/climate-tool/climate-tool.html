@@ -12,17 +12,16 @@
 
 <ion-content padding>
   <h1>{{selectedSite.name}}</h1>
+  <!--chart-->
   <div id="chart" [hidden]="activeChart.name=='Combined Risk'"></div>
-  <!--<button ion-button menuToggle>Toggle Menu</button>-->
   <div [hidden]="!fullScreenView">
+    <!--combined risk component-->
     <combined-risk *ngIf="activeChart.name=='Combined Risk'"></combined-risk>
-
     <div id="selectChart" class="flex wrap" *ngIf="!showTools">
       <div *ngFor="let chart of availableCharts" (click)="setChart(chart)">
         <img src="{{chart.image}}" class="chart-image">
       </div>
     </div>
-
 
     <div id="activeChart" class="flex wrap" *ngIf="showTools">
       <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
