@@ -25,9 +25,9 @@ export class C3ChartProvider {
     this.activeChart.x = "Rainfall"
     this.loadData()
     this.crops = [
-      { index:0,name: 'Maize', waterMin: 500, waterMax: 800, waterAvg: 720, lengthAvg: 60, image: "assets/img/crops/maize.jpg" },
-      { index:1,name: 'Groundnuts', waterMin: 500, waterMax: 700, waterAvg: 600, lengthAvg: 90, image: "assets/img/crops/groundnuts.jpg" },
-      { index:2,name: 'Sorghum', waterMin: 450, waterMax: 650, waterAvg: 550, lengthAvg: 120, image: "assets/img/crops/sorghum.jpg" },
+      { index: 0, name: 'Maize', waterMin: 405, waterMax: 660, waterAvg: 580, lengthMin: 90, lengthMax: 145, lengthAvg: 130, image: "assets/img/crops/maize.jpg" },
+      { index:1,name: 'Groundnuts', waterMin: 405, waterMax: 675, waterAvg: 540, lengthMin: 90, lengthMax:150, lengthAvg: 120, image: "assets/img/crops/groundnuts.jpg" },
+      { index: 2, name: 'Sorghum', waterMin: 450, waterMax: 540, waterAvg: 500, lengthMin: 100, lengthMax: 120, lengthAvg: 110, image: "assets/img/crops/sorghum.jpg" },
     ]
 ***REMOVED***
   loadData() {
@@ -51,6 +51,9 @@ export class C3ChartProvider {
     for (let key in s.summaries[0]) { keys.push(key) }
     this.chart = c3.generate({
       bindto: '#chart',
+      size: {
+        height: 320
+    ***REMOVED***,
       data: {
         json: s.summaries,
         hide: true,
