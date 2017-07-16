@@ -21,7 +21,8 @@ export class ClimateToolPage{
   probabilities:any;
   activeChart: any = { name:null};
   crops:any;
-  selectedCrop:any={};
+  selectedCrop: any = {};
+  fullScreenView:boolean = true;
   columns=[];
 
   constructor(
@@ -45,6 +46,25 @@ export class ClimateToolPage{
     // this.menuCtrl.open();
     this.selectSite();
   }
+  toggleFullScreen() {
+    this.fullScreenView = !this.fullScreenView
+    console.log('resize?')
+    console.log('screen',window.screen)
+    if (!this.fullScreenView) {
+      this.c3Provider.resize({
+        height: window.screen.height-80,
+        width: window.screen.width-20
+      });
+    }
+    else {
+      this.c3Provider.resize({
+        height: 320,
+        width: window.screen.width-20
+      });
+    }
+    
+  }
+  
   siteChanged(){
     this.c3Provider.setDataset(this.selectedSite)
       .then(
@@ -72,7 +92,10 @@ export class ClimateToolPage{
     this.navCtrl.pop();
   }
   selectSite() {
-    let profileModal = this.modalCtrl.create('SiteSelectPage', { });
+    let profileModal = this.modalCtrl.create(
+      'SiteSelectPage',
+      {},
+      { enableBackdropDismiss: false });
     profileModal.onDidDismiss(site => {
       console.log('site',site)
      this.selectedSite=site

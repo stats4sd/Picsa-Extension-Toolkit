@@ -10,81 +10,89 @@ export class BudgetToolProvider {
   constructor(public http: Http) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
-    this.sampleBudget = [
-      {
-        index: 1,
-        activities: [
-          { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-          { "Type": "activity", "Name": "land clearing", "Image": "assets/img/budget/activity/land-clearing.png", "ID": "land-clearing" },
-        ],
-        inputs: [
-          { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200, consumed:0 },
-          { "Type": "input", "Name": "seeds", "Image": "assets/img/budget/input/seeds.png", "ID": "seeds" , quantity:1, cost:500, consumed:0},
-        ],
-        outputs: [
-          { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, cost:200, consumed: 1 },
-        ],
-        familyLabour: {
-          people: 3,
-          days:4
-        },
-      }
-      ,
-      {
-        index: 2,
-        activities: [
-          { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-        ],
-        inputs: [
-          { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-        ],
-        outputs: [
-          { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity:6, consumed:1 },
-        ],
-        familyLabour: { people: 0, days: 0 },
-
-      },
-      {
-        index: 3,
-        activities: [
-          { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-        ],
-        inputs: [
-          { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-        ],
-        outputs: [],
-        familyLabour: {people:0,days:0},
-
-      },
-      {
-        index: 4,
-        activities: [
-          { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-        ],
-        inputs: [
-          { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-        ],
-        outputs: [],
-        familyLabour: { people: 0, days: 0 },
-      },
-      {
-        index: 5,
-        activities: [
-          { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-        ],
-        inputs: [
-          { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-        ],
-        outputs: [],
-        familyLabour: { people: 0, days: 0 },
-      },
-      
-    ]
+    this.sampleBudget = sampleBudget
+  }
+  save() {
+    
+  }
+  load() {
+    
   }
 
 
 
 }
+
+var sampleBudget = [
+  {
+    index: 1,
+    activities: [
+      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
+      { "Type": "activity", "Name": "land clearing", "Image": "assets/img/budget/activity/land-clearing.png", "ID": "land-clearing" },
+    ],
+    inputs: [
+      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200, consumed: 0 },
+      { "Type": "input", "Name": "seeds", "Image": "assets/img/budget/input/seeds.png", "ID": "seeds", quantity: 1, cost: 500, consumed: 0 },
+    ],
+    outputs: [
+      { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, cost: 200, consumed: 1 },
+    ],
+    familyLabour: {
+      people: 3,
+      days: 4
+    },
+  }
+  ,
+  {
+    index: 2,
+    activities: [
+      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
+    ],
+    inputs: [
+      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
+    ],
+    outputs: [
+      { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, consumed: 1 },
+    ],
+    familyLabour: { people: 0, days: 0 },
+
+  },
+  {
+    index: 3,
+    activities: [
+      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
+    ],
+    inputs: [
+      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
+    ],
+    outputs: [],
+    familyLabour: { people: 0, days: 0 },
+
+  },
+  {
+    index: 4,
+    activities: [
+      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
+    ],
+    inputs: [
+      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
+    ],
+    outputs: [],
+    familyLabour: { people: 0, days: 0 },
+  },
+  {
+    index: 5,
+    activities: [
+      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
+    ],
+    inputs: [
+      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
+    ],
+    outputs: [],
+    familyLabour: { people: 0, days: 0 },
+  },
+
+]
 
 var allData = {
   activities: [
@@ -123,7 +131,6 @@ var allData = {
     { "Type": "input", "Name": "wood", "Image": "assets/img/budget/input/wood.png", "ID": "wood" },
   ],
   outputs: [
-    { "Type": "labour", "Name": "family labour", "Image": "assets/img/budget/labour/family-labour.png", "ID": "family-labour" },
     { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop" },
     { "Type": "output", "Name": "manure for compost", "Image": "assets/img/budget/output/manure-for-compost.png", "ID": "manure-for-compost" },
     { "Type": "output", "Name": "money", "Image": "assets/img/budget/output/money.png", "ID": "money" },

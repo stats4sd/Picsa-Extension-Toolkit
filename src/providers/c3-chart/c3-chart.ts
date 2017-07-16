@@ -137,6 +137,13 @@ export class C3ChartProvider {
       this.chart.show(chart.x, {withLegend: true});
     }
   }
+  resize(size) {
+    console.log('resizing chart',size)
+    this.chart.resize({
+      height: size.height,
+      width: size.width
+    });
+  }
   setLineToolValue(value) {
     this.lineToolValues[this.activeChart.x] = value
     var lineArray = Array(this.site.summaries.length).fill(value)
