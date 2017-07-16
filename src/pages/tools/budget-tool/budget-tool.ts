@@ -48,6 +48,18 @@ export class BudgetToolPage {
     modal.present()
     
 ***REMOVED***
+  saveAndLoad(operation) {
+    console.log('operation',operation)
+    let modal = this.modalCtrl.create(
+      'BudgetSavedPage',
+      { operation: operation, budget: this.budget },
+      // { enableBackdropDismiss: false }
+    )
+    modal.onDidDismiss(data => {
+      this.budget=data
+  ***REMOVED***)
+    modal.present()
+***REMOVED***
   _toArray(value) {
     return new Array(value).fill(0)
 ***REMOVED***

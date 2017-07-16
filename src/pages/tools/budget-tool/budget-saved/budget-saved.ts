@@ -1,0 +1,24 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+/**
+ * Generated class for the BudgetSavedPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+@IonicPage()
+@Component({
+  selector: 'page-budget-saved',
+  templateUrl: 'budget-saved.html',
+})
+export class BudgetSavedPage {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+***REMOVED***
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad BudgetSavedPage');
+***REMOVED***
+
+}
