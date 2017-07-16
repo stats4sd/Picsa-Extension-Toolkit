@@ -74,7 +74,8 @@ export class ClimateToolPage{
         },
         err=>{console.log('error',err)
         }
-      )  
+    )
+    
   }
   setChart(chart) {
     this.activeChart = {};
@@ -105,11 +106,11 @@ export class ClimateToolPage{
   }
   setAvailableCharts(list){
     this.availableCharts=[
-      {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",x:"Rainfall",yFormat:"value",tools:{line:true}},
-      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date-from-July",tools:{line:true}},
-      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date-from-July",tools:{line:true}},
-      { name: "Length of Season", image: "assets/img/charts/season-length.png", x: "Length", yFormat: "value", tools: { line: true } },
-      { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page:"CombinedRiskPage" },
+      {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",cropTableValue:'water',x:"Rainfall",yFormat:"value",tools:{line:true}},
+      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date-from-July",tools:{line:false}},
+      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date-from-July",tools:{line:false}},
+      { name: "Length of Season", image: "assets/img/charts/season-length.png", cropTableValue: 'length', x: "Length", yFormat: "value", tools: { line: true } },
+      { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page: "CombinedRiskPage", tools: { line: false } },
     ]
   }
   lineToolValueChange(e?){
@@ -122,7 +123,7 @@ export class ClimateToolPage{
   setCrop(crop){
     this.selectedCrop={}
     this.selectedCrop[crop.name]=true
-    this.lineToolValue=crop.waterAvg;
+    this.lineToolValue = crop[this.activeChart.cropTableValue + 'Avg'];
     this.lineToolValueChange();
    
   }

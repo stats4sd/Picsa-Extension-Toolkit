@@ -28,11 +28,11 @@
       <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
       <div id="tools">
         <ion-list>
-          <ion-item>
+          <ion-item *ngIf="activeChart.tools.line">
             <ion-label>Line Tool</ion-label>
             <ion-toggle [(ngModel)]="showLineTool"></ion-toggle>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="activeChart.tools.line">
             <ion-label>Risk</ion-label>
             <ion-toggle [(ngModel)]="showRiskTool" [disabled]="!lineToolValue"></ion-toggle>
           </ion-item>
@@ -44,43 +44,41 @@
           </ion-item>
         </ion-list>
       </div>
-      <div id="lineTool" *ngIf="showLineTool" class="tool-container">
-        <h3>Line Tool</h3>
-        <ion-input type="number" placeholder="Input a value to test" [(ngModel)]='lineToolValue' (focusout)="lineToolValueChange($event)"></ion-input>
-        <button ion-button>apply</button>
-        <div>Or select a typical crop value</div>
-        <div class="flex">
-          <div *ngFor="let crop of crops" (click)="setCrop(crop)">
-            <img src="{{crop.image}}" class="crop-image">
-            <div *ngIf="selectedCrop[crop.name]==undefined">{{crop.name}}</div>
-            <div class="selected-crop" *ngIf="selectedCrop[crop.name]!==undefined">{{crop.name}}</div>
-          </div>
-        </div>
-      </div>
-      <div id="risk" *ngIf="showRiskTool" class="tool-container">
-        <h3>Risk</h3>
-        <div id="blocks" class="flex">
-          <div class="block good" *ngFor="let block of probabilities.tens.above">1</div>
-          <div class="block bad" *ngFor="let block of probabilities.tens.below">1</div>
-        </div>
-        <div>{{probabilities.tens.above.length}} out of 10</div>
-        <div class="flex wrap">
-          <div id="calculation">
-            <h3>Calculation</h3>
-            <div>Points Above: {{probabilities.above}}</div>
-            <div>Total Points: {{probabilities.below+probabilities.above}}</div>
-            <br>
-            <div>
-              <div><sup>{{probabilities.above}}</sup>&frasl;<sub>{{probabilities.above+probabilities.below}}</sub> = {{probabilities.percentage
-                | percent:'1.0-0'}}</div>
+      <!--line tool-->
+      <div *ngIf="activeChart.tools.line">
+        <div id="lineTool" *ngIf="showLineTool" class="tool-container">
+          <h3>Line Tool</h3>
+          <ion-input type="number" placeholder="Input a value to test" [(ngModel)]='lineToolValue' (focusout)="lineToolValueChange($event)"></ion-input>
+          <button ion-button>apply</button>
+          <!--crops-->
+          <div>Or select a typical crop value</div>
+          <div class="flex">
+            <div class="crop-select" *ngFor="let crop of crops" (click)="setCrop(crop)">
+              <img src="{{crop.image}}" class="crop-image">
+              <div *ngIf="selectedCrop[crop.name]==undefined">{{crop.name}}</div>
+              <div class="selected-crop" *ngIf="selectedCrop[crop.name]!==undefined">{{crop.name}}</div>
+              <div>{{crop[activeChart.cropTableValue+'Min']}} - {{crop[activeChart.cropTableValue+'Max']}}</div>
             </div>
           </div>
-          <!--<div id="people">
-          <div>This is about ...</div>
-          <div>{{probabilities.ratio[0]}}:{{probabilities.ratio[1]}}</div>
-        </div>-->
-          <div id="gauge">
-
+        </div>
+        <div id="risk" *ngIf="showRiskTool" class="tool-container">
+          <h3>Risk</h3>
+          <div id="blocks" class="flex">
+            <div class="block good" *ngFor="let block of probabilities.tens.above">1</div>
+            <div class="block bad" *ngFor="let block of probabilities.tens.below">1</div>
+          </div>
+          <div>{{probabilities.tens.above.length}} out of 10</div>
+          <div class="flex wrap">
+            <div id="calculation">
+              <h3>Calculation</h3>
+              <div>Points Above: {{probabilities.above}}</div>
+              <div>Total Points: {{probabilities.below+probabilities.above}}</div>
+              <br>
+              <div>
+                <div><sup>{{probabilities.above}}</sup>&frasl;<sub>{{probabilities.above+probabilities.below}}</sub> = {{probabilities.percentage
+                  | percent:'1.0-0'}}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
