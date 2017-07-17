@@ -23,7 +23,7 @@
         <div *ngIf="title=='Cash Balance'">(1 dot = MK 500)</div>
       </div>
     </div>
-    <div id="timePeriods" class="time-period flex-basis" *ngFor="let period of budget">
+    <div id="timePeriods" class="time-period flex-basis" *ngFor="let period of budget.data">
       <div class="time-period-title cell top-row">{{period.index}}</div>
       <!--Activities-->
       <div class="cell" (click)="edit('activities',period)">

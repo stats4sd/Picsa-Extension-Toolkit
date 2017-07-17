@@ -17,6 +17,7 @@ export class C3ChartProvider {
   public activeChart: any = {***REMOVED***
   public lineToolValues: any = {***REMOVED***
   public lineToolActive: boolean = false;
+  
   site: any;
   columnsObserver: any;
   initialRender: boolean = true;
@@ -138,8 +139,9 @@ export class C3ChartProvider {
       this.chart.hide();
       this.chart.legend.hide();
       this.chart.show(chart.x, {withLegend: true});
-  ***REMOVED***
+  ***REMOVED*** 
 ***REMOVED***
+
   resize(size) {
     console.log('resizing chart',size)
     this.chart.resize({

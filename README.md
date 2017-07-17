@@ -1,8 +1,11 @@
 # Picsa-Extension-Toolkit
 
+
 Building:
 
-Uncomment service worker from index.html
+Uncomment service worker from index.html (?)
+Update version number in home.html and confix.xml
+
 
 
 Troubleshooting:

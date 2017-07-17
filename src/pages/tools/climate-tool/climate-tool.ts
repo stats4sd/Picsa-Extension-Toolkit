@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ModalController, LoadingController } from 'ionic-angular';
 import { C3ChartProvider } from '../../../providers/c3-chart/c3-chart';
 import { MalawiDataProvider } from '../../../providers/c3-chart/malawi-data';
 import { CombinedRiskComponentModule} from './components/combined-risk/combined-risk.module'
@@ -23,7 +23,7 @@ export class ClimateToolPage{
   crops:any;
   selectedCrop: any = {***REMOVED***
   fullScreenView:boolean = true;
-  columns=[];
+  columns = [];
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +31,8 @@ export class ClimateToolPage{
     public menuCtrl: MenuController,
     public c3Provider: C3ChartProvider,
     public modalCtrl: ModalController,
-    public malawiData: MalawiDataProvider) {
+    public malawiData: MalawiDataProvider,
+    public loadingCtrl:LoadingController) {
     
 ***REMOVED***
 
@@ -78,13 +79,21 @@ export class ClimateToolPage{
     
 ***REMOVED***
   setChart(chart) {
-    this.activeChart = {***REMOVED***
-    this.activeChart = chart;
-    console.log('activeChart',chart)
-    this.c3Provider.setChart(chart)
-    this.showTools=true;
-    this.lineToolValue=null;
-    this.selectedCrop={***REMOVED***    
+    let loader = this.loadingCtrl.create({
+      content: 'Loading...',
+      duration: 3000
+  ***REMOVED***);
+    loader.present().then(() => {
+      this.activeChart = {***REMOVED***
+      this.activeChart = chart;
+      console.log('activeChart', chart)
+      this.c3Provider.setChart(chart)
+      this.showTools = true;
+      this.lineToolValue = null;
+      this.selectedCrop = {***REMOVED***   
+  ***REMOVED***)
+    
+    
 ***REMOVED***
   showAllCharts(){
     this.showTools=false

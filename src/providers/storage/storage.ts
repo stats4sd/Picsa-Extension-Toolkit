@@ -5,9 +5,39 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
+  user: string='anonymous'
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public storage: Storage) {
     console.log('Hello StorageProvider Provider');
+    storage.get('user').then((val) => {
+      if (val) {
+        this.user = val
+        console.log('user loaded', this.user)
+    ***REMOVED***
+      else {
+        this.user = this.generatePushID()
+        console.log('user created', this.user)
+        storage.set('user', this.user)
+    ***REMOVED***
+  ***REMOVED***);
+
+***REMOVED***
+
+  push(key, val) {
+    console.log('pushing to storage', key, val)
+    this.storage.get(key).then((v) => {
+      let tempArray = v || []
+      tempArray.push(val)
+      this.storage.set(key,tempArray)
+  ***REMOVED***)
+***REMOVED***
+  load(key) {
+    return new Promise((resolve) => {
+      this.storage.get(key).then((v) => {
+        resolve(v)
+    ***REMOVED***)
+  ***REMOVED***)
+    
 ***REMOVED***
 
 
