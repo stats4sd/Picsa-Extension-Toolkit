@@ -2,9 +2,13 @@
   <ion-navbar>
     <ion-title>Select Cards</ion-title>
     <ion-buttons end>
-      <button ion-button icon-left outline (click)="close()" color="primary">
+      <button *ngIf="!showNewCard" ion-button icon-left outline (click)="close()" color="primary">
         <ion-icon name="checkmark"></ion-icon>
         Continue
+      </button>
+      <button *ngIf="showNewCard" ion-button icon-left outline (click)="saveCanvasImage()" color="primary">
+        <ion-icon name="checkmark"></ion-icon>
+        Save Image
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -12,80 +16,102 @@
 
 <ion-content padding>
   <!--cards container-->
-  <div class="cards-container" *ngIf="showCards">
-    <div class="flex wrap">
-      <div class='card' *ngFor="let card of cards; let i=index" (click)="highlight(card,i)" [class.highlight]="selected[card.ID]">
-        <div class="card-title">{{card.Name}}</div>
-        <div class="image-holder"><img [src]="card.Image"></div>
-        <div class="card-value" *ngIf="selected[card.ID]" class="flex">
-          <div class="card-quantity" *ngIf="selected[card.ID].quantity>0">x{{selected[card.ID].quantity}}</div>
-          <div class="card-cost flex-basis-100" *ngIf="selected[card.ID].quantity>0"> MK {{selected[card.ID].cost}}</div>
+  <div *ngIf="!showNewCard">
+    <div class="cards-container" *ngIf="showCards">
+      <div class="flex wrap">
+        <div class='card' *ngFor="let card of cards; let i=index" (click)="highlight(card,i)" [class.highlight]="selected[card.ID]">
+          <div class="card-title">{{card.Name}}</div>
+          <div class="image-holder"><img [src]="card.Image"></div>
+          <div class="card-value" *ngIf="selected[card.ID]" class="flex">
+            <div class="card-quantity" *ngIf="selected[card.ID].quantity>0">x{{selected[card.ID].quantity}}</div>
+            <div class="card-cost flex-basis-100" *ngIf="selected[card.ID].quantity>0"> MK {{selected[card.ID].cost}}</div>
+          </div>
         </div>
-      </div>
-      <button ion-button icon-left (click)="addCard()">
+        <button ion-button icon-left (click)="addCard()">
       <ion-icon name="add"></ion-icon>
         Add Another
     </button>
-    </div>
-  </div>
-  <!--values container-->
-  <div class="values-container" *ngIf="showValues">
-    <div>
-      <div class=flex>
-        <div class="image-icon-holder"><img class="image-icon" [src]="activeCard.Image"></div>
-        <div class="values-title">{{activeCard.Name}}</div>
       </div>
     </div>
-    <ion-list>
-      <ion-item>
-        <ion-label stacked>How many units?</ion-label>
-        <ion-input type="number" [(ngModel)]="activeCard.quantity"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label stacked>Unit cost (MK)</ion-label>
-        <ion-input id="unitCost" [(ngModel)]="activeCard.cost" type="number"></ion-input>
-      </ion-item>
-      <button ion-button outline color="danger" (click)="removeCard(activeCard)">Remove</button>
-      <button ion-button (click)="updateValues(activeCard)">Update</button>
-    </ion-list>
-  </div>
-  <div class="backdrop" *ngIf="showValues">
-  </div>
-  <!--family labour container-->
-  <div class="family-labour-container" *ngIf="showFamilyLabour">
-    <div>
-      <h3>People</h3>
-      <div class=flex>
-        <button ion-button icon-only (click)="decreaseFamily('people')"><ion-icon name="remove"></ion-icon></button>
-        <div *ngFor="let person of _toArray(period.familyLabour.people)">
-          <ion-icon class="person-icon" name="person"></ion-icon>
-        </div>
-        <button ion-button (click)="increaseFamily('people')"><ion-icon name="add"></ion-icon></button>
-      </div>
-      <h3>Days</h3>
-      <div class=flex>
-        <button ion-button icon-only (click)="decreaseFamily('days')"><ion-icon name="remove"></ion-icon></button>
-        <div *ngFor="let day of _toArray(period.familyLabour.days)">
-          <ion-icon class="person-icon" name="clock"></ion-icon>
-        </div>
-        <button ion-button (click)="increaseFamily('days')"><ion-icon name="add"></ion-icon></button>
-      </div>
-      <hr>
-      <h4>Total:{{period.familyLabour.days*period.familyLabour.people}}</h4>
-    </div>
-  </div>
-  <!--consumed container-->
-  <div class="consumed" *ngIf="showConsumed">
-    <div>
-      <h3>Consumed</h3>
-      <div *ngFor="let output of period.outputs; let i=index">
+    <!--values container-->
+    <div class="values-container" *ngIf="showValues">
+      <div>
         <div class=flex>
-          <div class="image-holder"><img [src]="output.Image"></div>
-          <button ion-button icon-only (click)="decreaseConsumed(i)"><ion-icon name="remove"></ion-icon></button>
-          <div>{{output.consumed}}</div>
-          <button ion-button (click)="increaseConsumed(i)"><ion-icon name="add"></ion-icon></button>
+          <div class="image-icon-holder"><img class="image-icon" [src]="activeCard.Image"></div>
+          <div class="values-title">{{activeCard.Name}}</div>
+        </div>
+      </div>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>How many units?</ion-label>
+          <ion-input type="number" [(ngModel)]="activeCard.quantity"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Unit cost (MK)</ion-label>
+          <ion-input id="unitCost" [(ngModel)]="activeCard.cost" type="number"></ion-input>
+        </ion-item>
+        <button ion-button outline color="danger" (click)="removeCard(activeCard)">Remove</button>
+        <button ion-button (click)="updateValues(activeCard)">Update</button>
+      </ion-list>
+    </div>
+    <div class="backdrop" *ngIf="showValues">
+    </div>
+    <!--family labour container-->
+    <div class="family-labour-container" *ngIf="showFamilyLabour">
+      <div>
+        <h3>People</h3>
+        <div class=flex>
+          <button ion-button icon-only (click)="decreaseFamily('people')"><ion-icon name="remove"></ion-icon></button>
+          <div *ngFor="let person of _toArray(period.familyLabour.people)">
+            <ion-icon class="person-icon" name="person"></ion-icon>
+          </div>
+          <button ion-button (click)="increaseFamily('people')"><ion-icon name="add"></ion-icon></button>
+        </div>
+        <h3>Days</h3>
+        <div class=flex>
+          <button ion-button icon-only (click)="decreaseFamily('days')"><ion-icon name="remove"></ion-icon></button>
+          <div *ngFor="let day of _toArray(period.familyLabour.days)">
+            <ion-icon class="person-icon" name="clock"></ion-icon>
+          </div>
+          <button ion-button (click)="increaseFamily('days')"><ion-icon name="add"></ion-icon></button>
+        </div>
+        <hr>
+        <h4>Total:{{period.familyLabour.days*period.familyLabour.people}}</h4>
+      </div>
+    </div>
+    <!--consumed container-->
+    <div class="consumed" *ngIf="showConsumed">
+      <div>
+        <h3>Consumed</h3>
+        <div *ngFor="let output of period.outputs; let i=index">
+          <div class=flex>
+            <div class="image-holder"><img [src]="output.Image"></div>
+            <button ion-button icon-only (click)="decreaseConsumed(i)"><ion-icon name="remove"></ion-icon></button>
+            <div>{{output.consumed}}</div>
+            <button ion-button (click)="increaseConsumed(i)"><ion-icon name="add"></ion-icon></button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <!--Add card-->
+  <div *ngIf="showNewCard" class="canvas-container">
+    <canvas-whiteboard #canvasWhiteboard 
+    [drawButtonClass]="'drawButtonClass'" 
+    [drawButtonText]="'Draw'" 
+    [clearButtonClass]="'clearButtonClass'"
+    [clearButtonText]="'Clear'" 
+    [clearButtonEnabled]="true"
+    [undoButtonText]="'Undo'" 
+    [undoButtonEnabled]="true" 
+    [redoButtonText]="'Redo'" 
+    [redoButtonEnabled]="true"
+    [colorPickerEnabled]="true" 
+    [saveDataButtonEnabled]="false" 
+    [saveDataButtonText]="'Save'"
+    >
+    </canvas-whiteboard>
+    <img [src]="canvasDataUrl">
+    <img [src]="canvasBlob">
   </div>
 </ion-content>

@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, PopoverController } from 'ionic-angular';
-import { CanvasWhiteboardComponent } from 'ng2-canvas-whiteboard'
 import { BudgetToolProvider } from '../../../providers/budget-tool/budget-tool'
 
 @IonicPage()
 @Component({
   selector: 'page-budget-tool',
   templateUrl: 'budget-tool.html',
-  viewProviders: [CanvasWhiteboardComponent],
 })
 export class BudgetToolPage {
   budget: any;

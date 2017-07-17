@@ -19,7 +19,8 @@ export class BudgetToolProvider {
       created: new Date(),
       user: this.storage.user,
       data: [],
-      id: this.storage.generatePushID()
+      id: this.storage.generatePushID(),
+      archived:false
     }
     for (let i = 0; i < 12; i++) {
       var p = {

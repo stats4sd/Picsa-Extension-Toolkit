@@ -23,18 +23,25 @@ export class StorageProvider {
 
   }
 
-  push(key, val) {
-    console.log('pushing to storage', key, val)
-    this.storage.get(key).then((v) => {
-      let tempArray = v || []
-      tempArray.push(val)
-      this.storage.set(key,tempArray)
+  save(key, val, id?) {
+    return new Promise((resolve) => {
+      if (!id) { id = this.generatePushID() }
+      console.log('pushing to storage', key, val)
+      this.storage.get(key).then((v) => {
+        let temp = JSON.parse(v) || {}
+        console.log('temp', temp)
+        temp[id] = val
+        this.storage.set(key, JSON.stringify(temp)).then((res) => {
+          resolve('success')
+        })
+      })
     })
+    
   }
   load(key) {
     return new Promise((resolve) => {
       this.storage.get(key).then((v) => {
-        resolve(v)
+        resolve(JSON.parse(v))
       })
     })
     
