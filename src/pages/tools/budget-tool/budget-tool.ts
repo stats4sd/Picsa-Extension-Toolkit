@@ -26,7 +26,7 @@ export class BudgetToolPage {
 
     this.data = bdg.allData
     this.highlightActivity = { 0: true }
-    this.budget = this.bdg.sampleBudget
+    this.budget = this.bdg.budget
   }
 
   ionViewDidLoad() {
@@ -42,8 +42,8 @@ export class BudgetToolPage {
       'CardSelectPage',
       { type: type, selected: selected, period: period },
       { enableBackdropDismiss: false })
-    modal.onDidDismiss(data => {
-      this.budget[period.index - 1] = data
+    modal.onDidDismiss(d => {
+      this.budget.data[period.index - 1] = d
       this.calculateBalance()
     })
     modal.present()
@@ -54,12 +54,13 @@ export class BudgetToolPage {
     let modal = this.modalCtrl.create(
       'BudgetSavedPage',
       { operation: operation, budget: this.budget },
-      // { enableBackdropDismiss: false }
+      { enableBackdropDismiss: false }
     )
     modal.onDidDismiss(data => {
       this.budget = data
       this.calculateBalance()
     })
+    console.log('presenting modal')
     modal.present()
   }
   _toArray(value) {
@@ -69,7 +70,7 @@ export class BudgetToolPage {
     // total for current period
     console.log('calculating balance')
     var i = 0
-    for (let period of this.budget) {
+    for (let period of this.budget.data) {
       let expenses = 0
       let income = 0
       for (let input of period.inputs) {
@@ -85,19 +86,19 @@ export class BudgetToolPage {
         }
       }
       let net = income - expenses
-      this.budget[i].balance = {
+      this.budget.data[i].balance = {
         expenses: expenses, income: income, net: net
       }
       // running total
       if (i > 0) {
-        let running = this.budget[i - 1].runningTotal
-        this.budget[i].runningTotal = {
+        let running = this.budget.data[i - 1].runningTotal
+        this.budget.data[i].runningTotal = {
           expenses: expenses + running.expenses,
           income: income + running.income,
           net: net + running.net
         }
       }
-      else { this.budget[i].runningTotal = this.budget[i].balance }
+      else { this.budget.data[i].runningTotal = this.budget.data[i].balance }
       i++
     }
     console.log('budget', this.budget)

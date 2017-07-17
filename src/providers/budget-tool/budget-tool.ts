@@ -6,27 +6,34 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BudgetToolProvider {
   allData: any;
-  sampleBudget: any
+  budget: any
 
   constructor(public http: Http, public storage:StorageProvider) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
-    let temp=[]
-    for (let i = 0; i < 12; i++){
+    this.createNewBudget()
+  }
+  createNewBudget() {
+    this.budget = {
+      name: 'New Budget',
+      created: new Date(),
+      user: this.storage.user,
+      data: [],
+      id: this.storage.generatePushID()
+    }
+    for (let i = 0; i < 12; i++) {
       var p = {
-        index:0,
+        index: 0,
         activities: [],
         inputs: [],
         outputs: [],
         familyLabour: { people: 0, days: 0 },
         balance: { income: 0, expenses: 0, net: 0 },
-        runningTotal:{income:0,expenses:0,net:0}
+        runningTotal: { income: 0, expenses: 0, net: 0 }
       }
-      p.index = i+1
-      temp.push(p)
+      p.index = i + 1
+      this.budget.data.push(p)
     }
-    this.sampleBudget=temp
-    console.log('budget',this.sampleBudget)
   }
   save(budget) {
     // this.storage.set('','')
