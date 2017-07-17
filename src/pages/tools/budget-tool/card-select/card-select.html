@@ -78,8 +78,13 @@
   <div class="consumed" *ngIf="showConsumed">
     <div>
       <h3>Consumed</h3>
-      <div *ngFor="let output of period.outputs">
-        <div>{{output.Name}}</div>
+      <div *ngFor="let output of period.outputs; let i=index">
+        <div class=flex>
+          <div class="image-holder"><img [src]="output.Image"></div>
+          <button ion-button icon-only (click)="decreaseConsumed(i)"><ion-icon name="remove"></ion-icon></button>
+          <div>{{output.consumed}}</div>
+          <button ion-button (click)="increaseConsumed(i)"><ion-icon name="add"></ion-icon></button>
+        </div>
       </div>
     </div>
   </div>

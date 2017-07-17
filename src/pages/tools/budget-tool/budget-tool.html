@@ -46,12 +46,12 @@
       <!--Family Labour-->
       <div class="cell" (click)="edit('familyLabour',period)">
         <div class="grid-card" *ngIf="period.familyLabour && period.familyLabour.days">
-            <div *ngFor="let person of _toArray(period.familyLabour.people)" class="flex">
-              <ion-icon class="family-icon person-icon" name="person"></ion-icon>
-              <div *ngFor="let days of _toArray(period.familyLabour.days)">
-                <ion-icon class="family-icon clock-icon" name="clock"></ion-icon>
-              </div>
+          <div *ngFor="let person of _toArray(period.familyLabour.people)" class="flex">
+            <ion-icon class="family-icon person-icon" name="person"></ion-icon>
+            <div *ngFor="let days of _toArray(period.familyLabour.days)">
+              <ion-icon class="family-icon clock-icon" name="clock"></ion-icon>
             </div>
+          </div>
         </div>
       </div>
       <!--Outputs-->
@@ -67,9 +67,19 @@
       <div class="cell" (click)="edit('consumed',period)">
         <div class="grid-card flex">
           <div *ngFor="let output of period.outputs; let i=index">
-            <img class="card-image cell-main" [src]="output.Image">
-            <div class="cell-footer">{{output.consumed}}</div>
+            <div *ngIf="output.consumed>0">
+              <img class="card-image cell-main" [src]="output.Image">
+              <div class="cell-footer">{{output.consumed}}</div>
+            </div>
           </div>
+        </div>
+      </div>
+      <!--balance-->
+      <div class="cell">
+        <div class="grid-card">
+            <div>income:{{period.runningTotal.income}}</div>
+            <div>expenses:{{period.runningTotal.expenses}}</div>
+            <div>net:{{period.runningTotal.net}}</div>
         </div>
       </div>
     </div>
@@ -87,9 +97,4 @@
     </button>
   </div>
   <button ion-button round icon-start><ion-icon name="arrow-forward"></ion-icon>Continue</button>-->
-
-
-
-
-
 </ion-content>

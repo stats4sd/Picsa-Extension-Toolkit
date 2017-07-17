@@ -78,6 +78,18 @@ export class CardSelectPage {
       this.period.familyLabour[variable]--
     }
   }
+  increaseConsumed(index) {
+    if(!this.period.outputs[index].consumed){this.period.outputs[index.consumed]=0}
+    console.log('increasing', this.period.outputs[index])
+    if (this.period.outputs[index].consumed >= 0) {
+      this.period.outputs[index].consumed++
+    }
+  }
+  decreaseConsumed(index) {
+    if (this.period.outputs[index].consumed >= 0) {
+      this.period.outputs[index].consumed--
+    }
+  }
   _toArray(value) {
     return new Array(value).fill(0)
   }

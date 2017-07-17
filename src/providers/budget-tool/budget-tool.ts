@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import {StorageProvider } from '../storage/storage'
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -7,20 +8,33 @@ export class BudgetToolProvider {
   allData: any;
   sampleBudget: any
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public storage:StorageProvider) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
-    this.sampleBudget = sampleBudget
+    let temp=[]
+    for (let i = 0; i < 12; i++){
+      var p = {
+        index:0,
+        activities: [],
+        inputs: [],
+        outputs: [],
+        familyLabour: { people: 0, days: 0 },
+        balance: { income: 0, expenses: 0, net: 0 },
+        runningTotal:{income:0,expenses:0,net:0}
+      }
+      p.index = i+1
+      temp.push(p)
+    }
+    this.sampleBudget=temp
+    console.log('budget',this.sampleBudget)
   }
-  save() {
+  save(budget) {
+    // this.storage.set('','')
     
   }
   load() {
     
   }
-
-
-
 }
 
 var sampleBudget = [
@@ -131,9 +145,9 @@ var allData = {
     { "Type": "input", "Name": "wood", "Image": "assets/img/budget/input/wood.png", "ID": "wood" },
   ],
   outputs: [
-    { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop" },
-    { "Type": "output", "Name": "manure for compost", "Image": "assets/img/budget/output/manure-for-compost.png", "ID": "manure-for-compost" },
-    { "Type": "output", "Name": "money", "Image": "assets/img/budget/output/money.png", "ID": "money" },
-    { "Type": "output", "Name": "wood", "Image": "assets/img/budget/output/wood.png", "ID": "wood" }
+    { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop","consumed":0 },
+    { "Type": "output", "Name": "manure for compost", "Image": "assets/img/budget/output/manure-for-compost.png", "ID": "manure-for-compost", "consumed": 0 },
+    { "Type": "output", "Name": "money", "Image": "assets/img/budget/output/money.png", "ID": "money", "consumed": 0 },
+    { "Type": "output", "Name": "wood", "Image": "assets/img/budget/output/wood.png", "ID": "wood", "consumed": 0 }
   ]
 }
