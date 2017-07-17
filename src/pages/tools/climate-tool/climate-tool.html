@@ -5,8 +5,11 @@
 
   <ion-fab-list [hidden]="!fullScreenView">
     <button ion-fab color="load" (click)="selectSite()"><ion-icon name="globe"></ion-icon></button>
+    <div class="fab-label">Site</div>
     <button ion-fab color="save" (click)="toggleFullScreen()"><ion-icon name="expand"></ion-icon></button>
+    <div class="fab-label">Fill</div>
     <button ion-fab color="danger" (click)="close()"><ion-icon name="arrow-round-back"></ion-icon></button>
+    <div class="fab-label">Close</div>
   </ion-fab-list>
 </ion-fab>
 

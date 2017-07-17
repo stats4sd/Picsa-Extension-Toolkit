@@ -24,8 +24,18 @@
 
   <div *ngIf="operation=='load'">
     <h4 class="saved-budgets">Saved Budgets</h4>
-    <div *ngFor="let b of saved">
-      <button ion-button (click)="loadBudget(b)">{{b.name}}</button>
-    </div>
+    <ion-list>
+      <div *ngFor="let b of saved">
+        <ion-item *ngIf="!b.archived">
+          <div class="saved-budget" class="flex" >
+            <div class="saved-details" (click)="loadBudget(b)">
+              <div>{{b.name}}</div>
+              <div>{{b.created}}</div>
+            </div>
+            <button ion-button color="danger" (click)="archive(budget)">Archive</button>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
   </div>
 </ion-content>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CardSelectPage } from './card-select';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { CardSelectPage } from './card-select';
   ],
   imports: [
     IonicPageModule.forChild(CardSelectPage),
+    CanvasWhiteboardModule
   ],
   exports: [
     CardSelectPage

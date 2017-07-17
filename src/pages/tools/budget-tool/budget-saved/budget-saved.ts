@@ -23,11 +23,9 @@ export class BudgetSavedPage {
     console.log('nav params', navParams)
     this.operation = navParams.data.operation
     this.budget = navParams.data.budget
+    
     if (this.operation == 'load') {
-      this.storage.load('budgets').then((res)=>{
-        console.log('budgets loaded', res)
-        this.saved=res
-    ***REMOVED***)
+      this.loadSavedBudgets()
   ***REMOVED***
     
     console.log('budget',this.budget)
@@ -39,16 +37,41 @@ export class BudgetSavedPage {
   close() {
     this.viewCtrl.dismiss(this.budget)
 ***REMOVED***
+  loadSavedBudgets() {
+    this.storage.load('budgets').then((res) => {
+      console.log('budgets loaded', res)
+      let arr = []
+      for (let key in res) { arr.push(res[key]) }
+      this.saved = arr.reverse()
+  ***REMOVED***)
+***REMOVED***
   saveBudget() {
     console.log('saving budget')
-    this.storage.push('budgets', this.budget)
-    let toast = this.toastCtrl.create({
-      message: 'Budget Saved',
-      duration: 3000
-  ***REMOVED***);
-    toast.present
-    this.viewCtrl.dismiss(this.budget);
-
+    this.storage.save('budgets', this.budget, this.budget.id).then((res) => {
+      console.log('save res', res)
+      this.loadSavedBudgets()
+      let toast = this.toastCtrl.create({
+        message: 'Budget Saved',
+        duration: 3000
+    ***REMOVED***);
+      toast.present().then(() => {
+        this.viewCtrl.dismiss(this.budget);
+    ***REMOVED***)
+  ***REMOVED***)
+    
+***REMOVED***
+  archive(budget) {
+    console.log('archiving budget',budget)
+    this.budget.archived = true;
+    this.storage.save('budgets', this.budget, this.budget.id).then(()=>{
+      this.loadSavedBudgets()
+      let toast = this.toastCtrl.create({
+        message: 'Budget Archived',
+        duration: 3000
+    ***REMOVED***);
+      toast.present()
+  ***REMOVED***)
+    
 ***REMOVED***
   loadBudget(budget) {
     this.budget = budget

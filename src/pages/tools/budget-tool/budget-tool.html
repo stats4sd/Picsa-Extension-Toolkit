@@ -2,8 +2,11 @@
   <button ion-fab mini color="light"><ion-icon name="more"></ion-icon></button>
   <ion-fab-list>
     <button ion-fab color="load" (click)="saveAndLoad('load')"><ion-icon name="folder-open"></ion-icon></button>
+    <div class="fab-label">Load</div>
     <button ion-fab color="save" (click)="saveAndLoad('save')"><ion-icon name="bookmark"></ion-icon></button>
+    <div class="fab-label">Save</div>
     <button ion-fab mini color="danger" (click)="close()"><ion-icon name="arrow-round-back"></ion-icon></button>
+    <div class="fab-label">Close</div>
   </ion-fab-list>
 </ion-fab>
 
@@ -11,10 +14,6 @@
 
 
 <ion-content>
-  <!--<canvas-whiteboard #canvasWhiteboard [drawButtonClass]="'drawButtonClass'" [drawButtonText]="'Draw'" [clearButtonClass]="'clearButtonClass'"
-    [clearButtonText]="'Clear'" [undoButtonText]="'Undo'" [undoButtonEnabled]="true" [redoButtonText]="'Redo'" [redoButtonEnabled]="true"
-    [colorPickerEnabled]="false" [saveDataButtonEnabled]="true" [saveDataButtonText]="'Save'" >
-  </canvas-whiteboard>-->
   <div id="budget" class="flex">
     <div id="titles" class="titles time-period">
       <div class="cell top-row"></div>
@@ -77,9 +76,9 @@
       <!--balance-->
       <div class="cell">
         <div class="grid-card">
-            <div>income:{{period.runningTotal.income}}</div>
-            <div>expenses:{{period.runningTotal.expenses}}</div>
-            <div>net:{{period.runningTotal.net}}</div>
+          <div>income:{{period.runningTotal.income}}</div>
+          <div>expenses:{{period.runningTotal.expenses}}</div>
+          <div>net:{{period.runningTotal.net}}</div>
         </div>
       </div>
     </div>
