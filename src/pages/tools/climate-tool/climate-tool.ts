@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ModalController, LoadingController } from 'ionic-angular';
 import { C3ChartProvider } from '../../../providers/c3-chart/c3-chart';
 import { MalawiDataProvider } from '../../../providers/c3-chart/malawi-data';
 import { CombinedRiskComponentModule} from './components/combined-risk/combined-risk.module'
@@ -21,8 +21,9 @@ export class ClimateToolPage{
   probabilities:any;
   activeChart: any = { name:null***REMOVED***
   crops:any;
-  selectedCrop:any={***REMOVED***
-  columns=[];
+  selectedCrop: any = {***REMOVED***
+  fullScreenView:boolean = true;
+  columns = [];
 
   constructor(
     public navCtrl: NavController,
@@ -30,7 +31,8 @@ export class ClimateToolPage{
     public menuCtrl: MenuController,
     public c3Provider: C3ChartProvider,
     public modalCtrl: ModalController,
-    public malawiData: MalawiDataProvider) {
+    public malawiData: MalawiDataProvider,
+    public loadingCtrl:LoadingController) {
     
 ***REMOVED***
 
@@ -45,6 +47,25 @@ export class ClimateToolPage{
     // this.menuCtrl.open();
     this.selectSite();
 ***REMOVED***
+  toggleFullScreen() {
+    this.fullScreenView = !this.fullScreenView
+    console.log('resize?')
+    console.log('screen',window.screen)
+    if (!this.fullScreenView) {
+      this.c3Provider.resize({
+        height: window.screen.height-80,
+        width: window.screen.width-20
+    ***REMOVED***);
+  ***REMOVED***
+    else {
+      this.c3Provider.resize({
+        height: 320,
+        width: window.screen.width-20
+    ***REMOVED***);
+  ***REMOVED***
+    
+***REMOVED***
+  
   siteChanged(){
     this.c3Provider.setDataset(this.selectedSite)
       .then(
@@ -54,16 +75,25 @@ export class ClimateToolPage{
       ***REMOVED***,
         err=>{console.log('error',err)
       ***REMOVED***
-      )  
+    )
+    
 ***REMOVED***
   setChart(chart) {
-    this.activeChart = {***REMOVED***
-    this.activeChart = chart;
-    console.log('activeChart',chart)
-    this.c3Provider.setChart(chart)
-    this.showTools=true;
-    this.lineToolValue=null;
-    this.selectedCrop={***REMOVED***    
+    let loader = this.loadingCtrl.create({
+      content: 'Loading...',
+      duration: 3000
+  ***REMOVED***);
+    loader.present().then(() => {
+      this.activeChart = {***REMOVED***
+      this.activeChart = chart;
+      console.log('activeChart', chart)
+      this.c3Provider.setChart(chart)
+      this.showTools = true;
+      this.lineToolValue = null;
+      this.selectedCrop = {***REMOVED***   
+  ***REMOVED***)
+    
+    
 ***REMOVED***
   showAllCharts(){
     this.showTools=false
@@ -72,7 +102,10 @@ export class ClimateToolPage{
     this.navCtrl.pop();
 ***REMOVED***
   selectSite() {
-    let profileModal = this.modalCtrl.create('SiteSelectPage', { });
+    let profileModal = this.modalCtrl.create(
+      'SiteSelectPage',
+      {},
+      { enableBackdropDismiss: false });
     profileModal.onDidDismiss(site => {
       console.log('site',site)
      this.selectedSite=site
@@ -82,11 +115,11 @@ export class ClimateToolPage{
 ***REMOVED***
   setAvailableCharts(list){
     this.availableCharts=[
-      {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",x:"Rainfall",yFormat:"value",tools:{line:true}},
-      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date",tools:{line:true}},
-      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date",tools:{line:true}},
-      { name: "Length of Season", image: "assets/img/charts/season-length.png", x: "Length", yFormat: "value", tools: { line: true } },
-      { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page:"CombinedRiskPage" },
+      {name:"Seasonal Rainfall",image:"assets/img/charts/season-rainfall.png",cropTableValue:'water',x:"Rainfall",yFormat:"value",tools:{line:true}},
+      {name:"Start of Season",image:"assets/img/charts/season-start.png",x:"Start",yFormat:"date-from-July",tools:{line:false}},
+      {name:"End of Season",image:"assets/img/charts/season-end.png",x:"End",yFormat:"date-from-July",tools:{line:false}},
+      { name: "Length of Season", image: "assets/img/charts/season-length.png", cropTableValue: 'length', x: "Length", yFormat: "value", tools: { line: true } },
+      { name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page: "CombinedRiskPage", tools: { line: false } },
     ]
 ***REMOVED***
   lineToolValueChange(e?){
@@ -99,7 +132,7 @@ export class ClimateToolPage{
   setCrop(crop){
     this.selectedCrop={}
     this.selectedCrop[crop.name]=true
-    this.lineToolValue=crop.waterAvg;
+    this.lineToolValue = crop[this.activeChart.cropTableValue + 'Avg'];
     this.lineToolValueChange();
    
 ***REMOVED***
