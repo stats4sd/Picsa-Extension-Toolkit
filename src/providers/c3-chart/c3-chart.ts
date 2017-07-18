@@ -73,6 +73,21 @@ export class C3ChartProvider {
           return seriesColors[this.activeChart.x]
       ***REMOVED***.bind(this)
     ***REMOVED***,
+      tooltip: {
+        grouped:false,
+        format: {
+          // title: function (d) { return 'Data ' + d; },
+          value: function (value, ratio, id) {
+            if (this.activeChart.yFormat == 'value') {
+              return parseInt(value).toString() + " "+this.activeChart.units;
+          ***REMOVED***
+            else {
+              return this.formatAxis(value, this.activeChart.yFormat)+" "+this.activeChart.units
+          ***REMOVED***
+            
+        ***REMOVED***.bind(this)
+      ***REMOVED***
+    ***REMOVED***,
       axis: {
         y: {
           tick: {
@@ -94,6 +109,28 @@ export class C3ChartProvider {
           return 5
       ***REMOVED***.bind(this)
     ***REMOVED***,
+      // tooltip: {
+      //   // grouped: false,
+        
+      //   // contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+      //   //   // console.log(d)
+      //   //   var units = this.activeChart.units
+      //   //   var tooltip;
+      //   //   //add different tooltip for null years
+      //   //   if (d[0].value == null) {
+      //   //     tooltip = '<div style="width: 140px;background-color: #fdff7a;font-size:larger;border:2px solid black>'
+      //   //       + 'No data available</div>'
+      //   // ***REMOVED***
+      //   //   else {
+      //   //     tooltip = '<div style="width: 140px;background-color: #fdff7a;font-size: larger;border:border:2px solid black">'
+      //   //       + '<strong>' + d[0].x + '</strong><br><br>'
+      //   //       + Math.round(d[0].value) + ' ' + units + '</div>'
+      //   //       + '<div>' + defaultTitleFormat + '</div>'
+      //   //       + '<div>' + defaultValueFormat + '</div>'
+      //   // ***REMOVED***
+      //   //   return tooltip
+      //   // }.bind(this)
+      // },
       onrendered: function () {
         this.firstRender()
     ***REMOVED***.bind(this)

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import {StorageProvider } from '../storage/storage'
+import { StorageProvider } from '../storage/storage'
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class BudgetToolProvider {
   allData: any;
   budget: any
 
-  constructor(public http: Http, public storage:StorageProvider) {
+  constructor(public http: Http, public storage: StorageProvider) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
     //load saved cards
@@ -19,12 +19,12 @@ export class BudgetToolProvider {
     this.storage.load('budgetCards').then((res) => {
       console.log('loading saved cards', res)
       for (let key in res) {
-        console.log('adding type',res[key].Types)
+        console.log('adding type', res[key].Types)
         this.allData[res[key].Types].push(res[key])
     ***REMOVED***
-      console.log('all data',this.allData)
+      console.log('all data', this.allData)
   ***REMOVED***)
-    
+
 ***REMOVED***
   createNewBudget() {
     this.budget = {
@@ -33,7 +33,7 @@ export class BudgetToolProvider {
       user: this.storage.user,
       data: [],
       id: this.storage.generatePushID(),
-      archived:false
+      archived: false
   ***REMOVED***
     for (let i = 0; i < 12; i++) {
       var p = {
@@ -42,8 +42,28 @@ export class BudgetToolProvider {
         inputs: [],
         outputs: [],
         familyLabour: { people: 0, days: 0 },
-        balance: { income: 0, expenses: 0, net: 0 },
-        runningTotal: { income: 0, expenses: 0, net: 0 }
+        balance: {
+          inputs: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          outputs: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          consumed: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          monthly: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          running: {
+            total: 0,
+            dots: []
+        ***REMOVED***
+      ***REMOVED***
     ***REMOVED***
       p.index = i + 1
       this.budget.data.push(p)
@@ -51,10 +71,10 @@ export class BudgetToolProvider {
 ***REMOVED***
   save(budget) {
     // this.storage.set('','')
-    
+
 ***REMOVED***
   load() {
-    
+
 ***REMOVED***
 }
 
@@ -166,7 +186,7 @@ var allData = {
     { "Type": "input", "Name": "wood", "Image": "assets/img/budget/input/wood.png", "ID": "wood" },
   ],
   outputs: [
-    { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop","consumed":0 },
+    { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", "consumed": 0 },
     { "Type": "output", "Name": "manure for compost", "Image": "assets/img/budget/output/manure-for-compost.png", "ID": "manure-for-compost", "consumed": 0 },
     { "Type": "output", "Name": "money", "Image": "assets/img/budget/output/money.png", "ID": "money", "consumed": 0 },
     { "Type": "output", "Name": "wood", "Image": "assets/img/budget/output/wood.png", "ID": "wood", "consumed": 0 }
