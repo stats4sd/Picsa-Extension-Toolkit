@@ -13,9 +13,16 @@ page-card-select {
     img{
         height: 4.5em;
     }
+    .new-card-image{
+        height: 100%
+    }
     .card-title{
         height: 1.5em;
         line-height: 1em;        
+    }
+    .card-meta{
+        margin-left:20px;
+        font-size: x-large
     }
     .card-value{height:1em}
     .highlight{

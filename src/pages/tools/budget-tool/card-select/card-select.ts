@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 import { BudgetToolProvider } from '../../../../providers/budget-tool/budget-tool';
-import { CanvasWhiteboardComponent } from 'ng2-canvas-whiteboard'
+import { CanvasWhiteboardComponent } from 'ng2-canvas-whiteboard';
+import { StorageProvider } from '../../../../providers/storage/storage'
 
 @IonicPage()
 @Component({
@@ -22,16 +23,18 @@ export class CardSelectPage {
   showValues = false;
   showFamilyLabour = false;
   showConsumed = false;
-  showNewCard = false
+  showNewCard = false;
+  showNewCardMeta = false;
   type: string
   period: any;
-  canvasDataUrl: any;
-  canvasBlob: any;
+  newCard: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public bdg: BudgetToolProvider,
-    public viewCtrl: ViewController) {
+    public viewCtrl: ViewController,
+    public storage: StorageProvider,
+    public toatsCtrl: ToastController) {
     this.cards = this.bdg.allData[this.navParams.data.type]
     this.period = this.navParams.data.period
   }
@@ -102,12 +105,6 @@ export class CardSelectPage {
   _toArray(value) {
     return new Array(value).fill(0)
   }
-  addCard() {
-    this.showNewCard = true
-
-  }
-
-
 
   setSelected(array) {
     console.log('setting selected')
@@ -126,17 +123,43 @@ export class CardSelectPage {
     this.viewCtrl.dismiss(this.period)
 
   }
-  sendBatchUpdate($event) {
-    console.log('batch update', $event)
+  addCard() {
+    //lookup as card types not quite same as budget type names
+    let types = {
+      inputs: 'input',
+      outputs: 'output',
+      activities:'activity'
+    }
+    this.newCard = {
+      Type: types[this.type],
+      Types: this.type,
+      Name: "New Card",
+      Image: "",
+      ID: this.storage.generatePushID()
+    }
+    this.showNewCard = true
   }
   saveCanvasImage() {
     let img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
-    console.log('img', img)
-    this.canvasDataUrl = img
-    this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
-      console.log(blob);
-      this.canvasBlob = blob
-    }, "image/png");
+    this.newCard.Image = img
+    this.showNewCard = false
+    this.showNewCardMeta = true
+    // this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
+    //   console.log(blob);
+    // }, "image/png");
   }
+  saveNewCard() {
+    this.storage.save('budgetCards', this.newCard, this.newCard.ID).then((res) => {
+      console.log('card saved?', res)
+      let toast = this.toatsCtrl.create({
+        message: 'Card Saved',
+        duration: 3000
+      });
+      toast.present();
+      this.showNewCardMeta = false
+      this.cards.unshift(this.newCard);
+      this.highlight(this.newCard)
+    })
+}
 
 }

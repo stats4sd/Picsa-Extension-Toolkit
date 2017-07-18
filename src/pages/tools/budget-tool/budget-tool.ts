@@ -13,7 +13,8 @@ export class BudgetToolPage {
   rowTitles: any = ['Activities', 'Inputs', 'Family Labour', 'Outputs', 'Produce Consumed', 'Cash Balance']
   highlightActivity: any;
   highlighted: any = { activity: {} };
-  dotValue: number = 500;
+  dotValue: number = 1000;
+  editDotValue:boolean=false
 
   constructor(
     public navCtrl: NavController,
@@ -100,6 +101,29 @@ export class BudgetToolPage {
       i++
     }
     console.log('budget', this.budget)
+  }
+  valueDotNotation(type, val) {
+    if (!this.editDotValue) {
+      let count = Math.abs(Math.round(val / this.dotValue))
+      let arr = []
+      let positiveValue = {
+        src: "assets/img/budget/dot-positive.png"
+      }
+      let negativeValue = {
+        src: "assets/img/budget/dot-negative.png"
+      }
+      if (val < 0 || type == "expense") {
+        arr = new Array(count).fill(negativeValue)
+      }
+      else if (val > 0) {
+        arr = new Array(count).fill(positiveValue)
+      }
+      return arr
+    }
+    
+  }
+  toggleDotEdit() {
+    this.editDotValue = !this.editDotValue
   }
 
 }
