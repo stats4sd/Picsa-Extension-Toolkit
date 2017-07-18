@@ -2,6 +2,10 @@ page-budget-tool {
     #budget{
         padding: 10px;
     }
+    .scroll-content{
+        overflow-x: scroll;
+    }
+    
     .grow{
         flex-grow: 1;
         align-content: center;
@@ -30,11 +34,13 @@ page-budget-tool {
     .time-period{
         border: 2px solid black;
         flex-grow: 1;
-        height:90vh;
     }
     .row, .cell{
         height: 15vh;
         display: block; 
+    }
+    .cell{
+        min-width: 100px;
     }
     .top-row{
         height:3vh;
@@ -53,9 +59,6 @@ page-budget-tool {
     .cell-main{
         height:8vh;
     }
-    .titles{
-        height: 90vh;
-    }
     .image-holder{
         height: 100%
     }
@@ -73,5 +76,14 @@ page-budget-tool {
     }
     .person-icon{
         margin-right:5px
+    }
+    .dot-value{
+        height: 1em;
+    }
+    .dot-value-image{
+        max-height: 1em;
+    }
+    .text-input{
+        margin:0
     }
 }

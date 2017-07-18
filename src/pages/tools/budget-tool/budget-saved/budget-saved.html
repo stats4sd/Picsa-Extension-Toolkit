@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Budgets</ion-title>
+    <ion-buttons end>
+      <button (click)="close()" ion-button icon-only>
+        <ion-icon name="close"></ion-icon>
+        Close
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="operation=='save'">
+    <ion-item>
+      <ion-label floating>Enter name to save</ion-label>
+      <ion-input type="text" [(ngModel)]="budget.name"></ion-input>
+    </ion-item>
+    <button color="primary" ion-button (click)="saveBudget()">Save</button>
+  </div>
+
+  <div *ngIf="operation=='load'">
+    <h4 class="saved-budgets">Saved Budgets</h4>
+    <ion-list>
+      <div *ngFor="let b of saved">
+        <ion-item *ngIf="!b.archived">
+          <div class="saved-budget" class="flex" >
+            <div class="saved-details" (click)="loadBudget(b)">
+              <div>{{b.name}}</div>
+              <div>{{b.created}}</div>
+            </div>
+            <button ion-button color="danger" (click)="archive(budget)">Archive</button>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

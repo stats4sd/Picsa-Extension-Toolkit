@@ -17,6 +17,7 @@ export class C3ChartProvider {
   public activeChart: any = {};
   public lineToolValues: any = {};
   public lineToolActive: boolean = false;
+  
   site: any;
   columnsObserver: any;
   initialRender: boolean = true;
@@ -25,9 +26,9 @@ export class C3ChartProvider {
     this.activeChart.x = "Rainfall"
     this.loadData()
     this.crops = [
-      { index:0,name: 'Maize', waterMin: 500, waterMax: 800, waterAvg: 720, lengthAvg: 60, image: "assets/img/crops/maize.jpg" },
-      { index:1,name: 'Groundnuts', waterMin: 500, waterMax: 700, waterAvg: 600, lengthAvg: 90, image: "assets/img/crops/groundnuts.jpg" },
-      { index:2,name: 'Sorghum', waterMin: 450, waterMax: 650, waterAvg: 550, lengthAvg: 120, image: "assets/img/crops/sorghum.jpg" },
+      { index: 0, name: 'Maize', waterMin: 405, waterMax: 660, waterAvg: 580, lengthMin: 90, lengthMax: 145, lengthAvg: 130, image: "assets/img/crops/maize.jpg" },
+      { index:1,name: 'Groundnuts', waterMin: 405, waterMax: 675, waterAvg: 540, lengthMin: 90, lengthMax:150, lengthAvg: 120, image: "assets/img/crops/groundnuts.jpg" },
+      { index: 2, name: 'Sorghum', waterMin: 450, waterMax: 540, waterAvg: 500, lengthMin: 100, lengthMax: 120, lengthAvg: 110, image: "assets/img/crops/sorghum.jpg" },
     ]
   }
   loadData() {
@@ -45,11 +46,15 @@ export class C3ChartProvider {
   }
 
   generate(x) {
+    console.log('active chart',this.activeChart)
     var s = this.site
     var keys = []
     for (let key in s.summaries[0]) { keys.push(key) }
     this.chart = c3.generate({
       bindto: '#chart',
+      size: {
+        height: 320
+      },
       data: {
         json: s.summaries,
         hide: true,
@@ -67,6 +72,16 @@ export class C3ChartProvider {
           }
           return seriesColors[this.activeChart.x]
         }.bind(this)
+      },
+      axis: {
+        y: {
+          tick: {
+            format: function (d) {
+
+              return this.formatAxis(d, this.activeChart.yFormat)
+            }.bind(this)
+          }
+        }
       },
       legend: {
         hide:true
@@ -98,7 +113,6 @@ export class C3ChartProvider {
     this.site = site
     console.log('loading file', site.filePath)
     //try to load cache first
-
     //load from csv
     return new Promise((resolve, reject) => {
       Papa.parse(site.filePath, {
@@ -125,7 +139,15 @@ export class C3ChartProvider {
       this.chart.hide();
       this.chart.legend.hide();
       this.chart.show(chart.x, {withLegend: true});
-    }
+    } 
+  }
+
+  resize(size) {
+    console.log('resizing chart',size)
+    this.chart.resize({
+      height: size.height,
+      width: size.width
+    });
   }
   setLineToolValue(value) {
     this.lineToolValues[this.activeChart.x] = value
@@ -217,7 +239,22 @@ export class C3ChartProvider {
       color : color
     }
 
-   }
+  }
+  formatAxis(value, type) {
+    if (type == 'date-from-July') {
+      //181 based on local met +182 and -1 for index starting at 0
+      let dayNumber = (value + 181) % 366
+      //simply converts number to day rough date value (same method as local met office)
+      //initialise year
+      let d = new Date(2001, 0)
+      d.setDate(dayNumber)
+      var monthNames = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct","Nov", "Dec","Jan"];
+      var string = d.getDate()+'-'+monthNames[d.getMonth()]
+      return string
+    }
+    else if (type == 'value') { return value }
+    else return value
+  }
 }
 
 var seriesColors = {

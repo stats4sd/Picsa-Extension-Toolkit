@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, Http } from '@angular/http';
-import { Storage, IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
@@ -11,19 +11,6 @@ import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 // App pages
 import { MyApp } from './app.component';
-// import { QandAPage } from '../pages/qanda/qanda';
-// import { RecordDataPage } from '../pages/record-data/record-data';
-// import { ViewDataPage } from '../pages/view-data/view-data';
-// import { FormPopup } from "../pages/record-data/form-popup/form-popup";
-// import { ForumPage } from "../pages/qanda/forum/forum";
-// import { ForumDiscussionPage } from "../pages/qanda/forum/forum-discussion-page/forum-discussion-page";
-// import { VideosPage } from "../pages/qanda/videos/videos";
-// import { IframePage } from "../pages/iframe/iframe";
-// import { ToolsPage } from "../pages/tools/tools";
-// import { ClimateToolPage } from "../pages/climate-tool/climate-tool";
-// import { BudgetToolPage } from "../pages/budget-tool/budget-tool";
-// import { CombinedRiskComponent } from '../pages/climate-tool/components/combined-risk/combined-risk';
-
 // Angular fire 2
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -37,6 +24,7 @@ import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 import { ForumServiceProvider } from '../providers/forum-service/forum-service';
 import { MalawiDataProvider } from '../providers/c3-chart/malawi-data';
 import { BudgetToolProvider } from '../providers/budget-tool/budget-tool';
+import { StorageProvider } from '../providers/storage/storage';
 
 
 // AF2 Settings
@@ -51,21 +39,6 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    // QandAPage,
-    // TabsPage,
-    // PicsaManualPage,
-    // ViewDataPage,
-    // RecordDataPage,
-    // FormPopup,
-    // ForumPage,
-    // VideosPage,
-    // ForumDiscussionPage,
-    // ClimateToolPage,
-    // BudgetToolPage,
-    // PdfViewerComponent,
-    // IframePage,
-    // ToolsPage,
-    // CombinedRiskComponent,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -108,7 +81,8 @@ export const firebaseConfig = {
     Network,
     ForumServiceProvider,
     MalawiDataProvider,
-    BudgetToolProvider]
+    BudgetToolProvider,
+    StorageProvider]
 
 })
 export class AppModule {}
