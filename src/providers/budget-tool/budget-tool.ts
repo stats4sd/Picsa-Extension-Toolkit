@@ -11,7 +11,20 @@ export class BudgetToolProvider {
   constructor(public http: Http, public storage:StorageProvider) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
+    //load saved cards
+    this.loadSavedCards()
     this.createNewBudget()
+***REMOVED***
+  loadSavedCards() {
+    this.storage.load('budgetCards').then((res) => {
+      console.log('loading saved cards', res)
+      for (let key in res) {
+        console.log('adding type',res[key].Types)
+        this.allData[res[key].Types].push(res[key])
+    ***REMOVED***
+      console.log('all data',this.allData)
+  ***REMOVED***)
+    
 ***REMOVED***
   createNewBudget() {
     this.budget = {

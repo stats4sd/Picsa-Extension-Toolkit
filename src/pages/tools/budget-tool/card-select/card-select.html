@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-title>Select Cards</ion-title>
     <ion-buttons end>
-      <button *ngIf="!showNewCard" ion-button icon-left outline (click)="close()" color="primary">
+      <button *ngIf="!showNewCard && !showNewCardMeta" ion-button icon-left outline (click)="close()" color="primary">
         <ion-icon name="checkmark"></ion-icon>
         Continue
       </button>
       <button *ngIf="showNewCard" ion-button icon-left outline (click)="saveCanvasImage()" color="primary">
         <ion-icon name="checkmark"></ion-icon>
-        Save Image
+        Continue
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -16,7 +16,7 @@
 
 <ion-content padding>
   <!--cards container-->
-  <div *ngIf="!showNewCard">
+  <div *ngIf="!showNewCard && !showNewCardMeta">
     <div class="cards-container" *ngIf="showCards">
       <div class="flex wrap">
         <div class='card' *ngFor="let card of cards; let i=index" (click)="highlight(card,i)" [class.highlight]="selected[card.ID]">
@@ -96,22 +96,19 @@
   </div>
   <!--Add card-->
   <div *ngIf="showNewCard" class="canvas-container">
-    <canvas-whiteboard #canvasWhiteboard 
-    [drawButtonClass]="'drawButtonClass'" 
-    [drawButtonText]="'Draw'" 
-    [clearButtonClass]="'clearButtonClass'"
-    [clearButtonText]="'Clear'" 
-    [clearButtonEnabled]="true"
-    [undoButtonText]="'Undo'" 
-    [undoButtonEnabled]="true" 
-    [redoButtonText]="'Redo'" 
-    [redoButtonEnabled]="true"
-    [colorPickerEnabled]="true" 
-    [saveDataButtonEnabled]="false" 
-    [saveDataButtonText]="'Save'"
-    >
+    <canvas-whiteboard #canvasWhiteboard [drawButtonClass]="'drawButtonClass'" [drawButtonText]="'Draw'" [clearButtonClass]="'clearButtonClass'"
+      [clearButtonText]="'Clear'" [clearButtonEnabled]="true" [undoButtonText]="'Undo'" [undoButtonEnabled]="true" [redoButtonText]="'Redo'"
+      [redoButtonEnabled]="true" [colorPickerEnabled]="true" [saveDataButtonEnabled]="false" [saveDataButtonText]="'Save'">
     </canvas-whiteboard>
-    <img [src]="canvasDataUrl">
-    <img [src]="canvasBlob">
+  </div>
+  <div class="flex" *ngIf="showNewCardMeta">
+    <div class="card">
+      <img class="new-card-image" [src]="newCard.Image">
+    </div>
+    <div class="card-meta">
+      <ion-label stacked>Name for card:</ion-label>
+      <ion-input type="text" [(ngModel)]="newCard.Name"></ion-input>
+      <button ion-button (click)="saveNewCard()">Save</button>
+    </div>
   </div>
 </ion-content>
