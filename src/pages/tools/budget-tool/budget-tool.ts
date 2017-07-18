@@ -13,8 +13,9 @@ export class BudgetToolPage {
   rowTitles: any = ['Activities', 'Inputs', 'Family Labour', 'Outputs', 'Produce Consumed', 'Cash Balance']
   highlightActivity: any;
   highlighted: any = { activity: {} };
-  dotValue: number = 1000;
-  editDotValue:boolean=false
+  dots: any
+
+  editDotValue: boolean = false
 
   constructor(
     public navCtrl: NavController,
@@ -26,6 +27,12 @@ export class BudgetToolPage {
     this.data = bdg.allData
     this.highlightActivity = { 0: true }
     this.budget = this.bdg.budget
+    this.dots = {
+      large: 50000,
+      medium: 10000,
+      small: 1000,
+      half: 500
+    }
   }
 
   ionViewDidLoad() {
@@ -71,59 +78,102 @@ export class BudgetToolPage {
     var i = 0
     for (let period of this.budget.data) {
       let expenses = 0
-      let income = 0
+      let inputNet = 0
+      let outputNet = 0
+      let consumedNet = 0
+      let runningNet = 0
+      let monthlyNet = 0
+      //remember, inputs have negative effect on cash flow as need to be bought
       for (let input of period.inputs) {
         if (input.quantity > 0) {
-          let total = input.quantity * input.cost
-          expenses = expenses + total
+          inputNet = inputNet + input.quantity * input.cost
         }
       }
       for (let output of period.outputs) {
         if (output.quantity > 0) {
-          let total = (output.quantity - output.consumed) * output.cost
-          income = income + total
+          outputNet = outputNet + output.quantity * output.cost
+          consumedNet = consumedNet + output.consumed * output.cost
         }
       }
-      let net = income - expenses
+      monthlyNet = outputNet - inputNet
+      runningNet = runningNet + monthlyNet
+
+      let inputDots = this.valueDotNotation('expense', inputNet)
+      let outputDots = this.valueDotNotation('income', outputNet)
+      let consumedDots = this.valueDotNotation('expense', consumedNet)
+      let monthlyDots = this.valueDotNotation('', monthlyNet)
+      let runningDots = this.valueDotNotation('', runningNet)
+
       this.budget.data[i].balance = {
-        expenses: expenses, income: income, net: net
+        inputs: {
+          total: inputNet,
+          dots: inputDots
+        },
+        outputs: {
+          total: outputNet,
+          dots: outputDots
+        },
+        consumed: {
+          total: consumedNet,
+          dots: consumedDots
+        },
+        monthly: {
+          total: monthlyNet,
+          dots: monthlyDots
+        },
+        running: {
+          total: runningNet,
+          dots: runningDots
+        },
+
       }
-      // running total
-      if (i > 0) {
-        let running = this.budget.data[i - 1].runningTotal
-        this.budget.data[i].runningTotal = {
-          expenses: expenses + running.expenses,
-          income: income + running.income,
-          net: net + running.net
-        }
-      }
-      else { this.budget.data[i].runningTotal = this.budget.data[i].balance }
+
       i++
     }
     console.log('budget', this.budget)
+
   }
   valueDotNotation(type, val) {
-    if (!this.editDotValue) {
-      let count = Math.abs(Math.round(val / this.dotValue))
-      let arr = []
-      let positiveValue = {
-        src: "assets/img/budget/dot-positive.png"
-      }
-      let negativeValue = {
-        src: "assets/img/budget/dot-negative.png"
-      }
-      if (val < 0 || type == "expense") {
-        arr = new Array(count).fill(negativeValue)
-      }
-      else if (val > 0) {
-        arr = new Array(count).fill(positiveValue)
-      }
-      return arr
-    }
+    if (val != 0) {
+      //code could be tidies to loop but it's late!
+      let large = Math.abs(Math.round(val / this.dots.large))
+      let largeRemainder = Math.abs(Math.round(val % this.dots.large))
+      let medium = Math.abs(Math.round(largeRemainder / this.dots.medium))
+      let mediumRemainder = Math.abs(Math.round(largeRemainder % this.dots.medium))
+      let small = Math.abs(Math.round(mediumRemainder / this.dots.small))
+      let smallRemainder = Math.abs(Math.round(mediumRemainder % this.dots.small))
+      let half = Math.abs(Math.round(smallRemainder / this.dots.half))
+      console.log('val', val, 'large', large, 'medium', medium, 'small', small)
     
+      let suffix=""
+      if (val < 0 || type == "expense") { suffix = "negative" }
+      else { suffix = "positive" }
+    
+      let largeArr = new Array(large).fill({ src: "assets/img/budget/large-" + suffix + ".png" })
+      let mediumArr = new Array(medium).fill({ src: "assets/img/budget/medium-" + suffix + ".png" })
+      let smallArr = new Array(small).fill({ src: "assets/img/budget/small-" + suffix + ".png" })
+      let halfArr = new Array(half).fill({ src: "assets/img/budget/half-" + suffix + ".png" })
+      
+      let arr=[]
+      arr=arr.concat(largeArr,mediumArr,smallArr,halfArr)
+      return arr
+    
+    }
+
+    
+    // if (val < 0 || type == "expense") {
+    //   arr = new Array(count).fill(negativeValue)
+    // }
+    // else if (val > 0) {
+    //   arr = new Array(count).fill(positiveValue)
+    // }
+    
+
   }
   toggleDotEdit() {
+    if (this.editDotValue) { this.calculateBalance(); }
     this.editDotValue = !this.editDotValue
+
   }
 
 }
