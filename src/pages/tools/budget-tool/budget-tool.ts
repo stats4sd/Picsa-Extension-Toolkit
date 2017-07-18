@@ -14,6 +14,7 @@ export class BudgetToolPage {
   highlightActivity: any;
   highlighted: any = { activity: {} ***REMOVED***
   dots: any
+  dotsArray=[]
 
   editDotValue: boolean = false
 
@@ -33,6 +34,7 @@ export class BudgetToolPage {
       small: 1000,
       half: 500
   ***REMOVED***
+    this.dotsArray=this._objectToArray(this.dots)
 ***REMOVED***
 
   ionViewDidLoad() {
@@ -72,16 +74,24 @@ export class BudgetToolPage {
   _toArray(value) {
     return new Array(value).fill(0)
 ***REMOVED***
+  _objectToArray(object) {
+    console.log('converting object',object)
+    let arr = []
+    for (let key in object) {
+      arr.push({key:key,val:object[key]})
+  ***REMOVED***
+    return arr
+***REMOVED***
   calculateBalance() {
     // total for current period
     console.log('calculating balance')
-    var i = 0
+    let i = 0
+    let runningNet = 0
     for (let period of this.budget.data) {
       let expenses = 0
       let inputNet = 0
       let outputNet = 0
       let consumedNet = 0
-      let runningNet = 0
       let monthlyNet = 0
       //remember, inputs have negative effect on cash flow as need to be bought
       for (let input of period.inputs) {
