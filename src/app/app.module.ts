@@ -5,7 +5,7 @@ import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { File } from '@ionic-native/file';
+// import { File } from '@ionic-native/file';
 import { Network} from '@ionic-native/network';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
@@ -18,7 +18,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireOfflineModule } from 'angularfire2-offline';
 // Providers
 import {KoboApi} from "../providers/kobo-api";
-import {FileService} from "../providers/file-service";
+// import {FileService} from "../providers/file-service";
 import {YoutubeService} from '../providers/youtube-service';
 import { C3ChartProvider } from '../providers/c3-chart/c3-chart';
 import { ForumServiceProvider } from '../providers/forum-service/forum-service';
@@ -56,33 +56,21 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    // QandAPage,
-    // TabsPage,
-    // PicsaManualPage,
-    // ViewDataPage,
-    // RecordDataPage,
-    // FormPopup,
-    // ForumPage,
-    // VideosPage,
-    // ForumDiscussionPage,
-    // ClimateToolPage,
-    // BudgetToolPage,
-    // IframePage,
-    // ToolsPage,
   ],
 
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
     KoboApi,
     YoutubeService,
-    FileService,
+    // FileService,
     SplashScreen,
-    File,
+    // File,
     C3ChartProvider,
     Network,
     ForumServiceProvider,
     MalawiDataProvider,
     BudgetToolProvider,
-    StorageProvider]
+    StorageProvider,
+    ]
 
 })
 export class AppModule {}

@@ -1,6 +1,8 @@
 <ion-fab right top>
   <button ion-fab mini color="light"><ion-icon name="more"></ion-icon></button>
   <ion-fab-list>
+    <button ion-fab color="new" (click)="newBudget()"><ion-icon name="refresh"></ion-icon></button>
+    <div class="fab-label">New</div>
     <button ion-fab color="load" (click)="saveAndLoad('load')"><ion-icon name="folder-open"></ion-icon></button>
     <div class="fab-label">Load</div>
     <button ion-fab color="save" (click)="saveAndLoad('save')"><ion-icon name="bookmark"></ion-icon></button>
@@ -19,14 +21,17 @@
       <div class="cell top-row"></div>
       <div class="cell" *ngFor="let title of rowTitles">
         <div>{{title}}</div>
-        <div *ngIf="title=='Cash Balance'" >
-          <div class=flex (click)="toggleDotEdit()">
-            <div><img class="dot-value-image" src="assets/img/budget/dot-positive.png"></div>
-            <div *ngIf="!editDotValue">= MK {{dotValue}}</div>
-          </div>
-          <div  *ngIf="editDotValue">
-          <ion-input class="dot-value-input" type="number" [(ngModel)]="dotValue"></ion-input>
-          <button ion-button (click)="toggleDotEdit()">Save</button>
+        <div *ngIf="title=='Cash Balance'">
+          <div *ngFor="let dot of dotsArray">
+            <!-- <div class=flex (click)="toggleDotEdit()"> -->
+            <div class=flex>
+              <div><img class="dot-value-image" [src]="'assets/img/budget/'+dot.key+'-positive.png'"></div>
+              <div *ngIf="!editDotValue">= MK {{dot.val}}</div>
+            </div>
+            <div *ngIf="editDotValue">
+              <ion-input class="dot-value-input" type="number" [(ngModel)]="dots.large"></ion-input>
+              <button ion-button (click)="toggleDotEdit()">Save</button>
+            </div>
           </div>
         </div>
 
@@ -46,16 +51,14 @@
       <!--Inputs-->
       <div class="cell" (click)="edit('inputs',period)">
         <div class="grid-card flex">
-          <!-- <img [src]="'assets/img/budget/dot-positive.png'"> -->
-          <div *ngFor="let input of period.inputs; let i=index" class="grow">
+           <div *ngFor="let input of period.inputs; let i=index" class="grow">
             <img class="card-image cell-main" [src]="input.Image">
             <div class="cell-footer flex">
-              <div class="dot-value" *ngFor="let dot of valueDotNotation('expense',input.quantity*input.cost)">
+              <div class="dot-value" *ngFor="let dot of input.dots || []">
                 <img class="dot-value-image" [src]="dot.src">
               </div>
-              <!-- {{input.quantity*input.cost}} -->
             </div>
-          </div>
+          </div> 
         </div>
       </div>
       <!--Family Labour-->
@@ -75,7 +78,7 @@
           <div *ngFor="let output of period.outputs; let i=index">
             <img class="card-image cell-main" [src]="output.Image">
             <div class="cell-footer flex">
-              <div class="dot-value" *ngFor="let dot of valueDotNotation('income',output.quantity*output.cost)">
+              <div class="dot-value" *ngFor="let dot of period.balance.outputs.dots">
                 <img class="dot-value-image" [src]="dot.src">
               </div>
             </div>
@@ -89,7 +92,7 @@
             <div *ngIf="output.consumed>0">
               <img class="card-image cell-main" [src]="output.Image">
               <div class="cell-footer flex">
-                <div class="dot-value" *ngFor="let dot of valueDotNotation('expense',output.consumed*output.cost)">
+                <div class="dot-value" *ngFor="let dot of period.balance.consumed.dots">
                   <img class="dot-value-image" [src]="dot.src">
                 </div>
               </div>
@@ -99,12 +102,19 @@
       </div>
       <!--balance-->
       <div class="cell">
-        <div class="grid-card flex wrap">
-          <!-- <div>income:{{period.runningTotal.income}}</div>
-          <div>expenses:{{period.runningTotal.expenses}}</div>
-          <div>net:{{period.runningTotal.net}}</div> -->
-          <div class="dot-value" *ngFor="let dot of valueDotNotation('net',period.runningTotal.net)">
-            <img class="dot-value-image" [src]="dot.src">
+        <div class="grid-card">
+          <div class="one-em">Month: {{period.balance.monthly.total}}</div>
+          <div class="flex one-em">
+            <div class="dot-value" *ngFor="let dot of period.balance.monthly.dots">
+              <img class="dot-value-image" [src]="dot.src">
+            </div>
+          </div>
+          <hr>
+          <div class="one-em">Total: {{period.balance.running.total}}</div>
+          <div class="flex one-em">
+            <div class="dot-value" *ngFor="let dot of period.balance.running.dots">
+              <img class="dot-value-image" [src]="dot.src">
+            </div>
           </div>
         </div>
       </div>
