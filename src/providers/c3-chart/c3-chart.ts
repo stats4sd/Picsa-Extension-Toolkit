@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { File } from '@ionic-native/file';
+// import { File } from '@ionic-native/file';
 import * as c3 from 'c3';
 import * as Papa from 'papaparse';
 import { Platform } from 'ionic-angular';
@@ -22,9 +22,8 @@ export class C3ChartProvider {
   columnsObserver: any;
   initialRender: boolean = true;
   crops: any;
-  constructor(public http: Http, private file: File, private platform: Platform) {
+  constructor(public http: Http, private platform: Platform) {
     this.activeChart.x = "Rainfall"
-    this.loadData()
     this.crops = [
       { index: 0, name: 'Maize', waterMin: 405, waterMax: 660, waterAvg: 580, lengthMin: 90, lengthMax: 145, lengthAvg: 130, image: "assets/img/crops/maize.jpg" },
       { index:1,name: 'Groundnuts', waterMin: 405, waterMax: 675, waterAvg: 540, lengthMin: 90, lengthMax:150, lengthAvg: 120, image: "assets/img/crops/groundnuts.jpg" },
@@ -32,17 +31,17 @@ export class C3ChartProvider {
     ]
   }
   loadData() {
-    if (this.platform.is('core')) {
-      //use file api
-      console.log('loading demo data')
+    // if (this.platform.is('core')) {
+    //   //use file api
+    //   console.log('loading demo data')
       
-    }
-    if (this.platform.is('mobile')) {
-      //use cordova
-      this.file.checkDir(this.file.dataDirectory, 'mydir')
-        .then(_ => console.log('Directory exists'))
-        .catch(err => console.log('Directory doesnt exist'));
-    }
+    // }
+    // if (this.platform.is('mobile')) {
+    //   //use cordova
+    //   this.file.checkDir(this.file.dataDirectory, 'mydir')
+    //     .then(_ => console.log('Directory exists'))
+    //     .catch(err => console.log('Directory doesnt exist'));
+    // }
   }
 
   generate(x) {
