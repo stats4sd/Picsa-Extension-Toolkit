@@ -36,11 +36,10 @@ export class CardSelectPage {
     public storage: StorageProvider,
     public toatsCtrl: ToastController) {
     this.cards = this.bdg.allData[this.navParams.data.type]
-    this.period = this.navParams.data.period
 ***REMOVED***
   ionViewDidEnter() {
     this.setSelected(this.navParams.data.selected || [])
-    console.log('period', this.navParams.data.period)
+    this.period = this.navParams.data.period
     this.type = this.navParams.data.type
     this.showFamilyLabour = (this.type == "familyLabour")
     this.showCards = (this.type != "familyLabour" && this.type != "consumed")
@@ -49,79 +48,69 @@ export class CardSelectPage {
 ***REMOVED***
 
   highlight(card) {
-    //push card if doesn't exist
+    //push card if doesn't exist and set values to 0
     if (!this.selected[card.ID]) {
-      console.log('adding card', card)
+      card.quantity = 0
+      card.cost=0
       this.selected[card.ID] = card
-      if (!this.period[this.type]) { this.period[this.type] = [] }
-      this.period[this.type].push(card)
-      console.log('period', this.period)
-  ***REMOVED***
+ ***REMOVED***
     //else remove or toggle values
     else {
       if (card.Type != "input" && card.Type != "output") {
-        console.log('removing card', card)
         this.removeCard(card)
     ***REMOVED***
   ***REMOVED***
     //if input/output toggle values pane
     if (card.Type == "input" || card.Type == "output") {
-      if (!card.quantity) { card.quantity = 0 }
-      if (!card.cost) { card.cost = 0 }
-      this.activeCard = this.selected[card.ID] || card
+      this.activeCard = this.selected[card.ID]
       this.showValues = true;
   ***REMOVED***
 ***REMOVED***
 
   removeCard(card) {
     delete this.selected[card.ID]
-    this.period[this.type] = this.period[this.type].filter(function (element) {
-      return element.ID != card.ID
-  ***REMOVED***)
     this.showValues = false;
 ***REMOVED***
-  increaseFamily(variable) {
-    if (this.period.familyLabour[variable] >= 0) {
-      this.period.familyLabour[variable]++
-  ***REMOVED***
-***REMOVED***
-  decreaseFamily(variable) {
-    if (this.period.familyLabour[variable] >= 0) {
-      this.period.familyLabour[variable]--
-  ***REMOVED***
-***REMOVED***
-  increaseConsumed(index) {
-    if (!this.period.outputs[index].consumed) { this.period.outputs[index.consumed] = 0 }
-    console.log('increasing', this.period.outputs[index])
-    if (this.period.outputs[index].consumed >= 0) {
-      this.period.outputs[index].consumed++
-  ***REMOVED***
-***REMOVED***
-  decreaseConsumed(index) {
-    if (this.period.outputs[index].consumed >= 0) {
-      this.period.outputs[index].consumed--
-  ***REMOVED***
-***REMOVED***
-  _toArray(value) {
-    return new Array(value).fill(0)
-***REMOVED***
-
   setSelected(array) {
-    console.log('setting selected')
     for (let item of array) {
       this.selected[item.ID] = item;
   ***REMOVED***
-    console.log('selected', this.selected)
 ***REMOVED***
   updateValues(card) {
-    console.log('updating values', card)
-    this.selected[card.ID] = card
+    let index = this.getIndex(this.period[this.type], card)
+    let c = {}
+    //assigning budget data to card set up binding which meant all same inputs would auto update same value (see v0.2.5)
+    //really messy and awkward naming structure are legacy of this frustration!
+    for (let key in card) {
+      c[key]=card[key]
+  ***REMOVED***
+    this.selected[card.ID] = c
     this.showValues = false
-***REMOVED***
-  close() {
-    //repopulate 
-    this.viewCtrl.dismiss(this.period)
+    this.period[this.type][index]=c
 
+***REMOVED***
+  continue() {
+    //populate activities from selected array (could be done on initial click to show but then would need correct remove function too)
+    if (this.type == "activities") {
+      this.period[this.type] = []
+      for (let key in this.selected) {
+        this.period[this.type].push(this.selected[key])
+    ***REMOVED***
+  ***REMOVED***
+    //don't need to pass any data as binding to period kept - linked to mess above
+    this.viewCtrl.dismiss()
+    
+***REMOVED***
+  getIndex(array, card) {
+    let index: number = 0
+    let i=0
+    for (let item of array) {
+      if (item.ID == card.ID) {
+        index=i
+    ***REMOVED***
+      i++
+  ***REMOVED***
+    return index
 ***REMOVED***
   addCard() {
     //lookup as card types not quite same as budget type names
@@ -139,18 +128,9 @@ export class CardSelectPage {
   ***REMOVED***
     this.showNewCard = true
 ***REMOVED***
-  saveCanvasImage() {
-    let img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
-    this.newCard.Image = img
-    this.showNewCard = false
-    this.showNewCardMeta = true
-    // this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
-    //   console.log(blob);
-    // }, "image/png");
-***REMOVED***
+  
   saveNewCard() {
     this.storage.save('budgetCards', this.newCard, this.newCard.ID).then((res) => {
-      console.log('card saved?', res)
       let toast = this.toatsCtrl.create({
         message: 'Card Saved',
         duration: 3000
@@ -160,6 +140,39 @@ export class CardSelectPage {
       this.cards.unshift(this.newCard);
       this.highlight(this.newCard)
   ***REMOVED***)
-}
+***REMOVED***
+  saveCanvasImage() {
+    let img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
+    this.newCard.Image = img
+    this.showNewCard = false
+    this.showNewCardMeta = true
+    // this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
+    //   console.log(blob);
+    // }, "image/png");
+***REMOVED***
+  increaseFamily(variable) {
+    if (this.period.familyLabour[variable] >= 0) {
+      this.period.familyLabour[variable]++
+  ***REMOVED***
+***REMOVED***
+  decreaseFamily(variable) {
+    if (this.period.familyLabour[variable] >= 0) {
+      this.period.familyLabour[variable]--
+  ***REMOVED***
+***REMOVED***
+  increaseConsumed(index) {
+    if (!this.period.outputs[index].consumed) { this.period.outputs[index.consumed] = 0 }
+    if (this.period.outputs[index].consumed >= 0) {
+      this.period.outputs[index].consumed++
+  ***REMOVED***
+***REMOVED***
+  decreaseConsumed(index) {
+    if (this.period.outputs[index].consumed >= 0) {
+      this.period.outputs[index].consumed--
+  ***REMOVED***
+***REMOVED***
+  _toArray(value) {
+    return new Array(value).fill(0)
+***REMOVED***
 
 }

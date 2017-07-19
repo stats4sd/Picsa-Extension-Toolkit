@@ -68,6 +68,7 @@ export class BudgetToolProvider {
       p.index = i + 1
       this.budget.data.push(p)
   ***REMOVED***
+    return this.budget
 ***REMOVED***
   save(budget) {
     // this.storage.set('','')
