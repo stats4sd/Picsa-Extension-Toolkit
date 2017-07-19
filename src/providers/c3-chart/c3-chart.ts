@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { File } from '@ionic-native/file';
+// import { File } from '@ionic-native/file';
 import * as c3 from 'c3';
 import * as Papa from 'papaparse';
 import { Platform } from 'ionic-angular';
@@ -22,9 +22,8 @@ export class C3ChartProvider {
   columnsObserver: any;
   initialRender: boolean = true;
   crops: any;
-  constructor(public http: Http, private file: File, private platform: Platform) {
+  constructor(public http: Http, private platform: Platform) {
     this.activeChart.x = "Rainfall"
-    this.loadData()
     this.crops = [
       { index: 0, name: 'Maize', waterMin: 405, waterMax: 660, waterAvg: 580, lengthMin: 90, lengthMax: 145, lengthAvg: 130, image: "assets/img/crops/maize.jpg" },
       { index:1,name: 'Groundnuts', waterMin: 405, waterMax: 675, waterAvg: 540, lengthMin: 90, lengthMax:150, lengthAvg: 120, image: "assets/img/crops/groundnuts.jpg" },
@@ -32,17 +31,17 @@ export class C3ChartProvider {
     ]
   }
   loadData() {
-    if (this.platform.is('core')) {
-      //use file api
-      console.log('loading demo data')
+    // if (this.platform.is('core')) {
+    //   //use file api
+    //   console.log('loading demo data')
       
-    }
-    if (this.platform.is('mobile')) {
-      //use cordova
-      this.file.checkDir(this.file.dataDirectory, 'mydir')
-        .then(_ => console.log('Directory exists'))
-        .catch(err => console.log('Directory doesnt exist'));
-    }
+    // }
+    // if (this.platform.is('mobile')) {
+    //   //use cordova
+    //   this.file.checkDir(this.file.dataDirectory, 'mydir')
+    //     .then(_ => console.log('Directory exists'))
+    //     .catch(err => console.log('Directory doesnt exist'));
+    // }
   }
 
   generate(x) {
@@ -73,6 +72,21 @@ export class C3ChartProvider {
           return seriesColors[this.activeChart.x]
         }.bind(this)
       },
+      tooltip: {
+        grouped:false,
+        format: {
+          // title: function (d) { return 'Data ' + d; },
+          value: function (value, ratio, id) {
+            if (this.activeChart.yFormat == 'value') {
+              return parseInt(value).toString() + " "+this.activeChart.units;
+            }
+            else {
+              return this.formatAxis(value, this.activeChart.yFormat)+" "+this.activeChart.units
+            }
+            
+          }.bind(this)
+        }
+      },
       axis: {
         y: {
           tick: {
@@ -94,6 +108,28 @@ export class C3ChartProvider {
           return 5
         }.bind(this)
       },
+      // tooltip: {
+      //   // grouped: false,
+        
+      //   // contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+      //   //   // console.log(d)
+      //   //   var units = this.activeChart.units
+      //   //   var tooltip;
+      //   //   //add different tooltip for null years
+      //   //   if (d[0].value == null) {
+      //   //     tooltip = '<div style="width: 140px;background-color: #fdff7a;font-size:larger;border:2px solid black>'
+      //   //       + 'No data available</div>'
+      //   //   }
+      //   //   else {
+      //   //     tooltip = '<div style="width: 140px;background-color: #fdff7a;font-size: larger;border:border:2px solid black">'
+      //   //       + '<strong>' + d[0].x + '</strong><br><br>'
+      //   //       + Math.round(d[0].value) + ' ' + units + '</div>'
+      //   //       + '<div>' + defaultTitleFormat + '</div>'
+      //   //       + '<div>' + defaultValueFormat + '</div>'
+      //   //   }
+      //   //   return tooltip
+      //   // }.bind(this)
+      // },
       onrendered: function () {
         this.firstRender()
       }.bind(this)
