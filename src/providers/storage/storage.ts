@@ -25,11 +25,13 @@ export class StorageProvider {
 
   save(key, val, id?) {
     return new Promise((resolve) => {
-      if (!id) { id = this.generatePushID() }
+      if (!id) {
+        console.log('generating id')
+        id = this.generatePushID()
+      }
       console.log('pushing to storage', key, val)
       this.storage.get(key).then((v) => {
         let temp = JSON.parse(v) || {}
-        console.log('temp', temp)
         temp[id] = val
         this.storage.set(key, JSON.stringify(temp)).then((res) => {
           resolve('success')

@@ -43,6 +43,7 @@ export class BudgetSavedPage {
       let arr = []
       for (let key in res) { arr.push(res[key]) }
       this.saved = arr.reverse()
+      console.log('saved',this.saved)
     })
   }
   saveBudget() {
@@ -62,8 +63,8 @@ export class BudgetSavedPage {
   }
   archive(budget) {
     console.log('archiving budget',budget)
-    this.budget.archived = true;
-    this.storage.save('budgets', this.budget, this.budget.id).then(()=>{
+    budget.archived = true;
+    this.storage.save('budgets', budget, budget.id).then(()=>{
       this.loadSavedBudgets()
       let toast = this.toastCtrl.create({
         message: 'Budget Archived',

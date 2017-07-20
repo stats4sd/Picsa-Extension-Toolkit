@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, AlertController  } from 'ionic-angular';
 import { BudgetToolProvider } from '../../../../providers/budget-tool/budget-tool';
 import { CanvasWhiteboardComponent } from 'ng2-canvas-whiteboard';
 import { StorageProvider } from '../../../../providers/storage/storage'
@@ -34,7 +34,9 @@ export class CardSelectPage {
     public bdg: BudgetToolProvider,
     public viewCtrl: ViewController,
     public storage: StorageProvider,
-    public toatsCtrl: ToastController) {
+    public toatsCtrl: ToastController,
+    public alertCtrl: AlertController,
+    ) {
     this.cards = this.bdg.allData[this.navParams.data.type]
   }
   ionViewDidEnter() {
@@ -124,7 +126,8 @@ export class CardSelectPage {
       Types: this.type,
       Name: "New Card",
       Image: "",
-      ID: this.storage.generatePushID()
+      ID: this.storage.generatePushID(),
+      userGenerated:true
     }
     this.showNewCard = true
   }
@@ -149,6 +152,40 @@ export class CardSelectPage {
     // this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
     //   console.log(blob);
     // }, "image/png");
+  }
+  delete(card) {
+    console.log('deleting card',card)
+    let confirm = this.alertCtrl.create({
+      title: 'Remove Card',
+      message: 'Are you sure you want to delete this card from your budget tool?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+           
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            card.archived = true
+            this.storage.save('budgetCards', card, card.ID).then((res) => {
+              let toast = this.toatsCtrl.create({
+                message: 'Card deleted',
+                duration: 3000
+              });
+              toast.present();
+              console.log('selected',this.selected)
+              if (this.selected[card.ID]) {
+                delete this.selected[card.ID]
+              }
+              console.log('selected',this.selected)
+            })
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
   increaseFamily(variable) {
     if (this.period.familyLabour[variable] >= 0) {
