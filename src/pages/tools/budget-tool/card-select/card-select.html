@@ -19,12 +19,17 @@
   <div *ngIf="!showNewCard && !showNewCardMeta">
     <div class="cards-container" *ngIf="showCards">
       <div class="flex wrap">
-        <div class='card' *ngFor="let card of cards; let i=index" (click)="highlight(card,i)" [class.highlight]="selected[card.ID]">
-          <div class="card-title">{{card.Name}}</div>
-          <div class="image-holder"><img [src]="card.Image"></div>
-          <div class="card-value" *ngIf="selected[card.ID]" class="flex">
-            <div class="card-quantity" *ngIf="selected[card.ID].quantity>0">x{{selected[card.ID].quantity}}</div>
-            <div class="card-cost flex-basis-100" *ngIf="selected[card.ID].quantity>0"> MK {{selected[card.ID].cost}}</div>
+        <div *ngFor="let card of cards; let i=index">
+          <div class='card' *ngIf="!card.archived" (click)="highlight(card,i)" [class.highlight]="selected[card.ID]">
+            <div class="card-title">{{card.Name}}</div>
+            <div class="delete-card" *ngIf="card.userGenerated" (click)="delete(card)">
+              <ion-icon name="trash"></ion-icon>
+            </div>
+            <div class="image-holder"><img [src]="card.Image"></div>
+            <div class="card-value" *ngIf="selected[card.ID]" class="flex">
+              <div class="card-quantity" *ngIf="selected[card.ID].quantity>0">x{{selected[card.ID].quantity}}</div>
+              <div class="card-cost flex-basis-100" *ngIf="selected[card.ID].quantity>0"> MK {{selected[card.ID].cost}}</div>
+            </div>
           </div>
         </div>
         <button ion-button icon-left (click)="addCard()">

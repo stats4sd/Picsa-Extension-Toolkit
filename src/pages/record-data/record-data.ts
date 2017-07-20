@@ -4,6 +4,8 @@ import {KoboApi} from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
 import {ModalController} from "ionic-angular"
 import { Storage } from '@ionic/storage';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 
 @IonicPage()
@@ -15,11 +17,19 @@ import { Storage } from '@ionic/storage';
 export class RecordDataPage {
   results: any = [];
   anyErrors: boolean;
-  finished: boolean=true;
-  forms:any=[];
-  enketoLink:any;
+  finished: boolean = false;
+  refreshing: boolean = false;
+  forms: any = [];
+  formOpen: boolean = false;
+  enketoLink: any;
+  formDisplay: string = 'none';
 
-  constructor(public koboApi:KoboApi, public nav:NavController, public modal:ModalController, private storage:Storage) {
+  constructor(
+    public koboApi: KoboApi,
+    public nav: NavController,
+    public modal: ModalController,
+    private storage: Storage,
+    public sanitizer:DomSanitizer) {
     this.storage.get('forms').then((forms)=> {
         if (forms) {
             this.forms = (JSON.parse(forms))
@@ -31,17 +41,23 @@ export class RecordDataPage {
   ***REMOVED***)
 ***REMOVED***
 
-  getForms(){
+  getForms() {
+    this.refreshing = true;
     this.anyErrors=false;
     this.koboApi.koboRequest('https://kc.kobotoolbox.org/api/v1/forms').subscribe(
-        result =>this.forms = result,
+      result => {
+        this.forms = result
+        this.refreshing=false
+    ***REMOVED***  ,
         error => {
           console.log(error);
           this.anyErrors = true;
           this.finished = true;
+          this.refreshing = false
       ***REMOVED***,
         () => {
           this.finished = true;
+          this.refreshing = false
           let i=0;
           this.storage.set('forms',JSON.stringify(this.forms));
           for(let form of this.forms){
@@ -64,14 +80,13 @@ export class RecordDataPage {
 ***REMOVED***
 
   openForm(form) {
-    let modal = this.modal.create('FormPopupPage', {form: form}, {
-      showBackdrop: false,
-      enableBackdropDismiss: false
-  ***REMOVED***);
-    modal.onDidDismiss(data=> {
-      console.log(data)
-  ***REMOVED***);
-    modal.present();
+    this.formOpen = true;
+    this.enketoLink = this.sanitizer.bypassSecurityTrustResourceUrl(form.enketoLink);
+    this.formDisplay='block'
+***REMOVED***
+  closeForm() {
+    this.formOpen = false;
+    this.formDisplay = 'none'
 ***REMOVED***
 
 

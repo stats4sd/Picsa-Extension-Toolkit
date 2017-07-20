@@ -20,6 +20,7 @@ export class BudgetToolProvider {
       console.log('loading saved cards', res)
       for (let key in res) {
         console.log('adding type', res[key].Types)
+        res[key].userGenerated=true
         this.allData[res[key].Types].push(res[key])
     ***REMOVED***
       console.log('all data', this.allData)

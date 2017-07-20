@@ -12,8 +12,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, storage:StorageProvider) {
     this.links=[
-      {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
-      // { name: 'Resources', color: 'picsa-manual', icon: 'book', page: 'ResourcesPage', text: '' },
+      // {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
+      { name: 'Resources', color: 'picsa-manual', icon: 'book', page: 'ResourcesPage', text: '' },
       { name: 'Tools', color: 'picsa-view', icon: 'tablet-portrait', page: 'ToolsPage' },
       {name:' Discussions', color:'picsa-discussions', icon:'chatbubbles', page:'ForumPage'},
       // {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},

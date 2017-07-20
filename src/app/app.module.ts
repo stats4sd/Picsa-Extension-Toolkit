@@ -5,10 +5,11 @@ import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
-// import { File } from '@ionic-native/file';
+import { File } from '@ionic-native/file';
 import { Network} from '@ionic-native/network';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
+import { FileOpener } from '@ionic-native/file-opener';
 // App pages
 import { MyApp } from './app.component';
 // Angular fire 2
@@ -63,13 +64,14 @@ export const firebaseConfig = {
     YoutubeService,
     // FileService,
     SplashScreen,
-    // File,
     C3ChartProvider,
     Network,
     ForumServiceProvider,
     MalawiDataProvider,
     BudgetToolProvider,
     StorageProvider,
+    FileOpener,
+    File
     ]
 
 })

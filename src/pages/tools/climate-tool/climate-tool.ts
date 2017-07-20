@@ -134,8 +134,8 @@ export class ClimateToolPage{
     ***REMOVED***,{
         name: "Length of Season", image: "assets/img/charts/season-length.png", cropTableValue: 'length', x: "Length", yFormat: "value", tools: { line: true }, units:'days',
         definition: "Length of season is defined as the total days from the start of the season until the end of the season as defined"
-    ***REMOVED***,{
-        name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page: "CombinedRiskPage", tools: { line: false }},
+    ***REMOVED***,
+      // {name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page: "CombinedRiskPage", tools: { line: false }},
     ]
 ***REMOVED***
   lineToolValueChange(e?){
