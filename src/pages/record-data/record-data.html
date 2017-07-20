@@ -1,4 +1,14 @@
-<ion-header>
+<div *ngIf="formOpen" class="form" [style.display]="formDisplay">
+    <ion-buttons end>
+      <button ion-button icon-right class="form-close" (click)="closeForm()" *ngIf="formOpen">
+        <span>Close form</span>
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  <iframe id="form-iframe" class="enketo-iframe" [src]="enketoLink" sandbox="allow-forms allow-modals allow-same-origin allow-scripts allow-top-navigation"></iframe>
+</div>
+
+<ion-header *ngIf="!formOpen">
   <ion-navbar color="primary">
     <ion-title>Record Data</ion-title>
     <ion-buttons end>
@@ -13,20 +23,10 @@
   </ion-navbar>
 </ion-header>
 
-<ion-header *ngIf="formOpen" class="form-header">
-    <ion-buttons end>
-      <button ion-button icon-right class="form-close" (click)="closeForm()" *ngIf="formOpen">
-        <span>Close form</span>
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-</ion-header>
+
 
 
 <ion-content class="forms-overview">
-  <div class="form" [style.display]="formDisplay">
-    <iframe id="form-iframe" class="enketo-iframe" [src]="enketoLink" sandbox="allow-forms allow-modals allow-same-origin allow-scripts allow-top-navigation"></iframe>
-  </div>
   <div padding>
     <h2>Available Forms</h2>
     <ion-list>
