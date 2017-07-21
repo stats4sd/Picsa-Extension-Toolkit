@@ -23,13 +23,15 @@ export class RecordDataPage {
   formOpen: boolean = false;
   enketoLink: any;
   formDisplay: string = 'none';
+  user: any={id:'id not registered'}
 
   constructor(
     public koboApi: KoboApi,
     public nav: NavController,
     public modal: ModalController,
     private storage: Storage,
-    public sanitizer:DomSanitizer) {
+    public sanitizer: DomSanitizer) {
+    // can move to storage provider code
     this.storage.get('forms').then((forms)=> {
         if (forms) {
             this.forms = (JSON.parse(forms))
@@ -38,6 +40,10 @@ export class RecordDataPage {
             this.finished = false;
             this.getForms()
         }
+    })
+    console.log('getting user')
+    this.storage.get('user').then((user)=>{
+      this.user=user
     })
   }
 
@@ -80,8 +86,16 @@ export class RecordDataPage {
   }
 
   openForm(form) {
+    console.log('form',form)
+    console.log('enketo link', form.enketoLink)
+    //http://ee.kobotoolbox.org/x/#YCOj
+    var stringLength = form.enketoLink.length
+    var linkPrefix = form.enketoLink.slice(0, stringLength - 7)
+    var linkSuffix = form.enketoLink.slice(stringLength - 5)
+    var link = linkPrefix + '_/?d[/'+form.id_string+'/User_ID_from_Tablet]=' + this.user.id + linkSuffix
+    console.log('link',link)
     this.formOpen = true;
-    this.enketoLink = this.sanitizer.bypassSecurityTrustResourceUrl(form.enketoLink);
+    this.enketoLink = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     this.formDisplay='block'
   }
   closeForm() {

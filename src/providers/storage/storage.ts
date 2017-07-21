@@ -5,19 +5,42 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
-  user: string='anonymous'
+  user: any
 
   constructor(public http: Http, public storage: Storage) {
-    console.log('Hello StorageProvider Provider');
+    console.log('storage provider loading, loading user data')
     storage.get('user').then((val) => {
-      if (val) {
-        this.user = val
-        console.log('user loaded', this.user)
-      }
-      else {
-        this.user = this.generatePushID()
+      if (val == null) {
+        console.log('creating new user')
+        this.user = {}
+        this.user.id = this.generatePushID()
+        this.user.name = 'anonymous'
+        this.user.role = 'extension'
+        this.user.group = 'malawi-2017'
         console.log('user created', this.user)
         storage.set('user', this.user)
+      }
+      //old format correction, can be removed in later version
+      else if (typeof val == 'string') {
+        this.user = {}
+        this.user.name = 'anonymous'
+        this.user.id = val
+        this.user.role = 'extension'
+        this.user.group='malawi-2017'
+        console.log('user adapted', this.user)
+        storage.set('user', this.user)
+      }
+      //fix for old format  
+      else if (val.ID) {
+        this.user = val
+        this.user.id = val.ID
+        delete this.user.ID
+        storage.set('user', this.user)
+        console.log('id fixed', this.user)
+      }
+      else {
+        console.log('user loaded fine')
+        this.user=val
       }
     });
 
@@ -38,7 +61,7 @@ export class StorageProvider {
         })
       })
     })
-    
+
   }
   load(key) {
     return new Promise((resolve) => {
@@ -46,7 +69,7 @@ export class StorageProvider {
         resolve(JSON.parse(v))
       })
     })
-    
+
   }
 
 
