@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, AlertController, ToastController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage'
 
 @IonicPage()
@@ -8,9 +8,19 @@ import { StorageProvider } from '../../providers/storage/storage'
   templateUrl: 'home.html'
 })
 export class HomePage {
-  links:any;
+  links: any;
+  name: string;
+  user: any = {
+    permissions: {
+      name: null
+    }
+  }
 
-  constructor(public navCtrl: NavController, storage:StorageProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public storage: StorageProvider,
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController) {
     this.links=[
       // {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
       { name: 'Resources', color: 'picsa-manual', icon: 'book', page: 'ResourcesPage', text: '' },
@@ -23,7 +33,60 @@ export class HomePage {
   }
   ionViewDidLoad() {
     console.log('home page loaded')
+    this.storage.getUser().then(
+      res => {
+        console.log('res',res)
+        if(!res['permissions']){res['permissions']={name:''}}
+        this.user = res
+        this.name=this.user.permissions.name
+        console.log('user', this.user)
+  })    
   }
 
-
+  login() {
+    console.log('loading login')
+      let prompt = this.alertCtrl.create({
+        title: 'Login',
+        message: "Enter organisation access code in the box below",
+        inputs: [
+          {
+            name: 'accessCode',
+            placeholder: 'Code'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Save',
+            handler: data => {
+              this.storage.assignPermissions(data.accessCode).then((user) => {
+                console.log('user', user)
+                this.user = user
+              }  
+                // this.presentToast('Successfully signed in as '+user.name)
+              ).catch((err) =>{
+                console.log('err',err)
+              })
+            }
+          }
+        ]
+      });
+      prompt.present();
+  }
+  logout() {
+    this.user.permissions = {}
+  }
+  
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
+  }
 }
