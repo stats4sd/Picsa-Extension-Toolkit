@@ -85,7 +85,8 @@ export class ResourcesPage {
   setResources() {
     this.resources = [
       { name: 'Picsa Manual', filename: 'picsa-field-manual.pdf', type: 'pdf', image: 'assets/resources/picsa-field-manual-cover.png' },
-      { name: 'Crop Information - Chileka', filename: 'crop-info-sheet-chileka.pdf', type: 'pdf', image: 'assets/resources/crop-info-sheet-chileka-cover.png' }
+      { name: 'Crop Information - Chileka', filename: 'crop-info-sheet-chileka.pdf', type: 'pdf', image: 'assets/resources/crop-info-sheet-chileka-cover.png' },
+      { name: 'Potential Training Schedule', filename: 'potential-PICSA-training-schedule.pdf', type: 'pdf', image: 'assets/resources/potential-PICSA-training-schedule-cover.png' },
     ]
   }
 }  

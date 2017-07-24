@@ -17,7 +17,6 @@ export class StorageProvider {
       else {
         this.storage.get('user').then((val) => {
           if (val == null) {
-            console.log('creating new user')
             this.user = {}
             this.user.id = this.generatePushID()
             this.user.name = 'anonymous'
@@ -30,7 +29,6 @@ export class StorageProvider {
           //added complication as all data saved stringified, so need to distinguish proper user saved as string and 
           else if (typeof val == 'string') {
             let temp = JSON.parse(val)
-            console.log('temp', temp)
             if (typeof temp == 'string') {
               this.user = {}
               this.user.name = 'anonymous'
@@ -56,16 +54,14 @@ export class StorageProvider {
             console.log('user loaded successfully', val)
             this.user = val
           }
-          console.log('resolving user', this.user)
           resolve(this.user)
         });
       }
-      
-      
-    })
-   
-    
-    
+    })    
+  }
+
+  saveUser(user) {
+    this.storage.set('user',user)
   }
 
   save(key, val, id?) {

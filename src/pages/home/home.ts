@@ -32,10 +32,8 @@ export class HomePage {
     ]
   }
   ionViewDidLoad() {
-    console.log('home page loaded')
     this.storage.getUser().then(
       res => {
-        console.log('res',res)
         if(!res['permissions']){res['permissions']={name:''}}
         this.user = res
         this.name=this.user.permissions.name
@@ -44,21 +42,20 @@ export class HomePage {
   }
 
   login() {
-    console.log('loading login')
       let prompt = this.alertCtrl.create({
         title: 'Login',
         message: "Enter organisation access code in the box below",
         inputs: [
           {
             name: 'accessCode',
-            placeholder: 'Code'
+            placeholder: 'Code',
+            type:'password'
           },
         ],
         buttons: [
           {
             text: 'Cancel',
             handler: data => {
-              console.log('Cancel clicked');
             }
           },
           {
@@ -79,7 +76,27 @@ export class HomePage {
       prompt.present();
   }
   logout() {
-    this.user.permissions = {}
+    let alert = this.alertCtrl.create({
+      title: 'Sign Out',
+      message: 'Do you want to sign out of '+this.user.permissions.name,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.user.permissions = {}
+            this.storage.saveUser(this.user)
+          }
+        }
+      ]
+    });
+    alert.present();
+    
   }
   
   presentToast(message) {
