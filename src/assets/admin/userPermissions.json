@@ -1,10 +1,18 @@
 {
-	"example-password":{
-		"name":"group-name",
+	"extension-malawi":{
+		"name":"extension",
 		"permissions":"default"
 	},
-	"example-password2":{
-		"name":"monitoring-group-name",
+	"wfp-malawi":{
+		"name":"wfp",
 		"permissions":"monitoring"
 	},
+	"dccms-malawi":{
+		"name":"dccms",
+		"permissions":"monitoring"
+	},
+	"picsa-malawi":{
+		"name":"picsa",
+		"permissions":"monitoring"
+	}
 }
