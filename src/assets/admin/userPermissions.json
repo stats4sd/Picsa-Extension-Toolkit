@@ -1,0 +1,10 @@
+{
+	"example-password":{
+		"name":"group-name",
+		"permissions":"default"
+	},
+	"example-password2":{
+		"name":"monitoring-group-name",
+		"permissions":"monitoring"
+	},
+}

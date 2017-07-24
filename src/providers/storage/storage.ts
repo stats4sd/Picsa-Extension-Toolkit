@@ -1,49 +1,71 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { ToastController} from 'ionic-angular'
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
-  user: any
-
-  constructor(public http: Http, public storage: Storage) {
+  user: any=null
+// lots of constructor code can be cleaned up after migration to newer version
+  constructor(public http: Http, public storage: Storage, public toastCtrl:ToastController) {
     console.log('storage provider loading, loading user data')
-    storage.get('user').then((val) => {
-      if (val == null) {
-        console.log('creating new user')
-        this.user = {}
-        this.user.id = this.generatePushID()
-        this.user.name = 'anonymous'
-        this.user.role = 'extension'
-        this.user.group = 'malawi-2017'
-        console.log('user created', this.user)
-        storage.set('user', this.user)
-    ***REMOVED***
-      //old format correction, can be removed in later version
-      else if (typeof val == 'string') {
-        this.user = {}
-        this.user.name = 'anonymous'
-        this.user.id = val
-        this.user.role = 'extension'
-        this.user.group='malawi-2017'
-        console.log('user adapted', this.user)
-        storage.set('user', this.user)
-    ***REMOVED***
-      //fix for old format  
-      else if (val.ID) {
-        this.user = val
-        this.user.id = val.ID
-        delete this.user.ID
-        storage.set('user', this.user)
-        console.log('id fixed', this.user)
-    ***REMOVED***
+***REMOVED***
+  getUser() {
+    return new Promise((resolve, reject) => {
+      if (this.user) { resolve(this.user) }
       else {
-        console.log('user loaded fine')
-        this.user=val
+        this.storage.get('user').then((val) => {
+          if (val == null) {
+            console.log('creating new user')
+            this.user = {}
+            this.user.id = this.generatePushID()
+            this.user.name = 'anonymous'
+            this.user.role = 'extension'
+            this.user.group = 'malawi-2017'
+            console.log('user created', this.user)
+            this.storage.set('user', this.user)
+        ***REMOVED***
+          //old format correction, can be removed in later version
+          //added complication as all data saved stringified, so need to distinguish proper user saved as string and 
+          else if (typeof val == 'string') {
+            let temp = JSON.parse(val)
+            console.log('temp', temp)
+            if (typeof temp == 'string') {
+              this.user = {}
+              this.user.name = 'anonymous'
+              this.user.id = val
+              this.user.role = 'extension'
+              this.user.group = 'malawi-2017'
+              console.log('user adapted', this.user)
+              this.storage.set('user', this.user)
+          ***REMOVED***
+            else {
+              this.user = temp
+          ***REMOVED***
+        ***REMOVED***
+          //fix for old format  
+          else if (val.ID) {
+            this.user = val
+            this.user.id = val.ID
+            delete this.user.ID
+            this.storage.set('user', this.user)
+            console.log('id fixed', this.user)
+        ***REMOVED***
+          else {
+            console.log('user loaded successfully', val)
+            this.user = val
+        ***REMOVED***
+          console.log('resolving user', this.user)
+          resolve(this.user)
+      ***REMOVED***);
     ***REMOVED***
-  ***REMOVED***);
-
+      
+      
+  ***REMOVED***)
+   
+    
+    
 ***REMOVED***
 
   save(key, val, id?) {
@@ -54,11 +76,16 @@ export class StorageProvider {
     ***REMOVED***
       console.log('pushing to storage', key, val)
       this.storage.get(key).then((v) => {
-        let temp = JSON.parse(v) || {}
+        console.log('storage retrieved', v, typeof v)
+        let temp = {}
+        //extra code as sometimes user set as object instead of usual string
+        if (typeof v == 'object') { temp = v }
+        else { temp = JSON.parse(v) || {} }
         temp[id] = val
+        console.log('about to set temp',temp)
         this.storage.set(key, JSON.stringify(temp)).then((res) => {
           resolve('success')
-      ***REMOVED***)
+      ***REMOVED***).catch(err=>console.log('err',err))
     ***REMOVED***)
   ***REMOVED***)
 
@@ -70,6 +97,49 @@ export class StorageProvider {
     ***REMOVED***)
   ***REMOVED***)
 
+***REMOVED***
+  assignPermissions(code) {
+    console.log('assigning permissions')
+    return new Promise((resolve,reject) => {
+      this.loadFile('assets/admin/userPermissions.json').then(res => {
+          if(res[code]){
+            console.log('profile loaded successfuly succsefully')
+            this.user.permissions = res[code]
+            console.log('user', this.user)
+            this.storage.set('user', this.user).then(_=> resolve(this.user))
+      ***REMOVED***
+          else {
+            console.log('no code found',code)
+            reject('Invalid code, please try again')
+      ***REMOVED***
+      ***REMOVED***)
+  ***REMOVED***)
+***REMOVED***
+  removePermissions() {
+    return new Promise((resolve, reject) => {
+      this.user.permissions = {}
+      this.save('user', this.user, this.user.id).then(_ => resolve(this.user))
+  ***REMOVED***)
+***REMOVED***    
+
+  loadFile(url) {
+    var options = {}
+      return new Promise(resolve => {
+        this.http.get(url)
+          .map(res => res.json())
+          .subscribe(data => {
+            resolve(data);
+        ***REMOVED***);
+    ***REMOVED***);
+***REMOVED***
+  
+  presentToast(message) {
+    console.log('creating toast',message)
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+  ***REMOVED***);
+    toast.present();
 ***REMOVED***
 
 
