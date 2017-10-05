@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, AlertController, ToastController } from 'ionic-angular';
-import { StorageProvider } from '../../providers/storage/storage'
+import { NavController, IonicPage} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -10,17 +9,9 @@ import { StorageProvider } from '../../providers/storage/storage'
 export class HomePage {
   links: any;
   name: string;
-  user: any = {
-    permissions: {
-      name: null
-    }
-  }
 
   constructor(
-    public navCtrl: NavController,
-    public storage: StorageProvider,
-    public alertCtrl: AlertController,
-    public toastCtrl: ToastController) {
+    public navCtrl: NavController) {
     this.links=[
       // {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
       { name: 'Resources', color: 'picsa-manual', icon: 'book', page: 'ResourcesPage', text: '' },
@@ -32,78 +23,11 @@ export class HomePage {
     ]
   }
   ionViewDidLoad() {
-    this.storage.getUser().then(
-      res => {
-        if(!res['permissions']){res['permissions']={name:''}}
-        this.user = res
-        this.name=this.user.permissions.name
-        console.log('user', this.user)
-  })    
-  }
-
-  login() {
-      let prompt = this.alertCtrl.create({
-        title: 'Login',
-        message: "Enter organisation access code in the box below",
-        inputs: [
-          {
-            name: 'accessCode',
-            placeholder: 'Code',
-            type:'password'
-          },
-        ],
-        buttons: [
-          {
-            text: 'Cancel',
-            handler: data => {
-            }
-          },
-          {
-            text: 'Save',
-            handler: data => {
-              this.storage.assignPermissions(data.accessCode).then((user) => {
-                console.log('user', user)
-                this.user = user
-              }  
-                // this.presentToast('Successfully signed in as '+user.name)
-              ).catch((err) =>{
-                console.log('err',err)
-              })
-            }
-          }
-        ]
-      });
-      prompt.present();
-  }
-  logout() {
-    let alert = this.alertCtrl.create({
-      title: 'Sign Out',
-      message: 'Do you want to sign out of '+this.user.permissions.name,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-          }
-        },
-        {
-          text: 'Confirm',
-          handler: () => {
-            this.user.permissions = {}
-            this.storage.saveUser(this.user)
-          }
-        }
-      ]
-    });
-    alert.present();
     
   }
+  openSettings() {
+  this.navCtrl.push('SettingsPage')
+}  
+
   
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
 }
