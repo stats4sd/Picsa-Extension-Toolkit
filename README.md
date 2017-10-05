@@ -16,6 +16,14 @@ $npm install
 firebase promise issue:
 $npm install promise-polyfill --save-exact
 
+(known issue - cordova plugin file)
+if cannot install npm cordova plugin file, may first need to run
+$ionic cordova plugin rm cordova-plugin-file
+delete existing node modules folder
+$npm install
+$ionic cordova plugin add cordova-plugin-file
+
+
 
 #custom updates (not in repo)
 -changing default canvas drawing color:
