@@ -235,13 +235,13 @@ export class StorageProvider {
     if (!this.platform.is('cordova')) { return }
     return new Promise((resolve, reject) => {
         //assumes directory child of picsa, check picsa exists 
-        this.file.checkDir(this.file.externalApplicationStorageDirectory+'picsa/', dir)
+        File.checkDir(File.externalApplicationStorageDirectory+'picsa/', dir)
           .then(_ => {
-            console.log('directory exists', this.file.externalApplicationStorageDirectory + 'picsa/'+dir)
+            console.log('directory exists', File.externalApplicationStorageDirectory + 'picsa/'+dir)
             resolve('directory exists')
         ***REMOVED***)
           .catch(err => {
-            this.file.createDir(this.file.externalApplicationStorageDirectory+'picsa/', dir, false).then(() => {
+            File.createDir(File.externalApplicationStorageDirectory+'picsa/', dir, false).then(() => {
               console.log('picsa/'+dir+' directory created')
               resolve('directory created')
           ***REMOVED***).catch(err => { reject(err) })

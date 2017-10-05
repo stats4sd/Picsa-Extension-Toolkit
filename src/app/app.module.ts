@@ -5,7 +5,7 @@ import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { File } from '@ionic-native/file';
+
 import { Network} from '@ionic-native/network';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
@@ -71,7 +71,6 @@ export const firebaseConfig = {
     BudgetToolProvider,
     StorageProvider,
     FileOpener,
-    File
     ]
 
 })

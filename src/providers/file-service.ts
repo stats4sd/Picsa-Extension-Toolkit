@@ -31,7 +31,7 @@ export class FileService {
     if(this.fs){
       console.log('listing directory')
       return new Promise((resolve, reject) =>{
-        this.file.listDir(this.fs,path).then(res=>
+        File.listDir(this.fs,path).then(res=>
         resolve(res)
       ).catch(err=>
       resolve(err))      
@@ -43,7 +43,7 @@ export class FileService {
     if(this.fs){
       console.log('creating directory: '+name)
       return new Promise((resolve,reject)=>{
-        this.file.createDir(this.fs,name,false).then(res =>
+        File.createDir(this.fs,name,false).then(res =>
           resolve(res)
       ).catch(err=>
       resolve(err))
@@ -54,9 +54,9 @@ export class FileService {
   createFile(filepath,filename:string,data:any,replace:boolean){
     if(this.fs){
         return new Promise((resolve,reject)=>{
-          this.file.createFile(this.fs+filepath,filename,true).then(res=>{
+          File.createFile(this.fs+filepath,filename,true).then(res=>{
             console.log('file created')
-          this.file.writeFile(this.fs+filepath, filename, data,{}).then(res => 
+          File.writeFile(this.fs+filepath, filename, data,{}).then(res => 
           resolve('file written')
         ).catch(err=> resolve(err))
     ***REMOVED***).catch(err=>{console.log('file could not be created');resolve(err)})

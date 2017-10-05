@@ -33,13 +33,13 @@ export class ResourcesPage {
 
   checkFileDirectory() {
     console.log('checking file directory')
-    this.file.checkDir(this.file.externalApplicationStorageDirectory, 'picsa')
+    File.checkDir(File.externalApplicationStorageDirectory, 'picsa')
       .then(_ => {
         console.log('file directory exists');
         this.setResources()
     ***REMOVED***)
       .catch(err => {
-        this.file.createDir(this.file.externalApplicationStorageDirectory, 'picsa', false).then(() => {
+        File.createDir(File.externalApplicationStorageDirectory, 'picsa', false).then(() => {
           console.log('pics directory created')
           this.setResources()
       ***REMOVED***).catch(err => { console.log(err) })
@@ -50,7 +50,7 @@ export class ResourcesPage {
   
   list(dir, path) {
     console.log('listing', path)
-    this.file.listDir(dir, path).then(res => {
+    File.listDir(dir, path).then(res => {
       console.log('list:',path, res)
   ***REMOVED***).catch(err => { console.log('err', err) })
 ***REMOVED***
@@ -64,22 +64,22 @@ export class ResourcesPage {
 ***REMOVED***
   openResource(resource) {
     if(!this.platform.is('cordova')){return this.openWebResource(resource)}
-    this.file.copyFile(this.file.applicationDirectory + 'www/assets/resources/', resource.filename, this.file.externalApplicationStorageDirectory + 'picsa/', resource.filename)
+    File.copyFile(File.applicationDirectory + 'www/assets/resources/', resource.filename, File.externalApplicationStorageDirectory + 'picsa/', resource.filename)
       .then(_ => {
         console.log('file copied successfully', resource.filename)
         console.log('opening file',resource.filename)
-        this.fileOpener.open(this.file.externalApplicationStorageDirectory+'picsa/' + resource.filename, 'application/pdf')
+        FileOpener.open(File.externalApplicationStorageDirectory+'picsa/' + resource.filename, 'application/pdf')
           .then(_ => console.log('openned successfully')).catch(err => {
             err => console.log('file opener err', err);
-            this.list(this.file.externalApplicationStorageDirectory, 'picsa')
+            this.list(File.externalApplicationStorageDirectory, 'picsa')
         ***REMOVED***)
     ***REMOVED***).catch(
       err => {
         console.log('file copy error', err)
-        this.fileOpener.open(this.file.externalApplicationStorageDirectory + resource.filename, 'application/pdf')
+        FileOpener.open(File.externalApplicationStorageDirectory + resource.filename, 'application/pdf')
           .then(_=>console.log('opened successfuly')).catch(err => {
             err => console.log('file opener error', err);
-            this.list(this.file.externalApplicationStorageDirectory, 'picsa')
+            this.list(File.externalApplicationStorageDirectory, 'picsa')
         ***REMOVED***)
     ***REMOVED***)    
 ***REMOVED***
@@ -101,27 +101,27 @@ export class ResourcesPage {
 }  
 
 
-    // this.file.copyFile(this.file.applicationDirectory + 'www/assets', 'picsa-field-manual.pdf', this.file.externalApplicationStorageDirectory, 'picsa-field-manual.pdf')
+    // File.copyFile(File.applicationDirectory + 'www/assets', 'picsa-field-manual.pdf', File.externalApplicationStorageDirectory, 'picsa-field-manual.pdf')
     //   .then(_ => {
-    //     console.log('external data', this.file.externalApplicationStorageDirectory)
-    //     this.fileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
+    //     console.log('external data', File.externalApplicationStorageDirectory)
+    //     FileOpener.open(File.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
     // ***REMOVED***).catch(
     //   err => {
     //     console.log(err)
-    //     this.fileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
+    //     FileOpener.open(File.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
     // ***REMOVED***
     //   )
 
-    // this.file.checkDir(this.file.dataDirectory, 'picsa')
+    // File.checkDir(File.dataDirectory, 'picsa')
     //   .then(_ => {
     //     console.log('Directory exists')
     // ***REMOVED***)
     //   .catch(err => {
-    //     this.file.createDir(this.file.dataDirectory, 'picsa', false).then(() => {
-    //       this.file.copyDir(this.file.applicationDirectory + 'www/assets', 'resources', this.file.dataDirectory + '/picsa', 'resources')
+    //     File.createDir(File.dataDirectory, 'picsa', false).then(() => {
+    //       File.copyDir(File.applicationDirectory + 'www/assets', 'resources', File.dataDirectory + '/picsa', 'resources')
     //         .then(_ => {
     //           console.log('folder successfully copied')
-    //           this.list(this.file.dataDirectory, 'picsa/assets')
+    //           this.list(File.dataDirectory, 'picsa/assets')
     //       ***REMOVED***)
     //   ***REMOVED***).catch(err => { console.log(err) })
     // ***REMOVED***)

@@ -71,10 +71,10 @@ export class VideosPage {
   testFileFunction(){
     console.log('running test file function)')
     console.log(cordova.file);
-    this.file.listDir(this.fs,'videos').then(res=>
+    File.listDir(this.fs,'videos').then(res=>
     console.log(res));
-    this.file.createFile(this.fs+'/videos','test.txt',true).then(res =>
-    this.fileCheck(res))
+    File.createFile(this.fs+'/videos','test.txt',true).then(res =>
+    FileCheck(res))
 
 ***REMOVED***
   errorFunction(err){
@@ -91,7 +91,7 @@ export class VideosPage {
   fileCheck(res){
     console.log('running file check');
     console.log(res)
-    this.file.listDir(this.fs,'videos')
+    File.listDir(this.fs,'videos')
 ***REMOVED***
 
   fetchData(): void {
