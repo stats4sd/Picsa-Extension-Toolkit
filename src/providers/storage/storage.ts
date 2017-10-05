@@ -2,14 +2,24 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { ToastController} from 'ionic-angular'
 import { Storage } from '@ionic/storage';
+import { FileOpener } from '@ionic-native/file-opener';
+import { File } from '@ionic-native/file';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
   user: any=null
 // lots of constructor code can be cleaned up after migration to newer version
-  constructor(public http: Http, public storage: Storage, public toastCtrl:ToastController) {
+  constructor(
+    public http: Http,
+    public storage: Storage,
+    public toastCtrl: ToastController,
+    public fileOpener: FileOpener,
+    public file: File, ) {
+    
     console.log('storage provider loading, loading user data')
+    //check picsa directory exists, create if not
+    this.checkFileDirectory('picsa')
 ***REMOVED***
   getUser() {
     return new Promise((resolve, reject) => {
@@ -169,5 +179,34 @@ export class StorageProvider {
     if (id.length != 20) throw new Error('Length should be 20.');
     return id;
 ***REMOVED***
+
+  backup() {
+    //offline
+    console.log('creating offline user backup')
+    this.checkFileDirectory('backups')
+    
+
+    //online
+    
+***REMOVED***
+  //can merge code from resources page to single provider (either storage or file)
+  //checks for a single directory (assumes picsa directory will already exist)...not adapted for root eg. /picsa/backups/profile/...
+  checkFileDirectory(dir?) {
+    console.log('checking dir',dir)
+    return new Promise((resolve, reject) => {
+        //assumes directory child of picsa, check picsa exists 
+        this.file.checkDir(this.file.externalApplicationStorageDirectory+'picsa/', dir)
+          .then(_ => {
+            console.log('directory exists', this.file.externalApplicationStorageDirectory + 'picsa/'+dir)
+            resolve('directory exists')
+        ***REMOVED***)
+          .catch(err => {
+            this.file.createDir(this.file.externalApplicationStorageDirectory+'picsa/', dir, false).then(() => {
+              console.log('picsa/'+dir+' directory created')
+              resolve('directory created')
+          ***REMOVED***).catch(err => { reject(err) })
+        ***REMOVED***)
+    ***REMOVED***)    
+  ***REMOVED*** 
 
 }
