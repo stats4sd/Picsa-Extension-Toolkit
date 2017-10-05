@@ -16,7 +16,7 @@ export class BudgetToolProvider {
     this.createNewBudget()
   }
   loadSavedCards() {
-    this.storage.load('budgetCards').then((res) => {
+    this.storage.get('budgetCards').then((res) => {
       console.log('loading saved cards', res)
       for (let key in res) {
         console.log('adding type', res[key].Types)

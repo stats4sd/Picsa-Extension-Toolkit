@@ -49,10 +49,10 @@
       <ion-icon name="cloud-upload"></ion-icon>
       Data backup and restore
     </ion-list-header>
-    <ion-item>Last offline backup:</ion-item>
-    <ion-item>Last online backup:</ion-item>
+    <ion-item>Last offline backup:{{lastBackup.offline | date:'medium'}}</ion-item>
+    <ion-item>Last online backup:{{lastBackup.online | date:'medium'}}</ion-item>
     <ion-item>
-      <button ion-button (click)="backup()">Backup Now</button>
+      <button ion-button (click)="sync()">Backup Now</button>
       <!-- <button ion-button (click)="restore()">Restore User Data</button> -->
     </ion-item>
   </ion-list>

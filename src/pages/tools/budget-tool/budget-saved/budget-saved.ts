@@ -38,7 +38,7 @@ export class BudgetSavedPage {
     this.viewCtrl.dismiss(this.budget)
   }
   loadSavedBudgets() {
-    this.storage.load('budgets').then((res) => {
+    this.storage.get('budgets').then((res) => {
       console.log('budgets loaded', res)
       let arr = []
       for (let key in res) { arr.push(res[key]) }

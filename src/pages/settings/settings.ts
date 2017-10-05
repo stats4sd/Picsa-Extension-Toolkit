@@ -13,6 +13,10 @@ export class SettingsPage {
       name: 'none'
     }
   }
+  lastBackup:any= {
+    online: null,
+    offline: null
+  }
   name: string;
 
   constructor(
@@ -30,7 +34,8 @@ export class SettingsPage {
         this.user = res
         this.name = this.user.permissions.name
         console.log('user', this.user)
-      })    
+      })
+    this.storagePrvdr.get('lastBackup').then((res) => this.lastBackup = res ? res : { online: null,offline:null})
   }
   userEdit(name) {
     let prompt = this.alertCtrl.create({
@@ -129,8 +134,14 @@ export class SettingsPage {
     });
     toast.present();
   }
-  backup() {
-    this.storagePrvdr.backup(this.user)
+
+  sync() {
+    let time = Date.now();
+    this.storagePrvdr.set('lastBackup',time)
+    this.lastBackup.offline=Date.now()
+    this.storagePrvdr.sync({ user: this.user }).then(res => {
+      this.lastBackup = res
+    })
   }
 
 }
