@@ -32,6 +32,38 @@ export class SettingsPage {
         console.log('user', this.user)
       })    
   }
+  userEdit(name) {
+    let prompt = this.alertCtrl.create({
+      title: 'User Name',
+      message: "Enter your name",
+      inputs: [
+        {
+          name: 'userName',
+          placeholder: 'Name',
+          type: 'text'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.updateUser('name', data.userName)
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+  updateUser(key, val) {
+    console.log(key,val)
+    if (this.user.hasOwnProperty(key)) { this.user[key] = val }
+    this.storagePrvdr.saveUser(this.user)
+  }
   login() {
     let prompt = this.alertCtrl.create({
       title: 'Login',

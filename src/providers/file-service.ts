@@ -14,12 +14,14 @@ export class FileService {
 
   constructor(public http: Http, public platform:Platform, public file:File) {
     this.checkPlatform();
-    if(this.mainPlatform=='mobile'){
+    if (this.mainPlatform == 'mobile') {
+      console.log('platform mobile, cordova enabled?')
       this.fs= cordova.file.dataDirectory;
     }else{this.fs=undefined}
   }
 
-  checkPlatform(){
+  checkPlatform() {
+    console.log('checking platform')
    this.platforms=this.platform.platforms()
    if(this.platform.is('mobile')){this.mainPlatform='mobile'}
    if(this.platform.is('core')){this.mainPlatform='desktop'}
