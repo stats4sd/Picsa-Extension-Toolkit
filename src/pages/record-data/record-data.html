@@ -1,39 +1,59 @@
-<ion-header>
+<div *ngIf="formOpen" class="form" [style.display]="formDisplay">
+    <ion-buttons end>
+      <button ion-button icon-right class="form-close" (click)="closeForm()" *ngIf="formOpen">
+        <span>Close form</span>
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  <iframe id="form-iframe" class="enketo-iframe" [src]="enketoLink" sandbox="allow-forms allow-modals allow-same-origin allow-scripts allow-top-navigation"></iframe>
+</div>
 
+<ion-header *ngIf="!formOpen">
   <ion-navbar color="primary">
     <ion-title>Record Data</ion-title>
     <ion-buttons end>
-      <button (click)="refresh()">
-        <span *ngIf="!finished">Refreshing forms...</span>
+      <button ion-button icon-right (click)="refresh()" *ngIf="!formOpen">
+        <span *ngIf="!finished  && !refreshing">Update</span>
+        <span *ngIf="!finished && refreshing">Searching for forms...</span>
         <span *ngIf="anyErrors">Error</span>
-        <span *ngIf="finished && !anyErrors">Refresh</span>
-        <ion-icon name="refresh" *ngIf="finished || anyErrors"></ion-icon>
+        <span *ngIf="finished && !anyErrors">Up to Date</span>
+        <ion-icon name="refresh" *ngIf="(!finished && !refreshing)||anyErrors"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding class="forms-overview">
-  <h2>Available Forms</h2>
-  <ion-list>
-    <ion-item *ngFor="let form of forms">
-      <ion-icon name="clipboard" item-left *ngIf="form.downloadable"></ion-icon>
-      <ion-icon name="clipboard" light-grey item-left *ngIf="!form.downloadable"></ion-icon>
-      <h2>{{form.title}}</h2>
-      <p>{{form.date_modified | date:'medium'}}</p>
-      <button clear item-right (click)="openForm(form)" *ngIf="form.enketoLink && form.downloadable">
-        <ion-icon name="open"></ion-icon>
-        Open Form
-      </button>
-    </ion-item>
-  </ion-list>
-  <div id="info">
-    <h3>Info</h3>
-    <p>If you have internet the app will attempt to contact the kobo server and return forms from a demo account.</p>
-    <p>Once downloaded, links will be generated to complete the form using Enketo. Once the form has been opened once it is cached to work without internet.</p>
-  </div>
+
+
+<ion-content class="forms-overview">
+  <div padding>
+    <h2>Available Forms</h2>
+    <ion-list>
+      <div *ngFor="let form of forms">
+        <ion-item *ngIf="form.downloadable" (click)="openForm(form)">
+          <div class="flex">
+            <div>
+              <ion-icon name="clipboard" item-left *ngIf="form.downloadable"></ion-icon>
+              <ion-icon name="clipboard" light-grey item-left *ngIf="!form.downloadable"></ion-icon>
+            </div>
+            <div>
+              <div>{{form.title}}</div>
+              <div>{{form.date_modified | date:'medium'}}</div>
+            </div>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
+    </div>
+    <div id="info" class="footer">
+      <h3>Info</h3>
+      <p>If you have internet the app will attempt to download survey forms from the server.</p>
+      <p>Once a form has been opened it can be filled offline and automatically saved, however you require internet access to submit.</p>
+    </div>
+ 
+
+
 
 
 </ion-content>

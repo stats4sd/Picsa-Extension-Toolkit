@@ -1,0 +1,18 @@
+{
+	"extension-malawi":{
+		"name":"extension",
+		"permissions":"default"
+	},
+	"wfp-malawi":{
+		"name":"wfp",
+		"permissions":"monitoring"
+	},
+	"dccms-malawi":{
+		"name":"dccms",
+		"permissions":"monitoring"
+	},
+	"picsa-malawi":{
+		"name":"picsa",
+		"permissions":"monitoring"
+	}
+}
