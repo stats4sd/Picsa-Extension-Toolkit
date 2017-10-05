@@ -3,7 +3,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 import {KoboApi} from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
 import {ModalController} from "ionic-angular"
-import { Storage } from '@ionic/storage';
+import { StorageProvider } from '../../providers/storage/storage'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
@@ -29,20 +29,21 @@ export class RecordDataPage {
     public koboApi: KoboApi,
     public nav: NavController,
     public modal: ModalController,
-    private storage: Storage,
+    private storagePrvdr: StorageProvider,
     public sanitizer: DomSanitizer) {
     // can move to storage provider code
-    this.storage.get('forms').then((forms)=> {
+    this.storagePrvdr.get('forms').then((forms)=> {
         if (forms) {
-            this.forms = (JSON.parse(forms))
+            this.forms = forms
       ***REMOVED***
         else {
             this.finished = false;
             this.getForms()
       ***REMOVED***
   ***REMOVED***)
-    console.log('getting user')
-    this.storage.get('user').then((user)=>{
+    console.log('getting user from storage')
+    this.storagePrvdr.getUser().then((user) => {
+      console.log('user retrieved',user)
       this.user=user
   ***REMOVED***)
 ***REMOVED***
@@ -65,7 +66,7 @@ export class RecordDataPage {
           this.finished = true;
           this.refreshing = false
           let i=0;
-          this.storage.set('forms',JSON.stringify(this.forms));
+          this.storagePrvdr.set('forms',this.forms);
           for(let form of this.forms){
             this.getLinks(form, i);
             i++
@@ -81,7 +82,7 @@ export class RecordDataPage {
       ***REMOVED***,
         error =>{console.log(error)},
         () => {
-          this.storage.set('forms',JSON.stringify(this.forms));
+          this.storagePrvdr.set('forms',this.forms);
       ***REMOVED***)
 ***REMOVED***
 

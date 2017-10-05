@@ -13,6 +13,10 @@ export class SettingsPage {
       name: 'none'
   ***REMOVED***
 ***REMOVED***
+  lastBackup:any= {
+    online: null,
+    offline: null
+***REMOVED***
   name: string;
 
   constructor(
@@ -30,7 +34,8 @@ export class SettingsPage {
         this.user = res
         this.name = this.user.permissions.name
         console.log('user', this.user)
-    ***REMOVED***)    
+    ***REMOVED***)
+    this.storagePrvdr.get('lastBackup').then((res) => this.lastBackup = res ? res : { online: null,offline:null})
 ***REMOVED***
   userEdit(name) {
     let prompt = this.alertCtrl.create({
@@ -129,8 +134,14 @@ export class SettingsPage {
   ***REMOVED***);
     toast.present();
 ***REMOVED***
-  backup() {
-    this.storagePrvdr.backup(this.user)
+
+  sync() {
+    let time = Date.now();
+    this.storagePrvdr.set('lastBackup',time)
+    this.lastBackup.offline=Date.now()
+    this.storagePrvdr.sync({ user: this.user }).then(res => {
+      this.lastBackup = res
+  ***REMOVED***)
 ***REMOVED***
 
 }

@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
-  user: any=null
+  user: any
 // lots of constructor code can be cleaned up after migration to newer version
   constructor(
     public http: Http,
@@ -26,10 +26,13 @@ export class StorageProvider {
     this.checkFileDirectory('picsa')
 ***REMOVED***
   getUser() {
+    console.log('getting user')
     return new Promise((resolve, reject) => {
-      if (this.user) { resolve(this.user) }
+      if (this.user) { console.log('user already loaded'); resolve(this.user) }
       else {
+        console.log('loading user from database')
         this.storage.get('user').then((val) => {
+          console.log('user loaded from database',val)
           if (val == null) {
             this.user = {}
             this.user.id = this.generatePushID()
@@ -42,6 +45,7 @@ export class StorageProvider {
           //old format correction, can be removed in later version
           //added complication as all data saved stringified, so need to distinguish proper user saved as string and 
           else if (typeof val == 'string') {
+            console.log('upgrading user from legacy')
             let temp = JSON.parse(val)
             if (typeof temp == 'string') {
               this.user = {}
@@ -78,7 +82,20 @@ export class StorageProvider {
     this.storage.set('user',user)
 ***REMOVED***
 
+  get(key) {
+    // parse and stringify not strictly required but was used in old version so need to maintain compatibility
+    return new Promise((resolve) => {
+      this.storage.get(key).then(res=>resolve(JSON.parse(res)))
+  ***REMOVED***)
+***REMOVED***
+  set(key, val) {
+    console.log('setting',key,val)
+    return this.storage.set(key,JSON.stringify(val))
+***REMOVED***
+
   save(key, val, id?) {
+    // saves local data to db, creating unique id key
+    console.log('saving',key,val,id)
     return new Promise((resolve) => {
       if (!id) {
         console.log('generating id')
@@ -87,6 +104,7 @@ export class StorageProvider {
       console.log('pushing to storage', key, val)
       this.storage.get(key).then((v) => {
         console.log('storage retrieved', v, typeof v)
+        if (!v) { v = {}}
         let temp = {}
         //extra code as sometimes user set as object instead of usual string
         if (typeof v == 'object') { temp = v }
@@ -94,20 +112,17 @@ export class StorageProvider {
         temp[id] = val
         console.log('about to set temp',temp)
         this.storage.set(key, JSON.stringify(temp)).then((res) => {
+          // attemp to sync to live
+          let liveData = {}
+          liveData[key]=temp
+          this.sync(liveData)
           resolve('success')
       ***REMOVED***).catch(err=>console.log('err',err))
     ***REMOVED***)
   ***REMOVED***)
-
 ***REMOVED***
-  load(key) {
-    return new Promise((resolve) => {
-      this.storage.get(key).then((v) => {
-        resolve(JSON.parse(v))
-    ***REMOVED***)
-  ***REMOVED***)
 
-***REMOVED***
+  
   assignPermissions(code) {
     console.log('assigning permissions')
     return new Promise((resolve,reject) => {
@@ -184,21 +199,33 @@ export class StorageProvider {
     return id;
 ***REMOVED***
 
-  backup(user) {
-    //offline
-    console.log('creating offline user backup')
-    this.checkFileDirectory('backups')
+  sync(data) {
+    console.log('syncing data',data)
+    // attempts to sync local and live, returns timestamp of successful live sync
+    return new Promise((resolve, reject) => {
+      //offline - create file backup?
+      console.log('creating offline user backup')
+      this.checkFileDirectory('backups')
     
+      //online
+      this.getUser().then(() => {
+        console.log('user id', this.user.id)
+        this.user.updated = Date.now();
+        // sync data in format {key:value}, allows for multiple values
+        const promise = this.afoDatabase.object('/users/' + this.user.id).update(data);
+        // promise.offline.then(() => console.log('offline data saved to device storage!'));
+        promise.then(() => {
+          console.log('data saved to Firebase!')
+          let temp = { offline: Date.now(), online: Date.now() }
+          // save lastbackup data to db
+          console.log('temp',temp)
+          this.set('lastBackup',temp)
+          resolve(temp)
+      ***REMOVED***).catch(err => console.log('err', err));
+      
+    ***REMOVED***)
 
-    //online
-    const promise = this.afoDatabase.object('/users/' + user.id).update({ profile: user });
-    // promise.offline.then(() => console.log('offline data saved to device storage!'));
-    promise.then(() => {
-      console.log('data saved to Firebase!')
-
-  ***REMOVED***).catch(err=>console.log('err',err));
-    
-    
+  ***REMOVED***)  
 ***REMOVED***
   //can merge code from resources page to single provider (either storage or file)
   //checks for a single directory (assumes picsa directory will already exist)...not adapted for root eg. /picsa/backups/profile/...
