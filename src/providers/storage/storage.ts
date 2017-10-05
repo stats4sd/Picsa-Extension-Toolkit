@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastController} from 'ionic-angular'
+import { ToastController } from 'ionic-angular'
+import { Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File } from '@ionic-native/file';
+import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -15,7 +17,9 @@ export class StorageProvider {
     public storage: Storage,
     public toastCtrl: ToastController,
     public fileOpener: FileOpener,
-    public file: File, ) {
+    public platform: Platform,
+    public file: File,
+    public afoDatabase: AngularFireOfflineDatabase) {
     
     console.log('storage provider loading, loading user data')
     //check picsa directory exists, create if not
@@ -180,19 +184,28 @@ export class StorageProvider {
     return id;
 ***REMOVED***
 
-  backup() {
+  backup(user) {
     //offline
     console.log('creating offline user backup')
     this.checkFileDirectory('backups')
     
 
     //online
+    const promise = this.afoDatabase.object('/users/' + user.id).update({ profile: user });
+    // promise.offline.then(() => console.log('offline data saved to device storage!'));
+    promise.then(() => {
+      console.log('data saved to Firebase!')
+
+  ***REMOVED***).catch(err=>console.log('err',err));
+    
     
 ***REMOVED***
   //can merge code from resources page to single provider (either storage or file)
   //checks for a single directory (assumes picsa directory will already exist)...not adapted for root eg. /picsa/backups/profile/...
   checkFileDirectory(dir?) {
-    console.log('checking dir',dir)
+    console.log('checking dir', dir)
+    console.log('cordova?',this.platform.is('cordova'))
+    if (!this.platform.is('cordova')) { return }
     return new Promise((resolve, reject) => {
         //assumes directory child of picsa, check picsa exists 
         this.file.checkDir(this.file.externalApplicationStorageDirectory+'picsa/', dir)

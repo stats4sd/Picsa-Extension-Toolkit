@@ -63,6 +63,7 @@ export class ResourcesPage {
   ***REMOVED***
 ***REMOVED***
   openResource(resource) {
+    if(!this.platform.is('cordova')){return this.openWebResource(resource)}
     this.file.copyFile(this.file.applicationDirectory + 'www/assets/resources/', resource.filename, this.file.externalApplicationStorageDirectory + 'picsa/', resource.filename)
       .then(_ => {
         console.log('file copied successfully', resource.filename)
@@ -82,11 +83,19 @@ export class ResourcesPage {
         ***REMOVED***)
     ***REMOVED***)    
 ***REMOVED***
+  openWebResource(resource) {
+    // open resource for browser or simulator version. Currently files manually added to firebase storage and url copied. In future could automate.
+    // refs: https://firebase.google.com/docs/storage/web/download-files
+    console.log('opening resource', resource)
+    window.open(resource.weblink, '_blank');
+
+***REMOVED***
   setResources() {
     this.resources = [
-      { name: 'Picsa Manual', filename: 'picsa-field-manual.pdf', type: 'pdf', image: 'assets/resources/picsa-field-manual-cover.png' },
-      { name: 'Crop Information - Chileka', filename: 'crop-info-sheet-chileka.pdf', type: 'pdf', image: 'assets/resources/crop-info-sheet-chileka-cover.png' },
-      { name: 'Potential Training Schedule', filename: 'potential-PICSA-training-schedule.pdf', type: 'pdf', image: 'assets/resources/potential-PICSA-training-schedule-cover.png' },
+      { name: 'Picsa Manual', filename: 'picsa-field-manual.pdf', type: 'pdf', image: 'assets/resources/picsa-field-manual-cover.png', weblink:'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpicsa-field-manual.pdf?alt=media&token=c394b68a-3f67-4494-8620-c35d65151c45' },
+      { name: 'Crop Information - Chileka', filename: 'crop-info-sheet-chileka.pdf', type: 'pdf', image: 'assets/resources/crop-info-sheet-chileka-cover.png', weblink:'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fcrop-info-sheet-chileka.pdf?alt=media&token=cb8a6243-1d37-43f6-a97c-a0a7bc0f11f2' },
+      { name: 'Potential Training Schedule', filename: 'potential-PICSA-training-schedule.pdf', type: 'pdf', image: 'assets/resources/potential-PICSA-training-schedule-cover.png', weblink:'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpotential-PICSA-training-schedule.pdf?alt=media&token=618737d1-949b-467a-9f28-1dcc35ce3c8c' },
+      { name: 'Seasonal Forecase Blantyre', filename: 'seasonal-forecast-blantyre.pdf', type: 'pdf', image: 'assets/resources/seasonal-forecast-blantyre-cover.png', weblink:'https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-blantyre.pdf?alt=media&token=6ba42494-4c23-409f-ac55-f2fa8b3043ea' },
     ]
 ***REMOVED***
 }  
