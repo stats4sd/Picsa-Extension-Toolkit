@@ -1,5 +1,8 @@
 {
   "name": "picsa-extension-toolkit",
   "app_id": "b36f0670",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+***REMOVED***
 }

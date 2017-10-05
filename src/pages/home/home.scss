@@ -8,28 +8,36 @@ page-home {
     background-color: color($colors, primary);
     overflow: hidden;
 ***REMOVED***
+  .title, .subtitle{
+    color:white;
+    text-align: center;
+***REMOVED***
   .title{
-    height: 33%;
-    display: flex;
-    flex-wrap: wrap;
+    height: 15vh;
+    font-size: 13vh;
+    padding: 2vh;
+***REMOVED***
+  .subtitle{
+    height: 5vh;
+    font-size: 5vh;
+    margin-bottom: 5vh;
+***REMOVED***
+  .version{
+    position: absolute;
+    color:white;
+    bottom:0;
+    text-align: center;
+    width:100%;
+    padding: 2vh;
+    font-size: 3vh;
 ***REMOVED***
   .link-holder{
     height:67%;
     display: block;
     
 ***REMOVED***
-  h1,h2{
-    width:100vw;
-    color: white;
-    opacity: 0.95;
-    text-align: center;
-***REMOVED***
-  h1{
-    font-size: 6em
-***REMOVED***
-  h2{
-    font-size: 3em
-***REMOVED***
+
+
   .link{
     height:calc(100%/5)!important;
     width: 100%!important;
@@ -54,8 +62,16 @@ page-home {
   ion-icon{
     font-size: xx-large
 ***REMOVED***
-  .version{
-    font-size: small
+  .settings{
+    position: absolute;
+    right:0;
+    top:0;
+    color:white;
+    padding:5px;
+    text-transform: uppercase
+***REMOVED***
+  ion-icon{
+    padding-right:5px
 ***REMOVED***
   // button{
   //   height: 100%!important;
