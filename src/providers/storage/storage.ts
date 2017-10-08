@@ -18,7 +18,7 @@ export class StorageProvider {
     public toastCtrl: ToastController,
     public fileOpener: FileOpener,
     public platform: Platform,
-    public file: File,
+    private file: File,
     public afoDatabase: AngularFireOfflineDatabase) {
     
     console.log('storage provider loading, loading user data')
@@ -235,13 +235,13 @@ export class StorageProvider {
     if (!this.platform.is('cordova')) { return }
     return new Promise((resolve, reject) => {
         //assumes directory child of picsa, check picsa exists 
-        File.checkDir(File.externalApplicationStorageDirectory+'picsa/', dir)
+        this.file.checkDir(this.file.externalApplicationStorageDirectory+'picsa/', dir)
           .then(_ => {
-            console.log('directory exists', File.externalApplicationStorageDirectory + 'picsa/'+dir)
+            console.log('directory exists', this.file.externalApplicationStorageDirectory + 'picsa/'+dir)
             resolve('directory exists')
         ***REMOVED***)
           .catch(err => {
-            File.createDir(File.externalApplicationStorageDirectory+'picsa/', dir, false).then(() => {
+            this.file.createDir(this.file.externalApplicationStorageDirectory+'picsa/', dir, false).then(() => {
               console.log('picsa/'+dir+' directory created')
               resolve('directory created')
           ***REMOVED***).catch(err => { reject(err) })

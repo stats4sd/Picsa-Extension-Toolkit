@@ -28,7 +28,7 @@ export class VideosPage {
   player;
   activeVideo;
 
-  constructor(public navCtrl: NavController, public platform: Platform, fileService: FileService, public http: Http, public file:File, public ytPlayer: YoutubeService) {
+  constructor(public navCtrl: NavController, public platform: Platform, fileService: FileService, public http: Http, private file:File, public ytPlayer: YoutubeService) {
     this.videos = [
       {
         name: 'Women in extension',
@@ -54,7 +54,7 @@ export class VideosPage {
   
     // if (this.platform.is('mobile')) {
     //   this.fs= cordova.file.dataDirectory;
-    //   File.checkDir(this.fs, 'videos').then(res =>
+    //   this.file.checkDir(this.fs, 'videos').then(res =>
     //   console.log(res))
     //   .catch(err => 
     //   console.log(err)
@@ -71,10 +71,10 @@ export class VideosPage {
   testFileFunction(){
     console.log('running test file function)')
     console.log(cordova.file);
-    File.listDir(this.fs,'videos').then(res=>
+    this.file.listDir(this.fs,'videos').then(res=>
     console.log(res));
-    File.createFile(this.fs+'/videos','test.txt',true).then(res =>
-    FileCheck(res))
+    this.file.createFile(this.fs+'/videos','test.txt',true).then(res =>
+    this.fileCheck(res))
 
 ***REMOVED***
   errorFunction(err){
@@ -91,7 +91,7 @@ export class VideosPage {
   fileCheck(res){
     console.log('running file check');
     console.log(res)
-    File.listDir(this.fs,'videos')
+    this.file.listDir(this.fs,'videos')
 ***REMOVED***
 
   fetchData(): void {

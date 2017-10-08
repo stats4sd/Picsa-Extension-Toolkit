@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { File } from '@ionic-native/file';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -71,6 +72,7 @@ export const firebaseConfig = {
     BudgetToolProvider,
     StorageProvider,
     FileOpener,
+    File
     ]
 
 })
