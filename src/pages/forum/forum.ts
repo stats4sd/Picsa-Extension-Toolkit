@@ -15,9 +15,9 @@ export class ForumPage {
 
 
   constructor(public navCtrl: NavController, afoDatabase: AngularFireOfflineDatabase, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private network: Network) {
-    this.discussions = afoDatabase.list('/discussions');
-    this.messages = afoDatabase.list('/messages');
-    this.statistics = afoDatabase.list('/statistics');
+    // this.discussions = afoDatabase.list('/discussions');
+    // this.messages = afoDatabase.list('/messages');
+    // this.statistics = afoDatabase.list('/statistics');
     console.log('network', this.network.type)
     this.watchForConnection();
     this.watchForDisconnect();

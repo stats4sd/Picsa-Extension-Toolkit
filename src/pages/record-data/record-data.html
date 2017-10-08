@@ -8,7 +8,7 @@
   <iframe id="form-iframe" class="enketo-iframe" [src]="enketoLink" sandbox="allow-forms allow-modals allow-same-origin allow-scripts allow-top-navigation"></iframe>
 </div>
 
-<ion-header *ngIf="!formOpen">
+<ion-header [hidden]="formOpen">
   <ion-navbar color="primary">
     <ion-title>Record Data</ion-title>
     <ion-buttons end>

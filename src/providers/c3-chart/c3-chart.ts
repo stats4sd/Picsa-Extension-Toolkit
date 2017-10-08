@@ -38,7 +38,7 @@ export class C3ChartProvider {
     // }
     // if (this.platform.is('mobile')) {
     //   //use cordova
-    //   File.checkDir(File.dataDirectory, 'mydir')
+    //   this.file.checkDir(this.file.dataDirectory, 'mydir')
     //     .then(_ => console.log('Directory exists'))
     //     .catch(err => console.log('Directory doesnt exist'));
     // }
