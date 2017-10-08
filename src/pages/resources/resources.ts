@@ -14,7 +14,7 @@ export class ResourcesPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public fileOpener: FileOpener,
+    private fileOpener: FileOpener,
     public file: File,
     public platform: Platform) {
     
@@ -68,7 +68,7 @@ export class ResourcesPage {
       .then(_ => {
         console.log('file copied successfully', resource.filename)
         console.log('opening file',resource.filename)
-        FileOpener.open(File.externalApplicationStorageDirectory+'picsa/' + resource.filename, 'application/pdf')
+        this.fileOpener.open(File.externalApplicationStorageDirectory+'picsa/' + resource.filename, 'application/pdf')
           .then(_ => console.log('openned successfully')).catch(err => {
             err => console.log('file opener err', err);
             this.list(File.externalApplicationStorageDirectory, 'picsa')
@@ -76,7 +76,7 @@ export class ResourcesPage {
       }).catch(
       err => {
         console.log('file copy error', err)
-        FileOpener.open(File.externalApplicationStorageDirectory + resource.filename, 'application/pdf')
+        this.fileOpener.open(File.externalApplicationStorageDirectory + resource.filename, 'application/pdf')
           .then(_=>console.log('opened successfuly')).catch(err => {
             err => console.log('file opener error', err);
             this.list(File.externalApplicationStorageDirectory, 'picsa')
