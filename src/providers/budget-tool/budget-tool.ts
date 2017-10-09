@@ -8,7 +8,7 @@ export class BudgetToolProvider {
   allData: any;
   budget: any
 
-  constructor(public http: Http, public storage: StorageProvider) {
+  constructor(public http: Http, public storagePrvdr: StorageProvider) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
     //load saved cards
@@ -16,7 +16,7 @@ export class BudgetToolProvider {
     this.createNewBudget()
   }
   loadSavedCards() {
-    this.storage.get('budgetCards').then((res) => {
+    this.storagePrvdr.get('budgetCards').then((res) => {
       console.log('loading saved cards', res)
       for (let key in res) {
         console.log('adding type', res[key].Types)
@@ -32,7 +32,7 @@ export class BudgetToolProvider {
       name: 'New Budget',
       created: new Date(),
       data: [],
-      id: this.storage.generatePushID(),
+      id: this.storagePrvdr.generatePushID(),
       archived: false
     }
     for (let i = 0; i < 12; i++) {
@@ -71,7 +71,7 @@ export class BudgetToolProvider {
     return this.budget
   }
   save(budget) {
-    // this.storage.set('','')
+    // this.storagePrvdr.set('','')
 
   }
   load() {
@@ -163,7 +163,7 @@ var allData = {
     { "Type": "activity", "Name": "ploughing", "Image": "assets/img/budget/activity/ploughing.png", "ID": "ploughing" },
     { "Type": "activity", "Name": "shelling", "Image": "assets/img/budget/activity/shelling.png", "ID": "shelling" },
     { "Type": "activity", "Name": "sowing", "Image": "assets/img/budget/activity/sowing.png", "ID": "sowing" },
-    { "Type": "activity", "Name": "storage", "Image": "assets/img/budget/activity/storage.png", "ID": "storage" },
+    { "Type": "activity", "Name": "storagePrvdr", "Image": "assets/img/budget/activity/storagePrvdr.png", "ID": "storagePrvdr" },
     { "Type": "activity", "Name": "threshing", "Image": "assets/img/budget/activity/threshing.png", "ID": "threshing" },
     { "Type": "activity", "Name": "transport", "Image": "assets/img/budget/activity/transport.png", "ID": "transport" },
     { "Type": "activity", "Name": "watering", "Image": "assets/img/budget/activity/watering.png", "ID": "watering" },
@@ -177,7 +177,7 @@ var allData = {
     { "Type": "input", "Name": "labour - paid", "Image": "assets/img/budget/input/labour---paid.png", "ID": "labour---paid" },
     { "Type": "input", "Name": "manure sacks", "Image": "assets/img/budget/input/manure-sacks.png", "ID": "manure-sacks" },
     { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows" },
-    { "Type": "input", "Name": "pot for storage", "Image": "assets/img/budget/input/pot-for-storage.png", "ID": "pot-for-storage" },
+    { "Type": "input", "Name": "pot for storagePrvdr", "Image": "assets/img/budget/input/pot-for-storagePrvdr.png", "ID": "pot-for-storagePrvdr" },
     { "Type": "input", "Name": "protective equipment", "Image": "assets/img/budget/input/protective-equipment.png", "ID": "protective-equipment" },
     { "Type": "input", "Name": "seeds", "Image": "assets/img/budget/input/seeds.png", "ID": "seeds" },
     { "Type": "input", "Name": "sheller hire", "Image": "assets/img/budget/input/sheller-hire.png", "ID": "sheller-hire" },

@@ -67,7 +67,7 @@ export class SettingsPage {
   updateUser(key, val) {
     console.log(key,val)
     if (this.user.hasOwnProperty(key)) { this.user[key] = val }
-    this.storagePrvdr.saveUser(this.user)
+    this.storagePrvdr.save(this.user,false)
   }
   login() {
     let prompt = this.alertCtrl.create({
@@ -118,7 +118,7 @@ export class SettingsPage {
           text: 'Confirm',
           handler: () => {
             this.user.permissions = {}
-            this.storagePrvdr.saveUser(this.user)
+            this.storagePrvdr.save(this.user,false)
           }
         }
       ]
@@ -141,7 +141,7 @@ export class SettingsPage {
       this.lastBackup.online = new Date(Date.now())
       this.storagePrvdr.save({lastBackup:this.lastBackup},false)
       console.log('getting user details')
-      this.storagePrvdr._get().then(data=>console.log('data',data))
+      this.storagePrvdr.get().then(data=>console.log('data',data))
     })
   }
 

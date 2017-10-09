@@ -66,7 +66,7 @@ export class RecordDataPage {
           this.finished = true;
           this.refreshing = false
           let i=0;
-          this.storagePrvdr.set('forms',this.forms);
+          this.storagePrvdr.save('forms',this.forms);
           for(let form of this.forms){
             this.getLinks(form, i);
             i++
@@ -82,7 +82,7 @@ export class RecordDataPage {
         },
         error =>{console.log(error)},
         () => {
-          this.storagePrvdr.set('forms',this.forms);
+          this.storagePrvdr.save('forms',this.forms);
         })
   }
 

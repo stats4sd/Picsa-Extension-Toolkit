@@ -33,7 +33,7 @@ export class CardSelectPage {
     public navParams: NavParams,
     public bdg: BudgetToolProvider,
     public viewCtrl: ViewController,
-    public storage: StorageProvider,
+    public storagePrvdr: StorageProvider,
     public toatsCtrl: ToastController,
     public alertCtrl: AlertController,
     ) {
@@ -126,14 +126,14 @@ export class CardSelectPage {
       Types: this.type,
       Name: "New Card",
       Image: "",
-      ID: this.storage.generatePushID(),
+      ID: this.storagePrvdr.generatePushID(),
       userGenerated:true
     }
     this.showNewCard = true
   }
   
   saveNewCard() {
-    this.storage.save('budgetCards', this.newCard, this.newCard.ID).then((res) => {
+    this.storagePrvdr.save('budgetCards', this.newCard, this.newCard.ID).then((res) => {
       let toast = this.toatsCtrl.create({
         message: 'Card Saved',
         duration: 3000
@@ -169,7 +169,7 @@ export class CardSelectPage {
           text: 'Delete',
           handler: () => {
             card.archived = true
-            this.storage.save('budgetCards', card, card.ID).then((res) => {
+            this.storagePrvdr.save('budgetCards', card, card.ID).then((res) => {
               let toast = this.toatsCtrl.create({
                 message: 'Card deleted',
                 duration: 3000

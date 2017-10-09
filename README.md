@@ -25,6 +25,14 @@ $npm uninstall --save cordova-plugin-file cordova-plugin-file-transfer
 $npm install --save cordova-plugin-file cordova-plugin-file-transfer @ionic-native/file
 $ionic cordova plugin add --save cordova-plugin-file cordova-plugin-file-transfer
 
+##build fails for android - Multiple dex files
+possibly due to conflicts within file opener and fileopener2
+$cordova plugin add cordova-android-support-gradle-relase
+or try with higher android api (?)
+or:
+$ionic cordova platform remove android
+$ionic cordova platform add android
+try again
 
 #custom updates (not in repo)
 -changing default canvas drawing color:

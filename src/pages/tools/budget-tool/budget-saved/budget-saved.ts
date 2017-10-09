@@ -16,7 +16,7 @@ export class BudgetSavedPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public storage: StorageProvider,
+    public storagePrvdr: StorageProvider,
     public viewCtrl: ViewController,
     public toastCtrl:ToastController
   ) {
@@ -38,7 +38,7 @@ export class BudgetSavedPage {
     this.viewCtrl.dismiss(this.budget)
   }
   loadSavedBudgets() {
-    this.storage.get('budgets').then((res) => {
+    this.storagePrvdr.get('budgets').then((res) => {
       console.log('budgets loaded', res)
       let arr = []
       for (let key in res) { arr.push(res[key]) }
@@ -48,7 +48,7 @@ export class BudgetSavedPage {
   }
   saveBudget() {
     console.log('saving budget')
-    this.storage.save(this.budget,true,'budgets',this.budget.id).then((res) => {
+    this.storagePrvdr.save(this.budget,true,'budgets',this.budget.id).then((res) => {
       console.log('save res', res)
       this.loadSavedBudgets()
       let toast = this.toastCtrl.create({
@@ -64,7 +64,7 @@ export class BudgetSavedPage {
   archive(budget) {
     console.log('archiving budget',budget)
     budget.archived = true;
-    this.storage.save(this.budget,true,'budgets',this.budget.id).then(()=>{
+    this.storagePrvdr.save(this.budget,true,'budgets',this.budget.id).then(()=>{
       this.loadSavedBudgets()
       let toast = this.toastCtrl.create({
         message: 'Budget Archived',

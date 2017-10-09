@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class StorageProvider {
   user: any = {}
+  userID: string
   firebaseRef
   // lots of constructor code can be cleaned up after migration to newer version
   constructor(
@@ -37,7 +38,7 @@ export class StorageProvider {
       else {
         console.log('database not upgraded')
         this._migrateData().then(() => {
-          this.getUser()
+
         })
       }
     })
@@ -47,16 +48,22 @@ export class StorageProvider {
   }
 
   createUser(id?) {
-    if (!id) { id = this.generatePushID() }
-    this.user = {}
-    this.user.id = id
-    this.user.name = 'anonymous'
-    this.user.role = 'extension'
-    this.user.group = 'malawi-2017'
-    console.log('user created', this.user)
-    // save id to local storage and sync to firebase db (offline and online)
-    this.storage.set('userID', this.user.id)
-    this.save({ profile: this.user }, false).then(() => console.log('user saved'))
+    return new Promise((resolve, reject) => {
+      if (!id) { id = this.generatePushID() }
+      this.user = {}
+      this.userID = id
+      this.user.name = 'anonymous'
+      this.user.role = 'extension'
+      this.user.group = 'malawi-2017'
+      this.userID = this.userID
+      console.log('this.userID', this.userID)
+      console.log('user created', this.user)
+      // save id to local storage and sync to firebase db (offline and online)
+      this.storage.set('userID', this.userID).then(() => {
+        this.save({ profile: this.user }, false).then(() => console.log('user saved')).then(() => resolve(this.user))
+      })
+    })
+
   }
 
   getUser() {
@@ -66,8 +73,8 @@ export class StorageProvider {
       this.storage.get('userID').then(id => {
         if (id) {
           console.log('user id exists, retrieving data', id)
-          this.user.id = id
-          this._get(id).then(data => {
+          this.userID = id
+          this.get(id).then(data => {
             console.log('data retrieved', data)
             this.user = data['profile']
             console.log('this.user', this.user)
@@ -75,29 +82,57 @@ export class StorageProvider {
         }
         else {
           console.log('no user,creating')
-          this.createUser()
+          this.createUser().then(user => {
+            this.user = user
+            resolve(this.user)
+          })
         }
       })
     })
   }
 
-  save(data: any, stringify: boolean, collection?: string, id?: string) {
+  save(data: any, stringify: boolean, collection?: string, id?: string, merge?: boolean) {
     // saves data attached to user profile
     // accepts data, whether to stringify (avoid nested arrays), optional colletion and document id
     console.log('saving', data, stringify, collection, id)
-    console.log('user id', this.user.id)
+    console.log('this.userID', this.userID)
     if (stringify == true) { data = JSON.stringify(data) }
+    if (!merge) { merge = false }
 
     if (collection) {
-      // create new doc within collection
+      // create new doc within collection, overrides any previous document
       console.log('creating new doc in collection by id', collection, id)
-      return this.afs.collection('users').doc(this.user.id).collection(collection).doc(id).set({ json: data })
+      if (id) { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(id).set({ json: data }, { merge: merge }) }
+      else { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc().set({ json: data }, { merge: merge }) }
     }
     else {
       // otherwise update any existing fields, uses set command with merge option to prevent total overwrite
       console.log('updating data on user doc')
-      return this.afs.firestore.collection('users').doc(this.user.id).set(data, { merge: true })
+      return this.afs.firestore.collection('users').doc(this.userID).set(data, { merge: merge })
     }
+  }
+  saveBatch(data: any, stringify: boolean, collection: string, idAsKey?: boolean) {
+    console.log('saving batch', data)
+    console.log('this.userID', this.userID)
+    // save multiple docs to a sub collection on user doc. overwrites any existing doc
+    // allows idAsKey if data format {id:data}, which will maintain same doc ref
+    let batch = this.afs.firestore.batch();
+    for (let key in data) {
+      // create key:value pair doc
+      let doc = data[key]
+      if (stringify) {
+        doc = { json: JSON.stringify(doc) }
+      }
+      let ref: any
+      if (idAsKey) {
+        ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(key)
+      }
+      else {
+        ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc()
+      }
+      batch.set(ref, { json: doc })
+    }
+    return batch.commit()
   }
 
   _checkDB() {
@@ -113,59 +148,93 @@ export class StorageProvider {
         if (keys.length == 0) {
           // new user
           console.log('new user')
-          this.storage.set('dbUpgraded', true)
-          resolve()
+          this.createUser().then((user) => {
+            this.storage.set('dbUpgraded', true)
+            resolve(user)
+          })
+
         }
         else {
+          // first upgrade user, then budgets
           if (keys.indexOf('user') > -1) {
-            // existing user in need of migrating
-            console.log('upgrading user')
-            this.storage.get('user').then(user => {
-              console.log('user', user)
-              try {
-                user = JSON.parse(user);
-              } catch (err) {
-                // user parsed, return format either object or string depending on version. Now to upgrade
-                if (typeof user == 'string') {
-                  // 0.27 format where user saved as single string object
-                  console.log('string format')
-                  this.storage.clear().then(() => {
-                    this.createUser(user)
-                    this.storage.set('dbUpgraded', true)
-                    this.save({ profile: this.user }, false).then(() => resolve())
-                  })
-
-                }
-                //else console.error(err);
+            this._upgradeUser().then((userID) => {
+              console.log('user id', userID)
+              if (keys.indexOf('budgets') > -1) {
+                console.log('upgrading budgets')
+                this._upgradeBudgets(userID).then(() => {
+                  resolve()
+                })
               }
-              console.log('parsed user', user)
-              if (user.hasOwnProperty('ID')) {
-                // 0.28 format with user ID field
-                user.id = user.ID
-                delete user.ID
-              }
-              else {
-                // 0.29 correct format, only needs syncing as done for both below
-              }
-              this.user = user
-              this.storage.clear().then(() => {
-                this.storage.set('userID', this.user.id)
-                this.storage.set('dbUpgraded', true)
-                this.save({ profile: this.user }, false).then(() => resolve())
-              })
+              else { resolve() }
             })
           }
+          else resolve()
         }
       })
     })
+    // 
+
 
     // list db objects, then map
   }
+  _upgradeBudgets(userID) {
+    console.log('user id', userID)
+    return new Promise((resolve, reject) => {
+      this.storage.get('budgets').then(res => {
+        let budgets = JSON.parse(res)
+        console.log('parsed budgets', budgets)
+        this.saveBatch(budgets, true, 'budgets', true).then(() => {
+          console.log('budgets saved');
+          resolve()
+        })
+      })
+    })
+  }
+  _upgradeUser() {
+    console.log('upgrading user')
+    return new Promise((resolve, reject) => {
+      // existing user in need of migrating
+      let id: string
+      this.storage.get('user').then(user => {
+        console.log('user', user)
+        try {
+          user = JSON.parse(user);
+        } catch (err) {
+          // user parsed, return format either object or string depending on version. Now to upgrade
+          if (typeof user == 'string') {
+            // 0.27 format where user saved as single string object
+            console.log('string format')
+            id = user
+            console.log('user id', user)
+          }
+          //else console.error(err);
+        }
+        console.log('parsed user', user)
+        if (user.hasOwnProperty('ID')) {
+          // 0.28 format with user ID field
+          id = user.ID
+        }
+        if (user.hasOwnProperty('id')) {
+          // 0.29 correct format, only needs syncing as done for both below
+          id = user.id
+        }
+        console.log('id', id)
+        this.storage.set('userID', this.userID)
+        this.storage.set('dbUpgraded', true)
+        this.createUser(id).then(user => {
+          console.log('this.userID', this.userID)
+          this.storage.set('dbUpgraded', true).then(() => {
+            resolve(id)
+          })
+        })
+      })
+    })
+  }
 
-  _get(userID?) {
+  get(userID?,collection?) {
     // ***need another function to return from local db
     // ***could also add queries
-    if (!userID) { userID = this.user.id }
+    if (!userID) { userID = this.userID }
     return new Promise((resolve, reject) => {
       this.afs.firestore.collection("users").doc(userID).get()
         .then(res => resolve(res.data()))
@@ -195,7 +264,7 @@ export class StorageProvider {
   removePermissions() {
     return new Promise((resolve, reject) => {
       this.user.permissions = {}
-      this.save('user', this.user, this.user.id).then(_ => resolve(this.user))
+      this.save('user', this.user, this.userID).then(_ => resolve(this.user))
     })
   }
 
@@ -251,59 +320,60 @@ export class StorageProvider {
     return id;
   }
 
-  sync(data, collection?) {
-    //sync user data to firebase. supports optional collection
-    console.log('syncing data', data)
-    // attempts to sync local and live, returns timestamp of successful live sync
-    return new Promise((resolve, reject) => {
-      //***offline - create file backup? currently writes to local collection first I think...
+  // sync(data, collection?) {
+  //   //sync user data to firebase. supports optional collection
+  //   console.log('syncing data', data)
+  //   // attempts to sync local and live, returns timestamp of successful live sync
+  //   return new Promise((resolve, reject) => {
+  //     //***offline - create file backup? currently writes to local collection first I think...
 
-      // console.log('creating offline user backup')
-      // this.checkFileDirectory('backups')
+  //     // console.log('creating offline user backup')
+  //     // this.checkFileDirectory('backups')
 
-      //online
-      this.getUser().then(() => {
-        console.log('user id', this.user.id)
-        this.user.updated = Date.now();
-        // prevent nested arrays
-        //** will need to rembmer to convert back if restore db functionality built */
-        console.log('data key', Object.keys(data))
-        if (Object.keys(data)) {
-          let key = Object.keys(data)[0]
-          if (key == "budgets") {
-            let temp = {}
-            temp[key] = JSON.stringify(data[key])
-            data = temp
-          }
-        }
-        console.log('data', data)
+  //     //online
+  //     this.getUser().then(() => {
+  //       console.log('user id', this.userID)
+  //       this.user.updated = Date.now();
+  //       // prevent nested arrays
+  //       //** will need to rembmer to convert back if restore db functionality built */
+  //       console.log('data key', Object.keys(data))
+  //       if (Object.keys(data)) {
+  //         let key = Object.keys(data)[0]
+  //         if (key == "budgets") {
+  //           let temp = {}
+  //           temp[key] = JSON.stringify(data[key])
+  //           data = temp
+  //         }
+  //       }
+  //       console.log('data', data)
 
-        this.afs.collection('users').doc(this.user.id).set(data)
+  //       this.afs.collection('users').doc(this.userID).set(data)
 
-          .then(_ => console.log('document successfully written'))
-          .catch(err => console.log('err', err))
-      })
+  //         .then(_ => console.log('document successfully written'))
+  //         .catch(err => console.log('err', err))
+  //     })
 
-      // this.firebaseList=this.afoDatabase.list('/users')
-      // this.firebaseObject=this.afoDatabase.object('/users')
+  //     // this.firebaseList=this.afoDatabase.list('/users')
+  //     // this.firebaseObject=this.afoDatabase.object('/users')
 
-      // let db = this.afoDatabase.list('/users/' + this.user.id)
-      // console.log('db',db)
+  //     // let db = this.afoDatabase.list('/users/' + this.userID)
+  //     // console.log('db',db)
 
 
-      // promise.offline.then(() => console.log('offline data saved to device storage!'));
+  //     // promise.offline.then(() => console.log('offline data saved to device storage!'));
 
-      // promise.then(() => {
-      //   console.log('data saved to Firebase!')
-      //   let temp = { offline: Date.now(), online: Date.now() }
-      //   // save lastbackup data to db
-      //   console.log('temp',temp)
-      //   this.set('lastBackup',temp)
-      //   resolve(temp)
-      // }).catch(err => console.log('err', err));
+  //     // promise.then(() => {
+  //     //   console.log('data saved to Firebase!')
+  //     //   let temp = { offline: Date.now(), online: Date.now() }
+  //     //   // save lastbackup data to db
+  //     //   console.log('temp',temp)
+  //     //   this.set('lastBackup',temp)
+  //     //   resolve(temp)
+  //     // }).catch(err => console.log('err', err));
 
-    })
-  }
+  //   })
+  // }
+
   //can merge code from resources page to single provider (either storage or file)
   //checks for a single directory (assumes picsa directory will already exist)...not adapted for root eg. /picsa/backups/profile/...
   checkFileDirectory(dir?) {
