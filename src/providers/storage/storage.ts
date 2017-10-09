@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastController } from 'ionic-angular'
+import { ToastController, Events } from 'ionic-angular'
 import { Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 import { FileOpener } from '@ionic-native/file-opener';
@@ -10,9 +10,10 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
-  user: any = {}
+  public user: any
   userID: string
   firebaseRef
+  initCalled: boolean = false
   // lots of constructor code can be cleaned up after migration to newer version
   constructor(
     public http: Http,
@@ -20,69 +21,48 @@ export class StorageProvider {
     public toastCtrl: ToastController,
     public fileOpener: FileOpener,
     public platform: Platform,
+    public events: Events,
     private file: File,
     private afs: AngularFirestore,
-
   ) {
+  }
 
-    console.log('storage provider loading, loading user data')
-    console.log('checking db')
-    //see if database is of latest format (due to legacy migration)
+  storageInit() {
     this._checkDB().then((upgraded) => {
       console.log('db upgraded', upgraded)
       if (upgraded) {
         // database up to date and user exists
-        console.log('database upgraded,getting user')
-        this.getUser()
+        this.loadUser().then((user) => {
+          console.log('publishing user loaded event')
+          this.events.publish('user:loaded', user)
+        })
       }
       else {
         console.log('database not upgraded')
         this._migrateData().then(() => {
-
+          this.getUser().then(() => {
+            return
+          })
         })
       }
     })
-
-
-    // this.checkFileDirectory('picsa')
   }
 
-  createUser(id?) {
-    return new Promise((resolve, reject) => {
-      if (!id) { id = this.generatePushID() }
-      this.user = {}
-      this.userID = id
-      this.user.name = 'anonymous'
-      this.user.role = 'extension'
-      this.user.group = 'malawi-2017'
-      this.userID = this.userID
-      console.log('this.userID', this.userID)
-      console.log('user created', this.user)
-      // save id to local storage and sync to firebase db (offline and online)
-      this.storage.set('userID', this.userID).then(() => {
-        this.save({ profile: this.user }, false).then(() => console.log('user saved')).then(() => resolve(this.user))
-      })
-    })
-
-  }
-
-  getUser() {
-    // checks for user existance within local storage.
-    //returns corresponding firestore user doc if exists, or creates new if not
+  loadUser() {
     return new Promise((resolve, reject) => {
       this.storage.get('userID').then(id => {
         if (id) {
           console.log('user id exists, retrieving data', id)
           this.userID = id
-          this.get(id).then(data => {
-            console.log('data retrieved', data)
-            this.user = data['profile']
-            console.log('this.user', this.user)
+          this.getUserDoc('settings', 'profile').then(user => {
+            console.log('user doc retrieved', user)
+            this.user = user
+            resolve(this.user)
           })
         }
         else {
           console.log('no user,creating')
-          this.createUser().then(user => {
+          this._createUser().then(user => {
             this.user = user
             resolve(this.user)
           })
@@ -91,19 +71,99 @@ export class StorageProvider {
     })
   }
 
-  save(data: any, stringify: boolean, collection?: string, id?: string, merge?: boolean) {
+  getUser() {
+    // checks for user existance within local storage.
+    //returns corresponding firestore user doc if exists, or creates new if not
+    return new Promise((resolve, reject) => {
+      console.log('user', this.user)
+      if (this.user) { resolve(this.user) }
+      else {
+        if (!this.initCalled) { this.storageInit() }
+        // try again in a moment. alternatively could use event emitters but not sure if there would still potentially be gap between setting up and init finishing
+        this.events.subscribe('user:loaded', (user) => {
+          console.log('user loaded event received')
+          this.events.unsubscribe('user:loaded')
+          resolve(user)
+        })
+        setTimeout(() => {
+          console.log('retrying')
+          this.getUser().then(() => resolve(this.user))
+        }, 5000
+        )
+      }
+    })
+  }
+
+  getUserDoc(collection, docId) {
+    // ***need another function to return from local db
+    // ***could also add queries
+    let userID = this.userID
+    console.log('getting collection docs', collection, docId, this.userID)
+    return new Promise((resolve, reject) => {
+      this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).get()
+        .then(res => {
+          //*** should use res to check for exist before running data */
+          if(res.exists){
+            let doc=res.data()
+            if(doc.hasOwnProperty('jsonString')){
+              doc = JSON.parse(doc.jsonString)
+            }
+            resolve(doc)
+          }
+          console.log('doc doesnt exist',collection,docId);
+          resolve({})
+        })
+        .catch(err => console.log('could not get doc', collection, docId, userID, err))
+    })
+  }
+  removeUserDoc(collection,docId){
+    return this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).delete()
+  }
+  getAll(collection) {
+    // get all docs in collection
+    console.log('getting all docs in collection', collection)
+    return new Promise((resolve, reject) => {
+      this.afs.firestore.collection("users").doc(this.userID).collection(collection).get().then(snapshot=>{
+        console.log('snapshot',snapshot)
+        // convert json back to string and push into array
+        let docsArray=[]
+        snapshot.forEach(doc=>{
+          let data = doc.data()
+          if(data.hasOwnProperty('jsonString')){
+            data=JSON.parse(data.jsonString)
+          }
+          docsArray.push(data)
+        })
+        console.log('docs array',docsArray)
+        resolve(docsArray)
+      })
+    })
+
+  }
+  getSharedDoc() {
+    // get doc not saved in own user profile
+
+    // should change getDoc to getUserDoc
+  }
+
+
+  saveUserDoc(data: any, stringify: boolean, collection?: string, id?: string, merge?: boolean) {
     // saves data attached to user profile
     // accepts data, whether to stringify (avoid nested arrays), optional colletion and document id
     console.log('saving', data, stringify, collection, id)
     console.log('this.userID', this.userID)
-    if (stringify == true) { data = JSON.stringify(data) }
+    if(!this.userID){
+      console.log('user profile not loaded, sending request')
+      return this.loadUser().then(()=>this.saveUserDoc(data,stringify,collection,id,merge))
+    }
+    if (stringify == true) { data = { jsonString: JSON.stringify(data) } }
     if (!merge) { merge = false }
 
     if (collection) {
       // create new doc within collection, overrides any previous document
       console.log('creating new doc in collection by id', collection, id)
-      if (id) { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(id).set({ json: data }, { merge: merge }) }
-      else { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc().set({ json: data }, { merge: merge }) }
+      if (id) { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(id).set(data, { merge: merge }) }
+      else { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc().set(data, { merge: merge }) }
     }
     else {
       // otherwise update any existing fields, uses set command with merge option to prevent total overwrite
@@ -135,6 +195,30 @@ export class StorageProvider {
     return batch.commit()
   }
 
+  _createUser(id?) {
+    //creates new user and saves to this.user
+    return new Promise((resolve, reject) => {
+      if (!id) { id = this.generatePushID() }
+      this.user = {
+        id: id,
+        name: 'anonymous',
+        role: 'extension',
+        group: 'malawi-2017'
+      }
+      this.userID = id
+      console.log('publishing user loaded event')
+      this.events.publish('user:loaded', this.user)
+      // save id to local storage and sync to firebase db (offline and online)
+      this.storage.set('userID', this.userID).then(() => {
+        this.saveUserDoc(this.user, false, 'settings', 'profile')
+          .then(() => {
+            console.log('user saved', this.user);
+            resolve(this.user)
+          })
+      })
+    })
+  }
+
   _checkDB() {
     return this.storage.get('dbUpgraded')
   }
@@ -148,7 +232,7 @@ export class StorageProvider {
         if (keys.length == 0) {
           // new user
           console.log('new user')
-          this.createUser().then((user) => {
+          this._createUser().then((user) => {
             this.storage.set('dbUpgraded', true)
             resolve(user)
           })
@@ -162,7 +246,12 @@ export class StorageProvider {
               if (keys.indexOf('budgets') > -1) {
                 console.log('upgrading budgets')
                 this._upgradeBudgets(userID).then(() => {
-                  resolve()
+                  if (keys.indexOf('budgetCards') > -1) {
+                    console.log('upgrading budget cards')
+                    this._upgradeBudgetCards(userID).then(()=>{
+                      resolve()
+                    })}
+                    else{resolve()}
                 })
               }
               else { resolve() }
@@ -185,6 +274,20 @@ export class StorageProvider {
         console.log('parsed budgets', budgets)
         this.saveBatch(budgets, true, 'budgets', true).then(() => {
           console.log('budgets saved');
+          resolve()
+        })
+      })
+    })
+  }
+  _upgradeBudgetCards(userID) {
+    // identical to above, could have been merged
+    console.log('user id', userID)
+    return new Promise((resolve, reject) => {
+      this.storage.get('budgetCards').then(res => {
+        let cards = JSON.parse(res)
+        console.log('parsed cards', cards)
+        this.saveBatch(cards, true, 'budgetCards', true).then(() => {
+          console.log('budgetCards saved');
           resolve()
         })
       })
@@ -221,7 +324,7 @@ export class StorageProvider {
         console.log('id', id)
         this.storage.set('userID', this.userID)
         this.storage.set('dbUpgraded', true)
-        this.createUser(id).then(user => {
+        this._createUser(id).then(user => {
           console.log('this.userID', this.userID)
           this.storage.set('dbUpgraded', true).then(() => {
             resolve(id)
@@ -230,18 +333,6 @@ export class StorageProvider {
       })
     })
   }
-
-  get(userID?,collection?) {
-    // ***need another function to return from local db
-    // ***could also add queries
-    if (!userID) { userID = this.userID }
-    return new Promise((resolve, reject) => {
-      this.afs.firestore.collection("users").doc(userID).get()
-        .then(res => resolve(res.data()))
-        .catch(err => console.log('err', err))
-    })
-  }
-
 
 
   assignPermissions(code) {
@@ -252,7 +343,8 @@ export class StorageProvider {
           console.log('profile loaded successfuly succsefully')
           this.user.permissions = res[code]
           console.log('user', this.user)
-          this.storage.set('user', this.user).then(_ => resolve(this.user))
+          this.saveUserDoc(this.user, false, 'settings', 'profile')
+            .then(_ => resolve(this.user))
         }
         else {
           console.log('no code found', code)
@@ -261,12 +353,12 @@ export class StorageProvider {
       })
     })
   }
-  removePermissions() {
-    return new Promise((resolve, reject) => {
-      this.user.permissions = {}
-      this.save('user', this.user, this.userID).then(_ => resolve(this.user))
-    })
-  }
+  // removePermissions() {
+  //   return new Promise((resolve, reject) => {
+  //     this.user.permissions = {}
+  //     this.saveUserDoc('user', this.user, this.userID).then(_ => resolve(this.user))
+  //   })
+  // }
 
   loadFile(url) {
     var options = {}

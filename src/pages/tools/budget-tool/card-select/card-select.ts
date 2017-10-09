@@ -133,7 +133,7 @@ export class CardSelectPage {
   }
   
   saveNewCard() {
-    this.storagePrvdr.save('budgetCards', this.newCard, this.newCard.ID).then((res) => {
+    this.storagePrvdr.saveUserDoc(this.newCard,true,'budgetCards',this.newCard.ID).then((res) => {
       let toast = this.toatsCtrl.create({
         message: 'Card Saved',
         duration: 3000
@@ -169,7 +169,7 @@ export class CardSelectPage {
           text: 'Delete',
           handler: () => {
             card.archived = true
-            this.storagePrvdr.save('budgetCards', card, card.ID).then((res) => {
+            this.storagePrvdr.removeUserDoc('budgetCards', card.ID).then((res) => {
               let toast = this.toatsCtrl.create({
                 message: 'Card deleted',
                 duration: 3000

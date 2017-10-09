@@ -27,12 +27,15 @@ $ionic cordova plugin add --save cordova-plugin-file cordova-plugin-file-transfe
 
 ##build fails for android - Multiple dex files
 possibly due to conflicts within file opener and fileopener2
-$cordova plugin add cordova-android-support-gradle-relase
-or try with higher android api (?)
-or:
+
 $ionic cordova platform remove android
 $ionic cordova platform add android
 try again
+
+if still, make sure cordova plugin android-support-gradle-release installed
+$cordova plugin add cordova-android-support-gradle-relase
+
+or try with a higher android api version installed
 
 #custom updates (not in repo)
 -changing default canvas drawing color:

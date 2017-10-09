@@ -32,7 +32,7 @@ export class RecordDataPage {
     private storagePrvdr: StorageProvider,
     public sanitizer: DomSanitizer) {
     // can move to storage provider code
-    this.storagePrvdr.get('forms').then((forms)=> {
+    this.storagePrvdr.getAll('forms').then((forms)=> {
         if (forms) {
             this.forms = forms
         }
@@ -66,7 +66,7 @@ export class RecordDataPage {
           this.finished = true;
           this.refreshing = false
           let i=0;
-          this.storagePrvdr.save('forms',this.forms);
+          this.storagePrvdr.saveUserDoc('forms',this.forms);
           for(let form of this.forms){
             this.getLinks(form, i);
             i++
@@ -82,7 +82,7 @@ export class RecordDataPage {
         },
         error =>{console.log(error)},
         () => {
-          this.storagePrvdr.save('forms',this.forms);
+          this.storagePrvdr.saveUserDoc('forms',this.forms);
         })
   }
 

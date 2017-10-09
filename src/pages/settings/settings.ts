@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage'
 
 @IonicPage()
@@ -8,15 +8,8 @@ import { StorageProvider } from '../../providers/storage/storage'
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-  user: any = {
-    permissions: {
-      name: 'none'
-    }
-  }
-  lastBackup:any= {
-    online: null,
-    offline: null
-  }
+  user: any = { name:'...Loading',permissions: {} }
+  lastBackup: null
   name: string;
 
   constructor(
@@ -25,17 +18,25 @@ export class SettingsPage {
     public storagePrvdr: StorageProvider,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController) {
+
   }
 
   ionViewDidLoad() {
-    this.storagePrvdr.getUser().then(
-      res => {
-        if (!res['permissions']) { res['permissions'] = { name: '' } }
-        this.user = res
-        this.name = this.user.permissions.name
-        console.log('user', this.user)
+    this.storagePrvdr.getUser().then(user => {
+      console.log('user received to settings.ts', user)
+      this.storagePrvdr.getUserDoc('settings', 'profile').then((res:any) => {
+        for(let key in res){
+          if(res.hasOwnProperty(key)){this.user[key]=res[key]}
+        }
+        console.log('profile retrieved', res, JSON.stringify(res))
       })
-    this.storagePrvdr.get('lastBackup').then((res) => this.lastBackup = res ? res : { online: null,offline:null})
+    })
+
+  }
+  ionViewDidEnter() {
+    console.log('profile', this.storagePrvdr.user)
+    // this.profile=this.storagePrvdr.user.profile
+
   }
   userEdit(name) {
     let prompt = this.alertCtrl.create({
@@ -65,9 +66,9 @@ export class SettingsPage {
     prompt.present();
   }
   updateUser(key, val) {
-    console.log(key,val)
+    console.log(key, val)
     if (this.user.hasOwnProperty(key)) { this.user[key] = val }
-    this.storagePrvdr.save(this.user,false)
+    this.storagePrvdr.saveUserDoc(this.user, false)
   }
   login() {
     let prompt = this.alertCtrl.create({
@@ -118,7 +119,7 @@ export class SettingsPage {
           text: 'Confirm',
           handler: () => {
             this.user.permissions = {}
-            this.storagePrvdr.save(this.user,false)
+            this.storagePrvdr.saveUserDoc(this.user, false)
           }
         }
       ]
@@ -135,14 +136,14 @@ export class SettingsPage {
     toast.present();
   }
 
-  sync() {    
-    this.lastBackup.offline=new Date(Date.now())
-    this.storagePrvdr.save({lastBackup:this.lastBackup},false).then(res => {
-      this.lastBackup.online = new Date(Date.now())
-      this.storagePrvdr.save({lastBackup:this.lastBackup},false)
-      console.log('getting user details')
-      this.storagePrvdr.get().then(data=>console.log('data',data))
-    })
+  sync() {
+    // data should automatically sync when online, so this measure simply indicates a time recently data received
+    // probably better way to find out last sync
+    // this.lastBackup.offline = new Date(Date.now())
+    // this.storagePrvdr.saveUserDoc(this.lastBackup,false,'settings','lastBackup').then(res => {
+    //   this.lastBackup.online = new Date(Date.now())
+    //   this.storagePrvdr.saveUserDoc(this.lastBackup,false,'settings','lastBackup')
+    // })
   }
 
 }
