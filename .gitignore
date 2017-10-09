@@ -8,4 +8,5 @@ plugins/
 Thumbs.db
 .idea/
 .tmp/
+.sourcemaps/
 src/assets/admin
