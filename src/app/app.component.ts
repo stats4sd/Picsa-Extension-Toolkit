@@ -27,8 +27,6 @@ export class MyApp {
         ***REMOVED***
         )
     ***REMOVED***
-      
   ***REMOVED***);
 ***REMOVED***
-  
 }
