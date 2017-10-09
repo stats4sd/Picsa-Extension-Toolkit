@@ -31,7 +31,6 @@ export class BudgetToolProvider {
     this.budget = {
       name: 'New Budget',
       created: new Date(),
-      user: this.storage.user,
       data: [],
       id: this.storage.generatePushID(),
       archived: false

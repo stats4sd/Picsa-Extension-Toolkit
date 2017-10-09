@@ -48,7 +48,7 @@ export class BudgetSavedPage {
   }
   saveBudget() {
     console.log('saving budget')
-    this.storage.save('budgets', this.budget, this.budget.id).then((res) => {
+    this.storage.save(this.budget,true,'budgets',this.budget.id).then((res) => {
       console.log('save res', res)
       this.loadSavedBudgets()
       let toast = this.toastCtrl.create({
@@ -64,7 +64,7 @@ export class BudgetSavedPage {
   archive(budget) {
     console.log('archiving budget',budget)
     budget.archived = true;
-    this.storage.save('budgets', budget, budget.id).then(()=>{
+    this.storage.save(this.budget,true,'budgets',this.budget.id).then(()=>{
       this.loadSavedBudgets()
       let toast = this.toastCtrl.create({
         message: 'Budget Archived',

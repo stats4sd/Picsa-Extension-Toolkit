@@ -5,13 +5,14 @@ import { Platform } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File } from '@ionic-native/file';
-import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
+import { AngularFirestore } from 'angularfire2/firestore';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StorageProvider {
-  user: any
-// lots of constructor code can be cleaned up after migration to newer version
+  user: any = {}
+  firebaseRef
+  // lots of constructor code can be cleaned up after migration to newer version
   constructor(
     public http: Http,
     public storage: Storage,
@@ -19,125 +20,176 @@ export class StorageProvider {
     public fileOpener: FileOpener,
     public platform: Platform,
     private file: File,
-    public afoDatabase: AngularFireOfflineDatabase) {
-    
+    private afs: AngularFirestore,
+
+  ) {
+
     console.log('storage provider loading, loading user data')
-    //check picsa directory exists, create if not
-    this.checkFileDirectory('picsa')
-  }
-  getUser() {
-    console.log('getting user')
-    return new Promise((resolve, reject) => {
-      if (this.user) { console.log('user already loaded'); resolve(this.user) }
+    console.log('checking db')
+    //see if database is of latest format (due to legacy migration)
+    this._checkDB().then((upgraded) => {
+      console.log('db upgraded', upgraded)
+      if (upgraded) {
+        // database up to date and user exists
+        console.log('database upgraded,getting user')
+        this.getUser()
+      }
       else {
-        console.log('loading user from database')
-        this.storage.get('user').then((val) => {
-          console.log('user loaded from database',val)
-          if (val == null) {
-            this.user = {}
-            this.user.id = this.generatePushID()
-            this.user.name = 'anonymous'
-            this.user.role = 'extension'
-            this.user.group = 'malawi-2017'
-            console.log('user created', this.user)
-            this.storage.set('user', this.user)
-          }
-          //old format correction, can be removed in later version
-          //added complication as all data saved stringified, so need to distinguish proper user saved as string and 
-          else if (typeof val == 'string') {
-            console.log('upgrading user from legacy')
-            let temp = JSON.parse(val)
-            if (typeof temp == 'string') {
-              this.user = {}
-              this.user.name = 'anonymous'
-              this.user.id = val
-              this.user.role = 'extension'
-              this.user.group = 'malawi-2017'
-              console.log('user adapted', this.user)
-              this.storage.set('user', this.user)
-            }
-            else {
-              this.user = temp
-            }
-          }
-          //fix for old format  
-          else if (val.ID) {
-            this.user = val
-            this.user.id = val.ID
-            delete this.user.ID
-            this.storage.set('user', this.user)
-            console.log('id fixed', this.user)
-          }
-          else {
-            console.log('user loaded successfully', val)
-            this.user = val
-          }
-          resolve(this.user)
-        });
+        console.log('database not upgraded')
+        this._migrateData().then(() => {
+          this.getUser()
+        })
       }
-    })    
-  }
-
-  saveUser(user) {
-    this.storage.set('user',user)
-  }
-
-  get(key) {
-    // parse and stringify not strictly required but was used in old version so need to maintain compatibility
-    return new Promise((resolve) => {
-      this.storage.get(key).then(res=>resolve(JSON.parse(res)))
     })
-  }
-  set(key, val) {
-    console.log('setting',key,val)
-    return this.storage.set(key,JSON.stringify(val))
+
+
+    // this.checkFileDirectory('picsa')
   }
 
-  save(key, val, id?) {
-    // saves local data to db, creating unique id key
-    console.log('saving',key,val,id)
-    return new Promise((resolve) => {
-      if (!id) {
-        console.log('generating id')
-        id = this.generatePushID()
-      }
-      console.log('pushing to storage', key, val)
-      this.storage.get(key).then((v) => {
-        console.log('storage retrieved', v, typeof v)
-        if (!v) { v = {}}
-        let temp = {}
-        //extra code as sometimes user set as object instead of usual string
-        if (typeof v == 'object') { temp = v }
-        else { temp = JSON.parse(v) || {} }
-        temp[id] = val
-        console.log('about to set temp',temp)
-        this.storage.set(key, JSON.stringify(temp)).then((res) => {
-          // attemp to sync to live
-          let liveData = {}
-          liveData[key]=temp
-          this.sync(liveData)
-          resolve('success')
-        }).catch(err=>console.log('err',err))
+  createUser(id?) {
+    if (!id) { id = this.generatePushID() }
+    this.user = {}
+    this.user.id = id
+    this.user.name = 'anonymous'
+    this.user.role = 'extension'
+    this.user.group = 'malawi-2017'
+    console.log('user created', this.user)
+    // save id to local storage and sync to firebase db (offline and online)
+    this.storage.set('userID', this.user.id)
+    this.save({ profile: this.user }, false).then(() => console.log('user saved'))
+  }
+
+  getUser() {
+    // checks for user existance within local storage.
+    //returns corresponding firestore user doc if exists, or creates new if not
+    return new Promise((resolve, reject) => {
+      this.storage.get('userID').then(id => {
+        if (id) {
+          console.log('user id exists, retrieving data', id)
+          this.user.id = id
+          this._get(id).then(data => {
+            console.log('data retrieved', data)
+            this.user = data['profile']
+            console.log('this.user', this.user)
+          })
+        }
+        else {
+          console.log('no user,creating')
+          this.createUser()
+        }
       })
     })
   }
 
-  
+  save(data: any, stringify: boolean, collection?: string, id?: string) {
+    // saves data attached to user profile
+    // accepts data, whether to stringify (avoid nested arrays), optional colletion and document id
+    console.log('saving', data, stringify, collection, id)
+    console.log('user id', this.user.id)
+    if (stringify == true) { data = JSON.stringify(data) }
+
+    if (collection) {
+      // create new doc within collection
+      console.log('creating new doc in collection by id', collection, id)
+      return this.afs.collection('users').doc(this.user.id).collection(collection).doc(id).set({ json: data })
+    }
+    else {
+      // otherwise update any existing fields, uses set command with merge option to prevent total overwrite
+      console.log('updating data on user doc')
+      return this.afs.firestore.collection('users').doc(this.user.id).set(data, { merge: true })
+    }
+  }
+
+  _checkDB() {
+    return this.storage.get('dbUpgraded')
+  }
+
+  _migrateData() {
+    // messy promise chains used to upgrade old format local storage objects to new db
+    // will be removed for future deployments
+    return new Promise((resolve, reject) => {
+      this.storage.keys().then(keys => {
+        console.log('keys', keys)
+        if (keys.length == 0) {
+          // new user
+          console.log('new user')
+          this.storage.set('dbUpgraded', true)
+          resolve()
+        }
+        else {
+          if (keys.indexOf('user') > -1) {
+            // existing user in need of migrating
+            console.log('upgrading user')
+            this.storage.get('user').then(user => {
+              console.log('user', user)
+              try {
+                user = JSON.parse(user);
+              } catch (err) {
+                // user parsed, return format either object or string depending on version. Now to upgrade
+                if (typeof user == 'string') {
+                  // 0.27 format where user saved as single string object
+                  console.log('string format')
+                  this.storage.clear().then(() => {
+                    this.createUser(user)
+                    this.storage.set('dbUpgraded', true)
+                    this.save({ profile: this.user }, false).then(() => resolve())
+                  })
+
+                }
+                //else console.error(err);
+              }
+              console.log('parsed user', user)
+              if (user.hasOwnProperty('ID')) {
+                // 0.28 format with user ID field
+                user.id = user.ID
+                delete user.ID
+              }
+              else {
+                // 0.29 correct format, only needs syncing as done for both below
+              }
+              this.user = user
+              this.storage.clear().then(() => {
+                this.storage.set('userID', this.user.id)
+                this.storage.set('dbUpgraded', true)
+                this.save({ profile: this.user }, false).then(() => resolve())
+              })
+            })
+          }
+        }
+      })
+    })
+
+    // list db objects, then map
+  }
+
+  _get(userID?) {
+    // ***need another function to return from local db
+    // ***could also add queries
+    if (!userID) { userID = this.user.id }
+    return new Promise((resolve, reject) => {
+      this.afs.firestore.collection("users").doc(userID).get()
+        .then(res => resolve(res.data()))
+        .catch(err => console.log('err', err))
+    })
+  }
+
+
+
   assignPermissions(code) {
     console.log('assigning permissions')
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       this.loadFile('assets/admin/userPermissions.json').then(res => {
-          if(res[code]){
-            console.log('profile loaded successfuly succsefully')
-            this.user.permissions = res[code]
-            console.log('user', this.user)
-            this.storage.set('user', this.user).then(_=> resolve(this.user))
+        if (res[code]) {
+          console.log('profile loaded successfuly succsefully')
+          this.user.permissions = res[code]
+          console.log('user', this.user)
+          this.storage.set('user', this.user).then(_ => resolve(this.user))
         }
-          else {
-            console.log('no code found',code)
-            reject('Invalid code, please try again')
+        else {
+          console.log('no code found', code)
+          reject('Invalid code, please try again')
         }
-        })
+      })
     })
   }
   removePermissions() {
@@ -145,21 +197,21 @@ export class StorageProvider {
       this.user.permissions = {}
       this.save('user', this.user, this.user.id).then(_ => resolve(this.user))
     })
-  }    
+  }
 
   loadFile(url) {
     var options = {}
-      return new Promise(resolve => {
-        this.http.get(url)
-          .map(res => res.json())
-          .subscribe(data => {
-            resolve(data);
-          });
-      });
+    return new Promise(resolve => {
+      this.http.get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        });
+    });
   }
-  
+
   presentToast(message) {
-    console.log('creating toast',message)
+    console.log('creating toast', message)
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000
@@ -199,54 +251,79 @@ export class StorageProvider {
     return id;
   }
 
-  sync(data) {
-    console.log('syncing data',data)
+  sync(data, collection?) {
+    //sync user data to firebase. supports optional collection
+    console.log('syncing data', data)
     // attempts to sync local and live, returns timestamp of successful live sync
     return new Promise((resolve, reject) => {
-      //offline - create file backup?
-      console.log('creating offline user backup')
-      this.checkFileDirectory('backups')
-    
+      //***offline - create file backup? currently writes to local collection first I think...
+
+      // console.log('creating offline user backup')
+      // this.checkFileDirectory('backups')
+
       //online
       this.getUser().then(() => {
         console.log('user id', this.user.id)
         this.user.updated = Date.now();
-        // sync data in format {key:value}, allows for multiple values
-        const promise = this.afoDatabase.object('/users/' + this.user.id).update(data);
-        // promise.offline.then(() => console.log('offline data saved to device storage!'));
-        promise.then(() => {
-          console.log('data saved to Firebase!')
-          let temp = { offline: Date.now(), online: Date.now() }
-          // save lastbackup data to db
-          console.log('temp',temp)
-          this.set('lastBackup',temp)
-          resolve(temp)
-        }).catch(err => console.log('err', err));
-      
+        // prevent nested arrays
+        //** will need to rembmer to convert back if restore db functionality built */
+        console.log('data key', Object.keys(data))
+        if (Object.keys(data)) {
+          let key = Object.keys(data)[0]
+          if (key == "budgets") {
+            let temp = {}
+            temp[key] = JSON.stringify(data[key])
+            data = temp
+          }
+        }
+        console.log('data', data)
+
+        this.afs.collection('users').doc(this.user.id).set(data)
+
+          .then(_ => console.log('document successfully written'))
+          .catch(err => console.log('err', err))
       })
 
-    })  
+      // this.firebaseList=this.afoDatabase.list('/users')
+      // this.firebaseObject=this.afoDatabase.object('/users')
+
+      // let db = this.afoDatabase.list('/users/' + this.user.id)
+      // console.log('db',db)
+
+
+      // promise.offline.then(() => console.log('offline data saved to device storage!'));
+
+      // promise.then(() => {
+      //   console.log('data saved to Firebase!')
+      //   let temp = { offline: Date.now(), online: Date.now() }
+      //   // save lastbackup data to db
+      //   console.log('temp',temp)
+      //   this.set('lastBackup',temp)
+      //   resolve(temp)
+      // }).catch(err => console.log('err', err));
+
+    })
   }
   //can merge code from resources page to single provider (either storage or file)
   //checks for a single directory (assumes picsa directory will already exist)...not adapted for root eg. /picsa/backups/profile/...
   checkFileDirectory(dir?) {
     console.log('checking dir', dir)
-    console.log('cordova?',this.platform.is('cordova'))
+    console.log('cordova?', this.platform.is('cordova'))
     if (!this.platform.is('cordova')) { return }
     return new Promise((resolve, reject) => {
-        //assumes directory child of picsa, check picsa exists 
-        this.file.checkDir(this.file.externalApplicationStorageDirectory+'picsa/', dir)
-          .then(_ => {
-            console.log('directory exists', this.file.externalApplicationStorageDirectory + 'picsa/'+dir)
-            resolve('directory exists')
-          })
-          .catch(err => {
-            this.file.createDir(this.file.externalApplicationStorageDirectory+'picsa/', dir, false).then(() => {
-              console.log('picsa/'+dir+' directory created')
-              resolve('directory created')
-            }).catch(err => { reject(err) })
-          })
-      })    
-    } 
+      //assumes directory child of picsa, check picsa exists 
+      this.file.checkDir(this.file.externalApplicationStorageDirectory + 'picsa/', dir)
+        .then(_ => {
+          console.log('directory exists', this.file.externalApplicationStorageDirectory + 'picsa/' + dir)
+          resolve('directory exists')
+        })
+        .catch(err => {
+          this.file.createDir(this.file.externalApplicationStorageDirectory + 'picsa/', dir, false).then(() => {
+            console.log('picsa/' + dir + ' directory created')
+            resolve('directory created')
+          }).catch(err => { reject(err) })
+        })
+    })
+  }
 
 }
