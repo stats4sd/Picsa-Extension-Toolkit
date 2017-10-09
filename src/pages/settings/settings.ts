@@ -135,12 +135,13 @@ export class SettingsPage {
     toast.present();
 ***REMOVED***
 
-  sync() {
-    let time = Date.now();
-    this.storagePrvdr.set('lastBackup',time)
-    this.lastBackup.offline=Date.now()
-    this.storagePrvdr.sync({ user: this.user }).then(res => {
-      this.lastBackup = res
+  sync() {    
+    this.lastBackup.offline=new Date(Date.now())
+    this.storagePrvdr.save({lastBackup:this.lastBackup},false).then(res => {
+      this.lastBackup.online = new Date(Date.now())
+      this.storagePrvdr.save({lastBackup:this.lastBackup},false)
+      console.log('getting user details')
+      this.storagePrvdr._get().then(data=>console.log('data',data))
   ***REMOVED***)
 ***REMOVED***
 

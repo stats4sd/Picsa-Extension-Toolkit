@@ -76,7 +76,11 @@
       <div class="cell" (click)="edit('outputs',period)">
         <div class="grid-card flex">
           <div *ngFor="let output of period.outputs; let i=index">
-            <img class="card-image cell-main" [src]="output.Image">
+            <!-- multiple counter -->
+            <div>
+                <img class="card-image cell-main" [src]="output.Image">
+                <div>20</div>
+            </div>
             <div class="cell-footer flex">
               <div class="dot-value" *ngFor="let dot of period.balance.outputs.dots">
                 <img class="dot-value-image" [src]="dot.src">

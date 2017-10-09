@@ -13,11 +13,10 @@ import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { FileOpener } from '@ionic-native/file-opener';
 // App pages
 import { MyApp } from './app.component';
-// Angular fire 2
+// Angular firestore
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireOfflineModule } from 'angularfire2-offline';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '../environments/environment';
 // Providers
 import {KoboApi} from "../providers/kobo-api";
 // import {FileService} from "../providers/file-service";
@@ -45,9 +44,8 @@ export const firebaseConfig = {
   imports: [
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireOfflineModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     IonicStorageModule.forRoot({
       name: '__picsa',
   ***REMOVED***),
