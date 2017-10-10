@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage'
 import { Storage } from '@ionic/storage';
+// auth
+import { AngularFireAuth } from "angularfire2/auth";
+import * as firebase from 'firebase/app';
 
 /**
  * Generated class for the AdminPage page.
@@ -16,11 +19,58 @@ import { Storage } from '@ionic/storage';
 })
 export class AdminPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storagePrvdr: StorageProvider, private ionicStorage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storagePrvdr: StorageProvider, private ionicStorage: Storage, private afAuth: AngularFireAuth) {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        console.log('user signed in',user)
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        // this.ionicStorage.set('firebaseID',user.uid)
+        // jDxVvEN01hVMUZswhhkoVFsDCMY2
+        
+        // ...
+      } else {
+        // User is signed out.
+        // ...
+      }
+      // ...
+    });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');
+  }
+  signIn() {
+    console.log('signing in')
+    this.afAuth.auth
+      .signInAnonymously().catch(err=>console.log('sign in error',err))
+  }
+  sync() {
+    this.ionicStorage.get('firebaseID').then(res => {
+      if (res == null) {
+        // never signed in
+        console.log('attempting sign in')
+      }
+    })
+  }
+
+  saveUserDoc( ) {
+    let data = { name: 'chris' }
+    let stringify = false
+    let collection = 'profile'
+    let id
+    let merge
+
+    this.storagePrvdr.saveUserDoc(data, stringify, collection, id, merge).then(
+      res => { console.log('res', res) },
+      rej => { console.log('rej', rej) }
+    ).catch(err=>{console.log('err',err)})
+  }
+
+  clearCache() {
+    this.ionicStorage.clear().then(_ => { console.log('cache clear') })
   }
 
   simulateData(version) {
@@ -44,9 +94,6 @@ export class AdminPage {
       this.ionicStorage.set('user', user).then(() => console.log('user saved', user))
       this.ionicStorage.set('budgets', JSON.stringify(exampleBudgets)).then(() => console.log('budgets saved', exampleBudgets))
     })
-
-
-
   }
 
 

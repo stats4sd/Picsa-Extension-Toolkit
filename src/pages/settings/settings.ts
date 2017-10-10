@@ -68,7 +68,7 @@ export class SettingsPage {
   updateUser(key, val) {
     console.log(key, val)
     if (this.user.hasOwnProperty(key)) { this.user[key] = val }
-    this.storagePrvdr.saveUserDoc(this.user, false)
+    this.storagePrvdr.saveUserDoc(this.user, false,'settings','profile')
   }
   login() {
     let prompt = this.alertCtrl.create({

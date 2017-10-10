@@ -16,6 +16,7 @@ import { MyApp } from './app.component';
 // Angular firestore
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 // Providers
 import {KoboApi} from "../providers/kobo-api";
@@ -46,6 +47,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
+    AngularFireAuthModule,
     IonicStorageModule.forRoot({
       name: '__picsa',
     }),
