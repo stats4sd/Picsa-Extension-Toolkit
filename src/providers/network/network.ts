@@ -1,0 +1,80 @@
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { Network } from '@ionic-native/network';
+import { Events } from 'ionic-angular'
+import { Storage } from '@ionic/storage';
+import { StorageProvider } from '../storage/storage'
+// auth
+import { AngularFireAuth } from "angularfire2/auth";
+import * as firebase from 'firebase/app';
+
+@Injectable()
+export class NetworkProvider {
+  firebaseID: string
+  online: boolean
+
+  constructor(private network: Network, public ionicStorage: Storage, storagePrvdr: StorageProvider, private afAuth: AngularFireAuth, public events: Events) {
+    console.log('Hello NetworkProvider Provider');
+    this.subscribeToFirebaseChanges()
+    this.subscribeToNetworkChanges()
+    this.afAuth.auth.signInAnonymously().catch(err => console.log('sign in error', err))
+  }
+
+
+  syncPrepare() {
+    console.log('preparing sync checks')
+    return new Promise((resolve, reject) => {
+      console.log('navigator', navigator)
+      console.log('online', this.online)
+      console.log('type',this.network.type)
+      if (navigator.onLine || this.online) {
+        if (this.firebaseID) {
+          resolve(this.firebaseID)
+        }
+        else {
+          this.afAuth.auth.signInAnonymously().catch(err => console.log('sign in error', err))
+          reject({ code: 1, message: 'please try again' })
+        }
+      }
+      else {
+        reject({ code: 2, message: 'no internet connection' })
+      }
+    })
+  }
+
+  subscribeToFirebaseChanges() {
+    // firebase auth state ch
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        console.log('user signed in', user)
+        this.firebaseID = user.uid
+      }
+      else {
+        this.events.publish('firebase:signedOut', this.firebaseID)
+        // User is signed out.
+      }
+    });
+  }
+  subscribeToNetworkChanges() {
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      console.log('network was disconnected :-(');
+      this.online = false
+    });
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+      console.log('network connected!');
+      this.online = true
+      // We just got a connection but we need to wait briefly
+      // before we determine the connection type. Might need to wait.
+      // prior to doing any api requests as well.
+      setTimeout(() => {
+        if (this.network.type === 'wifi') {
+          console.log('we got a wifi connection, woohoo!');
+        }
+      }, 3000);
+    });
+
+  }
+
+}
