@@ -25,6 +25,7 @@ import { Storage } from '@ionic/storage';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File } from '@ionic-native/file';
 import { AngularFirestore } from 'angularfire2/firestore';
+
 // auth
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from 'firebase/app';
@@ -37,6 +38,8 @@ export class StorageProvider {
   userID: string
   firebaseRef
   initCalled: boolean = false
+  online: boolean = false
+  firebaseID:string
   // lots of constructor code can be cleaned up after migration to newer version
   constructor(
     public http: Http,
@@ -46,8 +49,8 @@ export class StorageProvider {
     public platform: Platform,
     public events: Events,
     private file: File,
-    private afAuth: AngularFireAuth
-    // private afs: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
   ) {
 ***REMOVED***
 
@@ -152,8 +155,18 @@ export class StorageProvider {
   ***REMOVED***)
 ***REMOVED***
   removeUserDoc(collection, docId) {
+    console.log('removing user doc', collection, docId)
+    // offline first
+    return new Promise((resolve, reject) => {
+      this.storage.get(collection).then(res => {
+        if (res.hasOwnProperty(docId)) {
+          delete res[docId]
+      ***REMOVED***
+        this.storage.set(collection, res)
+        resolve()
+    ***REMOVED***)
+  ***REMOVED***)
     // return this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).delete()
-    alert('not implemented yet!')
 ***REMOVED***
   getAll(collection) {
     // get all docs in collection, returns as array
@@ -161,7 +174,7 @@ export class StorageProvider {
     return new Promise((resolve, reject) => {
       // local first approach
       this.storage.get(collection).then((res) => {
-        console.log('docs received, converting to array',res)
+        console.log('docs received, converting to array', res)
         if (res == null) { resolve([]) }
         else {
           let docsArray = []
@@ -172,7 +185,7 @@ export class StorageProvider {
                 data = JSON.parse(data.jsonString)
             ***REMOVED***
               docsArray.push(data)
-              console.log('array',docsArray)
+              console.log('array', docsArray)
               resolve(docsArray)
           ***REMOVED***
         ***REMOVED***
@@ -276,8 +289,6 @@ export class StorageProvider {
       temp[id] = doc
   ***REMOVED***
     return this.storage.set(collection, temp)
-
-
     // let batch = this.afs.firestore.batch();
     // for (let key in data) {
     //   // create key:value pair doc
@@ -295,6 +306,52 @@ export class StorageProvider {
     //   batch.set(ref, { json: doc })
     // }
     // return batch.commit()
+***REMOVED***
+
+  syncAll(firebaseID) {
+    // assumes preflight checks already carried out in network app
+    return new Promise((resolve, reject) => {
+      console.log('syncing all', firebaseID)
+      let batch = this.afs.firestore.batch();
+      let total = 0
+      this.storage.forEach((docsObject, collection, n) => {
+        console.log('docs object', docsObject)
+        console.log('collection', collection)
+        /* storage in form
+        collection       docs object
+        budgets:{ budgets:data1, budget2:data2    ***REMOVED***
+        */
+
+        // push collections objects to right place
+        if (typeof docsObject == 'object') {
+          for (let id in docsObject) {
+            console.log('id', id)
+            let data = docsObject[id]
+            console.log('data', data)
+            let ref = this.afs.firestore.collection('users').doc(firebaseID).collection(collection).doc(id)
+            batch.set(ref, data)
+            total++
+        ***REMOVED***
+      ***REMOVED***
+        //anything else is local setting, can still pass
+        else {
+          let ref = this.afs.firestore.collection('users').doc(firebaseID)
+          let data = {}
+          data[collection] = docsObject
+          batch.set(ref, data)
+          total++
+      ***REMOVED***
+    ***REMOVED***).then(_ => {
+        console.log('commiting', total)
+        batch.commit()
+          .then(
+            res => resolve('success'),
+            rej => reject(rej))
+          .catch(err => console.log('err', err));
+    ***REMOVED***)
+  ***REMOVED***)
+    
+
 ***REMOVED***
 
   _createUser(id?) {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage'
+import { NetworkProvider } from '../../providers/network/network'
 
 @IonicPage()
 @Component({
@@ -8,35 +9,40 @@ import { StorageProvider } from '../../providers/storage/storage'
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-  user: any = { name:'...Loading',permissions: {} }
+  user: any = { name: '...Loading', permissions: {} }
   lastBackup: null
   name: string;
+  syncButton= {
+    text: 'Backup Now',
+    disabled: false,
+    color: "#8A2644"
+***REMOVED***
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public storagePrvdr: StorageProvider,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    public networkProvider: NetworkProvider,
+
+  ) {
 
 ***REMOVED***
 
   ionViewDidLoad() {
     this.storagePrvdr.getUser().then(user => {
-      console.log('user received to settings.ts', user)
-      this.storagePrvdr.getUserDoc('settings', 'profile').then((res:any) => {
-        for(let key in res){
-          if(res.hasOwnProperty(key)){this.user[key]=res[key]}
+      this.storagePrvdr.getUserDoc('settings', 'profile').then((res: any) => {
+        for (let key in res) {
+          if (res.hasOwnProperty(key)) { this.user[key] = res[key] }
       ***REMOVED***
-        console.log('profile retrieved', res, JSON.stringify(res))
     ***REMOVED***)
   ***REMOVED***)
+    
 
 ***REMOVED***
   ionViewDidEnter() {
-    console.log('profile', this.storagePrvdr.user)
     // this.profile=this.storagePrvdr.user.profile
-
 ***REMOVED***
   userEdit(name) {
     let prompt = this.alertCtrl.create({
@@ -68,7 +74,7 @@ export class SettingsPage {
   updateUser(key, val) {
     console.log(key, val)
     if (this.user.hasOwnProperty(key)) { this.user[key] = val }
-    this.storagePrvdr.saveUserDoc(this.user, false,'settings','profile')
+    this.storagePrvdr.saveUserDoc(this.user, false, 'settings', 'profile')
 ***REMOVED***
   login() {
     let prompt = this.alertCtrl.create({
@@ -137,13 +143,34 @@ export class SettingsPage {
 ***REMOVED***
 
   sync() {
-    // data should automatically sync when online, so this measure simply indicates a time recently data received
-    // probably better way to find out last sync
-    // this.lastBackup.offline = new Date(Date.now())
-    // this.storagePrvdr.saveUserDoc(this.lastBackup,false,'settings','lastBackup').then(res => {
-    //   this.lastBackup.online = new Date(Date.now())
-    //   this.storagePrvdr.saveUserDoc(this.lastBackup,false,'settings','lastBackup')
-    // })
+    console.log('starting sync')
+    this.syncButton.disabled = true
+    this.syncButton.text="Starting Sync"
+    this.networkProvider.syncPrepare().then(
+      res => {
+        // preflight request check internet and firebase status, and returns firebase id if successful
+        console.log('res', res)
+        // show syncing animation
+
+        this.storagePrvdr.syncAll(res)
+          .then(
+          res => {
+            this.syncButton.text = 'Sync Complete'
+            this.syncButton.color = "#2E7D32"
+            this.syncButton.disabled = false
+            this.user.lastBackup = new Date(Date.now())
+            this.storagePrvdr.saveUserDoc(this.user.lastBackup,false,'profile','lastBackup')
+            console.log('res', res);
+
+        ***REMOVED***,
+          rej => {
+            this.syncButton.text = 'Backup Now'
+            this.syncButton.color = "#8A2644"
+            console.log('rej', rej)
+        ***REMOVED***
+          )
+    ***REMOVED***
+    )
 ***REMOVED***
 
 }

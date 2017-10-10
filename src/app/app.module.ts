@@ -27,6 +27,7 @@ import { ForumServiceProvider } from '../providers/forum-service/forum-service';
 import { MalawiDataProvider } from '../providers/c3-chart/malawi-data';
 import { BudgetToolProvider } from '../providers/budget-tool/budget-tool';
 import { StorageProvider } from '../providers/storage/storage';
+import { NetworkProvider } from '../providers/network/network';
 
 
 // AF2 Settings
@@ -72,7 +73,8 @@ export const firebaseConfig = {
     BudgetToolProvider,
     StorageProvider,
     FileOpener,
-    File
+    File,
+    NetworkProvider
     ]
 
 })
