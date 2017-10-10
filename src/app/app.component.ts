@@ -16,7 +16,7 @@ export class MyApp {
       setTimeout(() => {
         splashScreen.hide();
     ***REMOVED***, 100);
-      if (platform.is('android')) {
+      if (platform.is('cordova')) {
         FCMPlugin.getToken(
           function (token) {
             console.log('subscribing to fcm topic "chris"')

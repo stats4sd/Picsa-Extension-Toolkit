@@ -44,7 +44,7 @@
     <ion-item class="list-title">Device ID: <span class="list-value">{{user.id}}</span></ion-item>
   </ion-list>
   <br>
-  <!-- <ion-list>
+  <ion-list>
     <ion-list-header icon-left>
       <ion-icon name="cloud-upload"></ion-icon>
       Data backup and restore
@@ -52,8 +52,8 @@
     <ion-item>Last online backup:{{lastBackup | date:'medium'}}</ion-item>
     <ion-item>
       <button ion-button (click)="sync()">Backup Now</button>
-      <button ion-button (click)="restore()">Restore User Data</button>
+      <!-- <button ion-button (click)="restore()">Restore User Data</button> -->
     </ion-item>
-  </ion-list> -->
+  </ion-list>
 
 </ion-content>

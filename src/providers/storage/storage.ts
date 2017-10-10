@@ -1,3 +1,22 @@
+/* Storage strategy
+
+Need offline-first approach and also potentially for users only ever offline.
+Preferred online approach would be firestore however it requires auth to prevent sync of large numbers of user docs.
+
+Approach - all user docs stored offline-first and sync'd when internet available
+User doc only goes 2 levels deep to allow for easy syncing (collection -> document)
+
+In ideal case local id and firebase id should match, however not vital as firebase can always handle online id
+Want tracking info into forms, however this is likely to be local device id
+
+Currently all 1:1 (local device to online db). If planning on multiple device use will need way to merge local storage docs
+
+firebase could use email format 'localID@picsa'
+(need to remove special characters?, possibly store as old-id?, unlikely to be major as can just say early data not available )
+
+note - haven't included all merge features, should review when testing
+
+*/
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { ToastController, Events } from 'ionic-angular'
@@ -6,6 +25,10 @@ import { Storage } from '@ionic/storage';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File } from '@ionic-native/file';
 import { AngularFirestore } from 'angularfire2/firestore';
+// auth
+import { AngularFireAuth } from "angularfire2/auth";
+import * as firebase from 'firebase/app';
+
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -23,29 +46,36 @@ export class StorageProvider {
     public platform: Platform,
     public events: Events,
     private file: File,
-    private afs: AngularFirestore,
+    private afAuth: AngularFireAuth
+    // private afs: AngularFirestore,
   ) {
 ***REMOVED***
 
   storageInit() {
-    this._checkDB().then((upgraded) => {
-      console.log('db upgraded', upgraded)
-      if (upgraded) {
-        // database up to date and user exists
-        this.loadUser().then((user) => {
-          console.log('publishing user loaded event')
-          this.events.publish('user:loaded', user)
-      ***REMOVED***)
-    ***REMOVED***
-      else {
-        console.log('database not upgraded')
-        this._migrateData().then(() => {
-          this.getUser().then(() => {
-            return
+    console.log('storage init')
+    this.storage.ready().then(_ => {
+      this.initCalled = true
+      console.log('storage ready')
+      this._checkDB().then((upgraded) => {
+        console.log('db upgraded', upgraded)
+        if (upgraded) {
+          // database up to date and user exists
+          this.loadUser().then((user) => {
+            console.log('publishing user loaded event')
+            this.events.publish('user:loaded', user)
         ***REMOVED***)
-      ***REMOVED***)
-    ***REMOVED***
+      ***REMOVED***
+        else {
+          console.log('database not upgraded')
+          this._migrateData().then(() => {
+            this.getUser().then(() => {
+              return
+          ***REMOVED***)
+        ***REMOVED***)
+      ***REMOVED***
+    ***REMOVED***)
   ***REMOVED***)
+
 ***REMOVED***
 
   loadUser() {
@@ -72,7 +102,7 @@ export class StorageProvider {
 ***REMOVED***
 
   getUser() {
-    // checks for user existance within local storage.
+    // checks for user existance within local this.storage.
     //returns corresponding firestore user doc if exists, or creates new if not
     return new Promise((resolve, reject) => {
       console.log('user', this.user)
@@ -100,43 +130,68 @@ export class StorageProvider {
     let userID = this.userID
     console.log('getting collection docs', collection, docId, this.userID)
     return new Promise((resolve, reject) => {
-      this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).get()
-        .then(res => {
-          //*** should use res to check for exist before running data */
-          if(res.exists){
-            let doc=res.data()
-            if(doc.hasOwnProperty('jsonString')){
-              doc = JSON.parse(doc.jsonString)
-          ***REMOVED***
-            resolve(doc)
-        ***REMOVED***
-          console.log('doc doesnt exist',collection,docId);
-          resolve({})
-      ***REMOVED***)
-        .catch(err => console.log('could not get doc', collection, docId, userID, err))
+      // local first approach
+      this.storage.get(collection).then(res => {
+        console.log('user doc retrieved', res)
+        resolve(res[docId])
+    ***REMOVED***)
+      // this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).get()
+      //   .then(res => {
+      //     //*** should use res to check for exist before running data */
+      //     if (res.exists) {
+      //       let doc = res.data()
+      //       if (doc.hasOwnProperty('jsonString')) {
+      //         doc = JSON.parse(doc.jsonString)
+      //     ***REMOVED***
+      //       resolve(doc)
+      //   ***REMOVED***
+      //     console.log('doc doesnt exist', collection, docId);
+      //     resolve({})
+      // ***REMOVED***)
+      //   .catch(err => console.log('could not get doc', collection, docId, userID, err))
   ***REMOVED***)
 ***REMOVED***
-  removeUserDoc(collection,docId){
-    return this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).delete()
+  removeUserDoc(collection, docId) {
+    // return this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).delete()
+    alert('not implemented yet!')
 ***REMOVED***
   getAll(collection) {
-    // get all docs in collection
+    // get all docs in collection, returns as array
     console.log('getting all docs in collection', collection)
     return new Promise((resolve, reject) => {
-      this.afs.firestore.collection("users").doc(this.userID).collection(collection).get().then(snapshot=>{
-        console.log('snapshot',snapshot)
-        // convert json back to string and push into array
-        let docsArray=[]
-        snapshot.forEach(doc=>{
-          let data = doc.data()
-          if(data.hasOwnProperty('jsonString')){
-            data=JSON.parse(data.jsonString)
+      // local first approach
+      this.storage.get(collection).then((res) => {
+        console.log('docs received, converting to array',res)
+        if (res == null) { resolve([]) }
+        else {
+          let docsArray = []
+          for (let key in res) {
+            if (res.hasOwnProperty(key)) {
+              let data = res[key]
+              if (data.hasOwnProperty('jsonString')) {
+                data = JSON.parse(data.jsonString)
+            ***REMOVED***
+              docsArray.push(data)
+              console.log('array',docsArray)
+              resolve(docsArray)
+          ***REMOVED***
         ***REMOVED***
-          docsArray.push(data)
-      ***REMOVED***)
-        console.log('docs array',docsArray)
-        resolve(docsArray)
+      ***REMOVED***
     ***REMOVED***)
+      // this.afs.firestore.collection("users").doc(this.userID).collection(collection).get().then(snapshot => {
+      //   console.log('snapshot', snapshot)
+      //   // convert json back to string and push into array
+      //   let docsArray = []
+      //   snapshot.forEach(doc => {
+      //     let data = doc.data()
+      //     if (data.hasOwnProperty('jsonString')) {
+      //       data = JSON.parse(data.jsonString)
+      //   ***REMOVED***
+      //     docsArray.push(data)
+      // ***REMOVED***)
+      //   console.log('docs array', docsArray)
+      //   resolve(docsArray)
+      // })
   ***REMOVED***)
 
 ***REMOVED***
@@ -152,47 +207,94 @@ export class StorageProvider {
     // accepts data, whether to stringify (avoid nested arrays), optional colletion and document id
     console.log('saving', data, stringify, collection, id)
     console.log('this.userID', this.userID)
-    if(!this.userID){
-      console.log('user profile not loaded, sending request')
-      return this.loadUser().then(()=>this.saveUserDoc(data,stringify,collection,id,merge))
-  ***REMOVED***
-    if (stringify == true) { data = { jsonString: JSON.stringify(data) } }
-    if (!merge) { merge = false }
 
-    if (collection) {
-      // create new doc within collection, overrides any previous document
-      console.log('creating new doc in collection by id', collection, id)
-      if (id) { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(id).set(data, { merge: merge }) }
-      else { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc().set(data, { merge: merge }) }
-  ***REMOVED***
-    else {
-      // otherwise update any existing fields, uses set command with merge option to prevent total overwrite
-      console.log('updating data on user doc')
-      return this.afs.firestore.collection('users').doc(this.userID).set(data, { merge: merge })
-  ***REMOVED***
+    return new Promise((resolve, reject) => {
+      if (!this.userID) {
+        console.log('user profile not loaded, sending request')
+        return this.loadUser().then(() => this.saveUserDoc(data, stringify, collection, id, merge))
+    ***REMOVED***
+      if (stringify == true) { data = { jsonString: JSON.stringify(data) } }
+      if (!merge) { merge = false }
+
+      if (collection) {
+        // create new doc within collection, overrides any previous document
+        // offline first approach
+        // *** note ,used to be based on returning functions but now promise so live needs to swap for resolve methods ***
+        if (!id) { id = this.generatePushID() }
+        console.log('creating new doc in collection by id', collection, id)
+        console.log('storage ready?')
+        this.storage.get(collection).then(
+          res => {
+            if (res == null) { res = {} }
+            console.log('res', res)
+            res[id] = data
+            this.storage.set(collection, res).then(_ => resolve(res))
+        ***REMOVED***,
+          rej => {
+            console.log('rejected', rej)
+            this.storage.set(collection, { id: data }).then(_ => resolve({ id: data }))
+        ***REMOVED***)
+
+        // if (id) { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(id).set(data, { merge: merge }) }
+        // else { return this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc().set(data, { merge: merge }) }
+    ***REMOVED***
+      else {
+        // otherwise update any existing fields, uses set command with merge option to prevent total overwrite
+        console.log('updating data on user doc')
+        //offline first approach
+        this.storage.get(collection).then(res => {
+          if (merge) {
+            for (let key in data) {
+              res[key] = data[key]
+          ***REMOVED***
+        ***REMOVED***
+          else { res = data }
+          this.storage.set(collection, res).then(_ => { resolve(res) })
+      ***REMOVED***)
+        // return this.afs.firestore.collection('users').doc(this.userID).set(data, { merge: merge })
+    ***REMOVED***
+
+  ***REMOVED***)
+
 ***REMOVED***
   saveBatch(data: any, stringify: boolean, collection: string, idAsKey?: boolean) {
     console.log('saving batch', data)
     console.log('this.userID', this.userID)
     // save multiple docs to a sub collection on user doc. overwrites any existing doc
     // allows idAsKey if data format {id:data}, which will maintain same doc ref
-    let batch = this.afs.firestore.batch();
+
+    // offline first
+    let temp = {}
     for (let key in data) {
-      // create key:value pair doc
       let doc = data[key]
       if (stringify) {
         doc = { json: JSON.stringify(doc) }
     ***REMOVED***
-      let ref: any
-      if (idAsKey) {
-        ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(key)
-    ***REMOVED***
-      else {
-        ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc()
-    ***REMOVED***
-      batch.set(ref, { json: doc })
+      let id
+      if (idAsKey) { id = key }
+      else { id = this.generatePushID() }
+      temp[id] = doc
   ***REMOVED***
-    return batch.commit()
+    return this.storage.set(collection, temp)
+
+
+    // let batch = this.afs.firestore.batch();
+    // for (let key in data) {
+    //   // create key:value pair doc
+    //   let doc = data[key]
+    //   if (stringify) {
+    //     doc = { json: JSON.stringify(doc) }
+    // ***REMOVED***
+    //   let ref: any
+    //   if (idAsKey) {
+    //     ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(key)
+    // ***REMOVED***
+    //   else {
+    //     ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc()
+    // ***REMOVED***
+    //   batch.set(ref, { json: doc })
+    // }
+    // return batch.commit()
 ***REMOVED***
 
   _createUser(id?) {
@@ -248,10 +350,11 @@ export class StorageProvider {
                 this._upgradeBudgets(userID).then(() => {
                   if (keys.indexOf('budgetCards') > -1) {
                     console.log('upgrading budget cards')
-                    this._upgradeBudgetCards(userID).then(()=>{
+                    this._upgradeBudgetCards(userID).then(() => {
                       resolve()
-                  ***REMOVED***)}
-                    else{resolve()}
+                  ***REMOVED***)
+                ***REMOVED***
+                  else { resolve() }
               ***REMOVED***)
             ***REMOVED***
               else { resolve() }
