@@ -4,6 +4,7 @@ import {KoboApi} from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
 import { StorageProvider } from '../../providers/storage/storage'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {FeedbackFormPageModule} from './forms/feedback-form/feedback-form.module'
 
 
 
@@ -88,8 +89,9 @@ export class RecordDataPage {
     // method to open locally produced form pages
     console.log('opening local form',form)
     let page = form +'Page'
-    let modal = this.modalCtrl.create(page,{})
-    modal.present()
+    this.nav.push(page,{})
+    // let modal = this.modalCtrl.create(page,{})
+    // modal.present()
 
 ***REMOVED***
 
