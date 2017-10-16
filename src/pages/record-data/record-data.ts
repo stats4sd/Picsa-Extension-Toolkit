@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, ModalController } from 'ionic-angular';
 import {KoboApi} from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
-import {ModalController} from "ionic-angular"
 import { StorageProvider } from '../../providers/storage/storage'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {FeedbackFormPageModule} from './forms/feedback-form/feedback-form.module'
 
 
 
@@ -28,7 +28,7 @@ export class RecordDataPage {
   constructor(
     public koboApi: KoboApi,
     public nav: NavController,
-    public modal: ModalController,
+    public modalCtrl: ModalController,
     private storagePrvdr: StorageProvider,
     public sanitizer: DomSanitizer) {
     // can move to storage provider code
@@ -84,6 +84,15 @@ export class RecordDataPage {
         () => {
           this.storagePrvdr.saveUserDoc('forms',this.forms);
         })
+  }
+  openForm2(form){
+    // method to open locally produced form pages
+    console.log('opening local form',form)
+    let page = form +'Page'
+    this.nav.push(page,{})
+    // let modal = this.modalCtrl.create(page,{})
+    // modal.present()
+
   }
 
   openForm(form) {

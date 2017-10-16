@@ -17,8 +17,7 @@ page-record-data {
     .footer{
         position: absolute;
         bottom: 0;
-        background-color: wheat;
-        padding: 10px;
+        background-color: #e13838;
         width: 100%;
     }
     .form-header{
@@ -28,4 +27,34 @@ page-record-data {
     .form-close{
         box-shadow: none
     }
+    .card-button{
+        font-size: large;
+        font-weight: 500;
+        padding: 5px;
+        height: calc(100% - 16px);
+        white-space: normal;
+        margin: 8px;
+    }
+    ion-icon{
+        font-size: 24px;
+        vertical-align: middle
+    }
+    span{
+        color:black;
+        font-size:18px
+    }
+    .form-stat{
+        line-height: 24px;
+    }
+    td{
+        border-collapse: collapse;
+        padding: 2px;
+    }
+    .warning{
+        text-align: center;
+        background-color: #e13838;
+        padding: 10px;
+        font-weight: 500;
+    }
+
 }

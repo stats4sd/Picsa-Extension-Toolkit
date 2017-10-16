@@ -8,11 +8,9 @@
 
 
 <ion-content padding>
-  <div class="flex resource-container">
     <div class="resource" *ngFor="let resource of resources" (click)="loadResource(resource)">
       <img class="resource-image" [src]="resource.image">
       <div class="resource-name">{{resource.name}}</div>
-    </div>
   </div>
 
 </ion-content>
