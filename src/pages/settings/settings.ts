@@ -12,7 +12,7 @@ export class SettingsPage {
   user: any = { name: '...Loading', permissions: {} }
   lastBackup: null
   name: string;
-  syncButton= {
+  syncButton = {
     text: 'Backup Now',
     disabled: false,
     color: "#8A2644"
@@ -38,7 +38,7 @@ export class SettingsPage {
       ***REMOVED***
     ***REMOVED***)
   ***REMOVED***)
-    
+
 
 ***REMOVED***
   ionViewDidEnter() {
@@ -145,7 +145,7 @@ export class SettingsPage {
   sync() {
     console.log('starting sync')
     this.syncButton.disabled = true
-    this.syncButton.text="Starting Sync"
+    this.syncButton.text = "Starting Sync"
     this.networkProvider.syncPrepare().then(
       res => {
         // preflight request check internet and firebase status, and returns firebase id if successful
@@ -159,18 +159,17 @@ export class SettingsPage {
             this.syncButton.color = "#2E7D32"
             this.syncButton.disabled = false
             this.user.lastBackup = new Date(Date.now())
-            this.storagePrvdr.saveUserDoc(this.user.lastBackup,false,'profile','lastBackup')
+            this.storagePrvdr.saveUserDoc(this.user.lastBackup, false, 'profile', 'lastBackup')
             console.log('res', res);
 
-        ***REMOVED***,
-          rej => {
-            this.syncButton.text = 'Backup Now'
-            this.syncButton.color = "#8A2644"
-            console.log('rej', rej)
-        ***REMOVED***
-          )
-    ***REMOVED***
-    )
+        ***REMOVED***)
+    ***REMOVED***).catch(err => {
+        console.log('err', err)
+        this.syncButton.text = err.message
+        this.syncButton.color = "#8A2644"
+        this.syncButton.disabled = false
+
+    ***REMOVED***)
 ***REMOVED***
 
 }

@@ -25,21 +25,17 @@ export class NetworkProvider {
   syncPrepare() {
     console.log('preparing sync checks')
     return new Promise((resolve, reject) => {
-      console.log('navigator', navigator)
-      console.log('online', this.online)
-      console.log('type',this.network.type)
-      if (navigator.onLine || this.online) {
-        if (this.firebaseID) {
-          resolve(this.firebaseID)
-      ***REMOVED***
-        else {
-          this.afAuth.auth.signInAnonymously().catch(err => console.log('sign in error', err))
-          reject({ code: 1, message: 'please try again' })
-      ***REMOVED***
-    ***REMOVED***
-      else {
+      if (navigator.onLine == false || this.network.type == "none") {
         reject({ code: 2, message: 'no internet connection' })
     ***REMOVED***
+      if (this.firebaseID) {
+        resolve(this.firebaseID)
+    ***REMOVED***
+      else {
+        this.afAuth.auth.signInAnonymously().catch(err => console.log('sign in error', err))
+        reject({ code: 1, message: 'please try again' })
+    ***REMOVED***
+
   ***REMOVED***)
 ***REMOVED***
 
