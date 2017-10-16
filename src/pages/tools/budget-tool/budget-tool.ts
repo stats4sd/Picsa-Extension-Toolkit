@@ -40,6 +40,10 @@ export class BudgetToolPage {
   ionViewDidLoad() {
     console.log('budget', this.budget);
   }
+  ionViewDidEnter(){
+    console.log('loading present page')
+    this.modalCtrl.create('BudgetSavedPage').present()
+  }
   close() {
     this.navCtrl.pop();
   }

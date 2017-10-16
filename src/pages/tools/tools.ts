@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { IframePage } from '../iframe/iframe';
 
 @IonicPage()
 @Component({
@@ -27,7 +26,7 @@ export class ToolsPage {
     console.log('tool', tool)
     if (tool.page) { this.navCtrl.push(tool.page) }
     else {
-      this.navCtrl.push(IframePage, tool)      
+      this.navCtrl.push('IframePage', tool)      
     }
   
   }

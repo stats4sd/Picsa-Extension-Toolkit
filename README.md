@@ -40,7 +40,7 @@ or try with a higher android api version installed
 #custom updates (not in repo)
 -changing default canvas drawing color:
 npm modules/ng2-canvas-whiteboard/dist/canvas-whiteboard-component
-line 35
+line 26
 this._strokeColor = "rgb(91, 45, 0)";
 
 -changing default canvas line width:

@@ -127,7 +127,7 @@ export class StorageProvider {
     })
   }
 
-  getUserDoc(collection, docId) {
+  getUserDoc(collection, docId?) {
     // ***need another function to return from local db
     // ***could also add queries
     let userID = this.userID
@@ -136,8 +136,9 @@ export class StorageProvider {
       // local first approach
       this.storage.get(collection).then(res => {
         console.log('user doc retrieved', res)
-        resolve(res[docId])
-      })
+        if(docId){resolve(res[docId])}
+        else{resolve(res)}
+      }).catch(err=>console.log('failed retrieving user doc',err))
       // this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).get()
       //   .then(res => {
       //     //*** should use res to check for exist before running data */
@@ -307,6 +308,28 @@ export class StorageProvider {
     // }
     // return batch.commit()
   }
+  syncForms(firebaseID){
+    return new Promise((resolve,reject)=>{
+      this.storage.get('submittedForms').then(forms=>{
+        // hardcoded just for reporting forms for now
+        let pending = forms.reporting.pending
+        let batch = this.afs.firestore.batch();
+        console.log('pending',pending)
+        for(let p of pending){
+          console.log('p',p)
+          let id=p._submissionID
+          console.log('id',id)
+          let ref = this.afs.firestore.collection('forms').doc('reporting').collection('submissions').doc(id)
+          batch.set(ref,p)
+        }
+        batch.commit().then(
+          res => resolve('success'),
+          rej => reject(rej)
+        ).catch(err=>console.log('problem syncing forms',err))
+      })
+    })
+   
+  }
 
   syncAll(firebaseID) {
     // assumes preflight checks already carried out in network app
@@ -380,6 +403,80 @@ export class StorageProvider {
 
   _checkDB() {
     return this.storage.get('dbUpgraded')
+  }
+
+ 
+
+
+  assignPermissions(code) {
+    console.log('assigning permissions')
+    return new Promise((resolve, reject) => {
+      this.loadFile('assets/admin/userPermissions.json').then(res => {
+        if (res[code]) {
+          console.log('profile loaded successfuly succsefully')
+          this.user.permissions = res[code]
+          console.log('user', this.user)
+          this.saveUserDoc(this.user, false, 'settings', 'profile')
+            .then(_ => resolve(this.user))
+        }
+        else {
+          console.log('no code found', code)
+          reject('Invalid code, please try again')
+        }
+      })
+    })
+  }
+
+  loadFile(url) {
+    var options = {}
+    return new Promise(resolve => {
+      this.http.get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        });
+    });
+  }
+
+  presentToast(message) {
+    console.log('creating toast', message)
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
+  }
+
+
+  generatePushID() {
+    var PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+    var lastPushTime = 0;
+    var lastRandChars = [];
+    var now = new Date().getTime();
+    var duplicateTime = (now === lastPushTime);
+    lastPushTime = now;
+    var timeStampChars = new Array(8);
+    for (var i = 7; i >= 0; i--) {
+      timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
+      now = Math.floor(now / 64);
+    }
+    if (now !== 0) throw new Error('We should have converted the entire timestamp.');
+    var id = timeStampChars.join('');
+    if (!duplicateTime) {
+      for (i = 0; i < 12; i++) {
+        lastRandChars[i] = Math.floor(Math.random() * 64);
+      }
+    } else {
+      for (i = 11; i >= 0 && lastRandChars[i] === 63; i--) {
+        lastRandChars[i] = 0;
+      }
+      lastRandChars[i]++;
+    }
+    for (i = 0; i < 12; i++) {
+      id += PUSH_CHARS.charAt(lastRandChars[i]);
+    }
+    if (id.length != 20) throw new Error('Length should be 20.');
+    return id;
   }
 
   _migrateData() {
@@ -492,84 +589,6 @@ export class StorageProvider {
         })
       })
     })
-  }
-
-
-  assignPermissions(code) {
-    console.log('assigning permissions')
-    return new Promise((resolve, reject) => {
-      this.loadFile('assets/admin/userPermissions.json').then(res => {
-        if (res[code]) {
-          console.log('profile loaded successfuly succsefully')
-          this.user.permissions = res[code]
-          console.log('user', this.user)
-          this.saveUserDoc(this.user, false, 'settings', 'profile')
-            .then(_ => resolve(this.user))
-        }
-        else {
-          console.log('no code found', code)
-          reject('Invalid code, please try again')
-        }
-      })
-    })
-  }
-  // removePermissions() {
-  //   return new Promise((resolve, reject) => {
-  //     this.user.permissions = {}
-  //     this.saveUserDoc('user', this.user, this.userID).then(_ => resolve(this.user))
-  //   })
-  // }
-
-  loadFile(url) {
-    var options = {}
-    return new Promise(resolve => {
-      this.http.get(url)
-        .map(res => res.json())
-        .subscribe(data => {
-          resolve(data);
-        });
-    });
-  }
-
-  presentToast(message) {
-    console.log('creating toast', message)
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
-
-
-  generatePushID() {
-    var PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
-    var lastPushTime = 0;
-    var lastRandChars = [];
-    var now = new Date().getTime();
-    var duplicateTime = (now === lastPushTime);
-    lastPushTime = now;
-    var timeStampChars = new Array(8);
-    for (var i = 7; i >= 0; i--) {
-      timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
-      now = Math.floor(now / 64);
-    }
-    if (now !== 0) throw new Error('We should have converted the entire timestamp.');
-    var id = timeStampChars.join('');
-    if (!duplicateTime) {
-      for (i = 0; i < 12; i++) {
-        lastRandChars[i] = Math.floor(Math.random() * 64);
-      }
-    } else {
-      for (i = 11; i >= 0 && lastRandChars[i] === 63; i--) {
-        lastRandChars[i] = 0;
-      }
-      lastRandChars[i]++;
-    }
-    for (i = 0; i < 12; i++) {
-      id += PUSH_CHARS.charAt(lastRandChars[i]);
-    }
-    if (id.length != 20) throw new Error('Length should be 20.');
-    return id;
   }
 
   // sync(data, collection?) {

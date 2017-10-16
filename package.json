@@ -30,7 +30,7 @@
         "@types/c3": "^0.4.42",
         "@types/leaflet": "1.0.63",
         "@types/papaparse": "4.1.28",
-        "angularfire2": "^5.0.0-rc.2",
+        "angularfire2": "^5.0.0-rc.3",
         "c3": "^0.4.12",
         "cordova-android": "^6.2.3",
         "cordova-android-support-gradle-release": "^1.1.1",
