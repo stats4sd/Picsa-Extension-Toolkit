@@ -127,7 +127,7 @@ export class StorageProvider {
   ***REMOVED***)
 ***REMOVED***
 
-  getUserDoc(collection, docId) {
+  getUserDoc(collection, docId?) {
     // ***need another function to return from local db
     // ***could also add queries
     let userID = this.userID
@@ -136,8 +136,9 @@ export class StorageProvider {
       // local first approach
       this.storage.get(collection).then(res => {
         console.log('user doc retrieved', res)
-        resolve(res[docId])
-    ***REMOVED***)
+        if(docId){resolve(res[docId])}
+        else{resolve(res)}
+    ***REMOVED***).catch(err=>console.log('failed retrieving user doc',err))
       // this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).get()
       //   .then(res => {
       //     //*** should use res to check for exist before running data */
@@ -307,6 +308,28 @@ export class StorageProvider {
     // }
     // return batch.commit()
 ***REMOVED***
+  syncForms(firebaseID){
+    return new Promise((resolve,reject)=>{
+      this.storage.get('submittedForms').then(forms=>{
+        // hardcoded just for reporting forms for now
+        let pending = forms.reporting.pending
+        let batch = this.afs.firestore.batch();
+        console.log('pending',pending)
+        for(let p of pending){
+          console.log('p',p)
+          let id=p._submissionID
+          console.log('id',id)
+          let ref = this.afs.firestore.collection('forms').doc('reporting').collection('submissions').doc(id)
+          batch.set(ref,p)
+      ***REMOVED***
+        batch.commit().then(
+          res => resolve('success'),
+          rej => reject(rej)
+        ).catch(err=>console.log('problem syncing forms',err))
+    ***REMOVED***)
+  ***REMOVED***)
+   
+***REMOVED***
 
   syncAll(firebaseID) {
     // assumes preflight checks already carried out in network app
@@ -380,6 +403,80 @@ export class StorageProvider {
 
   _checkDB() {
     return this.storage.get('dbUpgraded')
+***REMOVED***
+
+ 
+
+
+  assignPermissions(code) {
+    console.log('assigning permissions')
+    return new Promise((resolve, reject) => {
+      this.loadFile('assets/admin/userPermissions.json').then(res => {
+        if (res[code]) {
+          console.log('profile loaded successfuly succsefully')
+          this.user.permissions = res[code]
+          console.log('user', this.user)
+          this.saveUserDoc(this.user, false, 'settings', 'profile')
+            .then(_ => resolve(this.user))
+      ***REMOVED***
+        else {
+          console.log('no code found', code)
+          reject('Invalid code, please try again')
+      ***REMOVED***
+    ***REMOVED***)
+  ***REMOVED***)
+***REMOVED***
+
+  loadFile(url) {
+    var options = {}
+    return new Promise(resolve => {
+      this.http.get(url)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+      ***REMOVED***);
+  ***REMOVED***);
+***REMOVED***
+
+  presentToast(message) {
+    console.log('creating toast', message)
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+  ***REMOVED***);
+    toast.present();
+***REMOVED***
+
+
+  generatePushID() {
+    var PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+    var lastPushTime = 0;
+    var lastRandChars = [];
+    var now = new Date().getTime();
+    var duplicateTime = (now === lastPushTime);
+    lastPushTime = now;
+    var timeStampChars = new Array(8);
+    for (var i = 7; i >= 0; i--) {
+      timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
+      now = Math.floor(now / 64);
+  ***REMOVED***
+    if (now !== 0) throw new Error('We should have converted the entire timestamp.');
+    var id = timeStampChars.join('');
+    if (!duplicateTime) {
+      for (i = 0; i < 12; i++) {
+        lastRandChars[i] = Math.floor(Math.random() * 64);
+    ***REMOVED***
+  ***REMOVED*** else {
+      for (i = 11; i >= 0 && lastRandChars[i] === 63; i--) {
+        lastRandChars[i] = 0;
+    ***REMOVED***
+      lastRandChars[i]++;
+  ***REMOVED***
+    for (i = 0; i < 12; i++) {
+      id += PUSH_CHARS.charAt(lastRandChars[i]);
+  ***REMOVED***
+    if (id.length != 20) throw new Error('Length should be 20.');
+    return id;
 ***REMOVED***
 
   _migrateData() {
@@ -492,84 +589,6 @@ export class StorageProvider {
       ***REMOVED***)
     ***REMOVED***)
   ***REMOVED***)
-***REMOVED***
-
-
-  assignPermissions(code) {
-    console.log('assigning permissions')
-    return new Promise((resolve, reject) => {
-      this.loadFile('assets/admin/userPermissions.json').then(res => {
-        if (res[code]) {
-          console.log('profile loaded successfuly succsefully')
-          this.user.permissions = res[code]
-          console.log('user', this.user)
-          this.saveUserDoc(this.user, false, 'settings', 'profile')
-            .then(_ => resolve(this.user))
-      ***REMOVED***
-        else {
-          console.log('no code found', code)
-          reject('Invalid code, please try again')
-      ***REMOVED***
-    ***REMOVED***)
-  ***REMOVED***)
-***REMOVED***
-  // removePermissions() {
-  //   return new Promise((resolve, reject) => {
-  //     this.user.permissions = {}
-  //     this.saveUserDoc('user', this.user, this.userID).then(_ => resolve(this.user))
-  // ***REMOVED***)
-  // }
-
-  loadFile(url) {
-    var options = {}
-    return new Promise(resolve => {
-      this.http.get(url)
-        .map(res => res.json())
-        .subscribe(data => {
-          resolve(data);
-      ***REMOVED***);
-  ***REMOVED***);
-***REMOVED***
-
-  presentToast(message) {
-    console.log('creating toast', message)
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-  ***REMOVED***);
-    toast.present();
-***REMOVED***
-
-
-  generatePushID() {
-    var PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
-    var lastPushTime = 0;
-    var lastRandChars = [];
-    var now = new Date().getTime();
-    var duplicateTime = (now === lastPushTime);
-    lastPushTime = now;
-    var timeStampChars = new Array(8);
-    for (var i = 7; i >= 0; i--) {
-      timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
-      now = Math.floor(now / 64);
-  ***REMOVED***
-    if (now !== 0) throw new Error('We should have converted the entire timestamp.');
-    var id = timeStampChars.join('');
-    if (!duplicateTime) {
-      for (i = 0; i < 12; i++) {
-        lastRandChars[i] = Math.floor(Math.random() * 64);
-    ***REMOVED***
-  ***REMOVED*** else {
-      for (i = 11; i >= 0 && lastRandChars[i] === 63; i--) {
-        lastRandChars[i] = 0;
-    ***REMOVED***
-      lastRandChars[i]++;
-  ***REMOVED***
-    for (i = 0; i < 12; i++) {
-      id += PUSH_CHARS.charAt(lastRandChars[i]);
-  ***REMOVED***
-    if (id.length != 20) throw new Error('Length should be 20.');
-    return id;
 ***REMOVED***
 
   // sync(data, collection?) {

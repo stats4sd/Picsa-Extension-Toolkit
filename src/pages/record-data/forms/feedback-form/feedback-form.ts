@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,7 +17,7 @@ export class FeedbackFormPage {
 
   submitAttempt: boolean = false;
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public events:Events) {
 
     this.slideOneForm = formBuilder.group({
       date: [(new Date()).toISOString(), Validators.required],
@@ -66,8 +66,8 @@ export class FeedbackFormPage {
       this.signupSlider.slideTo(2);
   ***REMOVED***
     else {
-      submission._deviceID='test';
-      console.log("success!")
+      this.events.publish('form:submitted',{formName:'reporting',formSubmission:submission})
+      this.navCtrl.pop()
   ***REMOVED***
 
 ***REMOVED***
