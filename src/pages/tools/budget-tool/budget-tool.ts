@@ -42,7 +42,7 @@ export class BudgetToolPage {
   }
   ionViewDidEnter(){
     console.log('loading present page')
-    this.modalCtrl.create('BudgetSavedPage').present()
+    this.modalCtrl.create('BudgetSettingsPage').present()
   }
   close() {
     this.navCtrl.pop();

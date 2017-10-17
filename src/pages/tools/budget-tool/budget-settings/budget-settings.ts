@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 
 /**
  * Generated class for the BudgetSettingsPage page.
@@ -13,12 +13,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'budget-settings.html',
 })
 export class BudgetSettingsPage {
+  newBudgetSlide = true;
+  loadBudgetSlide = false;
+  enterprises: any
+  newBudget = {
+    enterprise: 'crop',
+    title:null
+  }
+  @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.enterprises=['crop','livestock','other']
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BudgetSettingsPage');
+    console.log('ionViewDidLoad BudgetSettingsPage 2');
+  }
+  startNew() {
+    this.newBudgetSlide = true
+    this.loadBudgetSlide = false
+    this.slides.update()
+    this.slides.slideTo(1, 500);
+
+  }
+  loadSaved() {
+    this.newBudgetSlide = false
+    this.loadBudgetSlide = true
+    this.slides.update()
+    this.slides.slideTo(1, 500);
+    
+  }
+  createNewBudget() {
+    
   }
 
 }
