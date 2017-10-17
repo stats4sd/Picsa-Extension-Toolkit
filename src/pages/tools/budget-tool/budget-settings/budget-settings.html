@@ -9,31 +9,47 @@
       Load a saved Budget
     </button>
   </ion-slide>
-  <!-- new budget slide and load budget select -->
+  <!-- Slide 2 contains options for both new and load -->
+  <!-- Load Budget Slide -->
   <ion-slide style="background-color: blue">
     <div *ngIf="loadBudgetSlide">
       <h2>Load Saved</h2>
     </div>
+    <!-- New Budget name and enterprise -->
     <div *ngIf="newBudgetSlide">
-      <h2>New Budget</h2>
+      <h2>About your budget...</h2>
       <ion-list>
         <ion-item>
           <ion-label floating>Enter a name for your budget</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input type="text" [(ngModel)]="newBudget.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>(optional) Description</ion-label>
+          <ion-input type="text"  [(ngModel)]="newBudget.description"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Type of Enterprise</ion-label>
-          <ion-checkbox [(ngModel)]="crop"></ion-checkbox>
-          <ion-checkbox [(ngModel)]="livestock"></ion-checkbox>
-          <ion-checkbox [(ngModel)]="other"></ion-checkbox>
+          <ion-select [(ngModel)]="newBudget.enterprise">
+            <ion-option value="crop" selected="true">Crop</ion-option>
+            <ion-option value="livestock">Livestock</ion-option>
+            <ion-option value="other">Other</ion-option>
+          </ion-select>>
+        </ion-item>
+        <ion-item>
+          <ion-label>Scale of Enterprise</ion-label>
+          <ion-select [(ngModel)]="newBudget.scale">
+            <ion-option value="small" selected="true">Scale 1?</ion-option>
+            <ion-option value="medium">Scale 2?</ion-option>
+            <ion-option value="large">Scale 3?</ion-option>
+          </ion-select>>
         </ion-item>
       </ion-list>
       <button ion-button (click)="createNewBudget()">Continue</button>
     </div>
   </ion-slide>
-
-  <!-- new budget settings slide -->
+  <!-- new budget time period -->
   <ion-slide *ngIf="newBudgetSlide" style="background-color: red">
 
   </ion-slide>
+
 </ion-slides>

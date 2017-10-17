@@ -17,7 +17,6 @@ export class BudgetSettingsPage {
   loadBudgetSlide = false;
   enterprises: any
   newBudget = {
-    enterprise: 'crop',
     title:null
   }
   @ViewChild(Slides) slides: Slides;
