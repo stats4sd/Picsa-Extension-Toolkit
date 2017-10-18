@@ -73,10 +73,15 @@ var sampleBudget = {
           "total": 0,
           "dots": []
       ***REMOVED***,
-        "outputs": {
-          "total": 0,
-          "dots": []
-      ***REMOVED***,
+        "outputs": [{
+          ID:"crop",
+          Image:"assets/img/budget/output/crop.png",
+          Name:"crop",
+          Type:"output",
+          consumed:0,
+          cost:"50",
+          quantity:"5"
+      ***REMOVED***],
         "consumed": {
           "total": 0,
           "dots": []

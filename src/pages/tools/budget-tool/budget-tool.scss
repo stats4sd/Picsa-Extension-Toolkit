@@ -59,6 +59,9 @@ page-budget-tool {
     .cell-main{
         height:8vh;
   ***REMOVED***
+    .cell-multiple{
+        max-height:2em;
+  ***REMOVED***
     .image-holder{
         height: 100%
   ***REMOVED***
@@ -104,5 +107,17 @@ page-budget-tool {
   ***REMOVED***
     .total-column{
         background-color: wheat
+  ***REMOVED***
+    .counterBadge{
+        border-radius: 4px;
+        background-color: cadetblue;
+        color: white;
+        position: relative;
+        left:-12px;
+        top:4px;
+        padding: 2px;
+  ***REMOVED***
+    .consumed{
+        background-color: lightcoral
   ***REMOVED***
 }

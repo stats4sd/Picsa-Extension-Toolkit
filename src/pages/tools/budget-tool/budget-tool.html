@@ -89,31 +89,36 @@
       </div>
       <!--Outputs-->
       <div class="cell" (click)="edit('outputs',period)">
-        <div class="grid-card flex">
-          <div *ngFor="let output of period.outputs; let i=index">
+        <div class="grid-card">
+          <div *ngFor="let output of period.outputs; let i=index" class="flex">
             <!-- multiple counter -->
+            <!-- <div *ngIf="output.quantity <= 5">
+              <img class="card-image cell-multiple" [src]="output.Image" *ngFor="let o of output.arrayCounter">
+            </div> -->
             <div>
-              <img class="card-image cell-main" [src]="output.Image">
+              <img class="card-image cell-multiple" [src]="output.Image">
+              <span class="counterBadge">x{{output.quantity}}</span>
             </div>
-            <div class="cell-footer flex">
-              <div class="dot-value" *ngFor="let dot of period.balance.outputs.dots">
-                <img class="dot-value-image" [src]="dot.src">
-              </div>
+          </div>
+          <div class="cell-footer flex">
+            <div class="dot-value" *ngFor="let dot of period.balance.outputs.dots">
+              <img class="dot-value-image" [src]="dot.src">
             </div>
           </div>
         </div>
       </div>
+
       <!--Consumed-->
       <div class="cell" (click)="edit('consumed',period)">
-        <div class="grid-card flex">
-          <div *ngFor="let output of period.outputs; let i=index">
+        <div class="grid-card">
+          <div *ngFor="let output of period.outputs; let i=index" class="flex">
+            <!-- multiple counter -->
+            <!-- <div *ngIf="output.consumed <= 5">
+              <img class="card-image cell-multiple consumed" [src]="output.Image" *ngFor="let o of output.arrayCounterConsumed">
+            </div> -->
             <div *ngIf="output.consumed>0">
-              <img class="card-image cell-main" [src]="output.Image">
-              <div class="cell-footer flex">
-                <div class="dot-value" *ngFor="let dot of period.balance.consumed.dots">
-                  <img class="dot-value-image" [src]="dot.src">
-                </div>
-              </div>
+              <img class="card-image cell-multiple consumed" [src]="output.Image">
+              <span class="counterBadge consumed">x{{output.consumed}}</span>
             </div>
           </div>
         </div>
@@ -137,6 +142,7 @@
         </div>
       </div>
     </div>
+
 
     <!-- Totals column -->
     <div class="time-period flex-basis">

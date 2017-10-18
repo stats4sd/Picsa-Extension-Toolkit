@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController, AlertController***REMOVED*** from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, AlertController, Events } from 'ionic-angular';
 import { BudgetToolProvider } from '../../../../providers/budget-tool/budget-tool';
 import { CanvasWhiteboardComponent } from 'ng2-canvas-whiteboard';
 import { StorageProvider } from '../../../../providers/storage/storage'
@@ -16,6 +16,7 @@ export class CardSelectPage {
   @ViewChild('canvasWhiteboard') canvasWhiteboard: CanvasWhiteboardComponent;
 
   cards: any;
+  budget: any;
   allCards: any;
   selected: any = {***REMOVED***
   activeCard: any = { quantity: 0, cost: 0 ***REMOVED***
@@ -36,7 +37,8 @@ export class CardSelectPage {
     public storagePrvdr: StorageProvider,
     public toatsCtrl: ToastController,
     public alertCtrl: AlertController,
-    ) {
+    public events: Events
+  ) {
     this.cards = this.bdg.allData[this.navParams.data.type]
 ***REMOVED***
   ionViewDidEnter() {
@@ -53,9 +55,9 @@ export class CardSelectPage {
     //push card if doesn't exist and set values to 0
     if (!this.selected[card.ID]) {
       card.quantity = 0
-      card.cost=0
+      card.cost = 0
       this.selected[card.ID] = card
- ***REMOVED***
+  ***REMOVED***
     //else remove or toggle values
     else {
       if (card.Type != "input" && card.Type != "output") {
@@ -70,8 +72,19 @@ export class CardSelectPage {
 ***REMOVED***
 
   removeCard(card) {
-    delete this.selected[card.ID]
+
+    // delete this.selected[card.ID]
+    console.log('selected', this.selected)
+    console.log('card', this.activeCard)
+    let deleteCardId = this.activeCard.ID
+    delete this.selected[deleteCardId]
+    console.log('selected', this.selected)
     this.showValues = false;
+    this.events.publish('card:update', {
+      periodIndex: this.period.index,
+      type: this.type,
+      value: this.selected
+  ***REMOVED***)
 ***REMOVED***
   setSelected(array) {
     for (let item of array) {
@@ -79,16 +92,27 @@ export class CardSelectPage {
   ***REMOVED***
 ***REMOVED***
   updateValues(card) {
-    let index = this.getIndex(this.period[this.type], card)
-    let c = {}
-    //assigning budget data to card set up binding which meant all same inputs would auto update same value (see v0.2.5)
-    //really messy and awkward naming structure are legacy of this frustration!
-    for (let key in card) {
-      c[key]=card[key]
-  ***REMOVED***
-    this.selected[card.ID] = c
+    console.log('updating values', card)
+    console.log('selected', this.selected)
+    this.events.publish('card:update', {
+      periodIndex: this.period.index,
+      type: this.type,
+      value: this.selected
+  ***REMOVED***)
+
+    // let index = this.getIndex(this.period[this.type], card)
+    // let c: any = {}
+    // //assigning budget data to card set up binding which meant all same inputs would auto update same value (see v0.2.5)
+    // //really messy and awkward naming structure are legacy of this frustration!
+    // for (let key in card) {
+    //   c[key] = card[key]
+    // }
+    // // add array counter for input/output quantities
+    // if (c.Type == 'output' || c.Type == 'input') { c.arrayCounter = new Array(parseInt(c.quantity)) }
+
+    // this.selected[card.ID] = c
     this.showValues = false
-    this.period[this.type][index]=c
+    // this.period[this.type][index] = c
 
 ***REMOVED***
   continue() {
@@ -101,14 +125,14 @@ export class CardSelectPage {
   ***REMOVED***
     //don't need to pass any data as binding to period kept - linked to mess above
     this.viewCtrl.dismiss()
-    
+
 ***REMOVED***
   getIndex(array, card) {
     let index: number = 0
-    let i=0
+    let i = 0
     for (let item of array) {
       if (item.ID == card.ID) {
-        index=i
+        index = i
     ***REMOVED***
       i++
   ***REMOVED***
@@ -119,7 +143,7 @@ export class CardSelectPage {
     let types = {
       inputs: 'input',
       outputs: 'output',
-      activities:'activity'
+      activities: 'activity'
   ***REMOVED***
     this.newCard = {
       Type: types[this.type],
@@ -127,13 +151,13 @@ export class CardSelectPage {
       Name: "New Card",
       Image: "",
       ID: this.storagePrvdr.generatePushID(),
-      userGenerated:true
+      userGenerated: true
   ***REMOVED***
     this.showNewCard = true
 ***REMOVED***
-  
+
   saveNewCard() {
-    this.storagePrvdr.saveUserDoc(this.newCard,true,'budgetCards',this.newCard.ID).then((res) => {
+    this.storagePrvdr.saveUserDoc(this.newCard, true, 'budgetCards', this.newCard.ID).then((res) => {
       let toast = this.toatsCtrl.create({
         message: 'Card Saved',
         duration: 3000
@@ -154,7 +178,7 @@ export class CardSelectPage {
     // }, "image/png");
 ***REMOVED***
   delete(card) {
-    console.log('deleting card',card)
+    console.log('deleting card', card)
     let confirm = this.alertCtrl.create({
       title: 'Remove Card',
       message: 'Are you sure you want to delete this card from your budget tool?',
@@ -162,7 +186,7 @@ export class CardSelectPage {
         {
           text: 'Cancel',
           handler: () => {
-           
+
         ***REMOVED***
       ***REMOVED***,
         {
@@ -175,11 +199,11 @@ export class CardSelectPage {
                 duration: 3000
             ***REMOVED***);
               toast.present();
-              console.log('selected',this.selected)
+              console.log('selected', this.selected)
               if (this.selected[card.ID]) {
                 delete this.selected[card.ID]
             ***REMOVED***
-              console.log('selected',this.selected)
+              console.log('selected', this.selected)
           ***REMOVED***)
         ***REMOVED***
       ***REMOVED***
@@ -202,11 +226,13 @@ export class CardSelectPage {
     if (this.period.outputs[index].consumed >= 0) {
       this.period.outputs[index].consumed++
   ***REMOVED***
+    this.period.outputs[index].arrayCounterConsumed = new Array(parseInt(this.period.outputs[index].consumed))
 ***REMOVED***
   decreaseConsumed(index) {
     if (this.period.outputs[index].consumed >= 0) {
       this.period.outputs[index].consumed--
   ***REMOVED***
+    this.period.outputs[index].arrayCounterConsumed = new Array(parseInt(this.period.outputs[index].consumed))
 ***REMOVED***
   _toArray(value) {
     return new Array(value).fill(0)
