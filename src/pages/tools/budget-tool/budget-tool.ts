@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ToastController, Events } from 'ionic-angular';
 import { BudgetToolProvider } from '../../../providers/budget-tool/budget-tool'
 import { StorageProvider } from '../../../providers/storage/storage'
 
@@ -26,7 +26,8 @@ export class BudgetToolPage {
     public budgetPrvdr: BudgetToolProvider,
     private modalCtrl: ModalController,
     private storagePrvdr:StorageProvider,
-    public toastCtrl:ToastController
+    public toastCtrl:ToastController,
+    public events:Events
     ) {
 
     this.data = budgetPrvdr.allData
@@ -41,6 +42,19 @@ export class BudgetToolPage {
       half: 500
     }
     this.dotsArray = this._objectToArray(this.dots)
+    this.calculateBalance()
+    this.events.subscribe('card:update',d=>this.cardUpdate(d.periodIndex,d.type,d.value))
+  }
+  cardUpdate(periodIndex,type,values){
+    console.log('updating card')
+    console.log('period',periodIndex)
+    console.log('type',type)
+    console.log('value',values)
+    this.budget.data[periodIndex][type]=[]
+    for(let key in values){
+      this.budget.data[periodIndex][type].push(values[key])
+    }
+    console.log('budget',this.budget)
   }
 
   close() {
@@ -100,6 +114,7 @@ export class BudgetToolPage {
     // console.log('new budget', this.budget)
   }
   _toArray(value) {
+    console.log('converting to array',value)
     return new Array(value).fill(0)
   }
   _objectToArray(object) {
