@@ -65,20 +65,20 @@
             <ion-icon name="apps"></ion-icon>
             Type of Enterprise</ion-label>
           <ion-select [(ngModel)]="budget.enterprise">
-            <ion-option value="crop">Crop</ion-option>
-            <ion-option value="livestock">Livestock</ion-option>
-            <ion-option value="other">Other</ion-option>
+            <ion-option *ngFor="let enterprise of enterprises" [value]="enterprise">{{enterprise}}</ion-option>
           </ion-select>>
         </ion-item>
         <ion-item>
           <ion-label icon-left>
             <ion-icon name="podium"></ion-icon>
             Scale of Enterprise</ion-label>
-          <ion-select [(ngModel)]="budget.scale">
-            <ion-option value="small">Scale 1?</ion-option>
-            <ion-option value="medium">Scale 2?</ion-option>
-            <ion-option value="large">Scale 3?</ion-option>
-          </ion-select>>
+          <ion-input *ngIf="budget.enterprise=='crop'" [(ngModel)]="budget.enterpriseScale" type="number" placeholder="number of acres"
+            class="input-right"></ion-input>
+          <ion-input *ngIf="budget.enterprise=='livestock'" [(ngModel)]="budget.enterpriseScale" type="number" placeholder="number of animals"
+            class="input-right"></ion-input>
+          <ion-textarea class="smaller-font" *ngIf="budget.enterprise=='livelihood'" [(ngModel)]="budget.enterpriseScale" type="text" placeholder="please describe in words (e.g. number of shops, beehives etc.) "
+            class="input-right"></ion-textarea>
+
         </ion-item>
       </ion-list>
       <button style="background-color:#1f867d" ion-button icon-right round (click)="nextSlide()" color="#">Continue
@@ -101,8 +101,8 @@
         <ion-label icon-left>
           <ion-icon name="calendar"></ion-icon>
           Measured in</ion-label>
-        <ion-select [(ngModel)]="budget.periods.scale" (ionChange)="calculatePeriod()">
-          <ion-option *ngFor="let scale of scales" [value]="scale">{{scale}}</ion-option>
+        <ion-select [(ngModel)]="budget.periods.timeScale" (ionChange)="calculatePeriod()">
+          <ion-option *ngFor="let timeScale of timeScales" [value]="timeScale">{{timeScale}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- time starting -->
@@ -124,8 +124,7 @@
         <ion-input (ionChange)="calculatePeriod()" type="number" [(ngModel)]="budget.periods.total" class="input-right"></ion-input>
       </ion-item>
     </ion-list>
-    <button style="background-color:#1f867d" ion-button icon-right round (click)="loadBudget(budget,true)"
-      color="#">Go
+    <button style="background-color:#1f867d" ion-button icon-right round (click)="loadBudget(budget,true)" color="#">Go
       <ion-icon name="arrow-round-forward"></ion-icon>
     </button>
 

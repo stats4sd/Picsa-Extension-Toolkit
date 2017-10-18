@@ -16,10 +16,10 @@
 <ion-content padding>
   <h1>{{selectedSite.name}}</h1>
   <!--chart-->
-  <div id="chart" [hidden]="activeChart.name=='Combined Risk'"></div>
+  <div id="chart" [hidden]="activeChart.name=='Combined Probability'"></div>
   <div [hidden]="!fullScreenView">
-    <!--combined risk component-->
-    <combined-risk *ngIf="activeChart.name=='Combined Risk'"></combined-risk>
+    <!--combined probability component-->
+    <combined-probability *ngIf="activeChart.name=='Combined Probability'"></combined-probability>
     <div id="selectChart" class="flex wrap" *ngIf="!showTools">
       <div *ngFor="let chart of availableCharts" (click)="setChart(chart)">
         <img src="{{chart.image}}" class="chart-image">
@@ -39,8 +39,8 @@
             <ion-toggle [(ngModel)]="showLineTool"></ion-toggle>
           </ion-item>
           <ion-item *ngIf="activeChart.tools.line">
-            <ion-label>Risk</ion-label>
-            <ion-toggle [(ngModel)]="showRiskTool" [disabled]="!lineToolValue"></ion-toggle>
+            <ion-label>Probability</ion-label>
+            <ion-toggle [(ngModel)]="showProbabilityTool" [disabled]="!lineToolValue"></ion-toggle>
           </ion-item>
           <ion-item>
             <button ion-button icon-start full outline (click)="showAllCharts()">
@@ -68,8 +68,8 @@
           </div>
         </div>
       </div>
-      <div id="risk" *ngIf="showRiskTool && activeChart.tools.line" class="tool-container">
-        <h3>Risk</h3>
+      <div id="probability" *ngIf="showProbabilityTool && activeChart.tools.line" class="tool-container">
+        <h3>Probability</h3>
         <div id="blocks" class="flex">
           <div class="block good" *ngFor="let block of probabilities.tens.above">1</div>
           <div class="block bad" *ngFor="let block of probabilities.tens.below">1</div>

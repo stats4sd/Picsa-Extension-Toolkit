@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, ModalController, LoadingController } from 'ionic-angular';
 import { C3ChartProvider } from '../../../providers/c3-chart/c3-chart';
 import { MalawiDataProvider } from '../../../providers/c3-chart/malawi-data';
-import { CombinedRiskComponentModule} from './components/combined-risk/combined-risk.module'
+import { CombinedProbabilityComponentModule} from './components/combined-probability/combined-probability.module'
 
 @IonicPage()
 @Component({
@@ -135,7 +135,7 @@ export class ClimateToolPage{
         name: "Length of Season", image: "assets/img/charts/season-length.png", cropTableValue: 'length', x: "Length", yFormat: "value", tools: { line: true }, units:'days',
         definition: "Length of season is defined as the total days from the start of the season until the end of the season as defined"
     ***REMOVED***,
-      // {name: "Combined Risk", image: "assets/img/charts/combined-risk.png", page: "CombinedRiskPage", tools: { line: false }},
+      // {name: "Combined Probability", image: "assets/img/charts/combined-probability.png", page: "CombinedProbabilityPage", tools: { line: false }},
     ]
 ***REMOVED***
   lineToolValueChange(e?){

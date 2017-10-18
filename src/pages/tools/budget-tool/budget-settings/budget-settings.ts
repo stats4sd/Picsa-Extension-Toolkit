@@ -14,22 +14,22 @@ export class BudgetSettingsPage {
   archived:any=[];
   enterprises: any
   months: any;
-  scales: any;
+  timeScales: any;
   days: any;
   modalMode:boolean;
   budget = {
     title: "New Budget",
     archived: false,
-    periods: { labels: [], starting: 'Jan', scale: "months", total: 12 }
+    periods: { labels: [], starting: 'Jan', timeScale: "months", total: 12 }
 ***REMOVED***
   @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storagePrvdr: StorageProvider, public viewCtrl:ViewController, public toastCtrl:ToastController) {
     console.log('loading budget settings page')
-    this.enterprises = ['crop', 'livestock', 'other']
+    this.enterprises = ['crop', 'livestock', 'livelihood']
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     this.days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
-    this.scales = ['months', 'weeks', 'days', 'none']
+    this.timeScales = ['months', 'weeks', 'days', 'none']
     this.budget.periods.labels = this.months
     console.log('budget',this.budget)
     
@@ -138,14 +138,14 @@ nextSlide() {
 }
 calculatePeriod() {
   // return array representing time periods
-  let scale = this.budget.periods.scale
+  let timeScale = this.budget.periods.timeScale
   let starting = this.budget.periods.starting
   let total = this.budget.periods.total
   let arr = []
-  if (scale == 'months') { arr = this.calculatePeriodMonths(total, starting) }
-  if (scale == 'days') { arr = this.calculatePeriodDays(total, starting) }
-  if (scale == 'weeks') { arr = this.calculatePeriodConsecutive(total, 'week') }
-  if (scale == 'none') { arr = this.calculatePeriodConsecutive(total) }
+  if (timeScale == 'months') { arr = this.calculatePeriodMonths(total, starting) }
+  if (timeScale == 'days') { arr = this.calculatePeriodDays(total, starting) }
+  if (timeScale == 'weeks') { arr = this.calculatePeriodConsecutive(total, 'week') }
+  if (timeScale == 'none') { arr = this.calculatePeriodConsecutive(total) }
   this.budget.periods.labels = arr
 }
 calculatePeriodConsecutive(total, prefix ?) {
@@ -189,7 +189,7 @@ calculatePeriodDays(total, starting) {
 upgradeBudget(b){
   console.log('upgrading budget b')
   if (!b.title) { b.title = b.name; delete b.name }
-  if(!b.periods){b.periods={ labels: [], starting: 1, scale: "none", total: 12 }}
+  if(!b.periods){b.periods={ labels: [], starting: 1, timeScale: "none", total: 12 }}
   return b
 }
 

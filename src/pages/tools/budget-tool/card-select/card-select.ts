@@ -99,45 +99,32 @@ export class CardSelectPage {
       type: this.type,
       value: this.selected
   ***REMOVED***)
-
-    // let index = this.getIndex(this.period[this.type], card)
-    // let c: any = {}
-    // //assigning budget data to card set up binding which meant all same inputs would auto update same value (see v0.2.5)
-    // //really messy and awkward naming structure are legacy of this frustration!
-    // for (let key in card) {
-    //   c[key] = card[key]
-    // }
-    // // add array counter for input/output quantities
-    // if (c.Type == 'output' || c.Type == 'input') { c.arrayCounter = new Array(parseInt(c.quantity)) }
-
-    // this.selected[card.ID] = c
     this.showValues = false
-    // this.period[this.type][index] = c
 
 ***REMOVED***
-  continue() {
-    //populate activities from selected array (could be done on initial click to show but then would need correct remove function too)
-    if (this.type == "activities") {
-      this.period[this.type] = []
-      for (let key in this.selected) {
-        this.period[this.type].push(this.selected[key])
-    ***REMOVED***
-  ***REMOVED***
-    //don't need to pass any data as binding to period kept - linked to mess above
-    this.viewCtrl.dismiss()
+  // continue() {
+  //   //populate activities from selected array (could be done on initial click to show but then would need correct remove function too)
+  //   if (this.type == "activities") {
+  //     this.period[this.type] = []
+  //     for (let key in this.selected) {
+  //       this.period[this.type].push(this.selected[key])
+  //   ***REMOVED***
+  // ***REMOVED***
+  //   //don't need to pass any data as binding to period kept - linked to mess above
+  //   this.viewCtrl.dismiss()
 
-***REMOVED***
-  getIndex(array, card) {
-    let index: number = 0
-    let i = 0
-    for (let item of array) {
-      if (item.ID == card.ID) {
-        index = i
-    ***REMOVED***
-      i++
-  ***REMOVED***
-    return index
-***REMOVED***
+  // }
+  // getIndex(array, card) {
+  //   let index: number = 0
+  //   let i = 0
+  //   for (let item of array) {
+  //     if (item.ID == card.ID) {
+  //       index = i
+  //   ***REMOVED***
+  //     i++
+  // ***REMOVED***
+  //   return index
+  // }
   addCard() {
     //lookup as card types not quite same as budget type names
     let types = {
