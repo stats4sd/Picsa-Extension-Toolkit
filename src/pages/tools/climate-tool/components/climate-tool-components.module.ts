@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CombinedRiskComponent } from './combined-risk/combined-risk'
+import { CombinedProbabilityComponent } from './combined-probability/combined-probability'
 import { IonicModule } from 'ionic-angular'
 @NgModule({
-    declarations: [CombinedRiskComponent],
+    declarations: [CombinedProbabilityComponent],
     imports: [IonicModule],
-    exports: [CombinedRiskComponent]
+    exports: [CombinedProbabilityComponent]
 })
 export class ClimateToolComponentsModule { }

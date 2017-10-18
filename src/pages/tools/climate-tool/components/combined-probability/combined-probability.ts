@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { C3ChartProvider } from '../../../../../providers/c3-chart/c3-chart';
 
 @Component({
-  selector: 'combined-risk',
-  templateUrl: 'combined-risk.html'
+  selector: 'combined-probability',
+  templateUrl: 'combined-probability.html'
 })
-export class CombinedRiskComponent {
+export class CombinedProbabilityComponent {
 
   plantDate: any;
   labels: any;
