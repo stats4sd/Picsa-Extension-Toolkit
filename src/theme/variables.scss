@@ -38,7 +38,11 @@ $colors: (
   danger: #f53d3d,
   load: #387ef5,
   save: #32db64,
-  new:#ff7716
+  new:#ff7716,
+  newInverse: (
+    base: #ffffff,
+    contrast: #ff7716
+  )
 );
 
 
