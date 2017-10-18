@@ -28,7 +28,7 @@ export class VideosPage {
   player;
   activeVideo;
 
-  constructor(public navCtrl: NavController, public platform: Platform, fileService: FileService, public http: Http, public file:File, public ytPlayer: YoutubeService) {
+  constructor(public navCtrl: NavController, public platform: Platform, fileService: FileService, public http: Http, private file:File, public ytPlayer: YoutubeService) {
     this.videos = [
       {
         name: 'Women in extension',
@@ -54,7 +54,7 @@ export class VideosPage {
   
     // if (this.platform.is('mobile')) {
     //   this.fs= cordova.file.dataDirectory;
-    //   File.checkDir(this.fs, 'videos').then(res =>
+    //   this.file.checkDir(this.fs, 'videos').then(res =>
     //   console.log(res))
     //   .catch(err => 
     //   console.log(err)

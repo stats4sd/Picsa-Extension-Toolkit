@@ -3,20 +3,21 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { File } from '@ionic-native/file';
 // Ionic native modules
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { File } from '@ionic-native/file';
+
 import { Network} from '@ionic-native/network';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { FileOpener } from '@ionic-native/file-opener';
 // App pages
 import { MyApp } from './app.component';
-// Angular fire 2
+// Angular firestore
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireOfflineModule } from 'angularfire2-offline';
+import { environment } from '../environments/environment';
 // Providers
 import {KoboApi} from "../providers/kobo-api";
 // import {FileService} from "../providers/file-service";
@@ -26,6 +27,7 @@ import { ForumServiceProvider } from '../providers/forum-service/forum-service';
 import { MalawiDataProvider } from '../providers/c3-chart/malawi-data';
 import { BudgetToolProvider } from '../providers/budget-tool/budget-tool';
 import { StorageProvider } from '../providers/storage/storage';
+import { NetworkProvider } from '../providers/network/network';
 
 
 // AF2 Settings
@@ -44,9 +46,9 @@ export const firebaseConfig = {
   imports: [
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    AngularFireOfflineModule,
     IonicStorageModule.forRoot({
       name: '__picsa',
     }),
@@ -71,7 +73,8 @@ export const firebaseConfig = {
     BudgetToolProvider,
     StorageProvider,
     FileOpener,
-    File
+    File,
+    NetworkProvider
     ]
 
 })

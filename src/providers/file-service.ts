@@ -12,7 +12,7 @@ export class FileService {
   mainPlatform:string;
   fs:any;
 
-  constructor(public http: Http, public platform:Platform, public file:File) {
+  constructor(public http: Http, public platform:Platform, private file:File) {
     this.checkPlatform();
     if (this.mainPlatform == 'mobile') {
       console.log('platform mobile, cordova enabled?')

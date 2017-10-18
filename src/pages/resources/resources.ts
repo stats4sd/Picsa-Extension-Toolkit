@@ -14,8 +14,8 @@ export class ResourcesPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public fileOpener: FileOpener,
-    public file: File,
+    private fileOpener: FileOpener,
+    private file: File,
     public platform: Platform) {
     
     if (this.platform.is('mobile')) {
@@ -104,11 +104,11 @@ export class ResourcesPage {
     // this.file.copyFile(this.file.applicationDirectory + 'www/assets', 'picsa-field-manual.pdf', this.file.externalApplicationStorageDirectory, 'picsa-field-manual.pdf')
     //   .then(_ => {
     //     console.log('external data', this.file.externalApplicationStorageDirectory)
-    //     this.fileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
+    //     FileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
     //   }).catch(
     //   err => {
     //     console.log(err)
-    //     this.fileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
+    //     FileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
     //   }
     //   )
 

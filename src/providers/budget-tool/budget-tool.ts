@@ -8,148 +8,261 @@ export class BudgetToolProvider {
   allData: any;
   budget: any
 
-  constructor(public http: Http, public storage: StorageProvider) {
+  constructor(public http: Http, public storagePrvdr: StorageProvider) {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
     //load saved cards
-    this.loadSavedCards()
-    this.createNewBudget()
+    this.storagePrvdr.loadUser().then((user) => {
+      console.log('user loaded', user)
+      this.loadSavedCards()
+    })
+
   }
+
   loadSavedCards() {
-    this.storage.get('budgetCards').then((res) => {
-      console.log('loading saved cards', res)
-      for (let key in res) {
-        console.log('adding type', res[key].Types)
-        res[key].userGenerated=true
-        this.allData[res[key].Types].push(res[key])
+    this.storagePrvdr.getAll('budgetCards').then((cards:any) => {
+      console.log('loading saved cards', cards)
+      for (let card of cards) {
+        console.log('adding type', card.Types)
+        card.userGenerated = true
+        this.allData[card.Types].push(card)
       }
       console.log('all data', this.allData)
     })
 
   }
-  createNewBudget() {
-    this.budget = {
-      name: 'New Budget',
-      created: new Date(),
-      user: this.storage.user,
-      data: [],
-      id: this.storage.generatePushID(),
-      archived: false
-    }
-    for (let i = 0; i < 12; i++) {
-      var p = {
-        index: 0,
-        activities: [],
-        inputs: [],
-        outputs: [],
-        familyLabour: { people: 0, days: 0 },
-        balance: {
-          inputs: {
-            total: 0,
-            dots: []
-          },
-          outputs: {
-            total: 0,
-            dots: []
-          },
-          consumed: {
-            total: 0,
-            dots: []
-          },
-          monthly: {
-            total: 0,
-            dots: []
-          },
-          running: {
-            total: 0,
-            dots: []
-          }
-        }
-      }
-      p.index = i + 1
-      this.budget.data.push(p)
-    }
-    return this.budget
-  }
-  save(budget) {
-    // this.storage.set('','')
-
-  }
-  load() {
-
+  loadSampleBudget(){
+    return sampleBudget
   }
 }
 
-var sampleBudget = [
-  {
-    index: 1,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-      { "Type": "activity", "Name": "land clearing", "Image": "assets/img/budget/activity/land-clearing.png", "ID": "land-clearing" },
+var sampleBudget = {
+  "title": "My First Budget",
+  "archived": false,
+  "periods": {
+    "labels": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thur",
+      "Fri",
+      "Sat"
     ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200, consumed: 0 },
-      { "Type": "input", "Name": "seeds", "Image": "assets/img/budget/input/seeds.png", "ID": "seeds", quantity: 1, cost: 500, consumed: 0 },
-    ],
-    outputs: [
-      { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, cost: 200, consumed: 1 },
-    ],
-    familyLabour: {
-      people: 3,
-      days: 4
+    "starting": "Mon",
+    "scale": "days",
+    "total": "6"
+  },
+  "description": "description here",
+  "enterprise": "livestock",
+  "scale": "small",
+  "created": "2017-10-18T09:37:03.311Z",
+  "id": "-KwipyhEIqwRLbyU3sjF",
+  "data": [
+    {
+      "label": "Mon",
+      "index": 0,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+      },
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+        },
+        "outputs": [{
+          ID:"crop",
+          Image:"assets/img/budget/output/crop.png",
+          Name:"crop",
+          Type:"output",
+          consumed:0,
+          cost:"50",
+          quantity:"5"
+        }],
+        "consumed": {
+          "total": 0,
+          "dots": []
+        },
+        "monthly": {
+          "total": 0,
+          "dots": []
+        },
+        "running": {
+          "total": 0,
+          "dots": []
+        }
+      }
     },
-  }
-  ,
-  {
-    index: 2,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [
-      { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, consumed: 1 },
-    ],
-    familyLabour: { people: 0, days: 0 },
-
-  },
-  {
-    index: 3,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [],
-    familyLabour: { people: 0, days: 0 },
-
-  },
-  {
-    index: 4,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [],
-    familyLabour: { people: 0, days: 0 },
-  },
-  {
-    index: 5,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [],
-    familyLabour: { people: 0, days: 0 },
-  },
-
-]
+    {
+      "label": "Tue",
+      "index": 1,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+      },
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+        },
+        "outputs": {
+          "total": 0,
+          "dots": []
+        },
+        "consumed": {
+          "total": 0,
+          "dots": []
+        },
+        "monthly": {
+          "total": 0,
+          "dots": []
+        },
+        "running": {
+          "total": 0,
+          "dots": []
+        }
+      }
+    },
+    {
+      "label": "Wed",
+      "index": 2,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+      },
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+        },
+        "outputs": {
+          "total": 0,
+          "dots": []
+        },
+        "consumed": {
+          "total": 0,
+          "dots": []
+        },
+        "monthly": {
+          "total": 0,
+          "dots": []
+        },
+        "running": {
+          "total": 0,
+          "dots": []
+        }
+      }
+    },
+    {
+      "label": "Thur",
+      "index": 3,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+      },
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+        },
+        "outputs": {
+          "total": 0,
+          "dots": []
+        },
+        "consumed": {
+          "total": 0,
+          "dots": []
+        },
+        "monthly": {
+          "total": 0,
+          "dots": []
+        },
+        "running": {
+          "total": 0,
+          "dots": []
+        }
+      }
+    },
+    {
+      "label": "Fri",
+      "index": 4,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+      },
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+        },
+        "outputs": {
+          "total": 0,
+          "dots": []
+        },
+        "consumed": {
+          "total": 0,
+          "dots": []
+        },
+        "monthly": {
+          "total": 0,
+          "dots": []
+        },
+        "running": {
+          "total": 0,
+          "dots": []
+        }
+      }
+    },
+    {
+      "label": "Sat",
+      "index": 5,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+      },
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+        },
+        "outputs": {
+          "total": 0,
+          "dots": []
+        },
+        "consumed": {
+          "total": 0,
+          "dots": []
+        },
+        "monthly": {
+          "total": 0,
+          "dots": []
+        },
+        "running": {
+          "total": 0,
+          "dots": []
+        }
+      }
+    }
+  ]
+}
 
 var allData = {
   activities: [
@@ -164,7 +277,7 @@ var allData = {
     { "Type": "activity", "Name": "ploughing", "Image": "assets/img/budget/activity/ploughing.png", "ID": "ploughing" },
     { "Type": "activity", "Name": "shelling", "Image": "assets/img/budget/activity/shelling.png", "ID": "shelling" },
     { "Type": "activity", "Name": "sowing", "Image": "assets/img/budget/activity/sowing.png", "ID": "sowing" },
-    { "Type": "activity", "Name": "storage", "Image": "assets/img/budget/activity/storage.png", "ID": "storage" },
+    { "Type": "activity", "Name": "storagePrvdr", "Image": "assets/img/budget/activity/storage.png", "ID": "storagePrvdr" },
     { "Type": "activity", "Name": "threshing", "Image": "assets/img/budget/activity/threshing.png", "ID": "threshing" },
     { "Type": "activity", "Name": "transport", "Image": "assets/img/budget/activity/transport.png", "ID": "transport" },
     { "Type": "activity", "Name": "watering", "Image": "assets/img/budget/activity/watering.png", "ID": "watering" },
@@ -178,7 +291,7 @@ var allData = {
     { "Type": "input", "Name": "labour - paid", "Image": "assets/img/budget/input/labour---paid.png", "ID": "labour---paid" },
     { "Type": "input", "Name": "manure sacks", "Image": "assets/img/budget/input/manure-sacks.png", "ID": "manure-sacks" },
     { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows" },
-    { "Type": "input", "Name": "pot for storage", "Image": "assets/img/budget/input/pot-for-storage.png", "ID": "pot-for-storage" },
+    { "Type": "input", "Name": "pot for storagePrvdr", "Image": "assets/img/budget/input/pot-for-storage.png", "ID": "pot-for-storagePrvdr" },
     { "Type": "input", "Name": "protective equipment", "Image": "assets/img/budget/input/protective-equipment.png", "ID": "protective-equipment" },
     { "Type": "input", "Name": "seeds", "Image": "assets/img/budget/input/seeds.png", "ID": "seeds" },
     { "Type": "input", "Name": "sheller hire", "Image": "assets/img/budget/input/sheller-hire.png", "ID": "sheller-hire" },
