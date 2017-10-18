@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController } from 'ionic-angular';
+import { DecimalPipe } from '@angular/common';
+import { IonicPage, NavController, NavParams, ModalController, ToastController, Events } from 'ionic-angular';
 import { BudgetToolProvider } from '../../../providers/budget-tool/budget-tool'
+import { StorageProvider } from '../../../providers/storage/storage'
 
 @IonicPage()
 @Component({
@@ -21,13 +23,18 @@ export class BudgetToolPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public bdg: BudgetToolProvider,
+    public budgetPrvdr: BudgetToolProvider,
     private modalCtrl: ModalController,
-    private popoverCtrl: PopoverController) {
+    private storagePrvdr:StorageProvider,
+    public toastCtrl:ToastController,
+    public events:Events
+    ) {
 
-    this.data = bdg.allData
+    this.data = budgetPrvdr.allData
+    console.log('nav params',navParams)
     this.highlightActivity = { 0: true }
-    this.budget = this.bdg.budget
+    this.budget = navParams.data.title ? navParams.data : budgetPrvdr.loadSampleBudget()
+    console.log('budget',this.budget)
     this.dots = {
       large: 50000,
       medium: 10000,
@@ -35,13 +42,23 @@ export class BudgetToolPage {
       half: 500
   ***REMOVED***
     this.dotsArray = this._objectToArray(this.dots)
+    this.calculateBalance()
+    this.events.subscribe('card:update',d=>this.cardUpdate(d.periodIndex,d.type,d.value))
+***REMOVED***
+  cardUpdate(periodIndex,type,values){
+    console.log('updating card')
+    console.log('period',periodIndex)
+    console.log('type',type)
+    console.log('value',values)
+    this.budget.data[periodIndex][type]=[]
+    for(let key in values){
+      this.budget.data[periodIndex][type].push(values[key])
+  ***REMOVED***
+    console.log('budget',this.budget)
 ***REMOVED***
 
-  ionViewDidLoad() {
-    console.log('budget', this.budget);
-***REMOVED***
   close() {
-    this.navCtrl.pop();
+    this.navCtrl.popToRoot();
 ***REMOVED***
   edit(type, period) {
     console.log('editing', type, period)
@@ -67,10 +84,10 @@ export class BudgetToolPage {
   ***REMOVED***
     return index
 ***REMOVED***
-  saveAndLoad(operation) {
+  newAndLoad(operation) {
     console.log('operation', operation)
     let modal = this.modalCtrl.create(
-      'BudgetSavedPage',
+      'BudgetSettingsPage',
       { operation: operation, budget: this.budget },
       { enableBackdropDismiss: false }
     )
@@ -81,11 +98,23 @@ export class BudgetToolPage {
     console.log('presenting modal')
     modal.present()
 ***REMOVED***
+    saveBudget() {
+      console.log('saving budget')
+      this.storagePrvdr.saveUserDoc(this.budget,true,'budgets',this.budget.id).then((res) => {
+        console.log('save res', res)
+        let toast = this.toastCtrl.create({
+          message: 'Budget Saved',
+          duration: 3000
+      ***REMOVED***);
+        toast.present()
+    ***REMOVED***)      
+***REMOVED***
   newBudget() {
-    this.budget = this.bdg.createNewBudget()
-    console.log('new budget', this.budget)
+    // this.budget = this.bdg.createNewBudget()
+    // console.log('new budget', this.budget)
 ***REMOVED***
   _toArray(value) {
+    console.log('converting to array',value)
     return new Array(value).fill(0)
 ***REMOVED***
   _objectToArray(object) {

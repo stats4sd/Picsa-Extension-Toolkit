@@ -3,6 +3,7 @@ import { Events, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { StatusBar } from '@ionic-native/status-bar';
 import { HomePage } from '../pages/home/home';
+import { AdminPage } from '../pages/admin/admin';
 declare var FCMPlugin
 
 @Component({
@@ -15,7 +16,7 @@ export class MyApp {
       setTimeout(() => {
         splashScreen.hide();
     ***REMOVED***, 100);
-      if (platform.is('android')) {
+      if (platform.is('cordova')) {
         FCMPlugin.getToken(
           function (token) {
             console.log('subscribing to fcm topic "chris"')
@@ -26,8 +27,6 @@ export class MyApp {
         ***REMOVED***
         )
     ***REMOVED***
-      
   ***REMOVED***);
 ***REMOVED***
-  
 }

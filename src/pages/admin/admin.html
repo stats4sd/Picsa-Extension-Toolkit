@@ -1,0 +1,33 @@
+<!--
+  Generated template for the AdminPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>admin</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>Simulate data structure</div>
+  <button ion-button (click)="simulateData(1)">Pre 0.2.8?</button>
+  <button ion-button (click)="simulateData(2)">0.2.8?</button>
+  <button ion-button (click)="simulateData(3)">0.2.9?</button>
+  <button ion-button (click)="simulateData(4)">0.3.0</button>
+  <div>Storage tests</div>
+  <button ion-button (click)="clearCache()">Clear cache</button>
+  <button ion-button (click)="saveUserDoc()">Save User Doc</button>
+    <button ion-button (click)="setBudgetCards()">Set Budget cards</button>
+    <button ion-button (click)="removeUserDoc()">removeUserDoc (budget card)</button>
+  <div>Firebase auth</div>
+  <button ion-button (click)="signIn()">Sign in</button>
+  <button ion-button (click)="syncInit()">Sync</button>
+  <div>Connection</div>
+  <button ion-button (click)="testConnection()">Test connection</button>
+
+</ion-content>

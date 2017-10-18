@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Reporting and Feedback Form
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button icon-left (click)="prev()"><ion-icon name="arrow-back"></ion-icon> Prev</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="next()">Next <ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides #signupSlider pager>
+    <ion-slide>
+      <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+      <ion-list no-lines>
+        <form [formGroup]="slideOneForm">
+          <ion-item>
+            <ion-label floating>*Date of Training</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" formControlName="date"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>*Location of Training</ion-label>
+            <ion-input formControlName="location" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>*Name of Extension Worker</ion-label>
+            <ion-input formControlName="name" type="text"></ion-input>
+          </ion-item>
+          <br>
+          <!-- <ion-item>
+            <ion-label floating>First Name</ion-label>
+            <ion-input formControlName="firstName" type="text" [class.invalid]="!slideOneForm.controls.firstName.valid && (slideOneForm.controls.firstName.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!slideOneForm.controls.firstName.valid  && (slideOneForm.controls.firstName.dirty || submitAttempt)">
+            <p>Please enter a valid name.</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input formControlName="lastName" type="text" [class.invalid]="!slideOneForm.controls.lastName.valid && (slideOneForm.controls.age.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!slideOneForm.controls.lastName.valid  && (slideOneForm.controls.lastName.dirty || submitAttempt)">
+            <p>Please enter a valid name.</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Age</ion-label>
+            <ion-input formControlName="age" type="number" [class.invalid]="!slideOneForm.controls.age.valid && (slideOneForm.controls.age.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!slideOneForm.controls.age.valid  && (slideOneForm.controls.age.dirty || submitAttempt)">
+            <p>Please enter a valid age.</p>
+          </ion-item> -->
+        </form>
+
+      </ion-list>
+
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list no-lines>
+        <form [formGroup]="slideTwoForm">
+          <ion-item>
+            <ion-label floating>*Number of males present</ion-label>
+            <ion-input formControlName="males" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>*Number of females present</ion-label>
+            <ion-input formControlName="females" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>*Training and Activities</ion-label>
+            <div class="hint">DESCRIBE WHAT TRAINING AND ACTIVITIES YOU CONDUCTED WITH THE FARMERS TODAY (PLEASE GIVE DETAILS)</div>
+            <ion-textarea formControlName="activities" type="text"></ion-textarea>
+          </ion-item>
+          <br>
+          <!-- <ion-item>
+            <ion-label floating>Username</ion-label>
+            <ion-input [class.invalid]="!slideTwoForm.controls.username.valid && (slideTwoForm.controls.username.dirty || submitAttempt)"
+              formControlName="username" type="text"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="slideTwoForm.controls.username.pending">
+            <p>Checking username...</p>
+          </ion-item>
+          <ion-item *ngIf="!slideTwoForm.controls.username.valid && !slideTwoForm.controls.username.pending && (slideTwoForm.controls.username.dirty || submitAttempt)">
+            <p>Sorry, that username can not be used!</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Privacy</ion-label>
+            <ion-select [class.invalid]="!slideTwoForm.controls.privacy.valid && (slideTwoForm.controls.privacy.dirty || submitAttempt)"
+              formControlName="privacy">
+              <ion-option value="public" checked="true">Public</ion-option>
+              <ion-option value="friends">Friends Only</ion-option>
+              <ion-option value="private">Private</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Bio</ion-label>
+            <ion-textarea formControlName="bio"></ion-textarea>
+          </ion-item> -->
+        </form>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-list no-lines>
+        <form [formGroup]="slideThreeForm">
+          <ion-item>
+            <ion-label floating>Comments or Observations</ion-label>
+            <div class="hint">ANY COMMENTS OR OBSERVATIONS (EG EXERCISES / ACTIVITIES FARMERS FOUND USEFUL? ANYTHING YOU OBSERVED THAT YOU
+              THINK IS INTERESTING? DO YOU SEE FARMERS LINKING PICSA WITH FFA OR OTHER SERVICES / ACTIVITIES? IF YES, HOW?)</div>
+            <ion-textarea formControlName="comments" type="text"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Additional PICSA Information Shared</ion-label>
+            <div class="hint">DID YOU (OR ANYONE ELSE) IN ADDITION TO THE TRAINING, SHARE INFORMATION FROM PICSA WITH OTHERS IN THE COMMUNITY
+              (EG USING NOTICE BOARDS, OTHER MEETINGS)? IF YES PLEASE GIVE DETAILS INCLUDING DATE, HOW MANY FARMERS YOU THINK
+              MAY HAVE BENEFITED FROM THIS</div>
+            <ion-textarea formControlName="shared" type="text"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Use of Tablets</ion-label>
+            <div class="hint">IF YOU USED A TABLET DURING THE SESSION, BRIEFLY DESCRIBE HOW YOU USED IT AND ANY SUGGESTIONS FOR THE PICSA APP
+              TO HELP MORE IN THE FUTURE</div>
+            <ion-textarea formControlName="tablets" type="text"></ion-textarea>
+          </ion-item>
+        </form>
+      </ion-list>
+      <br>
+      <button ion-button full color="primary" (click)="save()">Submit Form</button>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>
