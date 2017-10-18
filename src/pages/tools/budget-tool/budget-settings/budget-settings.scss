@@ -14,8 +14,10 @@ page-budget-settings {
     .label{
         color:#656464
   ***REMOVED***
-    .button-inner {
-        flex-flow: column;
+    .column-button{
+        .button-inner {
+            flex-flow: column;
+      ***REMOVED***
   ***REMOVED***
     .button{
           height: 7rem;

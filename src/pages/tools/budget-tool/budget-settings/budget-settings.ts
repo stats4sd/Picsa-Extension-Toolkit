@@ -1,12 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ViewController, ToastController } from 'ionic-angular';
+import { StorageProvider } from '../../../../providers/storage/storage'
 
-/**
- * Generated class for the BudgetSettingsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-budget-settings',
@@ -15,93 +10,187 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 export class BudgetSettingsPage {
   newBudgetSlide = true;
   loadBudgetSlide = false;
+  saved: any = [];
+  archived:any=[];
   enterprises: any
   months: any;
+  scales: any;
   days: any;
-  newBudget = {
-    title: null,
-    periods: { values: [], starting: 'Jan', scale: "months", total: 12 }
+  modalMode:boolean;
+  budget = {
+    title: "New Budget",
+    archived: false,
+    periods: { labels: [], starting: 'Jan', scale: "months", total: 12 }
 ***REMOVED***
   @ViewChild(Slides) slides: Slides;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storagePrvdr: StorageProvider, public viewCtrl:ViewController, public toastCtrl:ToastController) {
+    console.log('loading budget settings page')
     this.enterprises = ['crop', 'livestock', 'other']
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     this.days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
-    this.newBudget.periods.values = this.months
+    this.scales = ['months', 'weeks', 'days', 'none']
+    this.budget.periods.labels = this.months
+    console.log('budget',this.budget)
+    
 ***REMOVED***
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BudgetSettingsPage 2');
+  ionViewDidEnter() {
+    // if sent as model
+    if(this.navParams.data.operation){
+      console.log('navParams',this.navParams)
+      this.modalMode=true
+      if(this.navParams.data.operation=="new"){this.startNew()}
+      if(this.navParams.data.operation=="load"){this.loadSaved()}
+  ***REMOVED***
 ***REMOVED***
+  
   startNew() {
     this.newBudgetSlide = true
     this.loadBudgetSlide = false
     this.slides.update()
     this.slides.slideTo(1, 500);
-
 ***REMOVED***
   loadSaved() {
+    // load saved click, loads cached budgets and moves to loading screen
     this.newBudgetSlide = false
     this.loadBudgetSlide = true
+    this.loadSavedBudgets()
     this.slides.update()
     this.slides.slideTo(1, 500);
-
 ***REMOVED***
-  nextSlide() {
-    this.slides.slideNext()
+  loadSavedBudgets() {
+    // load saved budgets from cache
+    this.storagePrvdr.getAll('budgets').then((res) => {
+      let arr = []
+      for (let key in res) { 
+        let budget = res[key]
+        if(budget.archived){this.archived.push(budget)}
+        else{arr.push(budget)}
+    ***REMOVED***
+      this.saved = arr.reverse()
+  ***REMOVED***)
 ***REMOVED***
-  calculatePeriod() {
-    console.log('calculating period')
-    let scale = this.newBudget.periods.scale
-    let starting = this.newBudget.periods.starting
-    let total = this.newBudget.periods.total
-    let arr = []
-    if (scale == 'months') { arr = this.calculatePeriodMonths(total, starting) }
-    if (scale == 'weeks') { arr = this.calculatePeriodWeeks(total) }
-    if (scale == 'days') { arr = this.calculatePeriodDays(total, starting) }
-    this.newBudget.periods.values = arr
-***REMOVED***
-  calculatePeriodWeeks(total) {
-    console.log('total',total)
-    let arr = []
-    for (let i = 1; i <= total; i++) {
-      arr.push('week ' + i)
+  loadBudget(b, isNew) {
+    // click function to return selected budget
+    console.log('loading budget', b)
+    if (!b.hasOwnProperty('title')) { b = this.upgradeBudget(b) }
+    if (isNew) {
+      b.created = new Date();
+      b.id=this.storagePrvdr.generatePushID();
+      b.data = this.createDataTemplates(b.periods.labels);
   ***REMOVED***
+    if(this.modalMode){this.viewCtrl.dismiss(b)}
+    else{this.navCtrl.push('BudgetToolPage',b)}
+***REMOVED***
+  createDataTemplates(labels) {
+    let arr = []
+    console.log('creating templates')
+    labels.forEach((label, i) => {
+      arr.push({
+        label: label,
+        index: i,
+        activities: [],
+        inputs: [],
+        outputs: [],
+        familyLabour: { people: 0, days: 0 },
+        balance: {
+          inputs: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          outputs: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          consumed: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          monthly: {
+            total: 0,
+            dots: []
+        ***REMOVED***,
+          running: {
+            total: 0,
+            dots: []
+        ***REMOVED***
+      ***REMOVED***
+    ***REMOVED***)
+  ***REMOVED***);
     return arr
+}
+archive(budget) {
+  console.log('archiving budget',budget)
+  budget.archived = true;
+  this.storagePrvdr.saveUserDoc(budget,true,'budgets',budget.id).then(()=>{
+    this.loadSavedBudgets()
+    let toast = this.toastCtrl.create({
+      message: 'Budget Archived',
+      duration: 3000
+  ***REMOVED***);
+    toast.present()
+***REMOVED***)
+  
+}
+nextSlide() {
+  this.slides.slideNext()
+}
+calculatePeriod() {
+  // return array representing time periods
+  let scale = this.budget.periods.scale
+  let starting = this.budget.periods.starting
+  let total = this.budget.periods.total
+  let arr = []
+  if (scale == 'months') { arr = this.calculatePeriodMonths(total, starting) }
+  if (scale == 'days') { arr = this.calculatePeriodDays(total, starting) }
+  if (scale == 'weeks') { arr = this.calculatePeriodConsecutive(total, 'week') }
+  if (scale == 'none') { arr = this.calculatePeriodConsecutive(total) }
+  this.budget.periods.labels = arr
+}
+calculatePeriodConsecutive(total, prefix ?) {
+  if (!prefix) { prefix = "" }
+  let arr = []
+  for (let i = 1; i <= total; i++) {
+    arr.push(prefix + i)
 ***REMOVED***
-  calculatePeriodMonths(total, starting) {
-    let array = this.months
-    if (starting) {
-      let startIndex = this.months.indexOf(starting)
-      console.log('start index', startIndex)
-      for (let i = 0; i < startIndex; i++) { array.push(array.shift()) }
+  return arr
+}
+calculatePeriodMonths(total, starting) {
+  let array = this.months
+  if (starting) {
+    let startIndex = this.months.indexOf(starting)
+    for (let i = 0; i < startIndex; i++) { array.push(array.shift()) }
+***REMOVED***
+  if (total > array.length) {
+    for (let i = 0; i < Math.ceil(total / array.length); i++) {
+      array = array.concat(array)
   ***REMOVED***
-    if(total>array.length){
-      for(let i=0;i<Math.ceil(total/array.length);i++){
-        array = array.concat(array)
-    ***REMOVED***
-  ***REMOVED***
-    return array.slice(0,total)
+***REMOVED***
+  return array.slice(0, total)
 
+}
+calculatePeriodDays(total, starting) {
+  let array = this.days
+  if (starting) {
+    let startIndex = this.days.indexOf(starting)
+    for (let i = 0; i < startIndex; i++) { array.push(array.shift()) }
 ***REMOVED***
-  calculatePeriodDays(total, starting) {
-    let array = this.days
-    if (starting) {
-      let startIndex = this.days.indexOf(starting)
-      console.log('start index', startIndex)
-      for (let i = 0; i < startIndex; i++) { array.push(array.shift()) }
+  if (total > array.length) {
+    for (let i = 0; i < Math.ceil(total / array.length); i++) {
+      array = array.concat(array)
   ***REMOVED***
-    if(total>array.length){
-      for(let i=0;i<Math.ceil(total/array.length);i++){
-        array = array.concat(array)
-    ***REMOVED***
-  ***REMOVED***
-    return array.slice(0,total)
 ***REMOVED***
+  return array.slice(0, total)
+}
 
-  createNewBudget() {
+/************* legacy functions, to be removed in future updates *************/
 
-***REMOVED***
+upgradeBudget(b){
+  console.log('upgrading budget b')
+  if (!b.title) { b.title = b.name; delete b.name }
+  if(!b.periods){b.periods={ labels: [], starting: 1, scale: "none", total: 12 }}
+  return b
+}
 
 }

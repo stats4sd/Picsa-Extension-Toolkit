@@ -4,8 +4,7 @@ page-budget-tool {
   ***REMOVED***
     .scroll-content{
         overflow-x: scroll;
-  ***REMOVED***
-    
+  ***REMOVED***   
     .grow{
         flex-grow: 1;
         align-content: center;
@@ -30,6 +29,7 @@ page-budget-tool {
     .grid-card{
         height: 100%;
         width:100%;
+        min-width: 150px;
   ***REMOVED***
     .time-period{
         border: 2px solid black;
@@ -90,12 +90,19 @@ page-budget-tool {
     .one-em{
         height:1em
   ***REMOVED***
+    .number-value{
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8)
+  ***REMOVED***
     h1{
         text-align: center;
-        margin-top:8px;
-        margin-bottom:8px;
+        margin: 0;
+        font-size: large
   ***REMOVED***
     ion-fab[top]{
         top: 0
+  ***REMOVED***
+    .total-column{
+        background-color: wheat
   ***REMOVED***
 }

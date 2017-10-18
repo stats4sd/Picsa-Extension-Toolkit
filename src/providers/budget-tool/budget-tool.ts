@@ -12,8 +12,6 @@ export class BudgetToolProvider {
     console.log('Hello BudgetToolProvider Provider');
     this.allData = allData
     //load saved cards
-    this.createNewBudget()
-    console.log('test 2')
     this.storagePrvdr.loadUser().then((user) => {
       console.log('user loaded', user)
       this.loadSavedCards()
@@ -33,122 +31,233 @@ export class BudgetToolProvider {
   ***REMOVED***)
 
 ***REMOVED***
-  createNewBudget() {
-    this.budget = {
-      name: 'New Budget',
-      created: new Date(),
-      data: [],
-      id: this.storagePrvdr.generatePushID(),
-      archived: false
-  ***REMOVED***
-    for (let i = 0; i < 12; i++) {
-      var p = {
-        index: 0,
-        activities: [],
-        inputs: [],
-        outputs: [],
-        familyLabour: { people: 0, days: 0 },
-        balance: {
-          inputs: {
-            total: 0,
-            dots: []
-        ***REMOVED***,
-          outputs: {
-            total: 0,
-            dots: []
-        ***REMOVED***,
-          consumed: {
-            total: 0,
-            dots: []
-        ***REMOVED***,
-          monthly: {
-            total: 0,
-            dots: []
-        ***REMOVED***,
-          running: {
-            total: 0,
-            dots: []
-        ***REMOVED***
-      ***REMOVED***
-    ***REMOVED***
-      p.index = i + 1
-      this.budget.data.push(p)
-  ***REMOVED***
-    return this.budget
+  loadSampleBudget(){
+    return sampleBudget
 ***REMOVED***
-
 }
 
-var sampleBudget = [
-  {
-    index: 1,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-      { "Type": "activity", "Name": "land clearing", "Image": "assets/img/budget/activity/land-clearing.png", "ID": "land-clearing" },
+var sampleBudget = {
+  "title": "My First Budget",
+  "archived": false,
+  "periods": {
+    "labels": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thur",
+      "Fri",
+      "Sat"
     ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200, consumed: 0 },
-      { "Type": "input", "Name": "seeds", "Image": "assets/img/budget/input/seeds.png", "ID": "seeds", quantity: 1, cost: 500, consumed: 0 },
-    ],
-    outputs: [
-      { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, cost: 200, consumed: 1 },
-    ],
-    familyLabour: {
-      people: 3,
-      days: 4
+    "starting": "Mon",
+    "scale": "days",
+    "total": "6"
+***REMOVED***,
+  "description": "description here",
+  "enterprise": "livestock",
+  "scale": "small",
+  "created": "2017-10-18T09:37:03.311Z",
+  "id": "-KwipyhEIqwRLbyU3sjF",
+  "data": [
+    {
+      "label": "Mon",
+      "index": 0,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+    ***REMOVED***,
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "outputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "consumed": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "monthly": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "running": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***
+    ***REMOVED***
   ***REMOVED***,
-***REMOVED***
-  ,
-  {
-    index: 2,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [
-      { "Type": "output", "Name": "crop", "Image": "assets/img/budget/output/crop.png", "ID": "crop", quantity: 6, consumed: 1 },
-    ],
-    familyLabour: { people: 0, days: 0 },
-
-***REMOVED***,
-  {
-    index: 3,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [],
-    familyLabour: { people: 0, days: 0 },
-
-***REMOVED***,
-  {
-    index: 4,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [],
-    familyLabour: { people: 0, days: 0 },
-***REMOVED***,
-  {
-    index: 5,
-    activities: [
-      { "Type": "activity", "Name": "apply fertiliser", "Image": "assets/img/budget/activity/apply-fertiliser.png", "ID": "apply-fertiliser" },
-    ],
-    inputs: [
-      { "Type": "input", "Name": "manure wheelbarrows", "Image": "assets/img/budget/input/manure-wheelbarrows.png", "ID": "manure-wheelbarrows", quantity: 5, cost: 200 },
-    ],
-    outputs: [],
-    familyLabour: { people: 0, days: 0 },
-***REMOVED***,
-
-]
+    {
+      "label": "Tue",
+      "index": 1,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+    ***REMOVED***,
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "outputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "consumed": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "monthly": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "running": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***
+    ***REMOVED***
+  ***REMOVED***,
+    {
+      "label": "Wed",
+      "index": 2,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+    ***REMOVED***,
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "outputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "consumed": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "monthly": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "running": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***
+    ***REMOVED***
+  ***REMOVED***,
+    {
+      "label": "Thur",
+      "index": 3,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+    ***REMOVED***,
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "outputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "consumed": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "monthly": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "running": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***
+    ***REMOVED***
+  ***REMOVED***,
+    {
+      "label": "Fri",
+      "index": 4,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+    ***REMOVED***,
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "outputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "consumed": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "monthly": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "running": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***
+    ***REMOVED***
+  ***REMOVED***,
+    {
+      "label": "Sat",
+      "index": 5,
+      "activities": [],
+      "inputs": [],
+      "outputs": [],
+      "familyLabour": {
+        "people": 0,
+        "days": 0
+    ***REMOVED***,
+      "balance": {
+        "inputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "outputs": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "consumed": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "monthly": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***,
+        "running": {
+          "total": 0,
+          "dots": []
+      ***REMOVED***
+    ***REMOVED***
+  ***REMOVED***
+  ]
+}
 
 var allData = {
   activities: [
