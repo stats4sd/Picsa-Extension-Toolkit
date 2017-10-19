@@ -33,7 +33,7 @@ $ionic cordova platform add android
 try again
 
 if still, make sure cordova plugin android-support-gradle-release installed
-$cordova plugin add cordova-android-support-gradle-relase
+$cordova plugin add cordova-android-support-gradle-release
 
 or try with a higher android api version installed
 
