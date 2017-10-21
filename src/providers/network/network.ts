@@ -26,6 +26,7 @@ export class NetworkProvider {
     console.log('preparing sync checks')
     return new Promise((resolve, reject) => {
       if (navigator.onLine == false || this.network.type == "none") {
+        console.log('offline')
         reject({ code: 2, message: 'no internet connection' })
       }
       if (this.firebaseID) {
