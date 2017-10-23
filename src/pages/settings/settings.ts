@@ -150,6 +150,8 @@ export class SettingsPage {
       res => {
         // preflight request check internet and firebase status, and returns firebase id if successful
         console.log('res', res)
+        this.user.firebaseID=res;
+        this.storagePrvdr.saveUserDoc(this.user,false,'settings','profile',true)
         // show syncing animation
 
         this.storagePrvdr.syncAll(res)
@@ -159,7 +161,7 @@ export class SettingsPage {
             this.syncButton.color = "#2E7D32"
             this.syncButton.disabled = false
             this.user.lastBackup = new Date(Date.now())
-            this.storagePrvdr.saveUserDoc(this.user.lastBackup, false, 'profile', 'lastBackup')
+            this.storagePrvdr.saveUserDoc(this.user, false, 'settings', 'profile', true)
             console.log('res', res);
 
           })

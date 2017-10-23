@@ -26,8 +26,12 @@
     <button ion-button (click)="removeUserDoc()">removeUserDoc (budget card)</button>
   <div>Firebase auth</div>
   <button ion-button (click)="signIn()">Sign in</button>
-  <button ion-button (click)="syncInit()">Sync</button>
+  <div>{{firebaseID}}</div>
+  <button ion-button (click)="syncTestingDoc()">Sync Testing Doc</button>
+  <button ion-button (click)="syncUserDoc()">Sync User Doc</button>
   <div>Connection</div>
   <button ion-button (click)="testConnection()">Test connection</button>
+  <hr>
+  <button ion-button (click)="backupToConsole()">Backup to Console</button>
 
 </ion-content>

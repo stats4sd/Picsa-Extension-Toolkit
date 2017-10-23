@@ -30,13 +30,15 @@ export class NetworkProvider {
         reject({ code: 2, message: 'no internet connection' })
       }
       if (this.firebaseID) {
+        console.log('firebase id retrieved')
         resolve(this.firebaseID)
       }
       else {
-        this.afAuth.auth.signInAnonymously().catch(err => console.log('sign in error', err))
+        console.log('signing in')
+        this.afAuth.auth.signInAnonymously()
+          .catch(err => console.log('sign in error', err))
         reject({ code: 1, message: 'please try again' })
       }
-
     })
   }
 
@@ -47,6 +49,7 @@ export class NetworkProvider {
         // User is signed in.
         console.log('user signed in', user)
         this.firebaseID = user.uid
+        console.log('firebaseID',this.firebaseID)
       }
       else {
         this.events.publish('firebase:signedOut', this.firebaseID)

@@ -176,14 +176,24 @@ export class StorageProvider {
       // local first approach
       this.storage.get(collection).then((res) => {
         console.log('docs received, converting to array', res)
+        // messy with lots of try/catches because of old and mixed data storage
+        // will be removed in future
+        try { res=JSON.parse(res)}
+        catch(err) { }
         if (res == null) { resolve([]) }
         else {
           let docsArray = []
           for (let key in res) {
             if (res.hasOwnProperty(key)) {
               let data = res[key]
+              console.log('data',data)
               if (data.hasOwnProperty('jsonString')) {
-                data = JSON.parse(data.jsonString)
+                try {data = JSON.parse(data.jsonString)}
+                catch(err) {data = data.jsonString}
+              }
+              if (data.hasOwnProperty('json')) {
+                try {data = JSON.parse(data.json)}
+                catch(err) {data = data.json}
               }
               docsArray.push(data)
               console.log('array', docsArray)
@@ -350,7 +360,13 @@ export class StorageProvider {
           for (let id in docsObject) {
             console.log('id', id)
             let data = docsObject[id]
+            if(data instanceof Date){
+              // custom format for date object instance
+              data ={}; data[id]=docsObject
+            }
             console.log('data', data)
+            console.log('data type',typeof data)
+            console.log('date instance',data instanceof Date)
             let ref = this.afs.firestore.collection('users').doc(firebaseID).collection(collection).doc(id)
             batch.set(ref, data)
             total++
@@ -366,6 +382,7 @@ export class StorageProvider {
         }
       }).then(_ => {
         console.log('commiting', total)
+        console.log('batch',batch)        
         batch.commit()
           .then(
             res => resolve('success'),

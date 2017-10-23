@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import {Platform} from "ionic-angular";
 import {FileService} from "../../providers/file-service"
@@ -7,7 +7,7 @@ import {Http} from '@angular/http'
 import {YoutubeService} from '../../providers/youtube-service'
 declare let cordova: any;
 
-
+@IonicPage()
 @Component({
   selector: 'page-videos',
   templateUrl: 'videos.html',

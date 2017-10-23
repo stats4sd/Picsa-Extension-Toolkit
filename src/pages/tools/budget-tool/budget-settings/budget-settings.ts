@@ -66,15 +66,18 @@ export class BudgetSettingsPage {
       for (let key in res) { 
         let budget = res[key]
         if(budget.archived){this.archived.push(budget)}
-        else{arr.push(budget)}
+        else{
+          if (!budget.hasOwnProperty('title')) { budget = this.upgradeBudget(budget) }
+          arr.push(budget)}
       }
       this.saved = arr.reverse()
+      console.log('saved budgets',this.saved)
     })
   }
   loadBudget(b, isNew) {
     // click function to return selected budget
     console.log('loading budget', b)
-    if (!b.hasOwnProperty('title')) { b = this.upgradeBudget(b) }
+    
     if (isNew) {
       b.created = new Date();
       b.id=this.storagePrvdr.generatePushID();

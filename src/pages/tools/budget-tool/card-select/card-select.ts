@@ -102,29 +102,29 @@ export class CardSelectPage {
     this.showValues = false
 
   }
-  // continue() {
-  //   //populate activities from selected array (could be done on initial click to show but then would need correct remove function too)
-  //   if (this.type == "activities") {
-  //     this.period[this.type] = []
-  //     for (let key in this.selected) {
-  //       this.period[this.type].push(this.selected[key])
-  //     }
-  //   }
-  //   //don't need to pass any data as binding to period kept - linked to mess above
-  //   this.viewCtrl.dismiss()
+  continue() {
+    //populate activities from selected array (could be done on initial click to show but then would need correct remove function too)
+    if (this.type == "activities") {
+      this.period[this.type] = []
+      for (let key in this.selected) {
+        this.period[this.type].push(this.selected[key])
+      }
+    }
+    //don't need to pass any data as binding to period kept - linked to mess above
+    this.viewCtrl.dismiss()
 
-  // }
-  // getIndex(array, card) {
-  //   let index: number = 0
-  //   let i = 0
-  //   for (let item of array) {
-  //     if (item.ID == card.ID) {
-  //       index = i
-  //     }
-  //     i++
-  //   }
-  //   return index
-  // }
+  }
+  getIndex(array, card) {
+    let index: number = 0
+    let i = 0
+    for (let item of array) {
+      if (item.ID == card.ID) {
+        index = i
+      }
+      i++
+    }
+    return index
+  }
   addCard() {
     //lookup as card types not quite same as budget type names
     let types = {
