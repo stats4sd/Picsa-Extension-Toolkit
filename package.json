@@ -51,7 +51,6 @@
     "leaflet": "1.0.3",
     "leaflet-ajax": "^2.1.0",
     "ng2-canvas-whiteboard": "^1.2.0",
-    "ng2-pdf-viewer": "^1.1.0",
     "papaparse": "^4.3.3",
     "pdfjs-dist": "^1.8.446",
     "promise-polyfill": "6.0.2",

@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage'
 import { Storage } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireAuth } from "angularfire2/auth";
+import * as firebase from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -18,7 +21,8 @@ export class AdminPage {
     public navParams: NavParams,
     public storagePrvdr: StorageProvider,
     private ionicStorage: Storage,
-    
+    private afAuth: AngularFireAuth, 
+    private afs: AngularFirestore,   
     private network: Network
   ) {
 
@@ -32,6 +36,44 @@ export class AdminPage {
   testConnection() {
     console.log('type?', this.network.type)
     console.log('browser connection', navigator.onLine)
+***REMOVED***
+  signIn(){
+    // subscribe to changes
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        console.log('user signed in', user)
+        this.firebaseID = user.uid
+        console.log('firebaseID',this.firebaseID)
+    ***REMOVED***
+      else {
+        // User is signed out.
+    ***REMOVED***
+  ***REMOVED***);
+    this.afAuth.auth.signInAnonymously().catch(err => console.log('sign in error', err))
+***REMOVED***
+  syncTestingDoc(){
+    console.log('syncing doc');
+    let testingId = this.firebaseID
+    let ref = this.afs.firestore.collection('testing').doc(testingId)
+    console.log('ref',ref)
+    ref.set({time:new Date()})
+***REMOVED***
+  syncUserDoc(){
+    console.log('syncing doc');
+    let testingId = this.firebaseID
+    let ref = this.afs.firestore.collection('users').doc(this.firebaseID) 
+    console.log('ref',ref)
+    ref.set({time:new Date()})
+***REMOVED***
+  backupToConsole(){
+    let storageData={}
+    this.ionicStorage.forEach((v,k)=>{
+      storageData[k]=v
+
+  ***REMOVED***)
+    .then(_=>console.log('storage data',storageData))
+    
 ***REMOVED***
 
 

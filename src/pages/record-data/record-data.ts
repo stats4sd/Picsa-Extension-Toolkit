@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ModalController, Events } from 'ionic-angular';
+import { NavController, IonicPage, ModalController, Events, ToastController } from 'ionic-angular';
 import { KoboApi } from "../../providers/kobo-api";
 // import {Observable} from 'rxjs/Observable'
 import { StorageProvider } from '../../providers/storage/storage'
@@ -22,6 +22,7 @@ export class RecordDataPage {
   refreshing: boolean = false;
   forms: any = [];
   formOpen: boolean = false;
+  uploadDisabled: boolean = false;
   enketoLink: any;
   formDisplay: string = 'none';
   submittedForms: any = { reporting: { pending: [], complete: [] } }
@@ -34,7 +35,8 @@ export class RecordDataPage {
     private storagePrvdr: StorageProvider,
     private networkPrvdr: NetworkProvider,
     public sanitizer: DomSanitizer,
-    public events: Events) {
+    public events: Events,
+    public toastCtrl: ToastController) {
 
     console.log('getting user from storage')
     this.storagePrvdr.getUser().then((user) => {
@@ -48,6 +50,9 @@ export class RecordDataPage {
 
   ***REMOVED***)
 
+***REMOVED***
+  ionViewDidEnter() {
+    this.uploadSavedForms('reporting', true)
 ***REMOVED***
 
   openForm2(form) {
@@ -73,25 +78,54 @@ export class RecordDataPage {
       console.log('saved submission')
       this.events.publish('message', { text: 'Submission Saved' })
       this.events.unsubscribe('form:saved')
+      this.showToast('submission saved')
       this.uploadSavedForms(formName)
   ***REMOVED***)
 ***REMOVED***
+  showToast(message) {
+    this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      closeButtonText: 'close',
+      position: 'top',
+      dismissOnPageChange:true,
+      showCloseButton: true
+  ***REMOVED***).present();
+***REMOVED***
 
-  uploadSavedForms(formName) {
+  uploadSavedForms(formName, backgroundMode?) {
     // upload reporting form to firebase and resave local
+    // background mode prevents notification messages
     if (this.submittedForms.reporting.pending.length > 0) {
+      this.uploadDisabled = true
       this.networkPrvdr.syncPrepare().then(res => {
+        console.log('res received, proceeding to sync')
         let firebaseID = res
         this.storagePrvdr.syncForms(firebaseID).then(res => {
-          console.log('submitted successfully!')
+          console.log('submitted successfully!');
+          if(!backgroundMode){this.showToast('forms submitted succesffully')}
           this.submittedForms.reporting.pending.forEach(e => {
             this.submittedForms.reporting.complete.push(e)
         ***REMOVED***)
           this.submittedForms.reporting.pending = []
-          this.storagePrvdr.saveUserDoc(this.submittedForms[formName], false, 'submittedForms', formName)
+          console.log('forms', this.submittedForms.reporting)
+          this.storagePrvdr.saveUserDoc(this.submittedForms.reporting, false, 'submittedForms', 'reporting')
+          this.uploadDisabled = false
       ***REMOVED***)
-    ***REMOVED***)
+    ***REMOVED***,
+        rej => { 
+          console.log('rej', rej) 
+          this.uploadDisabled=false;
+          if (!backgroundMode) { this.showToast(rej.message) }
+      ***REMOVED***)
+        
+        .catch(err => {
+          console.log('err', err)
+          this.uploadDisabled = false
+          if (!backgroundMode) { this.showToast(err.message) }
+      ***REMOVED***)
   ***REMOVED***
+    else { if(!backgroundMode){this.showToast('all forms already uploaded') }}
 ***REMOVED***
 }
 
