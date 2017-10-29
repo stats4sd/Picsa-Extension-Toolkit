@@ -56,5 +56,22 @@ page-record-data {
         padding: 10px;
         font-weight: 500;
   ***REMOVED***
+    @media screen and (max-width:436px) {
+        .hide-l-436{
+            display: none
+      ***REMOVED***
+        .show-l-436{
+            display: block;
+            width: 100%
+      ***REMOVED***
+  ***REMOVED***
+    @media screen and (min-width:437px) {
+        .hide-l-436{
+            display: block
+      ***REMOVED***
+        .show-l-436{
+            display: none;
+      ***REMOVED***
+  ***REMOVED***
 
 }

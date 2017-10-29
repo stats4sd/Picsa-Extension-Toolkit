@@ -1,14 +1,15 @@
 # Picsa-Extension-Toolkit
 
 
-Building:
-
-Uncomment service worker from index.html (?)
+## Building:
+### General
+If deploying for web uncomment service worker from index.html
 Update version number in home.html and confix.xml
 *Make sure custom updates still valid (in case node modules have been reinstalled)*
-*Make sure datasets in folder (not available on git)*
+*Make sure datasets and metadata.json in assets/datasets (not available on git)*
 
-Troubleshooting:
+
+## Troubleshooting:
 make sure all cli=s up to date
 $npm install -g cordova ionic@latest
 
