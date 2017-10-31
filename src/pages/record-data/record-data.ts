@@ -40,9 +40,7 @@ export class RecordDataPage {
 
     console.log('getting user from storage')
     this.storagePrvdr.getUser().then((user) => {
-      console.log('user retrieved', user)
       this.user = user
-      console.log('submitted forms', this.submittedForms)
       this.storagePrvdr.getUserDoc('submittedForms').then(res => {
         console.log('submitted forms retrieved', res)
         if (res) { this.submittedForms = res }
@@ -52,19 +50,17 @@ export class RecordDataPage {
 
   }
   ionViewDidEnter() {
-    this.uploadSavedForms('reporting', true)
+    
+    this.events.subscribe('form:submitted', data => {
+      this.saveFormSubmission(data.formName, data.formSubmission)
+    })
+    // this.uploadSavedForms('reporting', true)
   }
 
   openForm2(form) {
     // method to open locally produced form pages and listen for save submissions
-    this.events.subscribe('form:submitted', data => {
-      this.saveFormSubmission(data.formName, data.formSubmission)
-    })
-    console.log('opening local form', form)
     let page = form + 'Page'
     this.nav.push(page, {})
-
-
   }
 
   saveFormSubmission(formName, formSubmission) {

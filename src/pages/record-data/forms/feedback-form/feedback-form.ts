@@ -1,6 +1,12 @@
+/*
+Note, entire system could do with overhaul, too much split logic. for should just handle updating form fields,
+meta data should be done via provider so that both view-data and record-data pages have access to same methods
+*/
+
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, IonicPage, Events } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, Events } from 'ionic-angular';
+import {StorageProvider} from '../../../../providers/storage/storage'
 
 @IonicPage()
 @Component({
@@ -16,32 +22,40 @@ export class FeedbackFormPage {
   slideThreeForm: FormGroup;
 
   submitAttempt: boolean = false;
+  template:any={
+    date:new Date().toISOString(),
+    location:'',
+    name:'',
+    males:null,
+    females:null,
+    activities:'',
+    comments:'',
+    shared:'',
+    tablets:'',
+    _submissionID:null,
+    _userID:null
+  }
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public events:Events) {
-
+  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public events:Events, public navParams:NavParams, public storagePrvdr:StorageProvider) {
+    if(this.navParams.data.hasOwnProperty('_submissionID')){this._enableEdit(this.navParams.data)}
     this.slideOneForm = formBuilder.group({
-      date: [(new Date()).toISOString(), Validators.required],
-      location:['',Validators.required],
-      name:['',Validators.required],   
+      date: [this.template.date, Validators.required],
+      location:[this.template.location || '',Validators.required],
+      name:[this.template.name || '',Validators.required],   
     });
     this.slideTwoForm = formBuilder.group({
-      males:['',Validators.required],
-      females:['',Validators.required],
-      activities:['',Validators.required],
+      males:[this.template.males,Validators.required],
+      females:[this.template.females,Validators.required],
+      activities:[this.template.activities,Validators.required],
     });
     this.slideThreeForm = formBuilder.group({
-      comments:[''],
-      shared:[''],
-      tablets:[''],     
+      comments:[this.template.comments],
+      shared:[this.template.shared],
+      tablets:[this.template.tablets],  
+      //metadata
+      _submissionID:[this.template._submissionID],
+      _userID:[this.template._userID],
     });
-    // firstName: ['test', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-    // lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-    // age: []
-    // username: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]*')])],
-    // privacy: ['', Validators.required],
-    // bio: ['']
-
-
   }
 
   next() {
@@ -51,11 +65,21 @@ export class FeedbackFormPage {
   prev() {
     this.signupSlider.slidePrev();
   }
+  _enableEdit(form){
+    console.log('enabling edit',form)
+    if(!this.template.updates){this.template.updates=1}
+    else{this.template.updates++}
+    for(let key in form){
+      if(this.template.hasOwnProperty(key)){
+        this.template[key]=form[key]
+      }
+    }
+  }
 
   save() {
     this.submitAttempt = true;
-    let submission = Object.assign({},this.slideOneForm.value, this.slideTwoForm.value, this.slideThreeForm.value);
-    console.log('submission',submission)
+    
+    console.log('submission',this.template)
     if (!this.slideOneForm.valid) {
       this.signupSlider.slideTo(0);
     }
@@ -66,7 +90,15 @@ export class FeedbackFormPage {
       this.signupSlider.slideTo(2);
     }
     else {
-      this.events.publish('form:submitted',{formName:'reporting',formSubmission:submission})
+      let submission = Object.assign({},this.slideOneForm.value, this.slideTwoForm.value, this.slideThreeForm.value);
+      if(submission._submissionID){
+        console.log('preparing to update form',submission)
+        this.events.publish('form:updated',{formName:'reporting',formSubmission:submission})
+      }
+      else{
+        console.log('preparing to submit form',submission)
+        this.events.publish('form:submitted',{formName:'reporting',formSubmission:submission})}
+      
       this.navCtrl.pop()
     }
 

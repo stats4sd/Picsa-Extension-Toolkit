@@ -1,12 +1,43 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>view-data</ion-title>
+    <ion-title>View Data</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <div>No data to display</div>
+  <h3>My Submissions</h3>
+  <ion-list>
+    <ion-list-header>
+      Reporting Form
+    </ion-list-header>
+    <ion-item *ngFor="let submitted of mySubmissions.reporting.pending; let i = index">
+      <div class="list-row">
+        <ion-icon item-start name="calendar"></ion-icon>
+        <div style="flex:1">{{submitted.date | date:'short'}}</div>
+        <button ion-button icon-only (click)="editSubmission(submitted,i,'pending')"><ion-icon name="create"></ion-icon></button>
+      </div>
+      <div class="list-row">
+        <ion-icon item-start name="pin"></ion-icon>
+        <div style="flex:1">{{submitted.location}}</div>
+      </div>
+      <div class="status-message pending">Pending</div>
+    </ion-item>
+    <!-- repeat for complete submissions (could be improved) -->
+    <ion-item *ngFor="let submitted of mySubmissions.reporting.complete; let i = index">
+        <div class="list-row">
+          <ion-icon item-start name="calendar"></ion-icon>
+          <div style="flex:1">{{submitted.date | date:'short'}}</div>
+          <button ion-button icon-only (click)="editSubmission(submitted,i,'complete')"><ion-icon name="create"></ion-icon></button>
+        </div>
+        <div class="list-row">
+          <ion-icon item-start name="pin"></ion-icon>
+          <div style="flex:1">{{submitted.location}}</div>
+        </div>
+        <div class="status-message submitted">Submitted</div>
+      </ion-item>
+  </ion-list>
+  <div *ngIf="mySubmissions.reporting.complete.length==0 && mySubmissions.reporting.pending.length==0">No data to display</div>
 
 </ion-content>
