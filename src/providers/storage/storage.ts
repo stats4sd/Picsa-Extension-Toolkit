@@ -49,27 +49,21 @@ export class StorageProvider {
     public platform: Platform,
     public events: Events,
     private file: File,
-    private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
   ) {
 ***REMOVED***
 
   storageInit() {
-    console.log('storage init')
     this.storage.ready().then(_ => {
       this.initCalled = true
-      console.log('storage ready')
       this._checkDB().then((upgraded) => {
-        console.log('db upgraded', upgraded)
         if (upgraded) {
           // database up to date and user exists
           this.loadUser().then((user) => {
-            console.log('publishing user loaded event')
             this.events.publish('user:loaded', user)
         ***REMOVED***)
       ***REMOVED***
         else {
-          console.log('database not upgraded')
           this._migrateData().then(() => {
             this.getUser().then(() => {
               return
@@ -85,7 +79,6 @@ export class StorageProvider {
     return new Promise((resolve, reject) => {
       this.storage.get('userID').then(id => {
         if (id) {
-          console.log('user id exists, retrieving data', id)
           this.userID = id
           this.getUserDoc('settings', 'profile').then(user => {
             console.log('user doc retrieved', user)
@@ -108,18 +101,15 @@ export class StorageProvider {
     // checks for user existance within local this.storage.
     //returns corresponding firestore user doc if exists, or creates new if not
     return new Promise((resolve, reject) => {
-      console.log('user', this.user)
       if (this.user) { resolve(this.user) }
       else {
         if (!this.initCalled) { this.storageInit() }
         // try again in a moment. alternatively could use event emitters but not sure if there would still potentially be gap between setting up and init finishing
         this.events.subscribe('user:loaded', (user) => {
-          console.log('user loaded event received')
           this.events.unsubscribe('user:loaded')
           resolve(user)
       ***REMOVED***)
         setTimeout(() => {
-          console.log('retrying')
           this.getUser().then(() => resolve(this.user))
       ***REMOVED***, 5000
         )
@@ -131,11 +121,9 @@ export class StorageProvider {
     // ***need another function to return from local db
     // ***could also add queries
     let userID = this.userID
-    console.log('getting collection docs', collection, docId, this.userID)
     return new Promise((resolve, reject) => {
       // local first approach
       this.storage.get(collection).then(res => {
-        console.log('user doc retrieved', res)
         if(docId){resolve(res[docId])}
         else{resolve(res)}
     ***REMOVED***).catch(err=>console.log('failed retrieving user doc',err))
@@ -155,6 +143,7 @@ export class StorageProvider {
       //   .catch(err => console.log('could not get doc', collection, docId, userID, err))
   ***REMOVED***)
 ***REMOVED***
+
   removeUserDoc(collection, docId) {
     console.log('removing user doc', collection, docId)
     // offline first
@@ -169,6 +158,7 @@ export class StorageProvider {
   ***REMOVED***)
     // return this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).delete()
 ***REMOVED***
+
   getAll(collection) {
     // get all docs in collection, returns as array
     console.log('getting all docs in collection', collection)
@@ -186,7 +176,6 @@ export class StorageProvider {
           for (let key in res) {
             if (res.hasOwnProperty(key)) {
               let data = res[key]
-              console.log('data',data)
               if (data.hasOwnProperty('jsonString')) {
                 try {data = JSON.parse(data.jsonString)}
                 catch(err) {data = data.jsonString}
@@ -219,6 +208,7 @@ export class StorageProvider {
   ***REMOVED***)
 
 ***REMOVED***
+
   getSharedDoc() {
     // get doc not saved in own user profile
 
@@ -230,11 +220,9 @@ export class StorageProvider {
     // saves data attached to user profile
     // accepts data, whether to stringify (avoid nested arrays), optional colletion and document id
     console.log('saving', data, stringify, collection, id)
-    console.log('this.userID', this.userID)
 
     return new Promise((resolve, reject) => {
       if (!this.userID) {
-        console.log('user profile not loaded, sending request')
         return this.loadUser().then(() => this.saveUserDoc(data, stringify, collection, id, merge))
     ***REMOVED***
       if (stringify == true) { data = { jsonString: JSON.stringify(data) } }
@@ -246,16 +234,13 @@ export class StorageProvider {
         // *** note ,used to be based on returning functions but now promise so live needs to swap for resolve methods ***
         if (!id) { id = this.generatePushID() }
         console.log('creating new doc in collection by id', collection, id)
-        console.log('storage ready?')
         this.storage.get(collection).then(
           res => {
             if (res == null) { res = {} }
-            console.log('res', res)
             res[id] = data
             this.storage.set(collection, res).then(_ => resolve(res))
         ***REMOVED***,
           rej => {
-            console.log('rejected', rej)
             this.storage.set(collection, { id: data }).then(_ => resolve({ id: data }))
         ***REMOVED***)
 
@@ -264,7 +249,6 @@ export class StorageProvider {
     ***REMOVED***
       else {
         // otherwise update any existing fields, uses set command with merge option to prevent total overwrite
-        console.log('updating data on user doc')
         //offline first approach
         this.storage.get(collection).then(res => {
           if (merge) {
@@ -281,6 +265,7 @@ export class StorageProvider {
   ***REMOVED***)
 
 ***REMOVED***
+
   saveBatch(data: any, stringify: boolean, collection: string, idAsKey?: boolean) {
     console.log('saving batch', data)
     console.log('this.userID', this.userID)
@@ -318,6 +303,11 @@ export class StorageProvider {
     // }
     // return batch.commit()
 ***REMOVED***
+
+  updateForm(submissionID){
+    // 
+***REMOVED***
+
   syncForms(firebaseID){
     return new Promise((resolve,reject)=>{
       this.storage.get('submittedForms').then(forms=>{
@@ -326,9 +316,7 @@ export class StorageProvider {
         let batch = this.afs.firestore.batch();
         console.log('pending',pending)
         for(let p of pending){
-          console.log('p',p)
           let id=p._submissionID
-          console.log('id',id)
           let ref = this.afs.firestore.collection('forms').doc('reporting').collection('submissions').doc(id)
           batch.set(ref,p)
       ***REMOVED***
@@ -348,8 +336,6 @@ export class StorageProvider {
       let batch = this.afs.firestore.batch();
       let total = 0
       this.storage.forEach((docsObject, collection, n) => {
-        console.log('docs object', docsObject)
-        console.log('collection', collection)
         /* storage in form
         collection       docs object
         budgets:{ budgets:data1, budget2:data2    ***REMOVED***
@@ -358,15 +344,11 @@ export class StorageProvider {
         // push collections objects to right place
         if (typeof docsObject == 'object') {
           for (let id in docsObject) {
-            console.log('id', id)
             let data = docsObject[id]
             if(data instanceof Date){
               // custom format for date object instance
               data ={***REMOVED*** data[id]=docsObject
           ***REMOVED***
-            console.log('data', data)
-            console.log('data type',typeof data)
-            console.log('date instance',data instanceof Date)
             let ref = this.afs.firestore.collection('users').doc(firebaseID).collection(collection).doc(id)
             batch.set(ref, data)
             total++
@@ -405,7 +387,6 @@ export class StorageProvider {
         group: 'malawi-2017'
     ***REMOVED***
       this.userID = id
-      console.log('publishing user loaded event')
       this.events.publish('user:loaded', this.user)
       // save id to local storage and sync to firebase db (offline and online)
       this.storage.set('userID', this.userID).then(() => {
@@ -430,14 +411,11 @@ export class StorageProvider {
     return new Promise((resolve, reject) => {
       this.loadFile('assets/admin/userPermissions.json').then(res => {
         if (res[code]) {
-          console.log('profile loaded successfuly succsefully')
           this.user.permissions = res[code]
-          console.log('user', this.user)
           this.saveUserDoc(this.user, false, 'settings', 'profile')
             .then(_ => resolve(this.user))
       ***REMOVED***
         else {
-          console.log('no code found', code)
           reject('Invalid code, please try again')
       ***REMOVED***
     ***REMOVED***)
