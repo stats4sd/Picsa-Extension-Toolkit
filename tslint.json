@@ -1,11 +1,19 @@
 {
   "rules": {
     "no-duplicate-variable": true,
-    "no-unused-variable": [
-      true
-    ]
+    "no-unused-variable": [true, { "severity": "warning" }],
+    "trailing-comma": false,
+    "quotemark": false,
+    "ordered-imports": { "severity": "warning" },
+    "no-console": false,
+    "typedef": false,
+    "newline-before-return": false,
+    "newline-per-chained-call": false,
+    "prefer-const": { "severity": "warning" },
+    "curly": true,
+    "prefer-template": { "severity": "warning" },
+    "one-line": false
 ***REMOVED***,
-  "rulesDirectory": [
-    "node_modules/tslint-eslint-rules/dist/rules"
-  ]
+  "extends": ["tslint-config-prettier"],
+  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"]
 }
