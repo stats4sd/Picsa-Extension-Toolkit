@@ -9,7 +9,6 @@ import { File } from "@ionic-native/file";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
 import { Network } from "@ionic-native/network";
-import { PdfViewerComponent } from "ng2-pdf-viewer";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
 import { FileOpener } from "@ionic-native/file-opener";
 // App pages
@@ -20,14 +19,21 @@ import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { environment } from "../environments/environment";
 // Providers
-// import {FileService} from "../providers/file-service";
 import { YoutubeService } from "../providers/youtube-service";
 import { C3ChartProvider } from "../providers/c3-chart/c3-chart";
-import { ForumServiceProvider } from "../providers/forum-service/forum-service";
 import { MalawiDataProvider } from "../providers/c3-chart/malawi-data";
 import { BudgetToolProvider } from "../providers/budget-tool/budget-tool";
 import { StorageProvider } from "../providers/storage/storage";
 import { NetworkProvider } from "../providers/network/network";
+// redux
+import {
+  NgRedux,
+  DevToolsExtension,
+  NgReduxModule
+} from "@angular-redux/store";
+import { AppState } from "../models/models";
+import { INITIAL_STATE, rootReducer } from "../reducers/reducers";
+import { UserActions } from "../actions/actions";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -41,7 +47,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [MyApp],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { preloadModules: true }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
@@ -51,7 +57,8 @@ export const firebaseConfig = {
     }),
     BrowserModule,
     HttpModule,
-    CanvasWhiteboardModule
+    CanvasWhiteboardModule,
+    NgReduxModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp],
@@ -63,7 +70,6 @@ export const firebaseConfig = {
     SplashScreen,
     C3ChartProvider,
     Network,
-    ForumServiceProvider,
     MalawiDataProvider,
     BudgetToolProvider,
     StorageProvider,
@@ -72,4 +78,15 @@ export const firebaseConfig = {
     NetworkProvider
   ]
 })
-export class AppModule {}
+export class AppModule {
+  // configure redux
+  constructor(store: NgRedux<AppState>, devTools: DevToolsExtension) {
+    store.configureStore(
+      rootReducer,
+      INITIAL_STATE,
+      [],
+      // [reduxLogger.createLogger()],
+      devTools.isEnabled() ? [devTools.enhancer()] : []
+    );
+  }
+}

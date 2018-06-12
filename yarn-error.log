@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add rxjs/compat
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js uninstall --save workbox-sw
 
 PATH: 
   C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Yarn\bin\;C:\Users\chris\git\flutter\bin;C:\Program Files\nodejs\;C:\cygwin64\bin;C:\Program Files\Git\cmd;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\chris\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_151;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Users\chris\AppData\Local\Android\sdk\platform-tools;C:\Users\chris\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\chris\AppData\Local\Yarn\bin;C:\Users\chris\AppData\Roaming\npm;C:\Users\chris\AppData\Roaming\Dashlane\5.12.0.19744\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\chris\AppData\Roaming\Dashlane\5.12.0.19744\ucrt
@@ -27,6 +27,7 @@ npm manifest:
       "ionic:serve": "ionic-app-scripts serve"
     },
     "dependencies": {
+      "@angular-redux/store": "9",
       "@angular/common": "6.0.4",
       "@angular/compiler": "6.0.4",
       "@angular/compiler-cli": "6.0.4",
@@ -43,9 +44,6 @@ npm manifest:
       "@ionic-native/splash-screen": "4.7.0",
       "@ionic-native/status-bar": "4.7.0",
       "@ionic/storage": "^2.1.3",
-      "@types/c3": "^0.6.0",
-      "@types/leaflet": "1.2.7",
-      "@types/papaparse": "4.1.34",
       "angularfire2": "5.0.0-rc.10",
       "c3": "^0.6.2",
       "cordova-android": "^7.1.0",
@@ -61,6 +59,7 @@ npm manifest:
       "cordova-plugin-whitelist": "^1.3.3",
       "cordova-sqlite-storage": "^2.3.2",
       "firebase": "^5.0.4",
+      "flux-standard-action": "^2.0.3",
       "ionic-angular": "3.9.2",
       "ionic-plugin-keyboard": "^2.2.1",
       "ionicons": "4.1.2",
@@ -70,12 +69,18 @@ npm manifest:
       "papaparse": "^4.5.0",
       "pdfjs-dist": "^2.0.489",
       "promise-polyfill": "8.0.0",
+      "redux": "^4.0.0",
       "rxjs": "6.2.0",
+      "rxjs-compat": "^6.2.0",
       "sw-toolbox": "3.6.0",
+      "workbox-sw": "3.2.0",
       "zone.js": "0.8.26"
     },
     "devDependencies": {
       "@ionic/app-scripts": "^3.1.10",
+      "@types/c3": "^0.6.0",
+      "@types/leaflet": "1.2.7",
+      "@types/papaparse": "4.1.34",
       "@types/request": "2.47.0",
       "prettier": "^1.13.5",
       "tslint": "^5.10.0",
@@ -133,6 +138,10 @@ Lockfile:
       source-map "^0.5.6"
       typescript "~2.6.1"
       webpack-sources "^1.0.1"
+  
+  "@angular-redux/store@9":
+    version "9.0.0"
+    resolved "https://registry.yarnpkg.com/@angular-redux/store/-/store-9.0.0.tgz#7de913fe8d9b28941a1aa798397f3a51f16e20a6"
   
   "@angular/common@6.0.4":
     version "6.0.4"
@@ -2094,6 +2103,12 @@ Lockfile:
       "@firebase/polyfill" "0.3.3"
       "@firebase/storage" "0.2.3"
   
+  flux-standard-action@^2.0.3:
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/flux-standard-action/-/flux-standard-action-2.0.3.tgz#a73a6c4b25ea19d7051afe093ec108ff33dd8935"
+    dependencies:
+      lodash "^4.0.0"
+  
   for-in@^1.0.1:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -2664,7 +2679,7 @@ Lockfile:
     version "2.3.2"
     resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.3.2.tgz#a79a923666372b580f8e27f51845c6f7e8fbfbaf"
   
-  js-tokens@^3.0.2:
+  js-tokens@^3.0.0, js-tokens@^3.0.2:
     version "3.0.2"
     resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   
@@ -2875,6 +2890,12 @@ Lockfile:
   longest@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
+  
+  loose-envify@^1.1.0:
+    version "1.3.1"
+    resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
+    dependencies:
+      js-tokens "^3.0.0"
   
   loud-rejection@^1.0.0:
     version "1.6.0"
@@ -3715,6 +3736,13 @@ Lockfile:
       indent-string "^2.1.0"
       strip-indent "^1.0.1"
   
+  redux@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
+    dependencies:
+      loose-envify "^1.1.0"
+      symbol-observable "^1.2.0"
+  
   reflect-metadata@^0.1.10, reflect-metadata@^0.1.2:
     version "0.1.10"
     resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
@@ -3898,6 +3926,10 @@ Lockfile:
   rw@1:
     version "1.3.3"
     resolved "https://registry.yarnpkg.com/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
+  
+  rxjs-compat@^6.2.0:
+    version "6.2.0"
+    resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.2.0.tgz#2eb49cc6ac20d0d7057c6887d1895beaab0966f9"
   
   rxjs@6.2.0:
     version "6.2.0"
@@ -4249,6 +4281,10 @@ Lockfile:
     dependencies:
       path-to-regexp "^1.0.1"
       serviceworker-cache-polyfill "^4.0.0"
+  
+  symbol-observable@^1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   
   tapable@^0.2.7:
     version "0.2.8"
@@ -4646,6 +4682,10 @@ Lockfile:
     version "0.0.2"
     resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.2.tgz#b79669bb42ecb409f83d583cad52ca17eaa1643f"
   
+  workbox-sw@3.2.0:
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-3.2.0.tgz#ccda9adff557ba2233bf1837229144b4a86276cb"
+  
   worker-loader@^1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/worker-loader/-/worker-loader-1.1.1.tgz#920d74ddac6816fc635392653ed8b4af1929fd92"
@@ -4785,21 +4825,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.26.tgz#7bdd72f7668c5a7ad6b118148b4ea39c59d08d2d"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 128
-  Command: git
-  Arguments: ls-remote --tags --heads ssh://git@github.com/rxjs/compat.git
-  Directory: C:\Apps\stats4sd\Picsa-Extension-Toolkit
-  Output:
-  Host key verification failed.
-  fatal: Could not read from remote repository.
-  
-  Please make sure you have the correct access rights
-  and the repository exists.
-      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
-      at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:925:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+  Error: Command "uninstall" not found.
+      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:87307:17
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:116:14
+      at new Promise (<anonymous>)
+      at new F (C:\Program Files (x86)\Yarn\lib\cli.js:23451:28)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:95:12
+      at runCommand (C:\Program Files (x86)\Yarn\lib\cli.js:87312:22)
+      at Object.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:87412:14)
