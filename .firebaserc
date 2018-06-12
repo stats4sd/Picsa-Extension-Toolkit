@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "extension-toolkit"
+    "default": "extension-toolkit",
+    "staging": "extension-toolkit-staging"
 ***REMOVED***
 }
