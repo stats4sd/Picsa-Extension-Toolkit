@@ -11,5 +11,10 @@ cache:
 addons:
   chrome: stable
 
+install:
+ — npm install -g firebase-tools
+
 script:
-  - npm run deploy:staging
+  — firebase use staging
+  — npm run build:prod
+  — firebase deploy — project extension-toolkit-staging — token $FIREBASE_TOKEN.
