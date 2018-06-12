@@ -1,22 +1,22 @@
 language: node_js
 node_js:
-  - "8"
+- '8'
 dist: trusty
 sudo: false
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 addons:
   chrome: stable
-
 before_script:
-  - npm install -g firebase-tools
-
+- npm install -g firebase-tools
 script:
-  - firebase use staging
-  - npm run build:prod
-
-after_success:
-  - firebase deploy - project extension-toolkit-staging - token $FIREBASE_TOKEN
+- firebase use staging
+- npm run build:prod
+deploy:
+  provider: firebase
+  token:
+    secure: "cbIKDrjjAju2sWZw7wQ+AUuYsRGAZdh7f0szv/r/RMXJDETiKzDCrNj9NJByg7cmjFlTlAjFxdjfUXXelL6MzpqTisjhw0usZqP7sna7uIRt14p2Nw3bngt9VTx6XvmBVjAivkypMpweL3nMwpRrV1WS1DYPXvJ/Styp7Wfrstyj28CrQDU0p5uGv3tZ8IJEbM60rnH3CdDjQ2puVd+bg8u9eVEWku2yA2WFBs+atxc78Ay7elMT4bao7kMt7yGtbNOE0JGpJ/lYL6mfS59w8E4iOBgBFXWZDeWJhcXXUqKIyGojelFzFE2PZCeEe4FGPpWIqzksY621lT8PSI0fQUN/tSpPnzbPjLOaAQunyUs6QF8aHgZjiV3mI+fULL3r702Adm6w54WvLXKqNiqxpM+5gVjc100nsYt67VPb3GHNwNHfxza8qbONVK9PYyvLB7BWN2qDY/5WgEbltxcMpD0sC+w8DHOWxtGdhhfP5ys7HoYUgHLu6CZdsE4z0zHh36ksfgvzTthZ6DKs3BAcrQyy3XPv2065+RbewtVbT/rxGKp4ugTwIKzIDk3dZWxNTCDo/xFBc4nxWOCDhmM2PLf6iJkERbXX8FNLTPWUyTLCMK/m367d3UR/DsndnsfKPVcJX0Kr0TO9pvIcBV5mEPk6qDuwFt9gFaIXJZ8CzcI="
+env:
+  global:
+  - secure: cbIKDrjjAju2sWZw7wQ+AUuYsRGAZdh7f0szv/r/RMXJDETiKzDCrNj9NJByg7cmjFlTlAjFxdjfUXXelL6MzpqTisjhw0usZqP7sna7uIRt14p2Nw3bngt9VTx6XvmBVjAivkypMpweL3nMwpRrV1WS1DYPXvJ/Styp7Wfrstyj28CrQDU0p5uGv3tZ8IJEbM60rnH3CdDjQ2puVd+bg8u9eVEWku2yA2WFBs+atxc78Ay7elMT4bao7kMt7yGtbNOE0JGpJ/lYL6mfS59w8E4iOBgBFXWZDeWJhcXXUqKIyGojelFzFE2PZCeEe4FGPpWIqzksY621lT8PSI0fQUN/tSpPnzbPjLOaAQunyUs6QF8aHgZjiV3mI+fULL3r702Adm6w54WvLXKqNiqxpM+5gVjc100nsYt67VPb3GHNwNHfxza8qbONVK9PYyvLB7BWN2qDY/5WgEbltxcMpD0sC+w8DHOWxtGdhhfP5ys7HoYUgHLu6CZdsE4z0zHh36ksfgvzTthZ6DKs3BAcrQyy3XPv2065+RbewtVbT/rxGKp4ugTwIKzIDk3dZWxNTCDo/xFBc4nxWOCDhmM2PLf6iJkERbXX8FNLTPWUyTLCMK/m367d3UR/DsndnsfKPVcJX0Kr0TO9pvIcBV5mEPk6qDuwFt9gFaIXJZ8CzcI=
