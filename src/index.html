@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Ionic App</title>
@@ -13,24 +14,54 @@
 
   <script src="cordova.js"></script>
   <!--<script src="https://www.youtube.com/iframe_api"></script>-->
-  
-
-  <!-- cordova.js required for cordova apps -->
-
-   <!--un-comment this code to enable service worker. needed for pdfjs??-->
   <script>
-    // if ('serviceWorker' in navigator) {
-    //   navigator.serviceWorker.register('service-worker.js')
-    //     .then(() => console.log('service worker installed'))
-    //     .catch(err => console.log('Error', err));
-    // }
+    // register service worker promise to window, listen in home component after init
+    window.isUpdateAvailable = () => new Promise(function (resolve, reject) {
+      if ('serviceWorker' in navigator) {
+        // disable for localhost (except firebase serve)
+        if (location.hostname.indexOf('localhost') == -1 || location.port == 5000) {
+          navigator.serviceWorker.register('service-worker.js')
+            .then(reg => {
+              console.log('worker registered with scope', reg.scope)
+              console.log('reg.installing', reg.installing)
+              reg.onupdatefound = () => {
+                console.log('onupdatefound')
+                const installingWorker = reg.installing;
+                installingWorker.onstatechange = () => {
+                  console.log('installing worker stage', installingWorker.state)
+                  switch (installingWorker.state) {
+                    case 'installed':
+                      if (navigator.serviceWorker.controller) {
+                        // new update available
+                        resolve(true);
+                    ***REMOVED*** else {
+                        // no update available
+                        resolve(false);
+                    ***REMOVED***
+                      break;
+                ***REMOVED***
+              ***REMOVED***;
+            ***REMOVED***;
+          ***REMOVED***,
+          )
+            .catch(err => console.error('[SW ERROR]', err));
+      ***REMOVED***
+        // register service worker file
+    ***REMOVED***
+      else {
+        console.log('disabling service worker for local')
+        resolve(false)
+    ***REMOVED***
+  ***REMOVED***);
   </script>
+
 
   <link href="build/main.css" rel="stylesheet">
   <link href="assets/leaflet/leaflet.css" rel="stylesheet">
   <link href="assets/c3.css" rel="stylesheet">
 
 </head>
+
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -43,4 +74,5 @@
   <script src="build/main.js"></script>
 
 </body>
+
 </html>

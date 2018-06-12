@@ -30,7 +30,6 @@ import { Platform } from "ionic-angular";
 // auth
 
 import { map } from "rxjs/operators";
-import { constants } from "fs";
 
 @Injectable()
 export class StorageProvider {
