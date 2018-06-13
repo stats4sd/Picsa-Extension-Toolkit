@@ -16,7 +16,6 @@ script:
 deploy:
   skip_cleanup: true
   provider: firebase
-  token:
-    secure: $FIREBASE_TOKEN
-    message: "Firebase deploy success"
-    project: "extension-toolkit-staging"
+  token: $FIREBASE_TOKEN
+  message: "Firebase deploy success"
+  project: "extension-toolkit-staging"
