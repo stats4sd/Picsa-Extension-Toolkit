@@ -7,6 +7,8 @@ _Make sure custom updates still valid (in case node modules have been reinstalle
 
 _Make sure datasets and metadata.json in assets/datasets (not available on git)_
 
+_If building for android, uncomment service worker_
+
 ### Live
 
 `npm run deploy:prod`
