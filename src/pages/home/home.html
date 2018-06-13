@@ -1,9 +1,15 @@
 <ion-content class='content'>
 
-    <div class="title">PICSA</div>
-    <div class="subtitle">Extension Toolkit</div>
-    <div class="settings"(click)="openSettings()"><ion-icon  name="settings"></ion-icon></div>
-    <div class="version">version 0.3.4</div>
+  <div class="title">PICSA</div>
+  <div class="subtitle">Extension Toolkit</div>
+  <div class="settings" navPush="SettingsPage">
+    <ion-icon name="settings"></ion-icon>
+  </div>
+  <div class="version">
+    <span>v{{version}}</span>
+    <span style="font-size:small; margin-left:5px">({{version_date}})</span>
+    <button ion-button navPush="ChangelogPage" style="margin-left:5px">What's New?</button>
+  </div>
 
   <div class="link-holder">
     <div *ngFor="let link of links" [navPush]="link.page" color="primary" class="link">

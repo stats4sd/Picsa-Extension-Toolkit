@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, ToastController } from "ionic-angular";
+import { environment } from "../../environments/environment";
 import { StorageProvider } from "../../providers/storage/storage";
 
 @IonicPage()
@@ -10,6 +11,8 @@ import { StorageProvider } from "../../providers/storage/storage";
 export class HomePage {
   links: any;
   name: string;
+  version: string = environment.VERSION;
+  version_date: string = environment.VERSION_DATE;
 
   constructor(
     public navCtrl: NavController,
@@ -57,9 +60,6 @@ export class HomePage {
     console.log("loading db");
     this.storagePrvdr.storageInit();
     this.checkForUpdates();
-***REMOVED***
-  openSettings() {
-    this.navCtrl.push("SettingsPage");
 ***REMOVED***
 
   checkForUpdates() {

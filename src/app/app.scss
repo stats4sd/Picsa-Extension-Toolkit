@@ -1,42 +1,51 @@
-// http://ionicframework.com/docs/v2/theming/
+$max-app-width: 1024px;
+.flex {
+  display: flex;
+}
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+.wrap {
+  flex-wrap: wrap;
+}
 
-.flex{
-    display: flex
+.flex-basis-100 {
+  flex-basis: 100%;
 }
-.wrap{
-    flex-wrap: wrap
+
+.fab-label {
+  background-color: white;
+  opacity: 0.9;
+  position: relative;
+  top: -8px;
 }
-.flex-basis-100{
-    flex-basis: 100%;
+
+.background-1 {
+  background-image: url("../assets/img/background-1.png");
 }
-.fab-label{
-        background-color: white;
-        opacity: 0.9;
-        position: relative;
-        top:-8px
-  ***REMOVED***
-.background-1{
-        background-image: url('../assets/img/background-1.png');
+
+.modal-wrapper {
+  position: inherit;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
-.modal-wrapper{
-    position: inherit;
-    width:100%;
-    height:100%;
-    left:0;
-    top:0
+
+// *****************************************************
+//  app root centering for wide display
+// *****************************************************
+@media screen and (min-width: $max-app-width) {
+  body {
+    max-width: $max-app-width;
+    left: calc(50% - #{$max-app-width}/ 2);
+    background-color: #dedede;
+    height: 100vh;
+    margin: 0 auto;
+***REMOVED*** // add padding, background and curved edges for large devices
+  .modal-wrapper {
+    left: calc(50% - #{$max-app-width}/ 2);
+    top: 0px;
+    position: absolute;
+    width: $max-app-width;
+    height: 100vh; //margin-top:100px;
+***REMOVED***
 }
-    
