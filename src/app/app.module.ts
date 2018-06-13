@@ -7,10 +7,10 @@ import { IonicStorageModule } from "@ionic/storage";
 import { File } from "@ionic-native/file";
 // Ionic native modules
 import { SplashScreen } from "@ionic-native/splash-screen";
-
 import { Network } from "@ionic-native/network";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
 import { FileOpener } from "@ionic-native/file-opener";
+import { StatusBar } from "@ionic-native/status-bar";
 // App pages
 import { MyApp } from "./app.component";
 // Angular firestore
@@ -75,6 +75,7 @@ export const firebaseConfig = {
     StorageProvider,
     FileOpener,
     File,
+    StatusBar,
     NetworkProvider
   ]
 })

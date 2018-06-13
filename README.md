@@ -2,7 +2,7 @@
 
 ## Building:
 
-Update version number in home.html and config.xml
+Update version number in package.json and config.xml
 _Make sure custom updates still valid (in case node modules have been reinstalled)_
 
 _Make sure datasets and metadata.json in assets/datasets (not available on git)_
