@@ -3,7 +3,6 @@
   "author": "Statistics for Sustainable Development",
   "homepage": "https://stats4sd.org/",
   "version": "0.4.0",
-  "version_date": "13th June",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
