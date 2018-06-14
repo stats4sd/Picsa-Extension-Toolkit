@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
 import { StorageProvider } from "../storage/storage";
 
 @Injectable()
@@ -7,7 +6,7 @@ export class BudgetToolProvider {
   allData: any;
   budget: any;
 
-  constructor(public http: Http, public storagePrvdr: StorageProvider) {
+  constructor(public storagePrvdr: StorageProvider) {
     console.log("Hello BudgetToolProvider Provider");
     this.allData = allData;
     //load saved cards

@@ -1,14 +1,17 @@
 <ion-content class='content'>
+  <div style="position: absolute; left: 20px; top: 5px">
+    <language-select></language-select>
+  </div>
   <div class="version-info">
     <div>
       <span style="font-weight: bold">v{{version.number}}</span>
       <span style="font-size:smaller; margin-left:8px">({{version.date}})</span>
     </div>
-    <button ion-button clear block navPush="ChangelogPage">What's New?</button>
+    <button ion-button clear block navPush="ChangelogPage">{{"What's New?" | translate}}</button>
   </div>
 
-  <div class="title">PICSA</div>
-  <div class="subtitle">Extension Toolkit</div>
+  <div class="title">{{'PICSA' | translate}}</div>
+  <div class="subtitle">{{'Extension Toolkit' | translate}}</div>
   <!-- <div class="settings" navPush="SettingsPage">
     <ion-icon name="settings"></ion-icon>
   </div> -->
@@ -17,7 +20,7 @@
     <div *ngFor="let link of links" [navPush]="link.page" color="primary" class="link">
       <div class="flex">
         <ion-icon name="{{link.icon}}"></ion-icon>
-        <div class="button-text">{{link.name}}</div>
+        <div class="button-text">{{link.name | translate}}</div>
       </div>
     </div>
   </div>

@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import { Observable } from "rxjs";
-// import { File } from '@ionic-native/file';
 import * as c3 from "c3";
-import * as Papa from "papaparse";
 import { Platform } from "ionic-angular";
+import * as Papa from "papaparse";
 
 declare let d3;
 
@@ -21,7 +18,7 @@ export class C3ChartProvider {
   columnsObserver: any;
   initialRender: boolean = true;
   crops: any;
-  constructor(public http: Http, private platform: Platform) {
+  constructor(private platform: Platform) {
     this.activeChart.x = "Rainfall";
     this.crops = [
       {
@@ -76,7 +73,7 @@ export class C3ChartProvider {
     console.log("active chart", this.activeChart);
     const s = this.site;
     const keys = [];
-    for (let key in s.summaries[0]) {
+    for (const key in s.summaries[0]) {
       keys.push(key);
   ***REMOVED***
     this.chart = c3.generate({

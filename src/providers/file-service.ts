@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
 import { File } from "@ionic-native/file";
 import { Platform } from "ionic-angular";
 
@@ -12,11 +11,7 @@ export class FileService {
   mainPlatform: string;
   fs: any;
 
-  constructor(
-    public http: Http,
-    public platform: Platform,
-    private file: File
-  ) {
+  constructor(public platform: Platform, private file: File) {
     this.checkPlatform();
     if (this.mainPlatform == "mobile") {
       console.log("platform mobile, cordova enabled?");
@@ -25,7 +20,6 @@ export class FileService {
       this.fs = undefined;
   ***REMOVED***
 ***REMOVED***
-
   checkPlatform() {
     console.log("checking platform");
     this.platforms = this.platform.platforms();

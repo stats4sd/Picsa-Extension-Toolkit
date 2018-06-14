@@ -1,12 +1,11 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import { map } from "rxjs/operators";
 
 @Injectable()
 export class MalawiDataProvider {
   metaData: any;
 
-  constructor(public http: Http) {
+  constructor(public http: HttpClient) {
     console.log("Hello MalawiDataProvider Provider");
     this.getMetaData();
 ***REMOVED***
@@ -25,15 +24,11 @@ export class MalawiDataProvider {
 ***REMOVED***
 
   loadFile(url) {
-    var options = {***REMOVED***
     if (!this.metaData) {
       return new Promise(resolve => {
-        this.http
-          .get(url)
-          .pipe(map(res => res.json()))
-          .subscribe(data => {
-            resolve(data);
-        ***REMOVED***);
+        this.http.get(url).subscribe(data => {
+          resolve(data);
+      ***REMOVED***);
     ***REMOVED***);
   ***REMOVED***
 ***REMOVED***

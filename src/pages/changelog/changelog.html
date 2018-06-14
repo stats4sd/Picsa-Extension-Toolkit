@@ -7,7 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-  <p>In this document find recorded the main changes that have been implemented.</p>
+  <p>In this document find recorded the main changes that have been implemented. Note, whilst the web version will always be
+    kept up-to-date there may be a delay between app store releases</p>
 
   <!-- 0.4.1 -->
   <div class="log-item">
@@ -23,7 +24,17 @@
         be joined by all.
       </p>
       <whatsapp-group [group]="whatsAppGroup"></whatsapp-group>
+      <p>
+        <strong>Translations</strong>
+        <br> The app now has the functionality to translate text into local languages. A full list of text still needs to be
+        build and translated, but you can see an example of the system in action below:
+      </p>
+      <div style="background-color:gray; padding:5px; margin-bottom:1em;">
+        <language-select></language-select>
+      </div>
+      <div>{{'How are you?' | translate}}</div>
     </div>
+
   </div>
 
   <!-- 0.4.0 -->

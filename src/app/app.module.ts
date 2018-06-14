@@ -2,8 +2,11 @@
 import { NgModule, ErrorHandler } from "@angular/core";
 import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
 import { BrowserModule } from "@angular/platform-browser";
-import { HttpModule, Http } from "@angular/http";
+// import { HttpModule, Http } from "@angular/http";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { IonicStorageModule } from "@ionic/storage";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { File } from "@ionic-native/file";
 // Ionic native modules
 import { SplashScreen } from "@ionic-native/splash-screen";
@@ -56,7 +59,14 @@ export const firebaseConfig = {
       name: "__picsa"
   ***REMOVED***),
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+    ***REMOVED***
+  ***REMOVED***),
     CanvasWhiteboardModule,
     NgReduxModule
   ],
@@ -76,7 +86,8 @@ export const firebaseConfig = {
     FileOpener,
     File,
     StatusBar,
-    NetworkProvider
+    NetworkProvider,
+    UserActions
   ]
 })
 export class AppModule {
@@ -90,4 +101,8 @@ export class AppModule {
       devTools.isEnabled() ? [devTools.enhancer()] : []
     );
 ***REMOVED***
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
