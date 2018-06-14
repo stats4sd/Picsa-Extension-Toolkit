@@ -1,15 +1,17 @@
 <ion-content class='content'>
+  <div class="version-info">
+    <div>
+      <span style="font-weight: bold">v{{version.number}}</span>
+      <span style="font-size:smaller; margin-left:8px">({{version.date}})</span>
+    </div>
+    <button ion-button clear block navPush="ChangelogPage">What's New?</button>
+  </div>
 
   <div class="title">PICSA</div>
   <div class="subtitle">Extension Toolkit</div>
-  <div class="settings" navPush="SettingsPage">
+  <!-- <div class="settings" navPush="SettingsPage">
     <ion-icon name="settings"></ion-icon>
-  </div>
-  <div class="version">
-    <span>v{{version.number}}</span>
-    <span style="font-size:small; margin-left:5px">({{version.date}})</span>
-    <button ion-button navPush="ChangelogPage" style="margin-left:5px">What's New?</button>
-  </div>
+  </div> -->
 
   <div class="link-holder">
     <div *ngFor="let link of links" [navPush]="link.page" color="primary" class="link">

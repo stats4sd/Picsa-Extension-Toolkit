@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage } from "ionic-angular";
+import { IWhatsAppGroup } from "../../components/whatsapp-group/whatsapp-group";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -9,7 +10,7 @@ import { IonicPage } from "ionic-angular";
   templateUrl: "discussions.html"
 })
 export class DiscussionsPage {
-  groups: group[] = [
+  groups: IWhatsAppGroup[] = [
     {
       label: "App Feedback",
       description: "Give your suggestions or ask for help using the PICSA app",
@@ -21,10 +22,4 @@ export class DiscussionsPage {
   ngOnInit() {
     console.log("groups", this.groups);
   }
-}
-
-interface group {
-  label: string;
-  description: string;
-  link: string;
 }
