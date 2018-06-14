@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, ToastController } from "ionic-angular";
-import { environment } from "../../environments/environment";
+import version from "../../pages/changelog/version";
 import { StorageProvider } from "../../providers/storage/storage";
 
 @IonicPage()
@@ -11,8 +11,7 @@ import { StorageProvider } from "../../providers/storage/storage";
 export class HomePage {
   links: any;
   name: string;
-  version: string = environment.VERSION;
-  version_date: string = environment.VERSION_DATE;
+  version = version;
 
   constructor(
     public navCtrl: NavController,
@@ -38,7 +37,7 @@ export class HomePage {
         name: " Discussions",
         color: "picsa-discussions",
         icon: "chatbubbles",
-        page: "ForumPage"
+        page: "DiscussionsPage"
     ***REMOVED***,
       // {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
       {
