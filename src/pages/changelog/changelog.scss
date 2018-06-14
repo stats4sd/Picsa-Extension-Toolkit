@@ -2,4 +2,19 @@ page-changelog {
   p {
     line-height: 1.5em;
 ***REMOVED***
+  .log-item {
+    margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 2em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+***REMOVED***
+  .log-updates {
+    max-width: 600px;
+    width: 100%;
+***REMOVED***
+  .log-title {
+    width: 200px;
+    margin-top: 14px !important;
+***REMOVED***
 }

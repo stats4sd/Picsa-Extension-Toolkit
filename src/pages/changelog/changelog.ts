@@ -9,7 +9,14 @@ import { IonicPage } from "ionic-angular";
   templateUrl: "changelog.html"
 })
 export class ChangelogPage {
-  constructor() {}
+  whatsAppGroup = {
+    label: "App Feedback",
+    description: "Give your suggestions or ask for help using the PICSA app",
+    link: "https://chat.whatsapp.com/8wEc1tjLRqI7XyU4Lv5OLk"
+***REMOVED***;
+  constructor() {
+    console.log("whatsapp group", this.whatsAppGroup);
+***REMOVED***
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ChangelogPage");

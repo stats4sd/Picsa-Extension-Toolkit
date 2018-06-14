@@ -8,19 +8,7 @@
 
 <ion-content padding>
   <p>Discussions are held within WhatsApp groups. You can use the links below to join groups you are interested in:</p>
-  <div *ngFor="let group of groups" class="group-container">
-    <div class="group-label">
-      <ion-icon name="logo-whatsapp"></ion-icon>
-      {{group.label}}
-    </div>
-    <div class="group-detail">
-      <div class="group-description">{{group.description}}</div>
-      <a [href]="group.link" target="_blank" rel="nofollow">
-        <button ion-button block clear>
-          Join
-        </button>
-      </a>
+  <whatsapp-group *ngFor="let group of groups" [group]="group">
+  </whatsapp-group>
 
-    </div>
-  </div>
 </ion-content>
