@@ -1,0 +1,10 @@
+<div class="language-container">
+  <ion-icon name="globe"></ion-icon>
+  <ion-item class="language-item">
+    <ion-select class="language-select" [(ngModel)]="language" (ionChange)="setLanguage(null,'home')">
+      <ion-option *ngFor="let language of languages" [value]="language">
+        {{language.label}}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+</div>

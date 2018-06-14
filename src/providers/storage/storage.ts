@@ -17,8 +17,8 @@ firebase could use email format 'localID@picsa'
 note - haven't included all merge features, should review when testing
 
 */
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
 import { Storage } from "@ionic/storage";
@@ -41,7 +41,7 @@ export class StorageProvider {
   firebaseID: string;
   // lots of constructor code can be cleaned up after migration to newer version
   constructor(
-    public http: Http,
+    public http: HttpClient,
     public storage: Storage,
     public toastCtrl: ToastController,
     public fileOpener: FileOpener,
@@ -178,7 +178,7 @@ export class StorageProvider {
           resolve([]);
         } else {
           const docsArray = [];
-          for (let key in res) {
+          for (const key in res) {
             if (res.hasOwnProperty(key)) {
               let data = res[key];
               if (data.hasOwnProperty("jsonString")) {
@@ -350,9 +350,9 @@ export class StorageProvider {
         const pending = forms.reporting.pending;
         const batch = this.afs.firestore.batch();
         console.log("pending", pending);
-        for (let p of pending) {
-          let id = p._submissionID;
-          let ref = this.afs.firestore
+        for (const p of pending) {
+          const id = p._submissionID;
+          const ref = this.afs.firestore
             .collection("forms")
             .doc("reporting")
             .collection("submissions")
@@ -382,7 +382,7 @@ export class StorageProvider {
 
           // push collections objects to right place
           if (typeof docsObject == "object") {
-            for (let id in docsObject) {
+            for (const id in docsObject) {
               let data = docsObject[id];
               if (data instanceof Date) {
                 // custom format for date object instance
@@ -463,14 +463,10 @@ export class StorageProvider {
   }
 
   loadFile(url) {
-    var options = {};
     return new Promise(resolve => {
-      this.http
-        .get(url)
-        .pipe(map(res => res.json()))
-        .subscribe(data => {
-          resolve(data);
-        });
+      this.http.get(url).subscribe(data => {
+        resolve(data);
+      });
     });
   }
 
@@ -695,23 +691,23 @@ export class StorageProvider {
     return new Promise((resolve, reject) => {
       //assumes directory child of picsa, check picsa exists
       this.file
-        .checkDir(this.file.externalApplicationStorageDirectory + "picsa/", dir)
+        .checkDir(`${this.file.externalApplicationStorageDirectory}picsa/`, dir)
         .then(_ => {
           console.log(
             "directory exists",
-            this.file.externalApplicationStorageDirectory + "picsa/" + dir
+            `${this.file.externalApplicationStorageDirectory}picsa/${dir}`
           );
           resolve("directory exists");
         })
         .catch(err => {
           this.file
             .createDir(
-              this.file.externalApplicationStorageDirectory + "picsa/",
+              `${this.file.externalApplicationStorageDirectory}picsa/`,
               dir,
               false
             )
             .then(() => {
-              console.log("picsa/" + dir + " directory created");
+              console.log(`picsa/${dir} directory created`);
               resolve("directory created");
             })
             .catch(err => {

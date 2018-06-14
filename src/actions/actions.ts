@@ -4,19 +4,22 @@ import { FluxStandardAction } from "flux-standard-action";
 
 export type UserAction = FluxStandardAction<any, null>;
 
-interface SetWPMeta {
-  source: "firebase" | "storage" | "default";
-  set: string;
-}
-
 @Injectable()
 export class UserActions {
   static readonly SET_USER = "SET_USER";
+  static readonly UPDATE_USER = "UPDATE_USER";
 
   @dispatch()
   setUser = (user: any): UserAction => ({
     type: UserActions.SET_USER,
     meta: null,
     payload: user
+  });
+
+  @dispatch()
+  updateUser = (update: any): UserAction => ({
+    type: UserActions.UPDATE_USER,
+    meta: null,
+    payload: update
   });
 }

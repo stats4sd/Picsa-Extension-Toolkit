@@ -1,7 +1,11 @@
+import { NgRedux, select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
+import { TranslateService } from "@ngx-translate/core";
 import { Events, Nav, Platform } from "ionic-angular";
+import { Observable } from "rxjs";
+import { AppState } from "../models/models";
 
 // declare var FCMPlugin;
 
@@ -12,12 +16,17 @@ export class MyApp {
   rootPage = "HomePage";
   showSplitPane: boolean = false;
   @ViewChild(Nav) nav: Nav;
+  @select(["user", "lang"])
+  readonly lang$: Observable<string>;
   constructor(
     platform: Platform,
     public events: Events,
     public splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private translate: TranslateService,
+    private ngRedux: NgRedux<AppState>
   ) {
+    this.initTranslate();
     platform.ready().then(() => {
       // mobile init
       console.log("platforms", platform.platforms());
@@ -43,6 +52,13 @@ export class MyApp {
 
   isHomePage() {
     return this.nav.getActive().component.name == "HomePage";
+  }
+  initTranslate() {
+    this.translate.setDefaultLang("en");
+    this.lang$.subscribe(lang => this.changeLanguage(lang));
+  }
+  changeLanguage(code: string) {
+    this.translate.use(code);
   }
 }
 

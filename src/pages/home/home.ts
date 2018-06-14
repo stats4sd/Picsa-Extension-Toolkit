@@ -12,7 +12,6 @@ export class HomePage {
   links: any;
   name: string;
   version = version;
-
   constructor(
     public navCtrl: NavController,
     public storagePrvdr: StorageProvider,

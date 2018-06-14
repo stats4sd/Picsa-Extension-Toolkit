@@ -3,6 +3,7 @@ export interface AppState {
 }
 
 export interface IUser {
-  name: string;
-  type: string;
+  name?: string;
+  type?: string;
+  lang: string;
 }

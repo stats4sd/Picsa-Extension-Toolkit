@@ -3,7 +3,9 @@ import * as Actions from "../actions/actions";
 import * as Models from "../models/models";
 
 export const INITIAL_STATE: Models.AppState = {
-  user: null
+  user: {
+    lang: "en"
+  }
 };
 
 export function rootReducer(
@@ -14,6 +16,12 @@ export function rootReducer(
     case Actions.UserActions.SET_USER:
       const setUser = action as Actions.UserAction;
       return Object.assign({}, state, { user: setUser.payload });
+
+    case Actions.UserActions.UPDATE_USER:
+      const updateUser = action as Actions.UserAction;
+      return Object.assign({}, state, {
+        user: Object.assign({}, state.user, updateUser.payload)
+      });
 
     default:
       return state;
