@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      Discussion Forum
+      {{'Discussions' | translate}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <p>Discussions are held within WhatsApp groups. You can use the links below to join groups you are interested in:</p>
+  <p>{{'Discussions are held within WhatsApp groups. You can use the links below to join groups you are interested in' | translate}}:</p>
   <whatsapp-group *ngFor="let group of groups" [group]="group">
   </whatsapp-group>
 

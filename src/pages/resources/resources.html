@@ -1,16 +1,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>resources</ion-title>
+    <ion-title>{{'Resources' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <div class="resource" *ngFor="let resource of resources" (click)="loadResource(resource)">
-      <img class="resource-image" [src]="resource.image">
-      <div class="resource-name">{{resource.name}}</div>
+  <div class="resource" *ngFor="let resource of resources" (click)="loadResource(resource)">
+    <img class="resource-image" [src]="resource.image">
+    <div class="resource-name">{{resource.name | translate}}</div>
   </div>
 
 </ion-content>
