@@ -1,25 +1,16 @@
 <div *ngIf="formOpen" class="form" [style.display]="formDisplay">
   <ion-buttons end>
     <button ion-button icon-right class="form-close" (click)="closeForm()" *ngIf="formOpen">
-        <span>Close form</span>
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
+      <span>{{'Close form'|translate}}</span>
+      <ion-icon name="close-circle"></ion-icon>
+    </button>
   </ion-buttons>
   <iframe id="form-iframe" class="enketo-iframe" [src]="enketoLink" sandbox="allow-forms allow-modals allow-same-origin allow-scripts allow-top-navigation"></iframe>
 </div>
 
 <ion-header [hidden]="formOpen">
   <ion-navbar color="primary">
-    <ion-title>Record Data</ion-title>
-    <!-- <ion-buttons end>
-      <button ion-button icon-right (click)="refresh()" *ngIf="!formOpen">
-        <span *ngIf="!finished  && !refreshing">Update</span>
-        <span *ngIf="!finished && refreshing">Searching for forms...</span>
-        <span *ngIf="anyErrors">Error</span>
-        <span *ngIf="finished && !anyErrors">Up to Date</span>
-        <ion-icon name="refresh" *ngIf="(!finished && !refreshing)||anyErrors"></ion-icon>
-      </button>
-    </ion-buttons> -->
+    <ion-title>{{'Record Data' | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -28,23 +19,31 @@
     <ion-card>
       <div class="flex">
         <div style="flex-basis:100%">
-          <ion-card-header>Reporting and Feedback Form</ion-card-header>
+          <ion-card-header>{{'Reporting and Feedback Form' | translate}}</ion-card-header>
           <ion-card-content>
             <div>
               <table>
                 <tr>
-                  <td style="text-align: right"><span style="color:darkgreen">{{submittedForms.reporting.complete.length}}</span></td>
+                  <td style="text-align: right">
+                    <span style="color:darkgreen">{{submittedForms.reporting.complete.length}}</span>
+                  </td>
                   <td>
                     <ion-icon name="checkbox-outline"></ion-icon>
                   </td>
-                  <td><span>Complete Submissions</span></td>
+                  <td>
+                    <span>{{'Complete Submissions'| translate}}</span>
+                  </td>
                 </tr>
                 <tr>
-                  <td style="text-align: right"><span style="color:darkgoldenrod">{{submittedForms.reporting.pending.length}}</span></td>
+                  <td style="text-align: right">
+                    <span style="color:darkgoldenrod">{{submittedForms.reporting.pending.length}}</span>
+                  </td>
                   <td>
                     <ion-icon name="cloud-upload"></ion-icon>
                   </td>
-                  <td><span>Pending Upload</span></td>
+                  <td>
+                    <span>{{'Pending Upload'| translate}}</span>
+                  </td>
                 </tr>
               </table>
             </div>
@@ -52,49 +51,25 @@
         </div>
         <div class="hide-l-436">
           <button ion-button icon-left class="card-button" color="save" (click)="openForm2('FeedbackForm')">
-                <ion-icon name="add-circle"></ion-icon>
-                Record Data
-              </button>
+            <ion-icon name="add-circle"></ion-icon>
+            {{'Record Data' | translate}}
+          </button>
         </div>
       </div>
       <div class="show-l-436">
         <button block ion-button icon-left color="save" style="margin:0" (click)="openForm2('FeedbackForm')">
-              <ion-icon name="add-circle"></ion-icon>
-              Record Data
-            </button>
+          <ion-icon name="add-circle"></ion-icon>
+          {{'Record Data' | translate}}
+        </button>
       </div>
     </ion-card>
   </div>
   <div id="info" class="footer">
     <button item-right ion-button [disabled]="uploadDisabled" style="width:100%; height:5em; margin:0" color="load" (click)="uploadSavedForms()">
-      Upload All Now
+      {{'Upload All Now' | translate}}
       <ion-icon name="upload"></ion-icon>
       <ion-spinner *ngIf="uploadDisabled" name="dots" style="margin-left:5px"></ion-spinner>
     </button>
     <!-- <div class="warning">No Internet Access</div> -->
   </div>
 </ion-content>
-
-<!-- <ion-list>
-      <div *ngFor="let form of forms">
-        <ion-item *ngIf="form.downloadable" (click)="openForm(form)">
-          <div class="flex">
-            <div>
-              <ion-icon name="clipboard" item-left *ngIf="form.downloadable"></ion-icon>
-              <ion-icon name="clipboard" light-grey item-left *ngIf="!form.downloadable"></ion-icon>
-            </div>
-            <div>
-              <div>{{form.title}}</div>
-              <div>{{form.date_modified | date:'medium'}}</div>
-            </div>
-          </div>
-        </ion-item>
-      </div>
-    </ion-list>
-
-    </div>
-    <div id="info" class="footer">
-      <h3>Info</h3>
-      <p>If you have internet the app will attempt to download survey forms from the server.</p>
-      <p>Once a form has been opened it can be filled offline and automatically saved, however you require internet access to submit.</p>
-    </div> -->

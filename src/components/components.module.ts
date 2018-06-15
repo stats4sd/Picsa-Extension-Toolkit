@@ -1,13 +1,12 @@
 import { NgModule } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 import { IonicModule } from "ionic-angular";
+import { LanguageSelectComponent } from "./language-select/language-select";
 import { WhatsappGroupComponent } from "./whatsapp-group/whatsapp-group";
-import { LanguageSelectComponent } from './language-select/language-select';
 
 @NgModule({
-  declarations: [WhatsappGroupComponent,
-    LanguageSelectComponent],
-  imports: [IonicModule],
-  exports: [WhatsappGroupComponent,
-    LanguageSelectComponent]
+  declarations: [WhatsappGroupComponent, LanguageSelectComponent],
+  imports: [IonicModule, TranslateModule.forChild()],
+  exports: [WhatsappGroupComponent, LanguageSelectComponent]
 })
 export class ComponentsModule {}

@@ -1,17 +1,18 @@
 import { Component } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import {
-  NavController,
+  Events,
   IonicPage,
   ModalController,
-  Events,
+  NavController,
   ToastController
 } from "ionic-angular";
-import { StorageProvider } from "../../providers/storage/storage";
 import { NetworkProvider } from "../../providers/network/network";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { FeedbackFormPageModule } from "./forms/feedback-form/feedback-form.module";
+import { StorageProvider } from "../../providers/storage/storage";
 
-@IonicPage()
+@IonicPage({
+  defaultHistory: ["HomePage"]
+})
 @Component({
   selector: "page-record-data",
   templateUrl: "record-data.html"

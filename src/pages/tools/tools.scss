@@ -1,13 +1,19 @@
 page-tools {
-    .flex{display: flex; flex-wrap: wrap}
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-    .tool{padding:20px}
+  .tool {
+    padding: 20px;
+    cursor: pointer;
+  }
 
-    .tool-text{
-        font-size: larger
-    }
-    img{
-        height: 150px;
-        width: 150px;
-    }
+  .tool-text {
+    font-size: larger;
+  }
+  img {
+    height: 150px;
+    width: 150px;
+  }
 }

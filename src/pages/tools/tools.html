@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Tools</ion-title>
+    <ion-title>{{'Tools'|translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <div class="flex">
     <div *ngFor="let tool of tools" (click)="loadTool(tool)" class='tool'>
       <img [src]="tool.image">
-      <div class="tool-text">{{tool.name}}</div>
+      <div class="tool-text">{{tool.name | translate}}</div>
     </div>
   </div>
 

@@ -180,7 +180,7 @@ export class ClimateToolPage {
   setCrop(crop) {
     this.selectedCrop = {};
     this.selectedCrop[crop.name] = true;
-    this.lineToolValue = crop[this.activeChart.cropTableValue + "Avg"];
+    this.lineToolValue = crop[`${this.activeChart.cropTableValue}Avg`];
     this.lineToolValueChange();
   }
 }

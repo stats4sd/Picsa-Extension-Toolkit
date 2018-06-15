@@ -40,7 +40,7 @@ export class HomePage {
       },
       // {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
       {
-        name: " Record Data",
+        name: "Record Data",
         color: "picsa-record",
         icon: "create",
         page: "RecordDataPage"

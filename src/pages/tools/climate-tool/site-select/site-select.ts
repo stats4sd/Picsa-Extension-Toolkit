@@ -8,7 +8,7 @@ import {
 import * as L from "leaflet";
 import "leaflet-ajax";
 import malawiGeo1 from "../../../../assets/geoJson/Malawi-admin-1";
-import malawiGeo2 from "../../../../assets/geoJson/Malawi-admin-2-Blantyre";
+// import malawiGeo2 from "../../../../assets/geoJson/Malawi-admin-2-Blantyre";
 import { MalawiDataProvider } from "../../../../providers/c3-chart/malawi-data";
 
 @IonicPage()
@@ -61,12 +61,14 @@ export class SiteSelectPage {
       const sites = res["sites"];
       for (const site of sites) {
         console.log("site", site);
-        const marker = L.marker([site.latitude, site.longitude]);
+        const marker = L.marker([site.latitude, site.longitude], {
+          icon: weatherIcon
+        });
 
         const container = L.DomUtil.create("div");
         const btn = L.DomUtil.create("button", "", container);
         btn.setAttribute("type", "button");
-        btn.innerHTML = "<div>" + site.name + "<br>Load Data</div>";
+        btn.innerHTML = `<div class="site-select-button">${site.name} 🡺</div>`;
         const popup = L.popup().setContent(btn);
         L.DomEvent.on(btn, "click", btn => {
           this.selectSite(site);
@@ -152,3 +154,14 @@ export class SiteSelectPage {
     this.viewCtrl.dismiss(site);
   }
 }
+
+const weatherIcon = L.icon({
+  iconUrl: "assets/img/station.png",
+  shadowUrl: "leaf-shadow.png",
+
+  iconSize: [38, 38], // size of the icon
+  shadowSize: [50, 64], // size of the shadow
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  shadowAnchor: [4, 62], // the same for the shadow
+  popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
