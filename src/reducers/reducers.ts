@@ -1,7 +1,7 @@
 import { combineReducers, Reducer } from "redux";
 import * as Models from "../models/models";
 import { climateToolReducer, ClimateToolState } from "./climate-tool.reducer";
-import { userReducer } from "./user.reducer";
+import { UserReducer } from "./user.reducer";
 
 export interface AppState {
   user: Models.IUser;
@@ -18,6 +18,6 @@ export const INITIAL_STATE: AppState = {
 // main export that gives access to all reducers.
 // note, could have as object with properties providing specific reducers to each state component
 export const rootReducer: Reducer<AppState> = combineReducers({
-  user: userReducer,
+  user: UserReducer,
   climate: climateToolReducer
 });
