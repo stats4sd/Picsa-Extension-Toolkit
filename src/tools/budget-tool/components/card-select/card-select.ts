@@ -1,7 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { AlertController, Events, ToastController } from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { BudgetToolProvider } from "../../../../providers/budget-tool/budget-tool";
 import { StorageProvider } from "../../../../providers/storage/storage";
 
 @Component({
@@ -27,7 +26,6 @@ export class CardSelectComponent {
   period: any;
   newCard: any;
   constructor(
-    public bdg: BudgetToolProvider,
     public storagePrvdr: StorageProvider,
     public toatsCtrl: ToastController,
     public alertCtrl: AlertController,

@@ -1,42 +1,41 @@
-page-budget-settings {
-    ion-slide{
-        background-color: color($colors,primary);
-        color:white;
-        
+budget-settings {
+  ion-slide {
+    background-color: color($colors, primary);
+    color: white;
+***REMOVED***
+  .large-icon {
+    font-size: xx-large;
+    font-weight: 700;
+***REMOVED***
+  .item-inner {
+    font-size: larger;
+***REMOVED***
+  .label {
+    color: #656464
+***REMOVED***
+  .column-button {
+    .button-inner {
+      flex-flow: column;
   ***REMOVED***
-    .large-icon{
-        font-size: xx-large;
-        font-weight: 700;
+***REMOVED***
+  .button {
+    height: 7rem;
+***REMOVED***
+  .select,
+  .text-input {
+    font-size: x-large;
+    color: #1f867d;
+***REMOVED***
+  .time-period {
+    width: 100%;
+    border: 2px white solid;
+    border-collapse: collapse;
+    padding: 2px;
+    text-align: center;
+***REMOVED***
+  .input-right {
+    input {
+      text-align: right
   ***REMOVED***
-    .item-inner{
-        font-size: larger;
-  ***REMOVED***
-    .label{
-        color:#656464
-  ***REMOVED***
-    .column-button{
-        .button-inner {
-            flex-flow: column;
-      ***REMOVED***
-  ***REMOVED***
-    .button{
-          height: 7rem;
-  ***REMOVED***
-    .select, .text-input {
-        font-size: x-large;
-        color: #1f867d;
-  ***REMOVED***
-    .time-period{
-        width:100%;
-        border:2px white solid;
-        border-collapse: collapse;
-        padding:2px;
-        text-align: center;
-  ***REMOVED***
-    .input-right{
-        input{
-            text-align: right
-      ***REMOVED***
-  ***REMOVED***
-
+***REMOVED***
 }
