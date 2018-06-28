@@ -4,7 +4,7 @@ export interface IUser {
   lang: string;
 }
 
-// climate tool
+// Climate Tool
 export interface ISite {
   name: string;
   fileName: string;

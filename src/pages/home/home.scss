@@ -20,7 +20,7 @@ page-home {
   .title {
     height: 15vh;
     font-size: 13vh;
-    padding: 2vh;
+    padding: 0;
 ***REMOVED***
   .subtitle {
     height: 5vh;
@@ -48,6 +48,7 @@ page-home {
   .link {
     // height: calc(100% / 5 - 5px) !important;
     flex: 1;
+    max-height: 100px;
     width: 100% !important;
     word-wrap: break-word;
     border-top: 1px solid white;

@@ -23,7 +23,7 @@ export class ToolsPage {
       {
         name: "Budget Tool",
         image: "assets/img/budget-tool.svg",
-        page: "BudgetSettingsPage"
+        page: "BudgetToolPage"
     ***REMOVED***
     ];
 ***REMOVED***

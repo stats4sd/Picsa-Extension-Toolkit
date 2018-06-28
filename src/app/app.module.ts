@@ -37,6 +37,7 @@ import {
 import { AppState, INITIAL_STATE, rootReducer } from "../reducers/reducers";
 import { UserActions } from "../actions/user.actions";
 import { ClimateToolActions } from "../actions/climate-tool.actions";
+import { BudgetToolActions } from "../actions/budget-tool.actions";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -88,7 +89,8 @@ export const firebaseConfig = {
     StatusBar,
     NetworkProvider,
     UserActions,
-    ClimateToolActions
+    ClimateToolActions,
+    BudgetToolActions
   ]
 })
 export class AppModule {

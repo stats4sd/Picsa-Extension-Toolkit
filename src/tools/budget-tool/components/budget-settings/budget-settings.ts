@@ -1,20 +1,12 @@
 import { Component, ViewChild } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  Slides,
-  ViewController,
-  ToastController
-} from "ionic-angular";
-import { StorageProvider } from "../../../providers/storage/storage";
+import { Slides, ToastController } from "ionic-angular";
+import { StorageProvider } from "../../../../providers/storage/storage";
 
-@IonicPage()
 @Component({
-  selector: "page-budget-settings",
+  selector: "budget-settings",
   templateUrl: "budget-settings.html"
 })
-export class BudgetSettingsPage {
+export class BudgetSettingsComponent {
   newBudgetSlide = true;
   loadBudgetSlide = false;
   saved: any = [];
@@ -32,10 +24,7 @@ export class BudgetSettingsPage {
   @ViewChild(Slides) slides: Slides;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     private storagePrvdr: StorageProvider,
-    public viewCtrl: ViewController,
     public toastCtrl: ToastController
   ) {
     console.log("loading budget settings page");
@@ -60,19 +49,19 @@ export class BudgetSettingsPage {
     console.log("budget", this.budget);
 ***REMOVED***
 
-  ionViewDidEnter() {
-    // if sent as model
-    if (this.navParams.data.operation) {
-      console.log("navParams", this.navParams);
-      this.modalMode = true;
-      if (this.navParams.data.operation == "new") {
-        this.startNew();
-    ***REMOVED***
-      if (this.navParams.data.operation == "load") {
-        this.loadSaved();
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+  // ionViewDidEnter() {
+  //   // if sent as model
+  //   if (this.navParams.data.operation) {
+  //     console.log("navParams", this.navParams);
+  //     this.modalMode = true;
+  //     if (this.navParams.data.operation == "new") {
+  //       this.startNew();
+  //   ***REMOVED***
+  //     if (this.navParams.data.operation == "load") {
+  //       this.loadSaved();
+  //   ***REMOVED***
+  // ***REMOVED***
+  // }
 
   startNew() {
     this.newBudgetSlide = true;
@@ -91,8 +80,8 @@ export class BudgetSettingsPage {
   loadSavedBudgets() {
     // load saved budgets from cache
     this.storagePrvdr.getAll("budgets").then(res => {
-      let arr = [];
-      for (let key in res) {
+      const arr = [];
+      for (const key in res) {
         let budget = res[key];
         if (budget.archived) {
           this.archived.push(budget);
@@ -109,21 +98,20 @@ export class BudgetSettingsPage {
 ***REMOVED***
   loadBudget(b, isNew) {
     // click function to return selected budget
-    console.log("loading budget", b);
-
-    if (isNew) {
-      b.created = new Date();
-      b.id = this.storagePrvdr.generatePushID();
-      b.data = this.createDataTemplates(b.periods.labels);
-  ***REMOVED***
-    if (this.modalMode) {
-      this.viewCtrl.dismiss(b);
-  ***REMOVED*** else {
-      this.navCtrl.push("BudgetToolPage", b);
-  ***REMOVED***
+    // console.log("loading budget", b);
+    // if (isNew) {
+    //   b.created = new Date();
+    //   b.id = this.storagePrvdr.generatePushID();
+    //   b.data = this.createDataTemplates(b.periods.labels);
+    // }
+    // if (this.modalMode) {
+    //   this.viewCtrl.dismiss(b);
+    // } else {
+    //   this.navCtrl.push("BudgetToolPage", b);
+    // }
 ***REMOVED***
   createDataTemplates(labels) {
-    let arr = [];
+    const arr = [];
     console.log("creating templates");
     labels.forEach((label, i) => {
       arr.push({
@@ -166,7 +154,7 @@ export class BudgetSettingsPage {
       .saveUserDoc(budget, true, "budgets", budget.id)
       .then(() => {
         this.loadSavedBudgets();
-        let toast = this.toastCtrl.create({
+        const toast = this.toastCtrl.create({
           message: "Budget Archived",
           duration: 3000
       ***REMOVED***);
@@ -178,9 +166,9 @@ export class BudgetSettingsPage {
 ***REMOVED***
   calculatePeriod() {
     // return array representing time periods
-    let timeScale = this.budget.periods.timeScale;
-    let starting = this.budget.periods.starting;
-    let total = this.budget.periods.total;
+    const timeScale = this.budget.periods.timeScale;
+    const starting = this.budget.periods.starting;
+    const total = this.budget.periods.total;
     let arr = [];
     if (timeScale == "months") {
       arr = this.calculatePeriodMonths(total, starting);
@@ -200,7 +188,7 @@ export class BudgetSettingsPage {
     if (!prefix) {
       prefix = "";
   ***REMOVED***
-    let arr = [];
+    const arr = [];
     for (let i = 1; i <= total; i++) {
       arr.push(prefix + i);
   ***REMOVED***
@@ -209,7 +197,7 @@ export class BudgetSettingsPage {
   calculatePeriodMonths(total, starting) {
     let array = this.months;
     if (starting) {
-      let startIndex = this.months.indexOf(starting);
+      const startIndex = this.months.indexOf(starting);
       for (let i = 0; i < startIndex; i++) {
         array.push(array.shift());
     ***REMOVED***
@@ -224,7 +212,7 @@ export class BudgetSettingsPage {
   calculatePeriodDays(total, starting) {
     let array = this.days;
     if (starting) {
-      let startIndex = this.days.indexOf(starting);
+      const startIndex = this.days.indexOf(starting);
       for (let i = 0; i < startIndex; i++) {
         array.push(array.shift());
     ***REMOVED***
