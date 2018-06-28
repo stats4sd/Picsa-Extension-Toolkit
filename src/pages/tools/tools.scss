@@ -3,14 +3,22 @@ page-tools {
     display: flex;
     flex-wrap: wrap;
   }
-
   .tool {
-    padding: 20px;
     cursor: pointer;
+    border: 5px solid black;
+    margin: 5px;
   }
-
+  .tool :hover {
+    // background: wheat;
+    font-weight: bold;
+  }
+  .tool-icon {
+    padding: 20px;
+  }
   .tool-text {
-    font-size: larger;
+    font-size: x-large;
+    text-align: center;
+    margin-top: 5px;
   }
   img {
     height: 150px;

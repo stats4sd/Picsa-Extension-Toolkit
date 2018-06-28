@@ -1,11 +1,10 @@
-import { NgRedux, select } from "@angular-redux/store";
+import { select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { TranslateService } from "@ngx-translate/core";
 import { Events, Nav, Platform } from "ionic-angular";
 import { Observable } from "rxjs";
-import { AppState } from "../models/models";
 
 // declare var FCMPlugin;
 
@@ -23,8 +22,7 @@ export class MyApp {
     public events: Events,
     public splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService,
-    private ngRedux: NgRedux<AppState>
+    private translate: TranslateService
   ) {
     this.initTranslate();
     platform.ready().then(() => {

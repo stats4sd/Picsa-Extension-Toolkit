@@ -19,7 +19,7 @@ export class BudgetToolProvider {
   loadSavedCards() {
     this.storagePrvdr.getAll("budgetCards").then((cards: any) => {
       console.log("loading saved cards", cards);
-      for (let card of cards) {
+      for (const card of cards) {
         console.log("adding type", card.Types);
         card.userGenerated = true;
         this.allData[card.Types].push(card);
@@ -32,7 +32,7 @@ export class BudgetToolProvider {
   }
 }
 
-var sampleBudget = {
+const sampleBudget = {
   title: "My First Budget",
   archived: false,
   periods: {
@@ -255,7 +255,7 @@ var sampleBudget = {
   ]
 };
 
-var allData = {
+const allData = {
   activities: [
     {
       Type: "activity",

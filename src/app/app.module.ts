@@ -34,9 +34,9 @@ import {
   DevToolsExtension,
   NgReduxModule
 } from "@angular-redux/store";
-import { AppState } from "../models/models";
-import { INITIAL_STATE, rootReducer } from "../reducers/reducers";
-import { UserActions } from "../actions/actions";
+import { AppState, INITIAL_STATE, rootReducer } from "../reducers/reducers";
+import { UserActions } from "../actions/user.actions";
+import { ClimateToolActions } from "../actions/climate-tool.actions";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -87,7 +87,8 @@ export const firebaseConfig = {
     File,
     StatusBar,
     NetworkProvider,
-    UserActions
+    UserActions,
+    ClimateToolActions
   ]
 })
 export class AppModule {
