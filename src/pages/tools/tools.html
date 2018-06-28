@@ -7,8 +7,10 @@
 <ion-content>
   <div class="flex">
     <div *ngFor="let tool of tools" (click)="loadTool(tool)" class='tool'>
-      <img [src]="tool.image">
-      <div class="tool-text">{{tool.name | translate}}</div>
+      <div class="tool-icon">
+        <img [src]="tool.image">
+        <div class="tool-text">{{tool.name | translate}}</div>
+      </div>
     </div>
   </div>
 

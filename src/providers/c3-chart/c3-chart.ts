@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import * as c3 from "c3";
 import { Platform } from "ionic-angular";
 import * as Papa from "papaparse";
+import { ISite } from "../../models/models";
 
 declare let d3;
 
@@ -56,18 +57,6 @@ export class C3ChartProvider {
     ***REMOVED***
     ];
 ***REMOVED***
-  loadData() {
-    // if (this.platform.is('core')) {
-    //   //use file api
-    //   console.log('loading demo data')
-    // }
-    // if (this.platform.is('mobile')) {
-    //   //use cordova
-    //   this.file.checkDir(this.file.dataDirectory, 'mydir')
-    //     .then(_ => console.log('Directory exists'))
-    //     .catch(err => console.log('Directory doesnt exist'));
-    // }
-***REMOVED***
 
   generate(x) {
     console.log("active chart", this.activeChart);
@@ -105,13 +94,11 @@ export class C3ChartProvider {
           // title: function (d) { return 'Data ' + d; },
           value: function(value, ratio, id) {
             if (this.activeChart.yFormat == "value") {
-              return parseInt(value).toString() + " " + this.activeChart.units;
+              return `${parseInt(value).toString()} ${this.activeChart.units}`;
           ***REMOVED*** else {
-              return (
-                this.formatAxis(value, this.activeChart.yFormat) +
-                " " +
+              return `${this.formatAxis(value, this.activeChart.yFormat)} ${
                 this.activeChart.units
-              );
+            ***REMOVED***`;
           ***REMOVED***
         ***REMOVED***.bind(this)
       ***REMOVED***
@@ -172,7 +159,7 @@ export class C3ChartProvider {
       this.initialRender = false;
   ***REMOVED***
 ***REMOVED***
-  setDataset(site) {
+  setDataset(site: ISite) {
     this.site = site;
     console.log("loading file", site.filePath);
     //try to load cache first
@@ -336,7 +323,7 @@ export class C3ChartProvider {
         "Dec",
         "Jan"
       ];
-      const string = d.getDate() + "-" + monthNames[d.getMonth()];
+      const string = `${d.getDate()}-${monthNames[d.getMonth()]}`;
       return string;
   ***REMOVED*** else if (type == "value") {
       return value;

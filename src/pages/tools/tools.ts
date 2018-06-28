@@ -17,14 +17,12 @@ export class ToolsPage {
       // { name: 'Climate Tool', image: 'assets/img/climate.png', url: 'assets/tools/climate/index.html' },
       {
         name: "Climate Tool",
-        image: "assets/img/climate-beta.png",
-        url: "assets/tools/climate/index.html",
+        image: "assets/img/climate-tool.svg",
         page: "ClimateToolPage"
     ***REMOVED***,
       {
         name: "Budget Tool",
-        image: "assets/img/budget-beta.png",
-        url: "assets/tools/budget/index.html",
+        image: "assets/img/budget-tool.svg",
         page: "BudgetSettingsPage"
     ***REMOVED***
     ];

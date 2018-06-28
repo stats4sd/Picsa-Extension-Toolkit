@@ -1,29 +1,23 @@
-import { Action } from "redux";
-import * as Actions from "../actions/actions";
+import { combineReducers, Reducer } from "redux";
 import * as Models from "../models/models";
+import { climateToolReducer, ClimateToolState } from "./climate-tool.reducer";
+import { userReducer } from "./user.reducer";
 
-export const INITIAL_STATE: Models.AppState = {
+export interface AppState {
+  user: Models.IUser;
+  climate: ClimateToolState;
+}
+
+export const INITIAL_STATE: AppState = {
   user: {
     lang: "en"
-***REMOVED***
+***REMOVED***,
+  climate: null
 ***REMOVED***
 
-export function rootReducer(
-  state: Models.AppState = INITIAL_STATE,
-  action: Action
-) {
-  switch (action.type) {
-    case Actions.UserActions.SET_USER:
-      const setUser = action as Actions.UserAction;
-      return Object.assign({}, state, { user: setUser.payload });
-
-    case Actions.UserActions.UPDATE_USER:
-      const updateUser = action as Actions.UserAction;
-      return Object.assign({}, state, {
-        user: Object.assign({}, state.user, updateUser.payload)
-    ***REMOVED***);
-
-    default:
-      return state;
-***REMOVED***
-}
+// main export that gives access to all reducers.
+// note, could have as object with properties providing specific reducers to each state component
+export const rootReducer: Reducer<AppState> = combineReducers({
+  user: userReducer,
+  climate: climateToolReducer
+});

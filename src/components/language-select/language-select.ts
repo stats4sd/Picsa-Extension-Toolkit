@@ -1,7 +1,7 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { Observable } from "rxjs";
-import { UserActions } from "../../actions/actions";
+import { UserActions } from "../../actions/user.actions";
 
 @Component({
   selector: "language-select",
