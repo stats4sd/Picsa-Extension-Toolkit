@@ -1,14 +1,15 @@
 <ion-content class='content'>
-  <div style="position: absolute; left: 20px; top: 5px">
+  <div class="top-bar" style="display: flex; justify-content: space-between">
     <language-select></language-select>
-  </div>
-  <div class="version-info">
-    <div>
-      <span style="font-weight: bold">v{{version.number}}</span>
-      <span style="font-size:smaller; margin-left:8px">({{version.date}})</span>
+    <div class="version-info">
+      <div>
+        <span style="font-weight: bold">v{{version.number}}</span>
+        <span style="font-size:smaller; margin-left:8px">({{version.date}})</span>
+      </div>
+      <button ion-button clear block navPush="ChangelogPage">{{"What's New?" | translate}}</button>
     </div>
-    <button ion-button clear block navPush="ChangelogPage">{{"What's New?" | translate}}</button>
   </div>
+
 
   <div class="title">{{'PICSA' | translate}}</div>
   <div class="subtitle">{{'Extension Toolkit' | translate}}</div>

@@ -1,64 +1,29 @@
 import { Injectable } from "@angular/core";
 import * as c3 from "c3";
-import { Platform } from "ionic-angular";
 import * as Papa from "papaparse";
 import { ISite } from "../../models/models";
+import crops from "./malawi-crops";
 
-declare let d3;
+declare const d3;
 
 @Injectable()
 export class C3ChartProvider {
   public datasets: any;
   public columns: any;
-  public chart: any;
-  public activeChart: any = {***REMOVED***
+  public chart: c3.ChartAPI;
+  public activeChart: any = {
+    x: "Rainfall"
+***REMOVED***;
   public lineToolValues: any = {***REMOVED***
   public lineToolActive: boolean = false;
 
   site: any;
   columnsObserver: any;
   initialRender: boolean = true;
-  crops: any;
-  constructor(private platform: Platform) {
-    this.activeChart.x = "Rainfall";
-    this.crops = [
-      {
-        index: 0,
-        name: "Maize",
-        waterMin: 405,
-        waterMax: 660,
-        waterAvg: 580,
-        lengthMin: 90,
-        lengthMax: 145,
-        lengthAvg: 130,
-        image: "assets/img/crops/maize.jpg"
-    ***REMOVED***,
-      {
-        index: 1,
-        name: "Groundnuts",
-        waterMin: 405,
-        waterMax: 675,
-        waterAvg: 540,
-        lengthMin: 90,
-        lengthMax: 150,
-        lengthAvg: 120,
-        image: "assets/img/crops/groundnuts.jpg"
-    ***REMOVED***,
-      {
-        index: 2,
-        name: "Sorghum",
-        waterMin: 450,
-        waterMax: 540,
-        waterAvg: 500,
-        lengthMin: 100,
-        lengthMax: 120,
-        lengthAvg: 110,
-        image: "assets/img/crops/sorghum.jpg"
-    ***REMOVED***
-    ];
-***REMOVED***
+  crops: any = crops;
+  constructor() {}
 
-  generate(x) {
+  generate(xAxis: string) {
     console.log("active chart", this.activeChart);
     const s = this.site;
     const keys = [];
@@ -123,28 +88,7 @@ export class C3ChartProvider {
           return 5;
       ***REMOVED***.bind(this)
     ***REMOVED***,
-      // tooltip: {
-      //   // grouped: false,
 
-      //   // contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-      //   //   // console.log(d)
-      //   //   const units = this.activeChart.units
-      //   //   const tooltip;
-      //   //   //add different tooltip for null years
-      //   //   if (d[0].value == null) {
-      //   //     tooltip = '<div style="width: 140px;background-color: #fdff7a;font-size:larger;border:2px solid black>'
-      //   //       + 'No data available</div>'
-      //   // ***REMOVED***
-      //   //   else {
-      //   //     tooltip = '<div style="width: 140px;background-color: #fdff7a;font-size: larger;border:border:2px solid black">'
-      //   //       + '<strong>' + d[0].x + '</strong><br><br>'
-      //   //       + Math.round(d[0].value) + ' ' + units + '</div>'
-      //   //       + '<div>' + defaultTitleFormat + '</div>'
-      //   //       + '<div>' + defaultValueFormat + '</div>'
-      //   // ***REMOVED***
-      //   //   return tooltip
-      //   // }.bind(this)
-      // },
       onrendered: function() {
         this.firstRender();
     ***REMOVED***.bind(this)
@@ -155,10 +99,10 @@ export class C3ChartProvider {
 
   firstRender() {
     if (this.initialRender) {
-      // this.setChart({ x: 'Total Rainfall SeasonA' })
       this.initialRender = false;
   ***REMOVED***
 ***REMOVED***
+
   setDataset(site: ISite) {
     this.site = site;
     console.log("loading file", site.filePath);

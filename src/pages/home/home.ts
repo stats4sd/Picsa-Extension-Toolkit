@@ -21,35 +21,34 @@ export class HomePage {
       // {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
       {
         name: "Resources",
-        color: "picsa-manual",
         icon: "book",
-        page: "ResourcesPage",
-        text: ""
+        page: "ResourcesPage"
     ***REMOVED***,
       {
         name: "Tools",
-        color: "picsa-view",
         icon: "tablet-portrait",
         page: "ToolsPage"
     ***REMOVED***,
       {
         name: " Discussions",
-        color: "picsa-discussions",
         icon: "chatbubbles",
         page: "DiscussionsPage"
     ***REMOVED***,
       // {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
       {
         name: "Record Data",
-        color: "picsa-record",
         icon: "create",
         page: "RecordDataPage"
     ***REMOVED***,
       {
         name: "View Data",
-        color: "picsa-view",
         icon: "stats",
         page: "ViewDataPage"
+    ***REMOVED***,
+      {
+        name: "Settings",
+        icon: "settings",
+        page: "SettingsPage"
     ***REMOVED***
     ];
 ***REMOVED***

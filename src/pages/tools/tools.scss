@@ -8,9 +8,12 @@ page-tools {
     border: 5px solid black;
     margin: 5px;
 ***REMOVED***
-  .tool :hover {
-    // background: wheat;
-    font-weight: bold;
+  .tool:hover {
+    font-weight: bold; // background: color($colors, primary);
+    border: 5px solid color($colors, primary); // color: white;
+***REMOVED***
+  .tool:hover>img {
+    // filter: invert(100%);
 ***REMOVED***
   .tool-icon {
     padding: 20px;
