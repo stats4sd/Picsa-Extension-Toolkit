@@ -89,8 +89,8 @@ export class ClimateToolPage {
   setChart(chart) {
     if (chart.name != this.activeChart.name) {
       const loader = this.loadingCtrl.create({
-        content: "Loading...",
-        duration: 3000
+        content: "Loading..."
+        // duration: 3000
       });
       loader.present().then(() => {
         this.activeChart = {};
@@ -100,6 +100,7 @@ export class ClimateToolPage {
         this.showTools = true;
         this.lineToolValue = null;
         this.selectedCrop = {};
+        loader.dismiss();
       });
     } else {
       this.showTools = true;
