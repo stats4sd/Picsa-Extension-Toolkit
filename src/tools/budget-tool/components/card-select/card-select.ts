@@ -1,24 +1,15 @@
 import { Component, ViewChild } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  ViewController,
-  ToastController,
-  AlertController,
-  Events
-} from "ionic-angular";
-import { BudgetToolProvider } from "../../../providers/budget-tool/budget-tool";
+import { AlertController, Events, ToastController } from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { StorageProvider } from "../../../providers/storage/storage";
+import { BudgetToolProvider } from "../../../../providers/budget-tool/budget-tool";
+import { StorageProvider } from "../../../../providers/storage/storage";
 
-@IonicPage()
 @Component({
-  selector: "page-card-select",
+  selector: "card-select",
   viewProviders: [CanvasWhiteboardComponent],
   templateUrl: "card-select.html"
 })
-export class CardSelectPage {
+export class CardSelectComponent {
   @ViewChild("canvasWhiteboard") canvasWhiteboard: CanvasWhiteboardComponent;
 
   cards: any;
@@ -36,21 +27,18 @@ export class CardSelectPage {
   period: any;
   newCard: any;
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     public bdg: BudgetToolProvider,
-    public viewCtrl: ViewController,
     public storagePrvdr: StorageProvider,
     public toatsCtrl: ToastController,
     public alertCtrl: AlertController,
     public events: Events
   ) {
-    this.cards = this.bdg.allData[this.navParams.data.type];
+    // this.cards = this.bdg.allData[this.navParams.data.type];
   }
   ionViewDidEnter() {
-    this.setSelected(this.navParams.data.selected || []);
-    this.period = this.navParams.data.period;
-    this.type = this.navParams.data.type;
+    // this.setSelected(this.navParams.data.selected || []);
+    // this.period = this.navParams.data.period;
+    // this.type = this.navParams.data.type;
     this.showFamilyLabour = this.type == "familyLabour";
     this.showCards = this.type != "familyLabour" && this.type != "consumed";
     this.showConsumed = this.type == "consumed";
@@ -80,7 +68,7 @@ export class CardSelectPage {
     // delete this.selected[card.ID]
     console.log("selected", this.selected);
     console.log("card", this.activeCard);
-    let deleteCardId = this.activeCard.ID;
+    const deleteCardId = this.activeCard.ID;
     delete this.selected[deleteCardId];
     console.log("selected", this.selected);
     this.showValues = false;
@@ -91,7 +79,7 @@ export class CardSelectPage {
     });
   }
   setSelected(array) {
-    for (let item of array) {
+    for (const item of array) {
       this.selected[item.ID] = item;
     }
   }
@@ -109,17 +97,17 @@ export class CardSelectPage {
     //populate activities from selected array (could be done on initial click to show but then would need correct remove function too)
     if (this.type == "activities") {
       this.period[this.type] = [];
-      for (let key in this.selected) {
+      for (const key in this.selected) {
         this.period[this.type].push(this.selected[key]);
       }
     }
     //don't need to pass any data as binding to period kept - linked to mess above
-    this.viewCtrl.dismiss();
+    // this.viewCtrl.dismiss();
   }
   getIndex(array, card) {
     let index: number = 0;
     let i = 0;
-    for (let item of array) {
+    for (const item of array) {
       if (item.ID == card.ID) {
         index = i;
       }
@@ -129,7 +117,7 @@ export class CardSelectPage {
   }
   addCard() {
     //lookup as card types not quite same as budget type names
-    let types = {
+    const types = {
       inputs: "input",
       outputs: "output",
       activities: "activity"
@@ -149,7 +137,7 @@ export class CardSelectPage {
     this.storagePrvdr
       .saveUserDoc(this.newCard, true, "budgetCards", this.newCard.ID)
       .then(res => {
-        let toast = this.toatsCtrl.create({
+        const toast = this.toatsCtrl.create({
           message: "Card Saved",
           duration: 3000
         });
@@ -160,7 +148,7 @@ export class CardSelectPage {
       });
   }
   saveCanvasImage() {
-    let img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
+    const img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
     this.newCard.Image = img;
     this.showNewCard = false;
     this.showNewCardMeta = true;
@@ -170,7 +158,7 @@ export class CardSelectPage {
   }
   delete(card) {
     console.log("deleting card", card);
-    let confirm = this.alertCtrl.create({
+    const confirm = this.alertCtrl.create({
       title: "Remove Card",
       message:
         "Are you sure you want to delete this card from your budget tool?",
@@ -186,7 +174,7 @@ export class CardSelectPage {
             this.storagePrvdr
               .removeUserDoc("budgetCards", card.ID)
               .then(res => {
-                let toast = this.toatsCtrl.create({
+                const toast = this.toatsCtrl.create({
                   message: "Card deleted",
                   duration: 3000
                 });

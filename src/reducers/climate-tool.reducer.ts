@@ -1,8 +1,6 @@
 import { Action } from "redux";
-import {
-  ClimateToolAction,
-  ClimateToolActions
-} from "../actions/climate-tool.actions";
+import { StandardAction } from "../actions/actions";
+import { ClimateToolActions } from "../actions/climate-tool.actions";
 import { ISite } from "../models/models";
 import { INITIAL_STATE } from "./reducers";
 
@@ -16,7 +14,7 @@ export function climateToolReducer(
 ) {
   switch (action.type) {
     case ClimateToolActions.SELECT_SITE:
-      const siteSelect = action as ClimateToolAction;
+      const siteSelect = action as StandardAction;
       return Object.assign({}, state, { site: siteSelect.payload });
 
     default:
