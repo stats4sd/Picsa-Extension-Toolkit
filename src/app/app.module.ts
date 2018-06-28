@@ -25,7 +25,6 @@ import { environment } from "../environments/environment";
 import { YoutubeService } from "../providers/youtube-service";
 import { C3ChartProvider } from "../providers/c3-chart/c3-chart";
 import { MalawiDataProvider } from "../providers/c3-chart/malawi-data";
-import { BudgetToolProvider } from "../providers/budget-tool/budget-tool";
 import { StorageProvider } from "../providers/storage/storage";
 import { NetworkProvider } from "../providers/network/network";
 // redux
@@ -82,7 +81,6 @@ export const firebaseConfig = {
     C3ChartProvider,
     Network,
     MalawiDataProvider,
-    BudgetToolProvider,
     StorageProvider,
     FileOpener,
     File,

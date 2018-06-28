@@ -1,42 +1,41 @@
-page-budget-settings {
-    ion-slide{
-        background-color: color($colors,primary);
-        color:white;
-        
+budget-settings {
+  ion-slide {
+    background-color: color($colors, primary);
+    color: white;
+  }
+  .large-icon {
+    font-size: xx-large;
+    font-weight: 700;
+  }
+  .item-inner {
+    font-size: larger;
+  }
+  .label {
+    color: #656464
+  }
+  .column-button {
+    .button-inner {
+      flex-flow: column;
     }
-    .large-icon{
-        font-size: xx-large;
-        font-weight: 700;
+  }
+  .button {
+    height: 7rem;
+  }
+  .select,
+  .text-input {
+    font-size: x-large;
+    color: #1f867d;
+  }
+  .time-period {
+    width: 100%;
+    border: 2px white solid;
+    border-collapse: collapse;
+    padding: 2px;
+    text-align: center;
+  }
+  .input-right {
+    input {
+      text-align: right
     }
-    .item-inner{
-        font-size: larger;
-    }
-    .label{
-        color:#656464
-    }
-    .column-button{
-        .button-inner {
-            flex-flow: column;
-        }
-    }
-    .button{
-          height: 7rem;
-    }
-    .select, .text-input {
-        font-size: x-large;
-        color: #1f867d;
-    }
-    .time-period{
-        width:100%;
-        border:2px white solid;
-        border-collapse: collapse;
-        padding:2px;
-        text-align: center;
-    }
-    .input-right{
-        input{
-            text-align: right
-        }
-    }
-
+  }
 }

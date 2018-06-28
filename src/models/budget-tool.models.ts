@@ -26,24 +26,27 @@ interface BudgetCard {
 }
 
 export interface IActivityCard extends BudgetCard {
-  Type: "actvity";
+  // Type: "activity";
 }
 export interface IInputCard extends BudgetCard {
-  Type: "input";
+  // Type: "input";
+  quantity?: number;
+  total?: number;
+  dots?: any[];
+  cost?: number;
 }
 export interface IOutputCard extends BudgetCard {
-  Type: "output";
+  // Type: "output";
+  quantity?: number;
+  total?: number;
+  dots?: any[];
+  cost?: number;
+  consumed?: number;
 }
 
 interface FamilyLabourCard {
   people: number;
   days: number;
-}
-
-interface BalanceOutput extends IOutputCard {
-  consumed: number;
-  cost: number;
-  quantity: number;
 }
 
 interface BalanceCounter {
@@ -57,7 +60,7 @@ interface BudgetEntry extends IBudgetData {
   familyLabour: FamilyLabourCard;
   balance: {
     inputs: BalanceCounter;
-    outputs: BalanceOutput[];
+    outputs: BalanceCounter;
     consumed: BalanceCounter;
     monthly: BalanceCounter;
     running: BalanceCounter;

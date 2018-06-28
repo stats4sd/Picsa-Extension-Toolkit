@@ -1,3 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="!budgetTitle">{{'Budget Tool'|translate}}</ion-title>
+    <ion-title *ngIf="budgetTitle">{{budgetTitle}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <budget-settings *ngIf="!budget"></budget-settings>
+  <budget-overview *ngIf="budget"></budget-overview>
+</ion-content>
+
+
+
 <!-- <ion-fab right top>
   <button ion-fab mini color="light">
     <ion-icon name="more"></ion-icon>
@@ -21,174 +36,3 @@
     <div class="fab-label">Close</div>
   </ion-fab-list>
 </ion-fab> -->
-
-
-
-
-<ion-content>
-  <h1>{{this.budget.title}}</h1>
-  <div id="budget" class="flex">
-    <!-- First column titles places vertically -->
-    <div id="titles" class="titles time-period">
-      <div class="cell top-row"></div>
-      <div class="cell" *ngFor="let title of rowTitles">
-        <div>{{title}}</div>
-        <div *ngIf="title=='Cash Balance'">
-          <div *ngFor="let dot of dotsArray">
-            <!-- <div class=flex (click)="toggleDotEdit()"> -->
-            <div class=flex>
-              <div>
-                <img class="dot-value-image" [src]="'assets/img/budget/'+dot.key+'-positive.png'">
-              </div>
-              <div *ngIf="!editDotValue">= MK {{dot.val}}</div>
-            </div>
-            <div *ngIf="editDotValue">
-              <ion-input class="dot-value-input" type="number" [(ngModel)]="dots.large"></ion-input>
-              <button ion-button (click)="toggleDotEdit()">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Time periods calculated Vertically -->
-    <div class="time-period flex-basis" *ngFor="let period of budget.data">
-      <div class="time-period-title cell top-row">{{period.label}}</div>
-      <!--Activities-->
-      <div class="cell" (click)="edit('activities',period)">
-        <div class="grid-card flex">
-          <div *ngFor="let activity of period.activities; let i=index" class="flex-basis">
-            <div class="card-index" *ngIf="period.activities.length>1">{{i+1}}</div>
-            <img class="card-image" [src]="activity.Image">
-          </div>
-        </div>
-      </div>
-      <!--Inputs-->
-      <div class="cell" (click)="edit('inputs',period)">
-        <div class="grid-card flex">
-          <div *ngFor="let input of period.inputs; let i=index" class="grow">
-            <img class="card-image cell-main" [src]="input.Image">
-            <div class="cell-footer flex">
-              <div class="dot-value" *ngFor="let dot of input.dots || []">
-                <img class="dot-value-image" [src]="dot.src">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Family Labour-->
-      <div class="cell" (click)="edit('familyLabour',period)">
-        <div class="grid-card" *ngIf="period.familyLabour && period.familyLabour.days">
-          <div *ngFor="let person of _toArray(period.familyLabour.people)" class="flex">
-            <ion-icon class="family-icon person-icon" name="person"></ion-icon>
-            <div *ngFor="let days of _toArray(period.familyLabour.days)">
-              <ion-icon class="family-icon clock-icon" name="clock"></ion-icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Outputs-->
-      <div class="cell" (click)="edit('outputs',period)">
-        <div class="grid-card">
-          <div *ngFor="let output of period.outputs; let i=index" class="flex">
-            <!-- multiple counter -->
-            <!-- <div *ngIf="output.quantity <= 5">
-              <img class="card-image cell-multiple" [src]="output.Image" *ngFor="let o of output.arrayCounter">
-            </div> -->
-            <div>
-              <img class="card-image cell-multiple" [src]="output.Image">
-              <span class="counterBadge">x{{output.quantity}}</span>
-            </div>
-          </div>
-          <div class="cell-footer flex">
-            <div class="dot-value" *ngFor="let dot of period.balance.outputs.dots">
-              <img class="dot-value-image" [src]="dot.src">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Consumed-->
-      <div class="cell" (click)="edit('consumed',period)">
-        <div class="grid-card">
-          <div *ngFor="let output of period.outputs; let i=index" class="flex">
-            <!-- multiple counter -->
-            <!-- <div *ngIf="output.consumed <= 5">
-              <img class="card-image cell-multiple consumed" [src]="output.Image" *ngFor="let o of output.arrayCounterConsumed">
-            </div> -->
-            <div *ngIf="output.consumed>0">
-              <img class="card-image cell-multiple consumed" [src]="output.Image">
-              <span class="counterBadge consumed">x{{output.consumed}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--balance-->
-      <div class="cell">
-        <div class="grid-card">
-          <div class="one-em number-value">{{period.label}}: {{period.balance.monthly.total | number:'1.0-0'}}</div>
-          <div class="flex one-em">
-            <div class="dot-value" *ngFor="let dot of period.balance.monthly.dots">
-              <img class="dot-value-image" [src]="dot.src">
-            </div>
-          </div>
-          <hr>
-          <div class="one-em number-value">Balance: {{period.balance.running.total | number:'1.0-0'}}</div>
-          <div class="flex one-em">
-            <div class="dot-value" *ngFor="let dot of period.balance.running.dots">
-              <img class="dot-value-image" [src]="dot.src">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Totals column -->
-    <div class="time-period flex-basis">
-      <div class="time-period-title cell top-row total-column">Total</div>
-      <!--Activities-->
-      <div class="cell total-column">
-      </div>
-      <!--Inputs-->
-      <div class="cell total-column">
-        <div class="grid-card flex">
-        </div>
-      </div>
-      <!--Family Labour-->
-      <div class="cell total-column">
-        <div class="grid-card flex">
-        </div>
-      </div>
-      <!--Outputs-->
-      <div class="cell total-column">
-        <div class="grid-card flex">
-        </div>
-      </div>
-      <!--Consumed-->
-      <div class="cell total-column">
-        <div class="grid-card flex">
-        </div>
-      </div>
-      <!--balance-->
-      <div class="cell total-column">
-        <div class="grid-card flex">
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!--<div>Step 1: Select all of the activities you take part in</div>
-  <div class="flex wrap">
-    <div class='card' *ngFor="let activity of data.activities; let i=index" (click)="highlight('activities',i)" [class.highlight]="activity.selected">
-      <div class="card-title">{{activity.Name}}</div>
-      <div class="image-holder"><img [src]="activity.Image"></div>
-    </div>
-    <button ion-button icon-left (click)="addCard()">
-      <ion-icon name="add"></ion-icon>
-        Add Another
-    </button>
-  </div>
-  <button ion-button round icon-start><ion-icon name="arrow-forward"></ion-icon>Continue</button>-->
-</ion-content>
