@@ -1,1 +1,7 @@
-page-budget-tool {}
+page-budget-tool {
+  .background-primary {
+    background-color: color($colors, primary);
+    height: 100%;
+    color: white;
+***REMOVED***
+}

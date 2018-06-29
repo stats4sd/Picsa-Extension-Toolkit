@@ -8,11 +8,19 @@ type StandardAction = FluxStandardAction<any, null>;
 @Injectable()
 export class BudgetToolActions {
   static readonly CREATE_NEW = "CREATE_NEW";
+  static readonly SET = "SET";
 
   @dispatch()
   createNew = (newBudget: IBudget): StandardAction => ({
     type: BudgetToolActions.CREATE_NEW,
     meta: null,
     payload: newBudget
+***REMOVED***);
+
+  @dispatch()
+  set = (budget: IBudget): StandardAction => ({
+    type: BudgetToolActions.SET,
+    meta: null,
+    payload: budget
 ***REMOVED***);
 }

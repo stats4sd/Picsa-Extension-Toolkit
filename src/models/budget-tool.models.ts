@@ -19,10 +19,9 @@ interface periods {
 }
 
 interface BudgetCard {
-  Type: string;
-  Name: string;
-  Image: string;
-  ID: string;
+  type: string;
+  name: string;
+  id: string;
 }
 
 export interface IActivityCard extends BudgetCard {
@@ -43,6 +42,7 @@ export interface IOutputCard extends BudgetCard {
   cost?: number;
   consumed?: number;
 }
+export interface IEnterpriseOptions extends BudgetCard {}
 
 interface FamilyLabourCard {
   people: number;

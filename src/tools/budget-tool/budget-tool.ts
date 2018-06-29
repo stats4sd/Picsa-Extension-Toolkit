@@ -4,7 +4,7 @@ import { IonicPage } from "ionic-angular";
 import { Observable } from "rxjs";
 import { IBudget, IBudgetData } from "../../models/budget-tool.models";
 import { StorageProvider } from "../../providers/storage/storage";
-import allData from "./budget-data";
+import * as data from "./data";
 import sampleBudget from "./sample-budget";
 
 @IonicPage({
@@ -17,7 +17,7 @@ import sampleBudget from "./sample-budget";
 export class BudgetToolPage {
   @select(["budget"])
   readonly budget$: Observable<IBudget>;
-  allData: IBudgetData = allData;
+  allData: IBudgetData = data;
   budget: any;
 
   constructor(public storagePrvdr: StorageProvider) {
