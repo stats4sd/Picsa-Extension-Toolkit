@@ -1,14 +1,31 @@
+import { select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
 import { Slides, ToastController } from "ionic-angular";
+import { Observable } from "rxjs";
+import { BudgetToolActions } from "../../../../actions/budget-tool.actions";
+import {
+  IBudget,
+  IEnterpriseOptions
+} from "../../../../models/budget-tool.models";
 import { StorageProvider } from "../../../../providers/storage/storage";
+import * as data from "../../data";
 
 @Component({
   selector: "budget-settings",
   templateUrl: "budget-settings.html"
 })
 export class BudgetSettingsComponent {
-  newBudgetSlide = true;
-  loadBudgetSlide = false;
+  apiVersion: 2;
+  @select(["user", "budgets"])
+  savedBudgets$: Observable<IBudget[]>;
+  @select(["budget", "enterpriseType"])
+  enterpriseType$: Observable<string>;
+  @select("budget") budget$: Observable<IBudget>;
+  savedBudgets: IBudget[] = [];
+  newBudget: boolean;
+  enterpriseTypes: string[];
+  budget: IBudget;
+
   saved: any = [];
   archived: any = [];
   enterprises: any;
@@ -16,68 +33,95 @@ export class BudgetSettingsComponent {
   timeScales: any;
   days: any;
   modalMode: boolean;
-  budget = {
-    title: "New Budget",
-    archived: false,
-    periods: { labels: [], starting: "Jan", timeScale: "months", total: 12 }
-  };
+  // budget = {
+  //   title: "New Budget",
+  //   archived: false,
+  //   periods: { labels: [], starting: "Jan", timeScale: "months", total: 12 }
+  // };
   @ViewChild(Slides) slides: Slides;
 
   constructor(
     private storagePrvdr: StorageProvider,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private actions: BudgetToolActions
   ) {
-    console.log("loading budget settings page");
-    this.enterprises = ["crop", "livestock", "livelihood"];
-    this.months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    this.days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
-    this.timeScales = ["months", "weeks", "days", "none"];
-    this.budget.periods.labels = this.months;
+    this.budget$.subscribe(budget => {
+      console.log("budget change", budget);
+      this.budget = budget;
+    });
+    this.savedBudgets$.subscribe(budgets => {
+      if (budgets) {
+        this.savedBudgets = budgets;
+      }
+    });
+    this.enterpriseType$.subscribe(type => {
+      console.log("enterprise type change", type);
+      this._filterEnterprises(type);
+    });
+    this.enterpriseTypes = this._generateEnterpriseTypes(data.enterprises);
+
+    // this.enterprises = ["crop", "livestock", "livelihood"];
+    // this.months = data.months;
+    // this.days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+    // this.timeScales = ["months", "weeks", "days", "none"];
+    // this.budget.periods.labels = this.months;
     console.log("budget", this.budget);
   }
 
-  // ionViewDidEnter() {
-  //   // if sent as model
-  //   if (this.navParams.data.operation) {
-  //     console.log("navParams", this.navParams);
-  //     this.modalMode = true;
-  //     if (this.navParams.data.operation == "new") {
-  //       this.startNew();
-  //     }
-  //     if (this.navParams.data.operation == "load") {
-  //       this.loadSaved();
-  //     }
-  //   }
-  // }
+  _generateEnterpriseTypes(enterprises: IEnterpriseOptions[]) {
+    const types = {};
+    enterprises.forEach(enterprise => {
+      types[enterprise.type] = true;
+    });
+    console.log("enterprise types", Object.keys(types));
+    return Object.keys(types);
+  }
+  // when enterprise type changed only show relevant enterprises
+  // if there is only one sub type assume that is the one selected
+  _filterEnterprises(type: string) {
+    console.log("filtering enterprises", type);
+    let enterprises = data.enterprises;
+    if (type) {
+      enterprises = enterprises.filter(e => {
+        return e.type === type;
+      });
+    }
+    this.enterprises = enterprises;
+    if (enterprises.length == 1) {
+      this.setBudget("enterprise", enterprises[0]);
+    }
+  }
+  // assign budget value, unsetting if already exists
+  setBudget(key, val) {
+    console.log("setting budget", key, val);
+    if (this.budget[key] === val) {
+      this.budget[key] = null;
+    } else {
+      this.budget[key] = val;
+    }
+    this.actions.set(this.budget);
+  }
 
   startNew() {
-    this.newBudgetSlide = true;
-    this.loadBudgetSlide = false;
-    this.slides.update();
-    this.slides.slideTo(1, 500);
+    const d = new Date();
+    const budget = {
+      apiVersion: this.apiVersion,
+      archived: false,
+      created: d.toLocaleDateString(),
+      data: null,
+      description: null,
+      enterprise: null,
+      id: null,
+      periods: null,
+      title: null,
+      scale: null
+    };
+    this.actions.createNew(budget);
+    this.newBudget = true;
   }
-  loadSaved() {
-    // load saved click, loads cached budgets and moves to loading screen
-    this.newBudgetSlide = false;
-    this.loadBudgetSlide = true;
-    this.loadSavedBudgets();
-    this.slides.update();
-    this.slides.slideTo(1, 500);
-  }
-  loadSavedBudgets() {
+
+  loadSaved() {}
+  getSavedBudgets() {
     // load saved budgets from cache
     this.storagePrvdr.getAll("budgets").then(res => {
       const arr = [];
@@ -148,41 +192,41 @@ export class BudgetSettingsComponent {
     return arr;
   }
   archive(budget) {
-    console.log("archiving budget", budget);
-    budget.archived = true;
-    this.storagePrvdr
-      .saveUserDoc(budget, true, "budgets", budget.id)
-      .then(() => {
-        this.loadSavedBudgets();
-        const toast = this.toastCtrl.create({
-          message: "Budget Archived",
-          duration: 3000
-        });
-        toast.present();
-      });
+    // console.log("archiving budget", budget);
+    // budget.archived = true;
+    // this.storagePrvdr
+    //   .saveUserDoc(budget, true, "budgets", budget.id)
+    //   .then(() => {
+    //     this.loadSavedBudgets();
+    //     const toast = this.toastCtrl.create({
+    //       message: "Budget Archived",
+    //       duration: 3000
+    //     });
+    //     toast.present();
+    //   });
   }
   nextSlide() {
     this.slides.slideNext();
   }
   calculatePeriod() {
     // return array representing time periods
-    const timeScale = this.budget.periods.timeScale;
-    const starting = this.budget.periods.starting;
-    const total = this.budget.periods.total;
-    let arr = [];
-    if (timeScale == "months") {
-      arr = this.calculatePeriodMonths(total, starting);
-    }
-    if (timeScale == "days") {
-      arr = this.calculatePeriodDays(total, starting);
-    }
-    if (timeScale == "weeks") {
-      arr = this.calculatePeriodConsecutive(total, "week");
-    }
-    if (timeScale == "none") {
-      arr = this.calculatePeriodConsecutive(total);
-    }
-    this.budget.periods.labels = arr;
+    // const timeScale = this.budget.periods.timeScale;
+    // const starting = this.budget.periods.starting;
+    // const total = this.budget.periods.total;
+    // let arr = [];
+    // if (timeScale == "months") {
+    //   arr = this.calculatePeriodMonths(total, starting);
+    // }
+    // if (timeScale == "days") {
+    //   arr = this.calculatePeriodDays(total, starting);
+    // }
+    // if (timeScale == "weeks") {
+    //   arr = this.calculatePeriodConsecutive(total, "week");
+    // }
+    // if (timeScale == "none") {
+    //   arr = this.calculatePeriodConsecutive(total);
+    // }
+    // this.budget.periods.labels = arr;
   }
   calculatePeriodConsecutive(total, prefix?) {
     if (!prefix) {

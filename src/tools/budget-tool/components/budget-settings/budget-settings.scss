@@ -1,4 +1,29 @@
 budget-settings {
+  ion-card.budget-card {
+    cursor: pointer;
+    color: black;
+    width: unset;
+    height: 120px;
+    width: 120px;
+    display: inline-block;
+    text-align: center;
+  }
+  ion-card.budget-card[selected="true"] {
+    font-weight: bold;
+    background: color($colors, selected);
+  }
+  ion-card.budget-card>img {
+    width: 100px;
+    height: 100px;
+    margin: 0 0.5em;
+  }
+  .saved-budgets {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: white;
+    color: black;
+  }
   ion-slide {
     background-color: color($colors, primary);
     color: white;
@@ -11,12 +36,11 @@ budget-settings {
     font-size: larger;
   }
   .label {
-    color: #656464
+    color: #656464;
   }
   .column-button {
-    .button-inner {
-      flex-flow: column;
-    }
+    max-width: 400px;
+    margin: auto;
   }
   .button {
     height: 7rem;
@@ -35,7 +59,7 @@ budget-settings {
   }
   .input-right {
     input {
-      text-align: right
+      text-align: right;
     }
   }
 }

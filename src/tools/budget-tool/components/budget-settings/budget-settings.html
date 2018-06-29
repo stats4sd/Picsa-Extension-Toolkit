@@ -1,32 +1,14 @@
-<ion-slides>
-  <!-- select new/load slide -->
-  <ion-slide>
-    <h2>I want to...</h2>
-    <button class="column-button" round ion-button (click)="startNew()" color="white">
-      <div class="large-icon">
-        <ion-icon color="new" name="add" class="large-icon"></ion-icon>
-      </div>
-      Create a new Budget
-    </button>
-    <button class="column-button" round ion-button (click)="loadSaved()" color="white">
-      <div class="large-icon">
-        <ion-icon color="load" name="folder-open" class="large-icon"></ion-icon>
-      </div>
-      Load a saved Budget
-    </button>
-  </ion-slide>
-  <!-- Slide 2 contains options for both new and load -->
-  <!-- Load Budget Slide -->
-  <ion-slide>
-    <div *ngIf="loadBudgetSlide">
-      <h2>Load Saved</h2>
-      <ion-list padding>
-        <div *ngFor="let b of saved">
-          <ion-item *ngIf="!b.archived">
+<div style="height: 100%">
+  <div padding *ngIf="!newBudget" class="saved-budgets">
+    <h2>Saved Budgets</h2>
+    <ion-scroll style="flex:1">
+      <ion-list>
+        <div *ngFor="let budget of savedBudgets">
+          <ion-item *ngIf="!budget.archived">
             <div class="saved-budget" style="display:flex">
-              <div class="saved-details" (click)="loadBudget(b,false)" style="flex-basis:100%">
-                <div>{{b.title}}</div>
-                <div>{{b.created | date:'mediumDate'}}</div>
+              <div class="saved-details" (click)="loadBudget(budget,false)" style="flex-basis:100%">
+                <div>{{budget.title}}</div>
+                <div>{{budget.created | date:'mediumDate'}}</div>
               </div>
               <button padding icon-left ion-button color="danger" (click)="archive(b)">
                 <ion-icon name="trash"></ion-icon>Archive</button>
@@ -35,99 +17,111 @@
         </div>
         <div *ngIf="saved.length==0">
           <p>There are no saved budgets</p>
-          <button class="column-button" round ion-button (click)="startNew()" color="white">
-            <div class="large-icon">
-              <ion-icon color="new" name="add" class="large-icon"></ion-icon>
-            </div>
-            Create a new Budget
-          </button>
         </div>
       </ion-list>
-    </div>
-    <!-- New Budget name and enterprise -->
-    <div *ngIf="newBudgetSlide">
-      <h2>{{budget.title}}</h2>
-      <ion-list padding>
-        <ion-item>
-          <ion-label floating icon-left>
-            <ion-icon name="bookmark"></ion-icon>
-            Enter a name for your budget</ion-label>
-          <ion-input type="text" [(ngModel)]="budget.title"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating icon-left>
-            <ion-icon name="create"></ion-icon>
-            (optional) Description</ion-label>
-          <ion-textarea type="text" [(ngModel)]="budget.description"></ion-textarea>
-        </ion-item>
-        <ion-item>
-          <ion-label icon-left>
-            <ion-icon name="apps"></ion-icon>
-            Type of Enterprise</ion-label>
-          <ion-select [(ngModel)]="budget.enterprise">
-            <ion-option *ngFor="let enterprise of enterprises" [value]="enterprise">{{enterprise}}</ion-option>
-          </ion-select>>
-        </ion-item>
-        <ion-item>
-          <ion-label icon-left>
-            <ion-icon name="podium"></ion-icon>
-            Scale of Enterprise</ion-label>
-          <ion-input *ngIf="budget.enterprise=='crop'" [(ngModel)]="budget.enterpriseScale" type="number" placeholder="number of acres"
-            class="input-right"></ion-input>
-          <ion-input *ngIf="budget.enterprise=='livestock'" [(ngModel)]="budget.enterpriseScale" type="number" placeholder="number of animals"
-            class="input-right"></ion-input>
-          <ion-textarea class="smaller-font" *ngIf="budget.enterprise=='livelihood'" [(ngModel)]="budget.enterpriseScale" type="text" placeholder="please describe in words (e.g. number of shops, beehives etc.) "
-            class="input-right"></ion-textarea>
-
-        </ion-item>
-      </ion-list>
-      <button style="background-color:#1f867d" ion-button icon-right round (click)="nextSlide()" color="#">Continue
-        <ion-icon name="arrow-round-forward"></ion-icon>
-      </button>
-    </div>
-  </ion-slide>
-  <!-- new budget time period -->
-  <ion-slide *ngIf="newBudgetSlide">
-    <h2>Time Periods</h2>
-    <!-- overview -->
-    <div style="display:flex" padding>
-      <div class="time-period" *ngFor="let period of budget.periods.labels">
-        {{period}}
-      </div>
-    </div>
-    <ion-list padding>
-      <!-- time measurement -->
-      <ion-item>
-        <ion-label icon-left>
-          <ion-icon name="calendar"></ion-icon>
-          Measured in</ion-label>
-        <ion-select [(ngModel)]="budget.periods.timeScale" (ionChange)="calculatePeriod()">
-          <ion-option *ngFor="let timeScale of timeScales" [value]="timeScale">{{timeScale}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <!-- time starting -->
-      <ion-item *ngIf="budget.periods.scale=='days' || budget.periods.scale=='months'">
-        <ion-label icon-left>
-          <ion-icon name="alarm"></ion-icon>
-          Starting</ion-label>
-        <ion-select (ionChange)="calculatePeriod()" [(ngModel)]="budget.periods.starting" *ngIf="budget.periods.scale=='months'">
-          <ion-option *ngFor="let month of months" [value]="month">{{month}}</ion-option>
-        </ion-select>
-        <ion-select (ionChange)="calculatePeriod()" [(ngModel)]="budget.periods.starting" *ngIf="budget.periods.scale=='days'">
-          <ion-option *ngFor="let day of days" [value]="day">{{day}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label inset icon-left>
-          <ion-icon name="calculator"></ion-icon>
-          Total Periods</ion-label>
-        <ion-input (ionChange)="calculatePeriod()" type="number" [(ngModel)]="budget.periods.total" class="input-right"></ion-input>
-      </ion-item>
-    </ion-list>
-    <button style="background-color:#1f867d" ion-button icon-right round (click)="loadBudget(budget,true)" color="#">Go
-      <ion-icon name="arrow-round-forward"></ion-icon>
+    </ion-scroll>
+    <button block ion-button (click)="startNew()" color="primary" style="max-width: 400px">
+      <ion-icon name="add" class="large-icon"></ion-icon>
+      <span style="margin-left:10px">Create a new Budget</span>
     </button>
+  </div>
 
-  </ion-slide>
+  <!-- New Budget name and enterprise -->
+  <div padding *ngIf="newBudget">
+    <div>Type of Enterprise</div>
+    <ion-card class="budget-card selectable" [attr.selected]="budget.enterpriseType===type" (click)="setBudget('enterpriseType',type)"
+      *ngFor="let type of enterpriseTypes">
+      <budget-card-image [image]="type"></budget-card-image>
+      <div class="card-title">{{type}}</div>
+    </ion-card>
+    <div *ngIf="budget.enterpriseType && enterprises && enterprises.length>1">
+      <div>Enterprise</div>
+      <ion-card class="budget-card selectable" [attr.selected]="budget.enterprise && budget.enterprise.id===enterprise.id" (click)="setBudget('enterprise',enterprise)"
+        *ngFor="let enterprise of enterprises">
+        <budget-card-image [image]="enterprise.id"></budget-card-image>
+        <div class="card-title">{{enterprise.name}}</div>
+      </ion-card>
+    </div>
 
-</ion-slides>
+    <!-- <card-select *ngFor="let option of enterpriseOptions "></card-select> -->
+    <!-- <button style="background-color:#1f867d " ion-button icon-right round (click)="nextSlide() " color="# ">Continue
+      <ion-icon name="arrow-round-forward "></ion-icon>
+    </button> -->
+  </div>
+</div>
+
+<!-- new budget time period -->
+<!-- <h2>Time Periods</h2>
+  <div style="display:flex " padding>
+    <div class="time-period " *ngFor="let period of budget.periods.labels ">
+      {{period}}
+    </div>
+  </div>
+  <ion-list padding>
+    <ion-item>
+      <ion-label icon-left>
+        <ion-icon name="calendar "></ion-icon>
+        Measured in</ion-label>
+      <ion-select [(ngModel)]="budget.periods.timeScale " (ionChange)="calculatePeriod() ">
+        <ion-option *ngFor="let timeScale of timeScales " [value]="timeScale ">{{timeScale}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="budget.periods.scale=='days' || budget.periods.scale=='months' ">
+      <ion-label icon-left>
+        <ion-icon name="alarm "></ion-icon>
+        Starting</ion-label>
+      <ion-select (ionChange)="calculatePeriod() " [(ngModel)]="budget.periods.starting " *ngIf="budget.periods.scale=='months' ">
+        <ion-option *ngFor="let month of months " [value]="month ">{{month}}</ion-option>
+      </ion-select>
+      <ion-select (ionChange)="calculatePeriod() " [(ngModel)]="budget.periods.starting " *ngIf="budget.periods.scale=='days' ">
+        <ion-option *ngFor="let day of days " [value]="day ">{{day}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label inset icon-left>
+        <ion-icon name="calculator "></ion-icon>
+        Total Periods</ion-label>
+      <ion-input (ionChange)="calculatePeriod() " type="number " [(ngModel)]="budget.periods.total " class="input-right "></ion-input>
+    </ion-item>
+  </ion-list>
+  <button style="background-color:#1f867d " ion-button icon-right round (click)="loadBudget(budget,true) " color="# ">Go
+    <ion-icon name="arrow-round-forward "></ion-icon>
+  </button> -->
+
+
+
+<!-- <ion-item>
+        <ion-label floating icon-left>
+          <ion-icon name="bookmark "></ion-icon>
+          Enter a name for your budget</ion-label>
+        <ion-input type="text " [(ngModel)]="budget.title "></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating icon-left>
+          <ion-icon name="create "></ion-icon>
+          (optional) Description</ion-label>
+        <ion-textarea type="text " [(ngModel)]="budget.description "></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label icon-left>
+          <ion-icon name="apps "></ion-icon>
+          Type of Enterprise</ion-label>
+        <ion-select [(ngModel)]="budget.enterprise ">
+          <ion-option *ngFor="let enterprise of enterprises " [value]="enterprise ">{{enterprise}}</ion-option>
+        </ion-select>>
+      </ion-item>
+      <ion-item>
+        <ion-label icon-left>
+          <ion-icon name="podium "></ion-icon>
+          Scale of Enterprise</ion-label>
+        <ion-input *ngIf="budget.enterprise=='crop' " [(ngModel)]="budget.enterpriseScale " type="number
+          " placeholder="number of acres "
+          class="input-right "></ion-input>
+        <ion-input *ngIf="budget.enterprise=='livestock' " [(ngModel)]="budget.enterpriseScale " type="number
+          " placeholder="number of animals "
+          class="input-right "></ion-input>
+        <ion-textarea class="smaller-font " *ngIf="budget.enterprise=='livelihood' " [(ngModel)]="budget.enterpriseScale
+          " type="text "
+          placeholder="please describe in words (e.g. number of shops, beehives etc.) " class="input-right "></ion-textarea>
+      </ion-item>
+    </ion-list> -->

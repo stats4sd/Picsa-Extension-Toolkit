@@ -12,11 +12,14 @@ export function budgetToolReducer(
   state: IBudget = INITIAL_STATE.budget,
   action: Action
 ) {
-  console.log("action", action);
   switch (action.type) {
     case BudgetToolActions.CREATE_NEW:
       const newBudget = action as StandardAction;
       return Object.assign({}, state, newBudget.payload);
+
+    case BudgetToolActions.SET:
+      const updatedBudget = action as StandardAction;
+      return Object.assign({}, state, updatedBudget.payload);
 
     default:
       return state;
