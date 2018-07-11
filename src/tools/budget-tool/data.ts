@@ -227,13 +227,16 @@ export const enterprises = [
   { type: "crop", name: "groundnuts", id: "groundnuts" },
   { type: "crop", name: "pigeon peas", id: "pigeon-peas" },
   { type: "crop", name: "sweet potatoes", id: "sweet-potatoes" },
+  { type: "crop", name: "sorgum", id: "sorgum" },
   { type: "fish", name: "fish", id: "fish" },
   { type: "fruits", name: "avocado", id: "avocado" },
-  {
-    type: "fruits",
-    name: "melons and pumpkins",
-    id: "melons-and-pumpkins"
-  }
+  { type: "fruits", name: "mangoes", id: "mangoes" },
+  { type: "fruits", name: "paw-paw", id: "paw-paw" },
+  { type: "fruits", name: "watermelon", id: "watermelon" },
+  { type: "fruits", name: "mixed", id: "mixed" },
+  { type: "fruits", name: "pumpkins", id: "pumpkins" },
+  { type: "livestock", name: "livestock", id: "livestock" },
+  { type: "poultry", name: "poultry", id: "poultry" }
 ];
 
 export const months = [
