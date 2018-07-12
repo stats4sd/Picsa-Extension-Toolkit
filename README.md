@@ -54,17 +54,6 @@ or try with a higher android api version installed
 Currently bugged and removed https://github.com/DefinitelyTyped/DefinitelyTyped/issues/21794
 should recheck in future
 
-#custom updates (not in repo)
--changing default canvas drawing color:
-npm modules/ng2-canvas-whiteboard/dist/canvas-whiteboard-component
-line 26
-this.\_strokeColor = "rgb(91, 45, 0)";
-
--changing default canvas line width:
-npm modules/ng2-canvas-whiteboard/dist/canvas-whiteboard-component
-line 321
-this.context.lineWidth = 5;
-
 #ios build notes
 
 - will require different resources section as different external storage stuctures

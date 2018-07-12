@@ -131,29 +131,29 @@ export class CardSelectComponent {
     this.showNewCard = true;
 ***REMOVED***
 
-  saveNewCard() {
-    this.storagePrvdr
-      .saveUserDoc(this.newCard, true, "budgetCards", this.newCard.ID)
-      .then(res => {
-        const toast = this.toatsCtrl.create({
-          message: "Card Saved",
-          duration: 3000
-      ***REMOVED***);
-        toast.present();
-        this.showNewCardMeta = false;
-        this.cards.unshift(this.newCard);
-        this.highlight(this.newCard);
-    ***REMOVED***);
-***REMOVED***
-  saveCanvasImage() {
-    const img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
-    this.newCard.Image = img;
-    this.showNewCard = false;
-    this.showNewCardMeta = true;
-    // this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
-    //   console.log(blob);
-    // }, "image/png");
-***REMOVED***
+  // saveNewCard() {
+  //   this.storagePrvdr
+  //     .saveUserDoc(this.newCard, true, "budgetCards", this.newCard.ID)
+  //     .then(res => {
+  //       const toast = this.toatsCtrl.create({
+  //         message: "Card Saved",
+  //         duration: 3000
+  //     ***REMOVED***);
+  //       toast.present();
+  //       this.showNewCardMeta = false;
+  //       this.cards.unshift(this.newCard);
+  //       this.highlight(this.newCard);
+  //   ***REMOVED***);
+  // }
+  // saveCanvasImage() {
+  //   const img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
+  //   this.newCard.Image = img;
+  //   this.showNewCard = false;
+  //   this.showNewCardMeta = true;
+  //   // this.canvasWhiteboard.generateCanvasBlob((blob: any) => {
+  //   //   console.log(blob);
+  //   // }, "image/png");
+  // }
   delete(card) {
     console.log("deleting card", card);
     const confirm = this.alertCtrl.create({

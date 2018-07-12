@@ -18,23 +18,25 @@ interface periods {
   total: number;
 }
 
-interface BudgetCard {
+export interface IBudgetCard {
   type: string;
   name: string;
   id: string;
+  custom?: boolean;
+  customImg?: string;
 }
 
-export interface IActivityCard extends BudgetCard {
+export interface IActivityCard extends IBudgetCard {
   // Type: "activity";
 }
-export interface IInputCard extends BudgetCard {
+export interface IInputCard extends IBudgetCard {
   // Type: "input";
   quantity?: number;
   total?: number;
   dots?: any[];
   cost?: number;
 }
-export interface IOutputCard extends BudgetCard {
+export interface IOutputCard extends IBudgetCard {
   // Type: "output";
   quantity?: number;
   total?: number;
@@ -42,7 +44,15 @@ export interface IOutputCard extends BudgetCard {
   cost?: number;
   consumed?: number;
 }
-export interface IEnterpriseOptions extends BudgetCard {}
+export interface IEnterpriseOptions extends IBudgetCard {}
+
+export interface ICustomCards {
+  enterprises: {
+    [id: string]: IBudgetCard;
+***REMOVED***;
+  inputs: {***REMOVED***
+  outputs: {***REMOVED***
+}
 
 interface FamilyLabourCard {
   people: number;

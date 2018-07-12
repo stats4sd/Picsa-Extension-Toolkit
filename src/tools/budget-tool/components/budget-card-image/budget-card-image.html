@@ -1,5 +1,5 @@
-<div [ngSwitch]="source" *ngIf="id">
-  <img *ngSwitchCase="'svg'" [src]="'assets/img/budget/cards/'+id+'.svg'" (error)="svgError()">
-  <img *ngSwitchCase="'png'" [src]="'assets/img/budget/cards/'+id+'.png'" (error)="pngError()">
+<div [ngSwitch]="source" *ngIf="id" class="card-image-holder">
+  <img *ngSwitchCase="'svg'" [src]="'assets/img/budget/cards/'+id+'.svg'" (error)="svgError()" [class]="id">
+  <img *ngSwitchCase="'png'" [src]="'assets/img/budget/cards/'+id+'.png'" (error)="pngError()" [class]="id">
   <img *ngSwitchDefault src="assets/img/budget/cards/other.png">
 </div>

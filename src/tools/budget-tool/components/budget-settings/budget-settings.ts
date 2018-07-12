@@ -21,6 +21,9 @@ export class BudgetSettingsComponent {
   @select(["budget", "enterpriseType"])
   enterpriseType$: Observable<string>;
   @select("budget") budget$: Observable<IBudget>;
+  @select(["budget", "customCards", "enterprises"])
+  customEnterprises$: Observable<any>;
+  customEnterprises: IEnterpriseOptions[];
   savedBudgets: IBudget[] = [];
   newBudget: boolean;
   enterpriseTypes: string[];
@@ -46,7 +49,6 @@ export class BudgetSettingsComponent {
     private actions: BudgetToolActions
   ) {
     this.budget$.subscribe(budget => {
-      console.log("budget change", budget);
       this.budget = budget;
   ***REMOVED***);
     this.savedBudgets$.subscribe(budgets => {
@@ -55,16 +57,16 @@ export class BudgetSettingsComponent {
     ***REMOVED***
   ***REMOVED***);
     this.enterpriseType$.subscribe(type => {
-      console.log("enterprise type change", type);
       this._filterEnterprises(type);
   ***REMOVED***);
     this.enterpriseTypes = this._generateEnterpriseTypes(data.enterprises);
-
-    // this.enterprises = ["crop", "livestock", "livelihood"];
-    // this.months = data.months;
-    // this.days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
-    // this.timeScales = ["months", "weeks", "days", "none"];
-    // this.budget.periods.labels = this.months;
+    this.customEnterprises$.subscribe(enterprises => {
+      console.log("enterprises", enterprises);
+      if (enterprises) {
+        this.customEnterprises = Object.values(enterprises);
+        console.log("custom enterprises", this.customEnterprises);
+    ***REMOVED***
+  ***REMOVED***);
     console.log("budget", this.budget);
 ***REMOVED***
 
@@ -73,13 +75,11 @@ export class BudgetSettingsComponent {
     enterprises.forEach(enterprise => {
       types[enterprise.type] = true;
   ***REMOVED***);
-    console.log("enterprise types", Object.keys(types));
     return Object.keys(types);
 ***REMOVED***
   // when enterprise type changed only show relevant enterprises
   // if there is only one sub type assume that is the one selected
   _filterEnterprises(type: string) {
-    console.log("filtering enterprises", type);
     let enterprises = data.enterprises;
     if (type) {
       enterprises = enterprises.filter(e => {
@@ -91,9 +91,8 @@ export class BudgetSettingsComponent {
       this.setBudget("enterprise", enterprises[0]);
   ***REMOVED***
 ***REMOVED***
-  // assign budget value, unsetting if already exists
+  // assign budget value, unsetting if already exists (duplicate of budget card function)
   setBudget(key, val) {
-    console.log("setting budget", key, val);
     if (this.budget[key] === val) {
       this.budget[key] = null;
   ***REMOVED*** else {

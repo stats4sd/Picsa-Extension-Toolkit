@@ -3,12 +3,14 @@ import { TranslateModule } from "@ngx-translate/core";
 import { IonicModule } from "ionic-angular";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
 import { BudgetCardImageComponent } from "./budget-card-image/budget-card-image";
+import { BudgetCardComponent } from "./budget-card/budget-card";
 import { BudgetOverviewComponent } from "./budget-overview/budget-overview";
 import { BudgetSettingsComponent } from "./budget-settings/budget-settings";
 import { CardSelectComponent } from "./card-select/card-select";
 
 @NgModule({
   declarations: [
+    BudgetCardComponent,
     BudgetCardImageComponent,
     BudgetOverviewComponent,
     BudgetSettingsComponent,
@@ -16,6 +18,7 @@ import { CardSelectComponent } from "./card-select/card-select";
   ],
   imports: [IonicModule, TranslateModule.forChild(), CanvasWhiteboardModule],
   exports: [
+    BudgetCardComponent,
     BudgetCardImageComponent,
     BudgetOverviewComponent,
     BudgetSettingsComponent,

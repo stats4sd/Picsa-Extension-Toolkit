@@ -27,7 +27,6 @@ import { AngularFirestore } from "angularfire2/firestore";
 import * as firebase from "firebase/app";
 import { Events, ToastController } from "ionic-angular";
 import { Platform } from "ionic-angular";
-// auth
 
 import { map } from "rxjs/operators";
 
@@ -130,20 +129,6 @@ export class StorageProvider {
         ***REMOVED***
       ***REMOVED***)
         .catch(err => console.log("failed retrieving user doc", err));
-      // this.afs.firestore.collection("users").doc(this.userID).collection(collection).doc(docId).get()
-      //   .then(res => {
-      //     //*** should use res to check for exist before running data */
-      //     if (res.exists) {
-      //       let doc = res.data()
-      //       if (doc.hasOwnProperty('jsonString')) {
-      //         doc = JSON.parse(doc.jsonString)
-      //     ***REMOVED***
-      //       resolve(doc)
-      //   ***REMOVED***
-      //     console.log('doc doesnt exist', collection, docId);
-      //     resolve({})
-      // ***REMOVED***)
-      //   .catch(err => console.log('could not get doc', collection, docId, userID, err))
   ***REMOVED***);
 ***REMOVED***
 
@@ -202,26 +187,7 @@ export class StorageProvider {
         ***REMOVED***
       ***REMOVED***
     ***REMOVED***);
-      // this.afs.firestore.collection("users").doc(this.userID).collection(collection).get().then(snapshot => {
-      //   console.log('snapshot', snapshot)
-      //   // convert json back to string and push into array
-      //   let docsArray = []
-      //   snapshot.forEach(doc => {
-      //     let data = doc.data()
-      //     if (data.hasOwnProperty('jsonString')) {
-      //       data = JSON.parse(data.jsonString)
-      //   ***REMOVED***
-      //     docsArray.push(data)
-      // ***REMOVED***)
-      //   console.log('docs array', docsArray)
-      //   resolve(docsArray)
-      // })
   ***REMOVED***);
-***REMOVED***
-
-  getSharedDoc() {
-    // get doc not saved in own user profile
-    // should change getDoc to getUserDoc
 ***REMOVED***
 
   saveUserDoc(
@@ -320,27 +286,6 @@ export class StorageProvider {
       temp[id] = doc;
   ***REMOVED***
     return this.storage.set(collection, temp);
-    // let batch = this.afs.firestore.batch();
-    // for (let key in data) {
-    //   // create key:value pair doc
-    //   let doc = data[key]
-    //   if (stringify) {
-    //     doc = { json: JSON.stringify(doc) }
-    // ***REMOVED***
-    //   let ref: any
-    //   if (idAsKey) {
-    //     ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc(key)
-    // ***REMOVED***
-    //   else {
-    //     ref = this.afs.firestore.collection('users').doc(this.userID).collection(collection).doc()
-    // ***REMOVED***
-    //   batch.set(ref, { json: doc })
-    // }
-    // return batch.commit()
-***REMOVED***
-
-  updateForm(submissionID) {
-    //
 ***REMOVED***
 
   syncForms(firebaseID) {
@@ -379,7 +324,6 @@ export class StorageProvider {
         collection       docs object
         budgets:{ budgets:data1, budget2:data2    ***REMOVED***
         */
-
           // push collections objects to right place
           if (typeof docsObject == "object") {
             for (const id in docsObject) {
@@ -626,59 +570,6 @@ export class StorageProvider {
     ***REMOVED***);
   ***REMOVED***);
 ***REMOVED***
-
-  // sync(data, collection?) {
-  //   //sync user data to firebase. supports optional collection
-  //   console.log('syncing data', data)
-  //   // attempts to sync local and live, returns timestamp of successful live sync
-  //   return new Promise((resolve, reject) => {
-  //     //***offline - create file backup? currently writes to local collection first I think...
-
-  //     // console.log('creating offline user backup')
-  //     // this.checkFileDirectory('backups')
-
-  //     //online
-  //     this.getUser().then(() => {
-  //       console.log('user id', this.userID)
-  //       this.user.updated = Date.now();
-  //       // prevent nested arrays
-  //       //** will need to rembmer to convert back if restore db functionality built */
-  //       console.log('data key', Object.keys(data))
-  //       if (Object.keys(data)) {
-  //         let key = Object.keys(data)[0]
-  //         if (key == "budgets") {
-  //           let temp = {}
-  //           temp[key] = JSON.stringify(data[key])
-  //           data = temp
-  //       ***REMOVED***
-  //     ***REMOVED***
-  //       console.log('data', data)
-
-  //       this.afs.collection('users').doc(this.userID).set(data)
-
-  //         .then(_ => console.log('document successfully written'))
-  //         .catch(err => console.log('err', err))
-  //   ***REMOVED***)
-
-  //     // this.firebaseList=this.afoDatabase.list('/users')
-  //     // this.firebaseObject=this.afoDatabase.object('/users')
-
-  //     // let db = this.afoDatabase.list('/users/' + this.userID)
-  //     // console.log('db',db)
-
-  //     // promise.offline.then(() => console.log('offline data saved to device storage!'));
-
-  //     // promise.then(() => {
-  //     //   console.log('data saved to Firebase!')
-  //     //   let temp = { offline: Date.now(), online: Date.now() }
-  //     //   // save lastbackup data to db
-  //     //   console.log('temp',temp)
-  //     //   this.set('lastBackup',temp)
-  //     //   resolve(temp)
-  //     // }).catch(err => console.log('err', err));
-
-  // ***REMOVED***)
-  // }
 
   //can merge code from resources page to single provider (either storage or file)
   //checks for a single directory (assumes picsa directory will already exist)...not adapted for root eg. /picsa/backups/profile/...

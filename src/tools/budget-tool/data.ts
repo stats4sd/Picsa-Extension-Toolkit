@@ -227,7 +227,7 @@ export const enterprises = [
   { type: "crop", name: "groundnuts", id: "groundnuts" },
   { type: "crop", name: "pigeon peas", id: "pigeon-peas" },
   { type: "crop", name: "sweet potatoes", id: "sweet-potatoes" },
-  { type: "crop", name: "sorgum", id: "sorgum" },
+  { type: "crop", name: "sorghum", id: "sorghum" },
   { type: "fish", name: "fish", id: "fish" },
   { type: "fruits", name: "avocado", id: "avocado" },
   { type: "fruits", name: "mangoes", id: "mangoes" },

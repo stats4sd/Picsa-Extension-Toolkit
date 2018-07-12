@@ -29,19 +29,18 @@
   <!-- New Budget name and enterprise -->
   <div padding *ngIf="newBudget">
     <div>Type of Enterprise</div>
-    <ion-card class="budget-card selectable" [attr.selected]="budget.enterpriseType===type" (click)="setBudget('enterpriseType',type)"
-      *ngFor="let type of enterpriseTypes">
-      <budget-card-image [image]="type"></budget-card-image>
-      <div class="card-title">{{type}}</div>
-    </ion-card>
+    <budget-card *ngFor="let type of enterpriseTypes" path="enterpriseType" [name]="type"></budget-card>
+    <budget-card path="enterpriseType" name="other"></budget-card>
     <div *ngIf="budget.enterpriseType && enterprises && enterprises.length>1">
       <div>Enterprise</div>
-      <ion-card class="budget-card selectable" [attr.selected]="budget.enterprise && budget.enterprise.id===enterprise.id" (click)="setBudget('enterprise',enterprise)"
-        *ngFor="let enterprise of enterprises">
-        <budget-card-image [image]="enterprise.id"></budget-card-image>
-        <div class="card-title">{{enterprise.name}}</div>
-      </ion-card>
+      <budget-card *ngFor="let enterprise of enterprises" path="enterprise" [name]="enterprise.name"></budget-card>
     </div>
+    <div *ngIf="budget.enterpriseType=='other'">
+      <div>Custom Enterprises</div>
+      <budget-card *ngFor="let enterprise of customEnterprises" path="enterprise" [name]="enterprise.name"></budget-card>
+      <budget-card path="enterprise" name="Add New" newCardType="enterprises"></budget-card>
+    </div>
+
 
     <!-- <card-select *ngFor="let option of enterpriseOptions "></card-select> -->
     <!-- <button style="background-color:#1f867d " ion-button icon-right round (click)="nextSlide() " color="# ">Continue
