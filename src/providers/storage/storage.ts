@@ -22,18 +22,14 @@ import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
 import { Storage } from "@ionic/storage";
-import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFirestore } from "angularfire2/firestore";
-import * as firebase from "firebase/app";
 import { Events, ToastController } from "ionic-angular";
 import { Platform } from "ionic-angular";
-
-import { map } from "rxjs/operators";
 
 @Injectable()
 export class StorageProvider {
   public user: any;
-  userID: string;
+  public userID: string;
   firebaseRef;
   initCalled: boolean = false;
   online: boolean = false;

@@ -5,8 +5,13 @@ import { Component, Input } from "@angular/core";
   templateUrl: "budget-card-image.html"
 })
 export class BudgetCardImageComponent {
-  @Input("image") id: string;
+  @Input("imageId") imageId: string;
+  @Input("imageData") imageData: string;
   source: string = "svg";
+
+  ngOnInit() {
+    console.log("image", this.imageId, this.imageData);
+  }
 
   svgError() {
     console.log("svg failed, trying png");

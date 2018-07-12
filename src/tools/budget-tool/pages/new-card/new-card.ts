@@ -2,9 +2,10 @@ import { NgRedux } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
 import { IonicPage, NavParams, ViewController } from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { BudgetToolActions } from "../../../../../actions/budget-tool.actions";
-import { IBudgetCard } from "../../../../../models/budget-tool.models";
-import { AppState } from "../../../../../reducers/reducers";
+import { AppState } from "../../../../reducers/reducers";
+import { BudgetToolActions } from "../../budget-tool.actions";
+import { ICustomBudgetCard } from "../../budget-tool.models";
+import { BudgetToolProvider } from "../../budget-tool.provider";
 
 @IonicPage()
 @Component({
@@ -20,34 +21,33 @@ export class BudgetNewCardPage {
     private navParams: NavParams,
     private viewCtrl: ViewController,
     private actions: BudgetToolActions,
-    private ngRedux: NgRedux<AppState>
+    private ngRedux: NgRedux<AppState>,
+    private budgetToolProvider: BudgetToolProvider
   ) {
     this.cardPath = navParams.data.cardPath;
   }
 
   saveCard() {
-    const budget = this.ngRedux.getState().budget;
-    const cards = budget.customCards ? budget.customCards : newCustomCards;
-    const type = this.navParams.data.type;
-    const id = this.generateSlug(this.cardName);
+    // const budget = this.ngRedux.getState().budget;
+    // const cards = budget.customCards ? budget.customCards : newCustomCards;
+    const endpoint = this.navParams.data.type;
+    const id = `_custom_${this.budgetToolProvider.firestorePrvdr.db.createId()}`;
     // *** should add check for uniqueness and possibly strip any other special characters
-    const card: IBudgetCard = {
-      type: "other",
+    const card: ICustomBudgetCard = {
+      group: "other",
       name: this.cardName,
       id: id,
       custom: true,
-      customImg: this.saveCanvasImage()
+      customImg: this.saveCanvasImage(),
+      created: new Date().toString(),
+      createdBy: "*** get by redux ***"
     };
-    cards[type][id] = card;
-    this.actions.updateCustomCards(cards);
+    this.budgetToolProvider.firestorePrvdr.addToCollection(
+      `budgetTool/meta/${endpoint}`,
+      card,
+      id
+    );
     this.viewCtrl.dismiss();
-  }
-
-  generateSlug(text) {
-    return text
-      .toLowerCase()
-      .split(" ")
-      .join("-");
   }
 
   saveCanvasImage() {
@@ -61,7 +61,7 @@ export class BudgetNewCardPage {
 }
 
 const newCustomCards = {
-  enterprises: {},
-  inputs: {},
-  outputs: {}
+  enterprises: [],
+  inputs: [],
+  outputs: []
 };

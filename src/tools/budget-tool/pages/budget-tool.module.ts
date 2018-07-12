@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { IonicPageModule } from "ionic-angular";
+import { BudgetToolComponentsModule } from "../components/budget-tool.components";
 import { BudgetToolPage } from "./budget-tool";
-import { BudgetToolComponentsModule } from "./components/budget-tool.components";
 
 @NgModule({
   declarations: [BudgetToolPage],

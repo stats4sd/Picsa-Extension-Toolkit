@@ -4,11 +4,20 @@ export interface IBudget {
   periods: periods;
   description: string;
   enterprise: string;
+  enterpriseType: string;
   scale: string;
   created: string;
   id: string;
   data: BudgetEntry[];
   apiVersion: number;
+}
+
+export interface IBudgetMeta {
+  templates?: IBudget[];
+  activities?: IBudgetCard[];
+  enterprises?: IBudgetCard[];
+  outputs?: IBudgetCard[];
+  inputs?: IBudgetCard[];
 }
 
 interface periods {
@@ -19,11 +28,16 @@ interface periods {
 }
 
 export interface IBudgetCard {
-  type: string;
+  group?: string;
   name: string;
   id: string;
-  custom?: boolean;
-  customImg?: string;
+}
+
+export interface ICustomBudgetCard extends IBudgetCard {
+  custom: boolean;
+  customImg: string;
+  created: string;
+  createdBy: string;
 }
 
 export interface IActivityCard extends IBudgetCard {
@@ -44,14 +58,11 @@ export interface IOutputCard extends IBudgetCard {
   cost?: number;
   consumed?: number;
 }
-export interface IEnterpriseOptions extends IBudgetCard {}
 
 export interface ICustomCards {
-  enterprises: {
-    [id: string]: IBudgetCard;
-  };
-  inputs: {};
-  outputs: {};
+  enterprises: IBudgetCard[];
+  inputs: IInputCard[];
+  outputs: IOutputCard[];
 }
 
 interface FamilyLabourCard {
@@ -81,4 +92,9 @@ export interface IBudgetData {
   activities: IActivityCard[];
   inputs: IInputCard[];
   outputs: IOutputCard[];
+}
+
+export interface IBudgetPublicData {
+  customCards?: { ["id"]: ICustomBudgetCard };
+  templates?: { ["id"]: IBudget };
 }

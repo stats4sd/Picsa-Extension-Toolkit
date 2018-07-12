@@ -26,6 +26,7 @@ import { YoutubeService } from "../providers/youtube-service";
 import { C3ChartProvider } from "../providers/c3-chart/c3-chart";
 import { MalawiDataProvider } from "../providers/c3-chart/malawi-data";
 import { StorageProvider } from "../providers/storage/storage";
+import { FirestoreStorageProvider } from "../providers/storage/firestore";
 import { NetworkProvider } from "../providers/network/network";
 // redux
 import {
@@ -35,8 +36,10 @@ import {
 } from "@angular-redux/store";
 import { AppState, INITIAL_STATE, rootReducer } from "../reducers/reducers";
 import { UserActions } from "../actions/user.actions";
+// Tools
+import { BudgetToolProvider } from "../tools/budget-tool/budget-tool.provider";
 import { ClimateToolActions } from "../actions/climate-tool.actions";
-import { BudgetToolActions } from "../actions/budget-tool.actions";
+import { BudgetToolActions } from "../tools/budget-tool/budget-tool.actions";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -76,19 +79,20 @@ export const firebaseConfig = {
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     YoutubeService,
-    // FileService,
     SplashScreen,
     C3ChartProvider,
     Network,
     MalawiDataProvider,
     StorageProvider,
+    FirestoreStorageProvider,
     FileOpener,
     File,
     StatusBar,
     NetworkProvider,
     UserActions,
     ClimateToolActions,
-    BudgetToolActions
+    BudgetToolActions,
+    BudgetToolProvider
   ]
 })
 export class AppModule {
