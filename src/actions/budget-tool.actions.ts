@@ -1,7 +1,7 @@
 import { dispatch } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
 import { FluxStandardAction } from "flux-standard-action";
-import { IBudget } from "../models/budget-tool.models";
+import { IBudget, ICustomCards } from "../models/budget-tool.models";
 
 type StandardAction = FluxStandardAction<any, null>;
 
@@ -9,6 +9,7 @@ type StandardAction = FluxStandardAction<any, null>;
 export class BudgetToolActions {
   static readonly CREATE_NEW = "CREATE_NEW";
   static readonly SET = "SET";
+  static readonly UPDATE_CUSTOM_CARDS = "UPDATE_CUSTOM_CARDS";
 
   @dispatch()
   createNew = (newBudget: IBudget): StandardAction => ({
@@ -22,5 +23,12 @@ export class BudgetToolActions {
     type: BudgetToolActions.SET,
     meta: null,
     payload: budget
+  });
+
+  @dispatch()
+  updateCustomCards = (cards: ICustomCards): StandardAction => ({
+    type: BudgetToolActions.UPDATE_CUSTOM_CARDS,
+    meta: null,
+    payload: cards
   });
 }

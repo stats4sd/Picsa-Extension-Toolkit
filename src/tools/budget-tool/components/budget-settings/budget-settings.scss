@@ -1,22 +1,4 @@
 budget-settings {
-  ion-card.budget-card {
-    cursor: pointer;
-    color: black;
-    width: unset;
-    height: 120px;
-    width: 120px;
-    display: inline-block;
-    text-align: center;
-  }
-  ion-card.budget-card[selected="true"] {
-    font-weight: bold;
-    background: color($colors, selected);
-  }
-  ion-card.budget-card>img {
-    width: 100px;
-    height: 100px;
-    margin: 0 0.5em;
-  }
   .saved-budgets {
     display: flex;
     flex-direction: column;
