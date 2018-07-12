@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { Events, ToastController } from "ionic-angular";
-import { IBudget } from "../../../../models/budget-tool.models";
-import { StorageProvider } from "../../../../providers/storage/storage";
+import { IBudget } from "../../../../tools/budget-tool/budget-tool.models";
 
 @Component({
   selector: "budget-overview",
@@ -25,11 +24,7 @@ export class BudgetOverviewComponent {
   backup = {***REMOVED***
   editDotValue: boolean = false;
 
-  constructor(
-    private storagePrvdr: StorageProvider,
-    public toastCtrl: ToastController,
-    public events: Events
-  ) {
+  constructor(public toastCtrl: ToastController, public events: Events) {
     // this.data = budgetPrvdr.allData;
     this.highlightActivity = { 0: true ***REMOVED***
     // this.budget = navParams.data.title
@@ -99,17 +94,17 @@ export class BudgetOverviewComponent {
     // modal.present();
 ***REMOVED***
   saveBudget() {
-    console.log("saving budget");
-    this.storagePrvdr
-      .saveUserDoc(this.budget, true, "budgets", this.budget.id)
-      .then(res => {
-        console.log("save res", res);
-        const toast = this.toastCtrl.create({
-          message: "Budget Saved",
-          duration: 3000
-      ***REMOVED***);
-        toast.present();
-    ***REMOVED***);
+    // console.log("saving budget");
+    // this.storagePrvdr
+    //   .saveUserDoc(this.budget, true, "budgets", this.budget.id)
+    //   .then(res => {
+    //     console.log("save res", res);
+    //     const toast = this.toastCtrl.create({
+    //       message: "Budget Saved",
+    //       duration: 3000
+    //   ***REMOVED***);
+    //     toast.present();
+    // ***REMOVED***);
 ***REMOVED***
   newBudget() {
     // this.budget = this.bdg.createNewBudget()

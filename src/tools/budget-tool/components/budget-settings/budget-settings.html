@@ -15,7 +15,7 @@
             </div>
           </ion-item>
         </div>
-        <div *ngIf="saved.length==0">
+        <div *ngIf="savedBudgets.length==0">
           <p>There are no saved budgets</p>
         </div>
       </ion-list>
@@ -29,23 +29,15 @@
   <!-- New Budget name and enterprise -->
   <div padding *ngIf="newBudget">
     <div>Type of Enterprise</div>
-    <budget-card *ngFor="let type of enterpriseTypes" path="enterpriseType" [name]="type"></budget-card>
-    <budget-card path="enterpriseType" name="other"></budget-card>
-    <div *ngIf="budget.enterpriseType && enterprises && enterprises.length>1">
-      <div>Enterprise</div>
-      <budget-card *ngFor="let enterprise of enterprises" path="enterprise" [name]="enterprise.name"></budget-card>
+    <budget-card *ngFor="let type of enterpriseTypes" path="enterpriseType" [card]="type"></budget-card>
+    <div *ngIf="showIndividualEnterprises">
+      <div>Select Enterprise</div>
+      <budget-card *ngFor="let enterprise of filteredEnterprises" path="enterprise" [card]="enterprise"></budget-card>
+      <budget-card *ngIf="(enterpriseType$ | async) =='other'" path="enterprise" newCardType="enterprises"></budget-card>
     </div>
-    <div *ngIf="budget.enterpriseType=='other'">
-      <div>Custom Enterprises</div>
-      <budget-card *ngFor="let enterprise of customEnterprises" path="enterprise" [name]="enterprise.name"></budget-card>
-      <budget-card path="enterprise" name="Add New" newCardType="enterprises"></budget-card>
-    </div>
-
-
-    <!-- <card-select *ngFor="let option of enterpriseOptions "></card-select> -->
-    <!-- <button style="background-color:#1f867d " ion-button icon-right round (click)="nextSlide() " color="# ">Continue
-      <ion-icon name="arrow-round-forward "></ion-icon>
-    </button> -->
+    <button ion-button color="primary-inverse" [disabled]="!(enterprise$ | async)" block outline icon-right round (click)="nextSlide()">Continue
+      <ion-icon name="arrow-round-forward"></ion-icon>
+    </button>
   </div>
 </div>
 

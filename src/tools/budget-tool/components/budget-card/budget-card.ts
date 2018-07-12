@@ -2,18 +2,22 @@ import { NgRedux, select } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
 import { ModalController } from "ionic-angular";
 import { Observable } from "rxjs/observable";
-import { BudgetToolActions } from "../../../../actions/budget-tool.actions";
-import { IBudget } from "../../../../models/budget-tool.models";
 import { AppState } from "../../../../reducers/reducers";
+import { BudgetToolActions } from "../../../../tools/budget-tool/budget-tool.actions";
+import {
+  IBudget,
+  IBudgetCard
+} from "../../../../tools/budget-tool/budget-tool.models";
 
 @Component({
   selector: "budget-card",
   templateUrl: "budget-card.html"
 })
 export class BudgetCardComponent {
-  @select("budget") readonly budget$: Observable<IBudget>;
+  @select(["budget", "active"])
+  readonly budget$: Observable<IBudget>;
   @Input("path") cardPath: string;
-  @Input("name") cardName: string;
+  @Input("card") card: IBudgetCard;
   @Input("newCardType") newCardType: string;
   cardSlug: string;
   budget: IBudget;
@@ -32,33 +36,32 @@ export class BudgetCardComponent {
 ***REMOVED***
 
   ngOnInit() {
-    this.cardSlug = this.cardName
-      .toLowerCase()
-      .split(" ")
-      .join("-");
-    if (this.cardName != "other") {
+    // skip init if card not specified (e.g. addNewCard card doesn't have properties)
+    if (this.card) {
       this.addValueSubscriber();
   ***REMOVED***
 ***REMOVED***
 
-  // subscribe to specific value changes related to this card's value path
+  // subscribe to specific value changes related to this card's value path (prepended with /budget/active)
   // don't add if card name 'other' as has own methods
   addValueSubscriber() {
     const pathArray: string[] = this.cardPath.split(".");
+    pathArray.unshift("active");
     pathArray.unshift("budget");
     this.value$ = this.ngRedux.select(pathArray);
+    console.log("adding value sub", this.card);
     this.value$.subscribe(v => {
       this.cardPathValue = v;
-      this.selected = v === this.cardName;
+      this.selected = v === this.card.id;
   ***REMOVED***);
 ***REMOVED***
 
   // assign budget value, unsetting if already exists
   cardClicked() {
-    if (this.cardPathValue === this.cardName) {
+    if (this.cardPathValue === this.card.id) {
       this.updateBudget(null);
   ***REMOVED*** else {
-      this.updateBudget(this.cardName);
+      this.updateBudget(this.card.id);
   ***REMOVED***
 ***REMOVED***
 
@@ -77,7 +80,7 @@ export class BudgetCardComponent {
       throw new Error("deep path not supported");
   ***REMOVED*** else {
       this.budget[this.cardPath] = value;
-      this.actions.set(this.budget);
+      this.actions.setActiveBudget(this.budget);
   ***REMOVED***
 ***REMOVED***
 }

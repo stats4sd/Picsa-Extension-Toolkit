@@ -1,10 +1,10 @@
-<ion-card class="budget-card selectable" [attr.selected]="selected" (click)="cardClicked()" *ngIf="cardName!='Add New'">
-  <budget-card-image [image]="cardSlug"></budget-card-image>
-  <div class="card-title">{{cardName}}</div>
+<ion-card class="budget-card selectable" [attr.selected]="selected" (click)="cardClicked()" *ngIf="!newCardType">
+  <budget-card-image [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+  <div class="card-title">{{card.name}}</div>
 </ion-card>
 
 <!-- add new card -->
-<ion-card class="budget-card add" (click)="addNewCard()" *ngIf="cardName=='Add New'">
-  <budget-card-image image="add" class="add-card"></budget-card-image>
+<ion-card class="budget-card add" (click)="addNewCard()" *ngIf="newCardType">
+  <budget-card-image imageId="add" class="add-card"></budget-card-image>
   <div>Add New Card</div>
 </ion-card>

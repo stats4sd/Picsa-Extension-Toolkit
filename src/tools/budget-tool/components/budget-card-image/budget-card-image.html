@@ -1,5 +1,11 @@
-<div [ngSwitch]="source" *ngIf="id" class="card-image-holder">
-  <img *ngSwitchCase="'svg'" [src]="'assets/img/budget/cards/'+id+'.svg'" (error)="svgError()" [class]="id">
-  <img *ngSwitchCase="'png'" [src]="'assets/img/budget/cards/'+id+'.png'" (error)="pngError()" [class]="id">
-  <img *ngSwitchDefault src="assets/img/budget/cards/other.png">
+<!-- image loaded from file -->
+<div [ngSwitch]="source" *ngIf="!imageData" class="card-image-holder">
+  <img *ngSwitchCase="'svg'" [src]="'assets/img/budget/cards/'+imageId+'.svg'" (error)="svgError()" [class]="imageId">
+  <img *ngSwitchCase="'png'" [src]="'assets/img/budget/cards/'+imageId+'.png'" (error)="pngError()" [class]="imageId">
+  <img *ngSwitchDefault src="assets/img/budget/cards/no-image.png">
+</div>
+
+<!-- image loaded from custom drawing -->
+<div *ngIf="imageData" class="card-image-holder">
+  <img [src]="imageData" [class]="imageId">
 </div>

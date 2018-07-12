@@ -1,6 +1,9 @@
 import { combineReducers, Reducer } from "redux";
 import * as Models from "../models/models";
-import { budgetToolReducer, BudgetToolState } from "./budget-tool.reducer";
+import {
+  budgetToolReducer,
+  BudgetToolState
+} from "../tools/budget-tool/budget-tool.reducer";
 import { climateToolReducer, ClimateToolState } from "./climate-tool.reducer";
 import { UserReducer } from "./user.reducer";
 
@@ -15,7 +18,10 @@ export const INITIAL_STATE: AppState = {
     lang: "en"
 ***REMOVED***,
   climate: null,
-  budget: null
+  budget: {
+    active: null,
+    meta: null
+***REMOVED***
 ***REMOVED***
 
 export const rootReducer: Reducer<AppState> = combineReducers({

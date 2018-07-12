@@ -2,13 +2,13 @@ import { select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
 import { Slides, ToastController } from "ionic-angular";
 import { Observable } from "rxjs";
-import { BudgetToolActions } from "../../../../actions/budget-tool.actions";
+import { BudgetToolActions } from "../../../../tools/budget-tool/budget-tool.actions";
 import {
   IBudget,
-  IEnterpriseOptions
-} from "../../../../models/budget-tool.models";
-import { StorageProvider } from "../../../../providers/storage/storage";
-import * as data from "../../data";
+  IBudgetCard,
+  ICustomBudgetCard
+} from "../../../../tools/budget-tool/budget-tool.models";
+import { budgetMeta } from "../../data";
 
 @Component({
   selector: "budget-settings",
@@ -18,33 +18,27 @@ export class BudgetSettingsComponent {
   apiVersion: 2;
   @select(["user", "budgets"])
   savedBudgets$: Observable<IBudget[]>;
-  @select(["budget", "enterpriseType"])
+  @select(["budget", "active", "enterpriseType"])
   enterpriseType$: Observable<string>;
-  @select("budget") budget$: Observable<IBudget>;
-  @select(["budget", "customCards", "enterprises"])
-  customEnterprises$: Observable<any>;
-  customEnterprises: IEnterpriseOptions[];
+  @select(["budget", "active"])
+  budget$: Observable<IBudget>;
+  @select(["budget", "active", "enterprise"])
+  enterprise$: Observable<string>;
+  @select(["budget", "meta", "enterprises"])
+  enterprises$: Observable<ICustomBudgetCard[]>;
+  allEnterprises: IBudgetCard[] = [];
+  filteredEnterprises: IBudgetCard[] = [];
+  showIndividualEnterprises: boolean;
+
   savedBudgets: IBudget[] = [];
   newBudget: boolean;
-  enterpriseTypes: string[];
+  enterpriseTypes: IBudgetCard[] = [];
   budget: IBudget;
-
-  saved: any = [];
-  archived: any = [];
-  enterprises: any;
   months: any;
-  timeScales: any;
   days: any;
-  modalMode: boolean;
-  // budget = {
-  //   title: "New Budget",
-  //   archived: false,
-  //   periods: { labels: [], starting: "Jan", timeScale: "months", total: 12 }
-  // ***REMOVED***
   @ViewChild(Slides) slides: Slides;
 
   constructor(
-    private storagePrvdr: StorageProvider,
     public toastCtrl: ToastController,
     private actions: BudgetToolActions
   ) {
@@ -57,38 +51,49 @@ export class BudgetSettingsComponent {
     ***REMOVED***
   ***REMOVED***);
     this.enterpriseType$.subscribe(type => {
-      this._filterEnterprises(type);
+      this._filterEnterprises(type, this.allEnterprises);
   ***REMOVED***);
-    this.enterpriseTypes = this._generateEnterpriseTypes(data.enterprises);
-    this.customEnterprises$.subscribe(enterprises => {
-      console.log("enterprises", enterprises);
+    this.enterprises$.subscribe(enterprises => {
       if (enterprises) {
-        this.customEnterprises = Object.values(enterprises);
-        console.log("custom enterprises", this.customEnterprises);
+        this.allEnterprises = enterprises;
+        this.enterpriseTypes = this._generateEnterpriseTypes(enterprises);
     ***REMOVED***
   ***REMOVED***);
-    console.log("budget", this.budget);
 ***REMOVED***
 
-  _generateEnterpriseTypes(enterprises: IEnterpriseOptions[]) {
-    const types = {***REMOVED***
+  // iterate over enterprises and populate groups that exist
+  // always populate the 'other/custom' group
+  _generateEnterpriseTypes(enterprises: IBudgetCard[]) {
+    const groups: any = { other: true ***REMOVED***
     enterprises.forEach(enterprise => {
-      types[enterprise.type] = true;
+      groups[enterprise.group] = true;
   ***REMOVED***);
-    return Object.keys(types);
+    // convert to array and move 'other' group to end
+    const types: string[] = Object.keys(groups);
+    types.push(types.splice(types.indexOf("other"), 1)[0]);
+    // finally convert to standard budget card format
+    const typeCards: IBudgetCard[] = types.map(type => {
+      return {
+        id: type,
+        name: type
+    ***REMOVED***;
+  ***REMOVED***);
+    return typeCards;
 ***REMOVED***
   // when enterprise type changed only show relevant enterprises
   // if there is only one sub type assume that is the one selected
-  _filterEnterprises(type: string) {
-    let enterprises = data.enterprises;
+  _filterEnterprises(type: string, enterprises: IBudgetCard[]) {
+    this.showIndividualEnterprises = false;
     if (type) {
       enterprises = enterprises.filter(e => {
-        return e.type === type;
+        return e.group === type;
     ***REMOVED***);
-  ***REMOVED***
-    this.enterprises = enterprises;
-    if (enterprises.length == 1) {
-      this.setBudget("enterprise", enterprises[0]);
+      this.filteredEnterprises = enterprises;
+      if (enterprises.length == 1 && type != "other") {
+        this.setBudget("enterprise", enterprises[0].id);
+    ***REMOVED*** else {
+        this.showIndividualEnterprises = true;
+    ***REMOVED***
   ***REMOVED***
 ***REMOVED***
   // assign budget value, unsetting if already exists (duplicate of budget card function)
@@ -98,12 +103,12 @@ export class BudgetSettingsComponent {
   ***REMOVED*** else {
       this.budget[key] = val;
   ***REMOVED***
-    this.actions.set(this.budget);
+    this.actions.setActiveBudget(this.budget);
 ***REMOVED***
 
   startNew() {
     const d = new Date();
-    const budget = {
+    const budget: IBudget = {
       apiVersion: this.apiVersion,
       archived: false,
       created: d.toLocaleDateString(),
@@ -113,31 +118,32 @@ export class BudgetSettingsComponent {
       id: null,
       periods: null,
       title: null,
-      scale: null
+      scale: null,
+      enterpriseType: null
   ***REMOVED***;
-    this.actions.createNew(budget);
+    this.actions.setActiveBudget(budget);
     this.newBudget = true;
 ***REMOVED***
 
   loadSaved() {}
   getSavedBudgets() {
     // load saved budgets from cache
-    this.storagePrvdr.getAll("budgets").then(res => {
-      const arr = [];
-      for (const key in res) {
-        let budget = res[key];
-        if (budget.archived) {
-          this.archived.push(budget);
-      ***REMOVED*** else {
-          if (!budget.hasOwnProperty("title")) {
-            budget = this.upgradeBudget(budget);
-        ***REMOVED***
-          arr.push(budget);
-      ***REMOVED***
-    ***REMOVED***
-      this.saved = arr.reverse();
-      console.log("saved budgets", this.saved);
-  ***REMOVED***);
+    // this.storagePrvdr.getAll("budgets").then(res => {
+    //   const arr = [];
+    //   for (const key in res) {
+    //     let budget = res[key];
+    //     if (budget.archived) {
+    //       this.archived.push(budget);
+    //   ***REMOVED*** else {
+    //       if (!budget.hasOwnProperty("title")) {
+    //         budget = this.upgradeBudget(budget);
+    //     ***REMOVED***
+    //       arr.push(budget);
+    //   ***REMOVED***
+    // ***REMOVED***
+    //   this.saved = arr.reverse();
+    //   console.log("saved budgets", this.saved);
+    // });
 ***REMOVED***
   loadBudget(b, isNew) {
     // click function to return selected budget

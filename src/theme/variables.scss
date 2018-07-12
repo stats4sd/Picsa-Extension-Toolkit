@@ -16,6 +16,10 @@
 // The "primary" color is the only required color in the map.
 $colors: (
   primary: #8a2644,
+  primary-inverse: (
+    base: #ffffff,
+    contrast: #8a2644
+  ),
   primary-wfp: #2a93fc,
   primary-walker: #8a2644,
   picsa-manual: #009688,
