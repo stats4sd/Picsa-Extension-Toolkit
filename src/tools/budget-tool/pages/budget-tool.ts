@@ -15,6 +15,8 @@ import { BudgetToolProvider } from "../budget-tool.provider";
 export class BudgetToolPage {
   @select(["budget"])
   readonly budget$: Observable<IBudget>;
+  @select(["budget", "active", "view"])
+  readonly view$: Observable<string>;
 
   constructor(private budgetPrvdr: BudgetToolProvider) {}
 }

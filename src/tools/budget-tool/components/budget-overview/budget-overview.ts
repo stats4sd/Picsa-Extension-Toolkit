@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Events, ToastController } from "ionic-angular";
-import { IBudget } from "../../../../tools/budget-tool/budget-tool.models";
+import { IBudget } from "../../budget-tool.models";
 
 @Component({
   selector: "budget-overview",

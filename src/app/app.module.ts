@@ -22,12 +22,16 @@ import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { environment } from "../environments/environment";
 // Providers
-import { YoutubeService } from "../providers/youtube-service";
+import {
+  FileService,
+  FirestoreStorageProvider,
+  NetworkProvider,
+  StorageProvider,
+  UserProvider,
+  YoutubeService
+} from "../providers/providers";
 import { C3ChartProvider } from "../providers/c3-chart/c3-chart";
 import { MalawiDataProvider } from "../providers/c3-chart/malawi-data";
-import { StorageProvider } from "../providers/storage/storage";
-import { FirestoreStorageProvider } from "../providers/storage/firestore";
-import { NetworkProvider } from "../providers/network/network";
 // redux
 import {
   NgRedux,
@@ -78,17 +82,19 @@ export const firebaseConfig = {
 
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    YoutubeService,
     SplashScreen,
     C3ChartProvider,
     Network,
     MalawiDataProvider,
-    StorageProvider,
-    FirestoreStorageProvider,
     FileOpener,
     File,
     StatusBar,
+    FileService,
+    FirestoreStorageProvider,
     NetworkProvider,
+    StorageProvider,
+    UserProvider,
+    YoutubeService,
     UserActions,
     ClimateToolActions,
     BudgetToolActions,

@@ -1,6 +1,10 @@
 import { NgRedux } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavParams, ViewController } from "ionic-angular";
+import {
+  IonicPage,
+  NavParams,
+  ViewController
+} from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";

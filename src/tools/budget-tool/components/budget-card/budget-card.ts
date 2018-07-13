@@ -1,21 +1,15 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
 import { ModalController } from "ionic-angular";
-import { Observable } from "rxjs/observable";
 import { AppState } from "../../../../reducers/reducers";
-import { BudgetToolActions } from "../../../../tools/budget-tool/budget-tool.actions";
-import {
-  IBudget,
-  IBudgetCard
-} from "../../../../tools/budget-tool/budget-tool.models";
+import { BudgetToolActions } from "../../budget-tool.actions";
+import { IBudget, IBudgetCard } from "../../budget-tool.models";
 
 @Component({
   selector: "budget-card",
   templateUrl: "budget-card.html"
 })
 export class BudgetCardComponent {
-  @select(["budget", "active"])
-  readonly budget$: Observable<IBudget>;
   @Input("path") cardPath: string;
   @Input("card") card: IBudgetCard;
   @Input("newCardType") newCardType: string;
@@ -29,11 +23,7 @@ export class BudgetCardComponent {
     public ngRedux: NgRedux<AppState>,
     public actions: BudgetToolActions,
     private modalCtrl: ModalController
-  ) {
-    this.budget$.subscribe(budget => {
-      this.budget = budget;
-  ***REMOVED***);
-***REMOVED***
+  ) {}
 
   ngOnInit() {
     // skip init if card not specified (e.g. addNewCard card doesn't have properties)
@@ -78,8 +68,9 @@ export class BudgetCardComponent {
     if (this.cardPath.includes(".")) {
       throw new Error("deep path not supported");
   ***REMOVED*** else {
-      this.budget[this.cardPath] = value;
-      this.actions.setActiveBudget(this.budget);
+      const budget = this.ngRedux.getState().budget.active;
+      budget[this.cardPath] = value;
+      this.actions.setActiveBudget(budget);
   ***REMOVED***
 ***REMOVED***
 }

@@ -1,65 +1,76 @@
-import { select } from "@angular-redux/store";
+import { NgRedux, select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
-import { Slides, ToastController } from "ionic-angular";
+import { Slides } from "ionic-angular";
 import { Observable } from "rxjs";
-import { BudgetToolActions } from "../../../../tools/budget-tool/budget-tool.actions";
+import { AppState } from "../../../../reducers/reducers";
+import { BudgetToolActions } from "../../budget-tool.actions";
 import {
   IBudget,
   IBudgetCard,
   ICustomBudgetCard
 } from "../../budget-tool.models";
-import { DAYS, defaults, MONTHS } from "../../data";
+import { BudgetToolProvider } from "../../budget-tool.provider";
+import { DAYS, MONTHS } from "../../data";
 
 @Component({
   selector: "budget-settings",
   templateUrl: "budget-settings.html"
 })
 export class BudgetSettingsComponent {
-  apiVersion: 2;
-  @select(["user", "budgets"])
-  savedBudgets$: Observable<IBudget[]>;
+  // budget property observers
   @select(["budget", "active", "enterpriseType"])
   enterpriseType$: Observable<string>;
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
   @select(["budget", "active", "enterprise"])
   enterprise$: Observable<string>;
+  @select(["budget", "active", "periods", "scale"])
+  timescale$: Observable<string>;
   @select(["budget", "meta", "enterprises"])
   enterprises$: Observable<ICustomBudgetCard[]>;
+  @select(["budget", "active", "created"])
+  created$: Observable<string>;
+  // additional properties
   allEnterprises: IBudgetCard[] = [];
   filteredEnterprises: IBudgetCard[] = [];
   showIndividualEnterprises: boolean;
-  timeScales = ["days", "weeks", "months"];
-
-  savedBudgets: IBudget[] = [];
-  newBudget: boolean;
+  timescales = ["days", "weeks", "months"];
   enterpriseTypes: IBudgetCard[] = [];
   budget: IBudget;
-  months: any;
-  days: any;
   @ViewChild(Slides) slides: Slides;
 
   constructor(
-    public toastCtrl: ToastController,
-    private actions: BudgetToolActions
-  ) {
-    this.budget$.subscribe(budget => {
-      this.budget = budget;
-  ***REMOVED***);
-    this.savedBudgets$.subscribe(budgets => {
-      if (budgets) {
-        this.savedBudgets = budgets;
-    ***REMOVED***
-  ***REMOVED***);
+    public actions: BudgetToolActions,
+    public ngRedux: NgRedux<AppState>,
+    public budgetPrvdr: BudgetToolProvider
+  ) {}
+
+  ngOnInit() {
+    this._addSubscribers();
+***REMOVED***
+
+  // various listeners for budget change actions
+  _addSubscribers() {
     this.enterpriseType$.subscribe(type => {
       this._filterEnterprises(type, this.allEnterprises);
   ***REMOVED***);
+    // update enterprise types and filter list when enterprises changes
     this.enterprises$.subscribe(enterprises => {
       if (enterprises) {
         this.allEnterprises = enterprises;
         this.enterpriseTypes = this._generateEnterpriseTypes(enterprises);
-        this._filterEnterprises(null, enterprises);
+        const type = this.budget ? this.budget.enterpriseType : null;
+        this._filterEnterprises(type, enterprises);
     ***REMOVED***
+  ***REMOVED***);
+    // calculate time periods when new timescale specified
+    this.timescale$.subscribe(scale => {
+      if (scale) {
+        this.calculatePeriod(scale);
+    ***REMOVED***
+  ***REMOVED***);
+    this.budget$.subscribe(budget => {
+      this.budget = budget;
   ***REMOVED***);
 ***REMOVED***
 
@@ -83,7 +94,7 @@ export class BudgetSettingsComponent {
     return typeCards;
 ***REMOVED***
   // when enterprise type changed only show relevant enterprises
-  // if there is only one sub type assume that is the one selected
+  // if there is only one sub type assume that is the one selected (unless other/custom)
   _filterEnterprises(type: string, enterprises: IBudgetCard[]) {
     this.showIndividualEnterprises = false;
     if (type) {
@@ -91,158 +102,56 @@ export class BudgetSettingsComponent {
         return e.group === type;
     ***REMOVED***);
       this.filteredEnterprises = enterprises;
-      if (enterprises.length == 1 && type != "other") {
-        this.setBudget("enterprise", enterprises[0].id);
-    ***REMOVED*** else {
+      if (type == "other") {
         this.showIndividualEnterprises = true;
+    ***REMOVED*** else {
+        // when only one result set it as type
+        if (enterprises.length == 1) {
+          this.budgetPrvdr.patchBudget("enterprise", enterprises[0].id);
+      ***REMOVED*** else {
+          this.showIndividualEnterprises = true;
+          this.budgetPrvdr.patchBudget("enterprise", null);
+      ***REMOVED***
     ***REMOVED***
   ***REMOVED*** else {
-      // if cards have been updated want to refilter but with same type selected
-      if (this.budget && this.budget.enterpriseType) {
-        this._filterEnterprises(this.budget.enterpriseType, enterprises);
-    ***REMOVED***
+      this.budgetPrvdr.patchBudget("enterprise", null);
   ***REMOVED***
-***REMOVED***
-  // assign budget value, unsetting if already exists (duplicate of budget card function)
-  setBudget(key, val) {
-    if (this.budget[key] === val) {
-      this.budget[key] = null;
-  ***REMOVED*** else {
-      this.budget[key] = val;
-  ***REMOVED***
-    this.actions.setActiveBudget(this.budget);
-***REMOVED***
-
-  startNew() {
-    const d = new Date();
-    const budget: IBudget = {
-      apiVersion: this.apiVersion,
-      archived: false,
-      created: d.toLocaleDateString(),
-      data: null,
-      description: null,
-      enterprise: null,
-      id: null,
-      periods: defaults.periods.days,
-      title: null,
-      scale: null,
-      enterpriseType: null
-  ***REMOVED***;
-    this.budget = budget;
-    this.actions.setActiveBudget(budget);
-    this.calculatePeriod();
-    this.newBudget = true;
-    this.slides.slideNext();
 ***REMOVED***
 
   nextSlide() {
     this.slides.slideNext();
 ***REMOVED***
 
-  getSavedBudgets() {
-    // load saved budgets from cache
-    // this.storagePrvdr.getAll("budgets").then(res => {
-    //   const arr = [];
-    //   for (const key in res) {
-    //     let budget = res[key];
-    //     if (budget.archived) {
-    //       this.archived.push(budget);
-    //   ***REMOVED*** else {
-    //       if (!budget.hasOwnProperty("title")) {
-    //         budget = this.upgradeBudget(budget);
-    //     ***REMOVED***
-    //       arr.push(budget);
-    //   ***REMOVED***
-    // ***REMOVED***
-    //   this.saved = arr.reverse();
-    //   console.log("saved budgets", this.saved);
-    // });
+  viewBudget() {
+    this.budget.view = "overview";
+    this.actions.setActiveBudget(this.budget);
 ***REMOVED***
-  loadBudget(b, isNew) {
-    // click function to return selected budget
-    // console.log("loading budget", b);
-    // if (isNew) {
-    //   b.created = new Date();
-    //   b.id = this.storagePrvdr.generatePushID();
-    //   b.data = this.createDataTemplates(b.periods.labels);
-    // }
-    // if (this.modalMode) {
-    //   this.viewCtrl.dismiss(b);
-    // } else {
-    //   this.navCtrl.push("BudgetToolPage", b);
-    // }
-***REMOVED***
-  // createDataTemplates(labels) {
-  //   const arr = [];
-  //   console.log("creating templates");
-  //   labels.forEach((label, i) => {
-  //     arr.push({
-  //       label: label,
-  //       index: i,
-  //       activities: [],
-  //       inputs: [],
-  //       outputs: [],
-  //       familyLabour: { people: 0, days: 0 },
-  //       balance: {
-  //         inputs: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         outputs: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         consumed: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         monthly: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         running: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***
-  //     ***REMOVED***
-  //   ***REMOVED***);
-  // ***REMOVED***);
-  //   return arr;
-  // }
-  // archive(budget) {
-  //   // console.log("archiving budget", budget);
-  //   // budget.archived = true;
-  //   // this.storagePrvdr
-  //   //   .saveUserDoc(budget, true, "budgets", budget.id)
-  //   //   .then(() => {
-  //   //     this.loadSavedBudgets();
-  //   //     const toast = this.toastCtrl.create({
-  //   //       message: "Budget Archived",
-  //   //       duration: 3000
-  //   //   ***REMOVED***);
-  //   //     toast.present();
-  //   // ***REMOVED***);
-  // }
 
-  calculatePeriod() {
+  calculatePeriod(timescale) {
+    const budget = this.ngRedux.getState().budget.active;
     // return array representing time periods
-    const timeScale = this.budget.periods.scale;
-    const starting = this.budget.periods.starting;
-    const total = this.budget.periods.total;
+    const starting = budget.periods.starting;
+    const total = budget.periods.total;
     let arr = [];
-    if (timeScale == "months") {
+    if (timescale == "months") {
+      budget.periods.total = 12;
+      budget.periods.starting = "Jan";
       arr = this.calculatePeriodMonths(total, starting);
   ***REMOVED***
-    if (timeScale == "days") {
+    if (timescale == "days") {
+      budget.periods.starting = "Mon";
+      budget.periods.total = 7;
       arr = this.calculatePeriodDays(total, starting);
   ***REMOVED***
-    if (timeScale == "weeks") {
+    if (timescale == "weeks") {
+      budget.periods.starting = null;
+      budget.periods.total = 4;
       arr = this.calculatePeriodConsecutive(total, "week");
   ***REMOVED***
-    if (timeScale == "none") {
+    if (timescale == "none") {
       arr = this.calculatePeriodConsecutive(total);
   ***REMOVED***
-    this.budget.periods.labels = arr;
+    budget.periods.labels = arr;
 ***REMOVED***
   calculatePeriodConsecutive(total, prefix?) {
     if (!prefix) {
@@ -284,4 +193,41 @@ export class BudgetSettingsComponent {
   ***REMOVED***
     return array.slice(0, total);
 ***REMOVED***
+
+  // createDataTemplates(labels) {
+  //   const arr = [];
+  //   labels.forEach((label, i) => {
+  //     arr.push({
+  //       label: label,
+  //       index: i,
+  //       activities: [],
+  //       inputs: [],
+  //       outputs: [],
+  //       familyLabour: { people: 0, days: 0 },
+  //       balance: {
+  //         inputs: {
+  //           total: 0,
+  //           dots: []
+  //       ***REMOVED***,
+  //         outputs: {
+  //           total: 0,
+  //           dots: []
+  //       ***REMOVED***,
+  //         consumed: {
+  //           total: 0,
+  //           dots: []
+  //       ***REMOVED***,
+  //         monthly: {
+  //           total: 0,
+  //           dots: []
+  //       ***REMOVED***,
+  //         running: {
+  //           total: 0,
+  //           dots: []
+  //       ***REMOVED***
+  //     ***REMOVED***
+  //   ***REMOVED***);
+  // ***REMOVED***);
+  //   return arr;
+  // }
 }

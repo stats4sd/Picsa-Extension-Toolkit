@@ -7,9 +7,12 @@
 
 
 <ion-content class="background-primary">
-  <budget-settings *ngIf="!budget"></budget-settings>
-  <budget-overview *ngIf="budget"></budget-overview>
+  <div [ngSwitch]="view$ | async" style="height: 100%">
+    <budget-settings *ngSwitchDefault></budget-settings>
+    <budget-overview *ngSwitchCase="'overview'"></budget-overview>
+  </div>
 </ion-content>
+
 
 
 

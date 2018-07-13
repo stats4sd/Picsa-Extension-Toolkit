@@ -1,7 +1,11 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, ToastController } from "ionic-angular";
-import version from "../../pages/changelog/version";
-import { StorageProvider } from "../../providers/storage/storage";
+import {
+  IonicPage,
+  NavController,
+  ToastController
+} from "ionic-angular";
+import { StorageProvider } from "../../providers/storage";
+import version from "../changelog/version";
 
 @IonicPage()
 @Component({
