@@ -1,7 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
-import { AlertController, Events, ToastController } from "ionic-angular";
+import {
+  AlertController,
+  Events,
+  ToastController
+} from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { StorageProvider } from "../../../../providers/storage/storage";
+import { StorageProvider } from "../../../../providers/storage";
 
 @Component({
   selector: "card-select",
@@ -125,7 +129,7 @@ export class CardSelectComponent {
       Types: this.type,
       Name: "New Card",
       Image: "",
-      ID: this.storagePrvdr.generatePushID(),
+      ID: this.storagePrvdr.firestorePrvdr.db.createId(),
       userGenerated: true
     };
     this.showNewCard = true;

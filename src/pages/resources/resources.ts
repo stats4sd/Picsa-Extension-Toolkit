@@ -1,7 +1,12 @@
 import { Component } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
-import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform
+} from "ionic-angular";
 
 @IonicPage({
   defaultHistory: ["HomePage"]

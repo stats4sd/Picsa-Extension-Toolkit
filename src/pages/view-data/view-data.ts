@@ -1,7 +1,11 @@
 import { Component } from "@angular/core";
-import { Events, IonicPage, NavController } from "ionic-angular";
-import { NetworkProvider } from "../../providers/network/network";
-import { StorageProvider } from "../../providers/storage/storage";
+import {
+  Events,
+  IonicPage,
+  NavController
+} from "ionic-angular";
+import { NetworkProvider } from "../../providers/network";
+import { StorageProvider } from "../../providers/storage";
 
 @IonicPage({
   defaultHistory: ["HomePage"]

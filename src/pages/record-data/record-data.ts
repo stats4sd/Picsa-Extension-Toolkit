@@ -7,8 +7,8 @@ import {
   NavController,
   ToastController
 } from "ionic-angular";
-import { NetworkProvider } from "../../providers/network/network";
-import { StorageProvider } from "../../providers/storage/storage";
+import { NetworkProvider } from "../../providers/network";
+import { StorageProvider } from "../../providers/storage";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -59,14 +59,14 @@ export class RecordDataPage {
 
   openForm2(form) {
     // method to open locally produced form pages and listen for save submissions
-    let page = form + "Page";
+    const page = `${form}Page`;
     this.nav.push(page, {});
   }
 
   saveFormSubmission(formName, formSubmission) {
     // save submitted form within submitted forms object, as stringified formsubmission within reporting.formname.pending
     console.log("saving submission", formName, formSubmission);
-    formSubmission._submissionID = this.storagePrvdr.generatePushID();
+    formSubmission._submissionID = this.storagePrvdr.firestorePrvdr.db.createId();
     formSubmission._userID = this.user.id;
     this.submittedForms[formName].pending.push(formSubmission);
     console.log("submitted forms", this.submittedForms);
@@ -108,7 +108,7 @@ export class RecordDataPage {
         .then(
           res => {
             console.log("res received, proceeding to sync");
-            let firebaseID = res;
+            const firebaseID = res;
             this.storagePrvdr.syncForms(firebaseID).then(res => {
               console.log("submitted successfully!");
               if (!backgroundMode) {

@@ -1,22 +1,29 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
-import { StorageProvider } from '../../providers/storage/storage'
-import { NetworkProvider } from '../../providers/network/network'
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController,
+  ToastController,
+  Events
+} from "ionic-angular";
+import { StorageProvider } from "../../providers/storage";
+import { NetworkProvider } from "../../providers/network";
 
 @IonicPage()
 @Component({
-  selector: 'page-settings',
-  templateUrl: 'settings.html',
+  selector: "page-settings",
+  templateUrl: "settings.html"
 })
 export class SettingsPage {
-  user: any = { name: '...Loading', permissions: {} }
-  lastBackup: null
+  user: any = { name: "...Loading", permissions: {} };
+  lastBackup: null;
   name: string;
   syncButton = {
-    text: 'Backup Now',
+    text: "Backup Now",
     disabled: false,
     color: "#8A2644"
-  }
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -24,47 +31,43 @@ export class SettingsPage {
     public storagePrvdr: StorageProvider,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    public networkProvider: NetworkProvider,
-
-  ) {
-
-  }
+    public networkProvider: NetworkProvider
+  ) {}
 
   ionViewDidLoad() {
     this.storagePrvdr.getUser().then(user => {
-      this.storagePrvdr.getUserDoc('settings', 'profile').then((res: any) => {
+      this.storagePrvdr.getUserDoc("settings", "profile").then((res: any) => {
         for (let key in res) {
-          if (res.hasOwnProperty(key)) { this.user[key] = res[key] }
+          if (res.hasOwnProperty(key)) {
+            this.user[key] = res[key];
+          }
         }
-      })
-    })
-
-
+      });
+    });
   }
   ionViewDidEnter() {
     // this.profile=this.storagePrvdr.user.profile
   }
   userEdit(name) {
     let prompt = this.alertCtrl.create({
-      title: 'User Name',
+      title: "User Name",
       message: "Enter your name",
       inputs: [
         {
-          name: 'userName',
-          placeholder: 'Name',
-          type: 'text'
-        },
+          name: "userName",
+          placeholder: "Name",
+          type: "text"
+        }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          handler: data => {
-          }
+          text: "Cancel",
+          handler: data => {}
         },
         {
-          text: 'Save',
+          text: "Save",
           handler: data => {
-            this.updateUser('name', data.userName)
+            this.updateUser("name", data.userName);
           }
         }
       ]
@@ -72,38 +75,43 @@ export class SettingsPage {
     prompt.present();
   }
   updateUser(key, val) {
-    console.log(key, val)
-    if (this.user.hasOwnProperty(key)) { this.user[key] = val }
-    this.storagePrvdr.saveUserDoc(this.user, false, 'settings', 'profile')
+    console.log(key, val);
+    if (this.user.hasOwnProperty(key)) {
+      this.user[key] = val;
+    }
+    this.storagePrvdr.saveUserDoc(this.user, false, "settings", "profile");
   }
   login() {
     let prompt = this.alertCtrl.create({
-      title: 'Login',
+      title: "Login",
       message: "Enter organisation access code in the box below",
       inputs: [
         {
-          name: 'accessCode',
-          placeholder: 'Code',
-          type: 'password'
-        },
+          name: "accessCode",
+          placeholder: "Code",
+          type: "password"
+        }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          handler: data => {
-          }
+          text: "Cancel",
+          handler: data => {}
         },
         {
-          text: 'Save',
+          text: "Save",
           handler: data => {
-            this.storagePrvdr.assignPermissions(data.accessCode).then((user) => {
-              console.log('user', user)
-              this.user = user
-            }
-              // this.presentToast('Successfully signed in as '+user.name)
-            ).catch((err) => {
-              console.log('err', err)
-            })
+            this.storagePrvdr
+              .assignPermissions(data.accessCode)
+              .then(
+                user => {
+                  console.log("user", user);
+                  this.user = user;
+                }
+                // this.presentToast('Successfully signed in as '+user.name)
+              )
+              .catch(err => {
+                console.log("err", err);
+              });
           }
         }
       ]
@@ -112,26 +120,24 @@ export class SettingsPage {
   }
   logout() {
     let alert = this.alertCtrl.create({
-      title: 'Sign Out',
-      message: 'Do you want to sign out of ' + this.user.permissions.name,
+      title: "Sign Out",
+      message: "Do you want to sign out of " + this.user.permissions.name,
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-          }
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {}
         },
         {
-          text: 'Confirm',
+          text: "Confirm",
           handler: () => {
-            this.user.permissions = {}
-            this.storagePrvdr.saveUserDoc(this.user, false)
+            this.user.permissions = {};
+            this.storagePrvdr.saveUserDoc(this.user, false);
           }
         }
       ]
     });
     alert.present();
-
   }
 
   presentToast(message) {
@@ -143,35 +149,44 @@ export class SettingsPage {
   }
 
   sync() {
-    console.log('starting sync')
-    this.syncButton.disabled = true
-    this.syncButton.text = "Starting Sync"
-    this.networkProvider.syncPrepare().then(
-      res => {
+    console.log("starting sync");
+    this.syncButton.disabled = true;
+    this.syncButton.text = "Starting Sync";
+    this.networkProvider
+      .syncPrepare()
+      .then(res => {
         // preflight request check internet and firebase status, and returns firebase id if successful
-        console.log('res', res)
-        this.user.firebaseID=res;
-        this.storagePrvdr.saveUserDoc(this.user,false,'settings','profile',true)
+        console.log("res", res);
+        this.user.firebaseID = res;
+        this.storagePrvdr.saveUserDoc(
+          this.user,
+          false,
+          "settings",
+          "profile",
+          true
+        );
         // show syncing animation
 
-        this.storagePrvdr.syncAll(res)
-          .then(
-          res => {
-            this.syncButton.text = 'Sync Complete'
-            this.syncButton.color = "#2E7D32"
-            this.syncButton.disabled = false
-            this.user.lastBackup = new Date(Date.now())
-            this.storagePrvdr.saveUserDoc(this.user, false, 'settings', 'profile', true)
-            console.log('res', res);
-
-          })
-      }).catch(err => {
-        console.log('err', err)
-        this.syncButton.text = err.message
-        this.syncButton.color = "#8A2644"
-        this.syncButton.disabled = false
-
+        this.storagePrvdr.syncAll(res).then(res => {
+          this.syncButton.text = "Sync Complete";
+          this.syncButton.color = "#2E7D32";
+          this.syncButton.disabled = false;
+          this.user.lastBackup = new Date(Date.now());
+          this.storagePrvdr.saveUserDoc(
+            this.user,
+            false,
+            "settings",
+            "profile",
+            true
+          );
+          console.log("res", res);
+        });
       })
+      .catch(err => {
+        console.log("err", err);
+        this.syncButton.text = err.message;
+        this.syncButton.color = "#8A2644";
+        this.syncButton.disabled = false;
+      });
   }
-
 }

@@ -10,6 +10,7 @@ export interface IBudget {
   id: string;
   data: BudgetEntry[];
   apiVersion: number;
+  view: string;
 }
 
 export interface IBudgetMeta {

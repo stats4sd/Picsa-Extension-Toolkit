@@ -1,22 +1,30 @@
-import { NgRedux } from "@angular-redux/store";
+import { NgRedux, select } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
-import { FirestoreStorageProvider } from "../../providers/storage/firestore";
-import { StorageProvider } from "../../providers/storage/storage";
+import { Observable } from "rxjs";
+import {
+  FirestoreStorageProvider,
+  StorageProvider,
+  UserProvider
+} from "../../providers/providers";
 import { AppState } from "../../reducers/reducers";
 import { BudgetToolActions } from "./budget-tool.actions";
-import { IBudgetCard } from "./budget-tool.models";
+import { IBudget, IBudgetCard } from "./budget-tool.models";
 import { budgetMeta } from "./data";
 
 @Injectable()
 export class BudgetToolProvider {
+  @select(["budget", "active"])
+  budget$: Observable<IBudget>;
   constructor(
     public firestorePrvdr: FirestoreStorageProvider,
+    public userPrvdr: UserProvider,
     private actions: BudgetToolActions,
     private storagePrvdr: StorageProvider,
     private ngRedux: NgRedux<AppState>
   ) {
     this.init();
     this.syncData();
+    this.enableAutoSave();
   }
 
   // automatically populate data from storage
@@ -31,6 +39,31 @@ export class BudgetToolProvider {
     }
   }
 
+  enableAutoSave() {
+    this.budget$.subscribe(budget => {
+      if (budget && budget.title) {
+        if (!budget.id) {
+          budget.id = this.firestorePrvdr.db.createId();
+        }
+      }
+    });
+  }
+
+  async saveBudget(budget: IBudget) {}
+
+  // change single budget key/value
+  patchBudget(key, val) {
+    setTimeout(() => {
+      const budget = this.ngRedux.getState().budget.active;
+      if (budget) {
+        budget[key] = val;
+        this.actions.setActiveBudget(budget);
+      }
+    }, 150);
+  }
+
+  getActiveBudget() {}
+
   // watch afs data endpoints and reflect changes to redux and localstorage
   async syncData() {
     for (const endpoint of Object.keys(budgetMeta)) {
@@ -38,7 +71,6 @@ export class BudgetToolProvider {
         `budgetTool/meta/${endpoint}`
       );
       collection.subscribe(data => {
-        console.log("budget data received", endpoint, data);
         this.actions.setBudgetMeta({ [endpoint]: data });
         const meta = this.ngRedux.getState().budget.meta;
         meta[endpoint] = data;
