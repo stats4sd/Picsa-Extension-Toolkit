@@ -49,7 +49,6 @@ export class BudgetCardComponent {
     pathArray.unshift("active");
     pathArray.unshift("budget");
     this.value$ = this.ngRedux.select(pathArray);
-    console.log("adding value sub", this.card);
     this.value$.subscribe(v => {
       this.cardPathValue = v;
       this.selected = v === this.card.id;

@@ -2,10 +2,10 @@ export default {
   title: "My First Budget",
   archived: false,
   periods: {
-    labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
+    labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
     starting: "Mon",
     scale: "days",
-    total: "6"
+    total: 7
 ***REMOVED***,
   description: "description here",
   enterprise: "livestock",

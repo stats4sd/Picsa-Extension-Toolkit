@@ -165,7 +165,7 @@ export const budgetMeta = {
   ]
 ***REMOVED***
 
-export const months = [
+export const MONTHS = [
   "Jan",
   "Feb",
   "Mar",
@@ -179,3 +179,16 @@ export const months = [
   "Nov",
   "Dec"
 ];
+
+export const DAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+
+export const defaults = {
+  periods: {
+    days: {
+      labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+      starting: "Mon",
+      scale: "days",
+      total: 7
+  ***REMOVED***
+***REMOVED***
+***REMOVED***
