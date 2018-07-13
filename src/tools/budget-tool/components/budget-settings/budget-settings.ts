@@ -7,8 +7,8 @@ import {
   IBudget,
   IBudgetCard,
   ICustomBudgetCard
-} from "../../../../tools/budget-tool/budget-tool.models";
-import { budgetMeta } from "../../data";
+} from "../../budget-tool.models";
+import { DAYS, defaults, MONTHS } from "../../data";
 
 @Component({
   selector: "budget-settings",
@@ -29,6 +29,7 @@ export class BudgetSettingsComponent {
   allEnterprises: IBudgetCard[] = [];
   filteredEnterprises: IBudgetCard[] = [];
   showIndividualEnterprises: boolean;
+  timeScales = ["days", "weeks", "months"];
 
   savedBudgets: IBudget[] = [];
   newBudget: boolean;
@@ -57,6 +58,7 @@ export class BudgetSettingsComponent {
       if (enterprises) {
         this.allEnterprises = enterprises;
         this.enterpriseTypes = this._generateEnterpriseTypes(enterprises);
+        this._filterEnterprises(null, enterprises);
       }
     });
   }
@@ -94,6 +96,11 @@ export class BudgetSettingsComponent {
       } else {
         this.showIndividualEnterprises = true;
       }
+    } else {
+      // if cards have been updated want to refilter but with same type selected
+      if (this.budget && this.budget.enterpriseType) {
+        this._filterEnterprises(this.budget.enterpriseType, enterprises);
+      }
     }
   }
   // assign budget value, unsetting if already exists (duplicate of budget card function)
@@ -116,16 +123,22 @@ export class BudgetSettingsComponent {
       description: null,
       enterprise: null,
       id: null,
-      periods: null,
+      periods: defaults.periods.days,
       title: null,
       scale: null,
       enterpriseType: null
     };
+    this.budget = budget;
     this.actions.setActiveBudget(budget);
+    this.calculatePeriod();
     this.newBudget = true;
+    this.slides.slideNext();
   }
 
-  loadSaved() {}
+  nextSlide() {
+    this.slides.slideNext();
+  }
+
   getSavedBudgets() {
     // load saved budgets from cache
     // this.storagePrvdr.getAll("budgets").then(res => {
@@ -159,79 +172,77 @@ export class BudgetSettingsComponent {
     //   this.navCtrl.push("BudgetToolPage", b);
     // }
   }
-  createDataTemplates(labels) {
-    const arr = [];
-    console.log("creating templates");
-    labels.forEach((label, i) => {
-      arr.push({
-        label: label,
-        index: i,
-        activities: [],
-        inputs: [],
-        outputs: [],
-        familyLabour: { people: 0, days: 0 },
-        balance: {
-          inputs: {
-            total: 0,
-            dots: []
-          },
-          outputs: {
-            total: 0,
-            dots: []
-          },
-          consumed: {
-            total: 0,
-            dots: []
-          },
-          monthly: {
-            total: 0,
-            dots: []
-          },
-          running: {
-            total: 0,
-            dots: []
-          }
-        }
-      });
-    });
-    return arr;
-  }
-  archive(budget) {
-    // console.log("archiving budget", budget);
-    // budget.archived = true;
-    // this.storagePrvdr
-    //   .saveUserDoc(budget, true, "budgets", budget.id)
-    //   .then(() => {
-    //     this.loadSavedBudgets();
-    //     const toast = this.toastCtrl.create({
-    //       message: "Budget Archived",
-    //       duration: 3000
-    //     });
-    //     toast.present();
-    //   });
-  }
-  nextSlide() {
-    this.slides.slideNext();
-  }
+  // createDataTemplates(labels) {
+  //   const arr = [];
+  //   console.log("creating templates");
+  //   labels.forEach((label, i) => {
+  //     arr.push({
+  //       label: label,
+  //       index: i,
+  //       activities: [],
+  //       inputs: [],
+  //       outputs: [],
+  //       familyLabour: { people: 0, days: 0 },
+  //       balance: {
+  //         inputs: {
+  //           total: 0,
+  //           dots: []
+  //         },
+  //         outputs: {
+  //           total: 0,
+  //           dots: []
+  //         },
+  //         consumed: {
+  //           total: 0,
+  //           dots: []
+  //         },
+  //         monthly: {
+  //           total: 0,
+  //           dots: []
+  //         },
+  //         running: {
+  //           total: 0,
+  //           dots: []
+  //         }
+  //       }
+  //     });
+  //   });
+  //   return arr;
+  // }
+  // archive(budget) {
+  //   // console.log("archiving budget", budget);
+  //   // budget.archived = true;
+  //   // this.storagePrvdr
+  //   //   .saveUserDoc(budget, true, "budgets", budget.id)
+  //   //   .then(() => {
+  //   //     this.loadSavedBudgets();
+  //   //     const toast = this.toastCtrl.create({
+  //   //       message: "Budget Archived",
+  //   //       duration: 3000
+  //   //     });
+  //   //     toast.present();
+  //   //   });
+  // }
+
   calculatePeriod() {
     // return array representing time periods
-    // const timeScale = this.budget.periods.timeScale;
-    // const starting = this.budget.periods.starting;
-    // const total = this.budget.periods.total;
-    // let arr = [];
-    // if (timeScale == "months") {
-    //   arr = this.calculatePeriodMonths(total, starting);
-    // }
-    // if (timeScale == "days") {
-    //   arr = this.calculatePeriodDays(total, starting);
-    // }
-    // if (timeScale == "weeks") {
-    //   arr = this.calculatePeriodConsecutive(total, "week");
-    // }
-    // if (timeScale == "none") {
-    //   arr = this.calculatePeriodConsecutive(total);
-    // }
-    // this.budget.periods.labels = arr;
+    const timeScale = this.budget.periods.scale;
+    const starting = this.budget.periods.starting;
+    const total = this.budget.periods.total;
+    let arr = [];
+    if (timeScale == "months") {
+      arr = this.calculatePeriodMonths(total, starting);
+    }
+    if (timeScale == "days") {
+      arr = this.calculatePeriodDays(total, starting);
+    }
+    if (timeScale == "weeks") {
+      arr = this.calculatePeriodConsecutive(total, "week");
+    }
+    if (timeScale == "none") {
+      arr = this.calculatePeriodConsecutive(total);
+    }
+    this.budget.periods.labels = arr;
   }
   calculatePeriodConsecutive(total, prefix?) {
     if (!prefix) {
@@ -244,9 +255,9 @@ export class BudgetSettingsComponent {
     return arr;
   }
   calculatePeriodMonths(total, starting) {
-    let array = this.months;
+    let array = MONTHS;
     if (starting) {
-      const startIndex = this.months.indexOf(starting);
+      const startIndex = MONTHS.indexOf(starting);
       for (let i = 0; i < startIndex; i++) {
         array.push(array.shift());
       }
@@ -259,9 +270,9 @@ export class BudgetSettingsComponent {
     return array.slice(0, total);
   }
   calculatePeriodDays(total, starting) {
-    let array = this.days;
+    let array = DAYS;
     if (starting) {
-      const startIndex = this.days.indexOf(starting);
+      const startIndex = DAYS.indexOf(starting);
       for (let i = 0; i < startIndex; i++) {
         array.push(array.shift());
       }
@@ -272,19 +283,5 @@ export class BudgetSettingsComponent {
       }
     }
     return array.slice(0, total);
-  }
-
-  /************* legacy functions, to be removed in future updates *************/
-
-  upgradeBudget(b) {
-    console.log("upgrading budget b");
-    if (!b.title) {
-      b.title = b.name;
-      delete b.name;
-    }
-    if (!b.periods) {
-      b.periods = { labels: [], starting: 1, timeScale: "none", total: 12 };
-    }
-    return b;
   }
 }

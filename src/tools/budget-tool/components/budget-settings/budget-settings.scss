@@ -1,14 +1,22 @@
 budget-settings {
+  // fix slide formatting
+  ion-slide.budget-slide {
+    align-items: flex-start;
+  }
+  .slide-zoom {
+    height: 100%;
+    overflow: auto;
+  } // hard code image height to match budget card image settings
+  .swiper-slide img {
+    width: 100px;
+    height: 100px;
+  }
   .saved-budgets {
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: white;
     color: black;
-  }
-  ion-slide {
-    background-color: color($colors, primary);
-    color: white;
   }
   .large-icon {
     font-size: xx-large;
