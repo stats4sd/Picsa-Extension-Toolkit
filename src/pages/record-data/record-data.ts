@@ -8,8 +8,10 @@ import {
   ToastController
 } from "ionic-angular";
 import { IUser } from "../../models/models";
-import { NetworkProvider } from "../../providers/network";
-import { StorageProvider } from "../../providers/storage";
+import {
+  FirestoreStorageProvider,
+  StorageProvider
+} from "../../providers/providers";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -35,7 +37,7 @@ export class RecordDataPage {
     public nav: NavController,
     public modalCtrl: ModalController,
     private storagePrvdr: StorageProvider,
-    private networkPrvdr: NetworkProvider,
+    private firestorePrvdr: FirestoreStorageProvider,
     public sanitizer: DomSanitizer,
     public events: Events,
     public toastCtrl: ToastController
@@ -60,7 +62,7 @@ export class RecordDataPage {
   async saveFormSubmission(formName, formSubmission) {
     // save submitted form within submitted forms object, as stringified formsubmission within reporting.formname.pending
     console.log("saving submission", formName, formSubmission);
-    formSubmission._submissionID = this.storagePrvdr.firestorePrvdr.db.createId();
+    formSubmission._submissionID = this.firestorePrvdr.db.createId();
     formSubmission._userID = this.user.id;
     this.submittedForms[formName].pending.push(formSubmission);
     console.log("submitted forms", this.submittedForms);

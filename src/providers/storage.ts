@@ -1,20 +1,43 @@
 /* Storage strategy
-
 Need offline-first approach and also potentially for users only ever offline.
-
-For data that is sync'd online, a local version if made available first (see budget tool provider sync for example)
+Data to be updated online also has local copy in storage.data which provides initial population
 */
 
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
-import { IUser } from "../models/models";
+import { DataActions } from "../actions/data.actions";
+import storageData from "./storage.data";
 
 @Injectable()
 export class StorageProvider {
-  public user: IUser;
+  constructor(public storage: Storage, private actions: DataActions) {
+    this.dataInit();
+    console.log("actions", this.actions);
+***REMOVED***
 
-  constructor(private storage: Storage) {}
-
+  // automatically load all data from storage into redux, where not available load from file
+  // if local data version > storage then override
+  async dataInit() {
+    const currentDataVersion = await this.storage.get("_version");
+    if (!currentDataVersion || currentDataVersion < storageData._version) {
+      this.loadDataFromFile();
+  ***REMOVED*** else {
+      this.loadDataFromCache();
+  ***REMOVED***
+***REMOVED***
+  async loadDataFromFile() {
+    for (const key of Object.keys(storageData)) {
+      this.set(key, storageData[key]);
+      this.actions.loadData({ [key]: storageData[key] }, "file");
+  ***REMOVED***
+***REMOVED***
+  async loadDataFromCache() {
+    for (const key of Object.keys(storageData)) {
+      const data = await this.storage.get(key);
+      this.actions.loadData({ [key]: data }, "storage");
+  ***REMOVED***
+***REMOVED***
+  // standard storage methods
   async get(storageKey: string) {
     return this.storage.get(storageKey);
 ***REMOVED***
