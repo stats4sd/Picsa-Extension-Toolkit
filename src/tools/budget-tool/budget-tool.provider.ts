@@ -43,8 +43,8 @@ export class BudgetToolProvider {
   enableAutoSave() {
     this.budget$.subscribe(budget => {
       if (budget && budget.title) {
-        if (!budget.id) {
-          budget.id = this.firestorePrvdr.db.createId();
+        if (!budget._key) {
+          budget._key = this.firestorePrvdr.db.createId();
         }
         this.saveBudget(budget);
       }
@@ -56,8 +56,8 @@ export class BudgetToolProvider {
     if (!savedBudgets) {
       savedBudgets = {};
     }
-    savedBudgets[budget.id] = budget;
-    this.userPrvdr.set("budgets", savedBudgets);
+    savedBudgets[budget._key] = budget;
+    this.userPrvdr.updateUser("budgets", savedBudgets);
   }
 
   // change single budget key/value
@@ -71,7 +71,11 @@ export class BudgetToolProvider {
     }, 150);
   }
 
-  getActiveBudget() {}
+  /*
+      The methods below are used to keep firebase data sync'd locally when internet available
+      They are the same as firebase and storage provider methods, but included again
+      to retain tool independent use and subcollection paths
+  */
 
   // watch afs data endpoints and reflect changes to redux and localstorage
   async syncData() {
