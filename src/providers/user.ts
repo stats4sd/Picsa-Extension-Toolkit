@@ -17,7 +17,9 @@ export class UserProvider {
     private storagePrvdr: StorageProvider,
     private actions: UserActions,
     private firestorePrvdr: FirestoreStorageProvider
-  ) {
+  ) {}
+  init() {
+    this.enableUserSync();
     this.loadUser();
     this.subscribeToFirebaseChanges();
     this.afAuth.auth
@@ -29,16 +31,19 @@ export class UserProvider {
   async loadUser() {
     const user: IUser = await this.storagePrvdr.get("user");
     if (user) {
+      console.log("user loaded from storage");
       this.actions.updateUser(user);
     }
   }
 
   // automatically reflect changes to user to local storage and firebase
-  syncUser() {
+  // note - only want to sync if some data saved (by default 4 items are saved even for anonymous users)
+  enableUserSync() {
     this.user$.subscribe(user => {
       this.user = user;
       this.storagePrvdr.set("user", user);
-      if (user.id) {
+      if (user && Object.keys(user).length > 4) {
+        console.log("syncing user online");
         this.firestorePrvdr.setDoc(`users/${user.id}`, user);
       }
     });
@@ -62,7 +67,6 @@ export class UserProvider {
         console.log("user signed in", user);
         this.actions.updateUser({
           id: user.uid,
-          lang: this.user.lang,
           email: user.email,
           verified: user.emailVerified
         });

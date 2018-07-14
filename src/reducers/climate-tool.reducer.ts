@@ -8,7 +8,7 @@ export interface ClimateToolState {
   site: ISite;
 }
 
-export function climateToolReducer(
+export function ClimateToolReducer(
   state: ClimateToolState = INITIAL_STATE.climate,
   action: Action
 ) {

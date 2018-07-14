@@ -11,7 +11,7 @@ export interface BudgetToolState {
   // no additional parameters currently specified (may change)
 }
 
-export function budgetToolReducer(
+export function BudgetToolReducer(
   state: BudgetToolState = INITIAL_STATE.budget,
   action: Action
 ) {

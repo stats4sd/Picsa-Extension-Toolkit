@@ -1,9 +1,34 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "angularfire2/firestore";
+import { DataActions } from "../actions/data.actions";
+import { StorageProvider } from "./storage";
+import storageCollections from "./storage.data";
 
 @Injectable()
 export class FirestoreStorageProvider {
-  constructor(public db: AngularFirestore) {}
+  constructor(
+    public db: AngularFirestore,
+    private actions: DataActions,
+    private storagePrvdr: StorageProvider
+  ) {
+    this.syncCollections();
+  }
+  // automatically sync firebase collection data locally using list from storage.data
+  syncCollections() {
+    for (const key of Object.keys(storageCollections)) {
+      console.log("syncing collection", key);
+      // skip metadata marked with _ in key
+      if (!key.includes("_")) {
+        this.getCollection(key).subscribe(data => {
+          if (data) {
+            this.storagePrvdr.set(key, data);
+            this.actions.syncData({ [key]: data }, "firestore");
+          }
+        });
+      }
+    }
+  }
+
   getCollection(path) {
     // return collection observable
     return this.db.collection(path).valueChanges();
@@ -38,5 +63,19 @@ export class FirestoreStorageProvider {
       .collection(path)
       .doc(key)
       .set(data);
+  }
+
+  // instead of usual sync from db to local, this can be used to populate the main db from local
+  // NOTE, THIS OVERRIDES EXISTING DATA ON MATCH, ONLY USE IF YOU KNOW WHAT YOU ARE DOING
+  async populateDB() {
+    for (const collection of Object.keys(storageCollections)) {
+      if (!collection.includes("_")) {
+        const data = storageCollections[collection];
+        console.log("data", data);
+        data.forEach(datum => {
+          this.addToCollection(collection, datum, datum._key);
+        });
+      }
+    }
   }
 }

@@ -40,6 +40,7 @@ import {
 } from "@angular-redux/store";
 import { AppState, INITIAL_STATE, rootReducer } from "../reducers/reducers";
 import { UserActions } from "../actions/user.actions";
+import { DataActions } from "../actions/data.actions";
 // Tools
 import { BudgetToolProvider } from "../tools/budget-tool/budget-tool.provider";
 import { ClimateToolActions } from "../actions/climate-tool.actions";
@@ -98,7 +99,8 @@ export const firebaseConfig = {
     UserActions,
     ClimateToolActions,
     BudgetToolActions,
-    BudgetToolProvider
+    BudgetToolProvider,
+    DataActions
   ]
 })
 export class AppModule {

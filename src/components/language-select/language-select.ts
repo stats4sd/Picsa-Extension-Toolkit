@@ -17,7 +17,6 @@ export class LanguageSelectComponent {
   readonly lang$: Observable<string>;
 
   constructor(private userActions: UserActions) {
-    console.log("Hello LanguageSelectComponent Component");
     this.lang$.subscribe(code => {
       this.setLanguage(code, "redux");
     });
@@ -26,14 +25,12 @@ export class LanguageSelectComponent {
   // send language update to redux or update local ngmodel depending on source of update
   setLanguage(code: string, source: "redux" | "home") {
     if (source == "redux") {
-      console.log("redux lang", code);
       if (code && this.language.code != code) {
         this.language = this.languages.filter(l => {
           return l.code === code;
         });
       }
     } else {
-      console.log("language", this.language);
       this.userActions.updateUser({
         lang: this.language.code
       });

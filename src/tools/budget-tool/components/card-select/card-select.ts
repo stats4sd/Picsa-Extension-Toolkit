@@ -115,20 +115,20 @@ export class CardSelectComponent {
   }
   addCard() {
     //lookup as card types not quite same as budget type names
-    const types = {
-      inputs: "input",
-      outputs: "output",
-      activities: "activity"
-    };
-    this.newCard = {
-      Type: types[this.type],
-      Types: this.type,
-      Name: "New Card",
-      Image: "",
-      ID: this.storagePrvdr.firestorePrvdr.db.createId(),
-      userGenerated: true
-    };
-    this.showNewCard = true;
+    // const types = {
+    //   inputs: "input",
+    //   outputs: "output",
+    //   activities: "activity"
+    // };
+    // this.newCard = {
+    //   Type: types[this.type],
+    //   Types: this.type,
+    //   Name: "New Card",
+    //   Image: "",
+    //   ID: this.storagePrvdr.firestorePrvdr.db.createId(),
+    //   userGenerated: true
+    // };
+    // this.showNewCard = true;
   }
 
   // saveNewCard() {

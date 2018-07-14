@@ -5,6 +5,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { TranslateService } from "@ngx-translate/core";
 import { Events, Nav, Platform } from "ionic-angular";
 import { Observable } from "rxjs";
+import { UserProvider } from "../providers/user";
 
 // declare var FCMPlugin;
 
@@ -22,10 +23,13 @@ export class MyApp {
     public events: Events,
     public splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private userPrvdr: UserProvider
   ) {
     this.initTranslate();
     platform.ready().then(() => {
+      // load user
+      this.userPrvdr.init();
       // mobile init
       console.log("platforms", platform.platforms());
       if (platform.is("cordova")) {
