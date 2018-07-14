@@ -9,7 +9,7 @@ import { defaults } from "../../data";
   selector: "budget-load",
   template: `<div padding class="budget-load-container">
   <h2>Saved Budgets</h2>
-  <ion-scroll style="flex:1">
+  <div class="saved-budgets-container">
     <ion-list *ngIf="savedBudgets">
       <div *ngFor="let budget of savedBudgets">
         <ion-item *ngIf="!budget.archived">
@@ -27,7 +27,7 @@ import { defaults } from "../../data";
     <div *ngIf="!savedBudgets">
         <p>There are no saved budgets</p>
     </div>
-  </ion-scroll>
+  </div>
   <button block ion-button (click)="startNew()" color="primary" style="max-width: 400px">
     <ion-icon name="add" class="large-icon"></ion-icon>
     <span style="margin-left:10px">Create a new Budget</span>

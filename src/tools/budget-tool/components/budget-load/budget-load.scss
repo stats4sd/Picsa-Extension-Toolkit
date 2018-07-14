@@ -5,6 +5,15 @@ budget-load {
     color: black;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+  }
+  .saved-budgets-container {
+    overflow: auto;
+    max-height: 66vh;
+  }
+  .saved-details:hover {
+    font-weight: bold;
+  }
+  .item {
+    cursor: pointer;
   }
 }

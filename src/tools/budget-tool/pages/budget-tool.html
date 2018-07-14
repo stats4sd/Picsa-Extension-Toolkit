@@ -2,29 +2,30 @@
   <ion-navbar hideBackButton class="title-bar">
     <div class="title-bar">
       <div class="budget-title">{{title$ | async}}</div>
-      <button class="nav-icon" ion-button icon-only clear (click)="setView(view)" *ngFor="let view of views" [disabled]="!budget"
-        [class.active]="(viewComponent$ | async)== view.component">
-        <ion-icon [name]="view.icon" [attr.icon]="view.icon"></ion-icon>
-      </button>
-      <button ion-button icon-only clear style="color: black" navPop>
-        <ion-icon name="close"></ion-icon>
-      </button>
+      <!-- nav bar for main views -->
+      <div *ngIf="(viewComponent$ | async) !='cell-edit'">
+        <button class="nav-icon" ion-button icon-only clear (click)="setView(view)" *ngFor="let view of views" [disabled]="!budget"
+          [class.active]="(viewComponent$ | async)== view.component">
+          <ion-icon [name]="view.icon" [attr.icon]="view.icon"></ion-icon>
+        </button>
+        <button ion-button icon-only clear style="color: black" navPop>
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </div>
+      <!-- nav bar for cell edit mode -->
+      <div *ngIf="(viewComponent$ | async) =='cell-edit'">
+        <button ion-button outline icon-right (click)="setView(views[0])">
+          Continue
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </div>
     </div>
-
   </ion-navbar>
 </ion-header>
 
 <!-- <budget-new-card *ngSwitchCase="'new-card'"></budget-new-card> -->
 
 <ion-content class="background-primary">
-  <!-- <div [ngSwitch]="viewComponent$ | async" style="height: 100%">
-    <budget-overview *ngSwitchCase="'overview'"></budget-overview>
-    <budget-settings *ngSwitchCase="'settings'"></budget-settings>
-    <budget-cell-edit *ngSwitchCase="'cell-edit'"></budget-cell-edit>
-    <budget-load *ngSwitchCase="'load'"></budget-load>
-    <div *ngSwitchDefault>Error: No view for {{viewComponent$ | async}}</div>
-  </div> -->
-
   <div style="height: 100%">
     <budget-overview [style.display]="(viewComponent$ | async) =='overview'? 'initial' : 'none'"></budget-overview>
     <budget-settings [style.display]="(viewComponent$ | async) =='settings'? 'initial' : 'none'"></budget-settings>

@@ -1,1 +1,7 @@
-<div class="editor-container">Budget Cell Editor</div>
+<div class="editor-container" padding>
+  <h2>Select Cards</h2>
+  <div style="display: flex; flex-wrap: wrap">
+    <budget-card *ngFor="let card of cards" [card]="card" [path]="'data.'+rowIndex+'.'+type"></budget-card>
+  </div>
+
+</div>
