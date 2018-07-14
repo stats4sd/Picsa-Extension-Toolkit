@@ -18,6 +18,10 @@ export function BudgetToolReducer(
   switch (action.type) {
     case BudgetToolActions.SET_ACTIVE_BUDGET:
       const updatedBudget = action as StandardAction;
+      // want to be able to set null to clear budget
+      if (!updatedBudget.payload) {
+        return { ...state, active: null ***REMOVED***
+    ***REMOVED***
       const newBudget = { ...state.active, ...updatedBudget.payload ***REMOVED***
       return { ...state, active: newBudget ***REMOVED***
 
@@ -25,6 +29,10 @@ export function BudgetToolReducer(
       const budgetMeta = action as StandardAction;
       const newMeta = { ...state.meta, ...budgetMeta.payload ***REMOVED***
       return { ...state, meta: newMeta ***REMOVED***
+
+    case BudgetToolActions.SET_BUDGET_VIEW:
+      const budgetView = action as StandardAction;
+      return { ...state, view: budgetView.payload ***REMOVED***
 
     default:
       return state;

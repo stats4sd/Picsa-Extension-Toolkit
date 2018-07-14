@@ -1,0 +1,19 @@
+<div class="budget-cell-container" (click)="editCell()">
+  <div *ngIf="cellData">
+    <div [ngSwitch]="type">
+      <div *ngSwitchCase="'activities'">
+        <div *ngFor=" let activity of budget.data[i].activities; let i=index ">
+          <div class="card-index " *ngIf="period.activities.length>1">{{i+1}}</div>
+          <img class="card-image" [src]="activity.Image">
+        </div>
+      </div>
+      <div *ngSwitchDefault>DEFAULT</div>
+
+    </div>
+  </div>
+  <div *ngIf="!cellData" class="add-cell-data">
+    <ion-icon name="add" class="add-cell-data-icon"></ion-icon>
+  </div>
+
+
+</div>

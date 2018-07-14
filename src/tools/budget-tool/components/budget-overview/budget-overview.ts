@@ -12,7 +12,6 @@ export class BudgetOverviewComponent {
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
   budget: IBudget;
-  data: any;
   rowTitles: any = [
     "Activities",
     "Inputs",
@@ -21,6 +20,8 @@ export class BudgetOverviewComponent {
     "Produce Consumed",
     "Cash Balance"
   ];
+
+  data: any;
   highlightActivity: any;
   highlighted: any = { activity: {} ***REMOVED***
   dots: any;

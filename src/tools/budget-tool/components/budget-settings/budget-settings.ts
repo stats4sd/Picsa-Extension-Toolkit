@@ -109,22 +109,31 @@ export class BudgetSettingsComponent {
         if (enterprises.length == 1) {
           this.budgetPrvdr.patchBudget("enterprise", enterprises[0].id);
       ***REMOVED*** else {
+          // otherwise set enterprise as null (if not already defined)
           this.showIndividualEnterprises = true;
-          this.budgetPrvdr.patchBudget("enterprise", null);
+          if (!this.budget || !this.budget.enterprise) {
+            console.log("preparing null patch", this.budget);
+            this.budgetPrvdr.patchBudget("enterprise", null);
+        ***REMOVED***
       ***REMOVED***
     ***REMOVED***
   ***REMOVED*** else {
+      console.log("null patch 2");
       this.budgetPrvdr.patchBudget("enterprise", null);
   ***REMOVED***
 ***REMOVED***
 
   nextSlide() {
+    console.log("next slide", this.slides);
     this.slides.slideNext();
 ***REMOVED***
 
   viewBudget() {
-    this.budget.view = "overview";
     this.actions.setActiveBudget(this.budget);
+    this.actions.setBudgetView({
+      component: "overview",
+      title: this.budget.title
+  ***REMOVED***);
 ***REMOVED***
 
   calculatePeriod(timescale) {

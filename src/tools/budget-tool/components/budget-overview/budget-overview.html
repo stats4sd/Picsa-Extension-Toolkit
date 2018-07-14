@@ -1,17 +1,17 @@
-<div id="budget" style="display: flex; background-color: white" *ngIf="budget">
+<div id="budget" class="budget-container" *ngIf="budget">
   <!-- First column titles places vertically -->
-  <div id="titles" class="titles time-period">
-    <div class="cell top-row"></div>
-    <div class="cell" *ngFor="let title of rowTitles">
+  <div class="time-period">
+    <div class="time-period-title cell top-row"></div>
+    <div [class]="'cell row-title '+title" *ngFor="let title of rowTitles">
       <div>{{title}}</div>
-      <div *ngIf="title=='Cash Balance'">
+      <div *ngIf="title=='Cash Balance'" class="cash-balance">
         <div *ngFor="let dot of dotsArray">
           <!-- <div class=flex (click)="toggleDotEdit()"> -->
           <div class=flex>
             <div>
               <img class="dot-value-image" [src]="'assets/img/budget/'+dot.key+'-positive.png'">
             </div>
-            <div *ngIf="!editDotValue">= MK {{dot.val}}</div>
+            <div *ngIf="!editDotValue">= {{dot.val}}</div>
           </div>
           <div *ngIf="editDotValue">
             <ion-input class="dot-value-input" type="number" [(ngModel)]="dots.large"></ion-input>
@@ -22,21 +22,19 @@
     </div>
   </div>
 
+
   <!-- Time periods calculated Vertically -->
-  <div class="time-period flex-basis" *ngFor="let period of budget.data">
-    <div class="time-period-title cell top-row">{{period.label}}</div>
+  <div class="time-period " *ngFor="let period of budget.periods.labels; let i = index">
+    <div class="time-period-title cell top-row">{{period}}</div>
     <!--Activities-->
     <div class="cell" (click)="edit('activities',period)">
-      <div class="grid-card flex">
-        <div *ngFor="let activity of period.activities; let i=index" class="flex-basis">
-          <div class="card-index" *ngIf="period.activities.length>1">{{i+1}}</div>
-          <img class="card-image" [src]="activity.Image">
-        </div>
-      </div>
+      <budget-cell [rowIndex]="i" type="activities" [rowLabel]="period">
+
+      </budget-cell>
     </div>
     <!--Inputs-->
     <div class="cell" (click)="edit('inputs',period)">
-      <div class="grid-card flex">
+      <div class="grid-card flex" *ngIf="budget.data[i] && budget.data[i].inputs">
         <div *ngFor="let input of period.inputs; let i=index" class="grow">
           <img class="card-image cell-main" [src]="input.Image">
           <div class="cell-footer flex">
@@ -49,7 +47,7 @@
     </div>
     <!--Family Labour-->
     <div class="cell" (click)="edit('familyLabour',period)">
-      <div class="grid-card" *ngIf="period.familyLabour && period.familyLabour.days">
+      <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].familyLabour">
         <div *ngFor="let person of _toArray(period.familyLabour.people)" class="flex">
           <ion-icon class="family-icon person-icon" name="person"></ion-icon>
           <div *ngFor="let days of _toArray(period.familyLabour.days)">
@@ -60,7 +58,7 @@
     </div>
     <!--Outputs-->
     <div class="cell" (click)="edit('outputs',period)">
-      <div class="grid-card">
+      <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].outputs">
         <div *ngFor="let output of period.outputs; let i=index" class="flex">
           <!-- multiple counter -->
           <!-- <div *ngIf="output.quantity <= 5">
@@ -81,7 +79,7 @@
 
     <!--Consumed-->
     <div class="cell" (click)="edit('consumed',period)">
-      <div class="grid-card">
+      <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].outputs">
         <div *ngFor="let output of period.outputs; let i=index" class="flex">
           <!-- multiple counter -->
           <!-- <div *ngIf="output.consumed <= 5">
@@ -95,8 +93,8 @@
       </div>
     </div>
     <!--balance-->
-    <div class="cell">
-      <div class="grid-card">
+    <div class="cell Cash">
+      <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].balance">
         <div class="one-em number-value">{{period.label}}: {{period.balance.monthly.total | number:'1.0-0'}}</div>
         <div class="flex one-em">
           <div class="dot-value" *ngFor="let dot of period.balance.monthly.dots">
@@ -114,7 +112,7 @@
     </div>
   </div>
   <!-- Totals column -->
-  <div class="time-period flex-basis">
+  <div class="time-period ">
     <div class="time-period-title cell top-row total-column">Total</div>
     <!--Activities-->
     <div class="cell total-column">
@@ -140,7 +138,7 @@
       </div>
     </div>
     <!--balance-->
-    <div class="cell total-column">
+    <div class="cell total-column Cash">
       <div class="grid-card flex">
       </div>
     </div>

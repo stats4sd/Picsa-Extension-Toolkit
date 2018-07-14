@@ -6,8 +6,8 @@ import { IBudget } from "../../budget-tool.models";
 import { defaults } from "../../data";
 
 @Component({
-  selector: "load-budget",
-  template: `<div padding class="saved-budgets">
+  selector: "budget-load",
+  template: `<div padding class="budget-load-container">
   <h2>Saved Budgets</h2>
   <ion-scroll style="flex:1">
     <ion-list *ngIf="savedBudgets">
@@ -55,20 +55,27 @@ export class BudgetLoadComponent {
       apiVersion: this.apiVersion,
       archived: false,
       created: new Date().toISOString(),
-      data: null,
+      data: [],
       description: null,
       enterprise: null,
       _key: null,
       periods: defaults.periods.days,
       title: null,
       scale: null,
-      enterpriseType: null,
-      view: null
+      enterpriseType: null
   ***REMOVED***;
     this.actions.setActiveBudget(budget);
+    this.actions.setBudgetView({
+      component: "settings",
+      title: "Settings"
+  ***REMOVED***);
 ***REMOVED***
   loadBudget(budget: IBudget) {
     this.actions.setActiveBudget(budget);
+    this.actions.setBudgetView({
+      component: "overview",
+      title: budget.title
+  ***REMOVED***);
 ***REMOVED***
 
   // archive(budget) {

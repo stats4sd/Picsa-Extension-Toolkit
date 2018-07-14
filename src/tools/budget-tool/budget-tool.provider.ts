@@ -62,6 +62,7 @@ export class BudgetToolProvider {
 
   // change single budget key/value
   patchBudget(key, val) {
+    console.log("patching budget", key, val);
     setTimeout(() => {
       const budget = this.ngRedux.getState().budget.active;
       if (budget) {

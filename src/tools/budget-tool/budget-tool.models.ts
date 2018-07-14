@@ -10,7 +10,6 @@ export interface IBudget {
   created: string;
   data: BudgetEntry[];
   apiVersion: number;
-  view: string;
 }
 
 export interface IBudgetMeta {
@@ -19,6 +18,19 @@ export interface IBudgetMeta {
   enterprises?: IBudgetCard[];
   outputs?: IBudgetCard[];
   inputs?: IBudgetCard[];
+}
+
+export interface IBudgetView {
+  component:
+    | "overview"
+    | "cell-edit"
+    | "load"
+    | "settings"
+    | "new-card"
+    | "export";
+  title: string;
+  icon?: string;
+  meta?: any;
 }
 
 interface periods {

@@ -43,7 +43,7 @@ export class RecordDataPage {
     public toastCtrl: ToastController
   ) {
     console.log("getting user from storage");
-    this.user = this.storagePrvdr.user;
+    // this.user = this.storagePrvdr.user;
     this.submittedForms = this.user.submittedForms;
 ***REMOVED***
   ionViewDidEnter() {
