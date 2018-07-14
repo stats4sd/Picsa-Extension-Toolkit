@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { Platform } from "ionic-angular";
 
-declare let cordova: any;
-declare let window: any;
+declare const cordova: any;
 
 @Injectable()
 export class FileService {
@@ -45,7 +44,7 @@ export class FileService {
 
   createDirectory(name: string) {
     if (this.fs) {
-      console.log("creating directory: " + name);
+      console.log("creating directory:", name);
       return new Promise((resolve, reject) => {
         this.file
           .createDir(this.fs, name, false)

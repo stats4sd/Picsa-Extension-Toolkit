@@ -39,17 +39,26 @@ export class BudgetToolProvider {
     }
   }
 
+  // automatically save any changes to the active budget
   enableAutoSave() {
     this.budget$.subscribe(budget => {
       if (budget && budget.title) {
         if (!budget.id) {
           budget.id = this.firestorePrvdr.db.createId();
         }
+        this.saveBudget(budget);
       }
     });
   }
 
-  async saveBudget(budget: IBudget) {}
+  async saveBudget(budget: IBudget) {
+    let savedBudgets = await this.userPrvdr.user.budgets;
+    if (!savedBudgets) {
+      savedBudgets = {};
+    }
+    savedBudgets[budget.id] = budget;
+    this.userPrvdr.set("budgets", savedBudgets);
+  }
 
   // change single budget key/value
   patchBudget(key, val) {

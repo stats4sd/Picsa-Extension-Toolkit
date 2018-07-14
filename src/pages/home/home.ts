@@ -1,9 +1,5 @@
 import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  ToastController
-} from "ionic-angular";
+import { IonicPage, NavController, ToastController } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage";
 import version from "../changelog/version";
 
@@ -56,10 +52,8 @@ export class HomePage {
       }
     ];
   }
-  ionViewDidLoad() {}
   ionViewDidEnter() {
     console.log("loading db");
-    this.storagePrvdr.storageInit();
     this.checkForUpdates();
   }
 

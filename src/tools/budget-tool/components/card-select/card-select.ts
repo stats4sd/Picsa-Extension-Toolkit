@@ -1,9 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import {
-  AlertController,
-  Events,
-  ToastController
-} from "ionic-angular";
+import { AlertController, Events, ToastController } from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
 import { StorageProvider } from "../../../../providers/storage";
 
@@ -159,39 +155,39 @@ export class CardSelectComponent {
   //   // }, "image/png");
   // }
   delete(card) {
-    console.log("deleting card", card);
-    const confirm = this.alertCtrl.create({
-      title: "Remove Card",
-      message:
-        "Are you sure you want to delete this card from your budget tool?",
-      buttons: [
-        {
-          text: "Cancel",
-          handler: () => {}
-        },
-        {
-          text: "Delete",
-          handler: () => {
-            card.archived = true;
-            this.storagePrvdr
-              .removeUserDoc("budgetCards", card.ID)
-              .then(res => {
-                const toast = this.toatsCtrl.create({
-                  message: "Card deleted",
-                  duration: 3000
-                });
-                toast.present();
-                console.log("selected", this.selected);
-                if (this.selected[card.ID]) {
-                  delete this.selected[card.ID];
-                }
-                console.log("selected", this.selected);
-              });
-          }
-        }
-      ]
-    });
-    confirm.present();
+    // console.log("deleting card", card);
+    // const confirm = this.alertCtrl.create({
+    //   title: "Remove Card",
+    //   message:
+    //     "Are you sure you want to delete this card from your budget tool?",
+    //   buttons: [
+    //     {
+    //       text: "Cancel",
+    //       handler: () => {}
+    //     },
+    //     {
+    //       text: "Delete",
+    //       handler: () => {
+    //         card.archived = true;
+    //         this.storagePrvdr
+    //           .removeUserDoc("budgetCards", card.ID)
+    //           .then(res => {
+    //             const toast = this.toatsCtrl.create({
+    //               message: "Card deleted",
+    //               duration: 3000
+    //             });
+    //             toast.present();
+    //             console.log("selected", this.selected);
+    //             if (this.selected[card.ID]) {
+    //               delete this.selected[card.ID];
+    //             }
+    //             console.log("selected", this.selected);
+    //           });
+    //       }
+    //     }
+    //   ]
+    // });
+    // confirm.present();
   }
   increaseFamily(variable) {
     if (this.period.familyLabour[variable] >= 0) {

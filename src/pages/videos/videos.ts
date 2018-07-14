@@ -88,7 +88,7 @@ export class VideosPage {
     console.log(cordova.file);
     this.file.listDir(this.fs, "videos").then(res => console.log(res));
     this.file
-      .createFile(this.fs + "/videos", "test.txt", true)
+      .createFile(`${this.fs}/videos`, "test.txt", true)
       .then(res => this.fileCheck(res));
   }
   errorFunction(err) {
@@ -113,7 +113,7 @@ export class VideosPage {
     }&type=video&order=viewCount&maxResults=
     ${this.maxResults}&key=${this.googleToken}`;
     if (this.pageToken) {
-      url += "&pageToken=" + this.pageToken;
+      url += `&pageToken=${this.pageToken}`;
     }
     this.http.get(url).subscribe((data: any) => {
       console.log(data.items);

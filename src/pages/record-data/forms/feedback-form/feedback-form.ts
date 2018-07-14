@@ -5,12 +5,7 @@ meta data should be done via provider so that both view-data and record-data pag
 
 import { Component, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  NavController,
-  NavParams,
-  IonicPage,
-  Events
-} from "ionic-angular";
+import { Events, IonicPage, NavController, NavParams } from "ionic-angular";
 import { StorageProvider } from "../../../../providers/storage";
 
 @IonicPage()
@@ -84,7 +79,7 @@ export class FeedbackFormPage {
     } else {
       this.template.updates++;
     }
-    for (let key in form) {
+    for (const key in form) {
       if (this.template.hasOwnProperty(key)) {
         this.template[key] = form[key];
       }
@@ -102,7 +97,7 @@ export class FeedbackFormPage {
     } else if (!this.slideThreeForm.valid) {
       this.signupSlider.slideTo(2);
     } else {
-      let submission = Object.assign(
+      const submission = Object.assign(
         {},
         this.slideOneForm.value,
         this.slideTwoForm.value,

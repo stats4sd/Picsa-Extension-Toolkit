@@ -7,6 +7,7 @@ import {
   NavController,
   ToastController
 } from "ionic-angular";
+import { IUser } from "../../models/models";
 import { NetworkProvider } from "../../providers/network";
 import { StorageProvider } from "../../providers/storage";
 
@@ -28,7 +29,7 @@ export class RecordDataPage {
   enketoLink: any;
   formDisplay: string = "none";
   submittedForms: any = { reporting: { pending: [], complete: [] } };
-  user: any = { id: "id not registered" };
+  user: IUser;
 
   constructor(
     public nav: NavController,
@@ -40,15 +41,8 @@ export class RecordDataPage {
     public toastCtrl: ToastController
   ) {
     console.log("getting user from storage");
-    this.storagePrvdr.getUser().then(user => {
-      this.user = user;
-      this.storagePrvdr.getUserDoc("submittedForms").then(res => {
-        console.log("submitted forms retrieved", res);
-        if (res) {
-          this.submittedForms = res;
-        }
-      });
-    });
+    this.user = this.storagePrvdr.user;
+    this.submittedForms = this.user.submittedForms;
   }
   ionViewDidEnter() {
     this.events.subscribe("form:submitted", data => {
@@ -63,28 +57,21 @@ export class RecordDataPage {
     this.nav.push(page, {});
   }
 
-  saveFormSubmission(formName, formSubmission) {
+  async saveFormSubmission(formName, formSubmission) {
     // save submitted form within submitted forms object, as stringified formsubmission within reporting.formname.pending
     console.log("saving submission", formName, formSubmission);
     formSubmission._submissionID = this.storagePrvdr.firestorePrvdr.db.createId();
     formSubmission._userID = this.user.id;
     this.submittedForms[formName].pending.push(formSubmission);
     console.log("submitted forms", this.submittedForms);
-    this.storagePrvdr
-      .saveUserDoc(
-        this.submittedForms[formName],
-        false,
-        "submittedForms",
-        formName
-      )
-      .then(res => {
-        console.log("saved submission");
-        this.events.publish("message", { text: "Submission Saved" });
-        this.events.unsubscribe("form:saved");
-        this.showToast("submission saved");
-        this.uploadSavedForms(formName);
-      });
+    await this.storagePrvdr.set("submittedForms", this.submittedForms);
+    console.log("saved submission");
+    this.events.publish("message", { text: "Submission Saved" });
+    this.events.unsubscribe("form:saved");
+    this.showToast("submission saved");
+    // this.uploadSavedForms(formName);
   }
+
   showToast(message) {
     this.toastCtrl
       .create({
@@ -97,60 +84,61 @@ export class RecordDataPage {
       })
       .present();
   }
-
-  uploadSavedForms(formName, backgroundMode?) {
-    // upload reporting form to firebase and resave local
-    // background mode prevents notification messages
-    if (this.submittedForms.reporting.pending.length > 0) {
-      this.uploadDisabled = true;
-      this.networkPrvdr
-        .syncPrepare()
-        .then(
-          res => {
-            console.log("res received, proceeding to sync");
-            const firebaseID = res;
-            this.storagePrvdr.syncForms(firebaseID).then(res => {
-              console.log("submitted successfully!");
-              if (!backgroundMode) {
-                this.showToast("forms submitted succesffully");
-              }
-              this.submittedForms.reporting.pending.forEach(e => {
-                this.submittedForms.reporting.complete.push(e);
-              });
-              this.submittedForms.reporting.pending = [];
-              console.log("forms", this.submittedForms.reporting);
-              this.storagePrvdr.saveUserDoc(
-                this.submittedForms.reporting,
-                false,
-                "submittedForms",
-                "reporting"
-              );
-              this.uploadDisabled = false;
-            });
-          },
-          rej => {
-            console.log("rej", rej);
-            this.uploadDisabled = false;
-            if (!backgroundMode) {
-              this.showToast(rej.message);
-            }
-          }
-        )
-
-        .catch(err => {
-          console.log("err", err);
-          this.uploadDisabled = false;
-          if (!backgroundMode) {
-            this.showToast(err.message);
-          }
-        });
-    } else {
-      if (!backgroundMode) {
-        this.showToast("all forms already uploaded");
-      }
-    }
-  }
 }
+
+//   uploadSavedForms(formName, backgroundMode?) {
+//     // upload reporting form to firebase and resave local
+//     // background mode prevents notification messages
+//     if (this.submittedForms.reporting.pending.length > 0) {
+//       this.uploadDisabled = true;
+//       this.networkPrvdr
+//         .syncPrepare()
+//         .then(
+//           res => {
+//             console.log("res received, proceeding to sync");
+//             const firebaseID = res;
+//             this.storagePrvdr.syncForms(firebaseID).then(res => {
+//               console.log("submitted successfully!");
+//               if (!backgroundMode) {
+//                 this.showToast("forms submitted succesffully");
+//               }
+//               this.submittedForms.reporting.pending.forEach(e => {
+//                 this.submittedForms.reporting.complete.push(e);
+//               });
+//               this.submittedForms.reporting.pending = [];
+//               console.log("forms", this.submittedForms.reporting);
+//               this.storagePrvdr.saveUserDoc(
+//                 this.submittedForms.reporting,
+//                 false,
+//                 "submittedForms",
+//                 "reporting"
+//               );
+//               this.uploadDisabled = false;
+//             });
+//           },
+//           rej => {
+//             console.log("rej", rej);
+//             this.uploadDisabled = false;
+//             if (!backgroundMode) {
+//               this.showToast(rej.message);
+//             }
+//           }
+//         )
+
+//         .catch(err => {
+//           console.log("err", err);
+//           this.uploadDisabled = false;
+//           if (!backgroundMode) {
+//             this.showToast(err.message);
+//           }
+//         });
+//     } else {
+//       if (!backgroundMode) {
+//         this.showToast("all forms already uploaded");
+//       }
+//     }
+//   }
+// }
 
 // getForms() {
 //   this.refreshing = true;
