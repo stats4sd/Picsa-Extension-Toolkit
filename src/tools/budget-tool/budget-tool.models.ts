@@ -20,6 +20,13 @@ export interface IBudgetMeta {
   inputs?: IBudgetCard[];
 }
 
+export interface IBudgetData {
+  activities: IActivityCard[];
+  inputs: IInputCard[];
+  outputs: IOutputCard[];
+  familyLabour: any;
+}
+
 export interface IBudgetView {
   component:
     | "overview"
@@ -99,12 +106,6 @@ interface BudgetEntry extends IBudgetData {
     monthly: BalanceCounter;
     running: BalanceCounter;
 ***REMOVED***;
-}
-
-export interface IBudgetData {
-  activities: IActivityCard[];
-  inputs: IInputCard[];
-  outputs: IOutputCard[];
 }
 
 export interface IBudgetPublicData {

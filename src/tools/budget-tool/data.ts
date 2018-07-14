@@ -46,8 +46,8 @@ export const budgetMeta = {
       id: "sowing"
   ***REMOVED***,
     {
-      name: "storagePrvdr",
-      id: "storagePrvdr"
+      name: "storage",
+      id: "storage"
   ***REMOVED***,
     {
       name: "threshing",

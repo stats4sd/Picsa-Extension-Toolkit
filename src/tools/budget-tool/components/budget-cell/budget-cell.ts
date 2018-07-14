@@ -11,6 +11,7 @@ export class BudgetCellComponent {
   @Input("rowIndex") rowIndex: number;
   @Input("rowLabel") rowLabel: string;
   @Input("type") type: string;
+  @Input("typeLabel") typeLabel: string;
   cellData: any;
   constructor(
     private NgRedux: NgRedux<AppState>,
@@ -33,7 +34,7 @@ export class BudgetCellComponent {
   editCell() {
     this.actions.setBudgetView({
       component: "cell-edit",
-      title: `${this.rowLabel} ${this.type}`,
+      title: `${this.rowLabel} ${this.typeLabel}`,
       meta: {
         type: this.type,
         rowIndex: this.rowIndex

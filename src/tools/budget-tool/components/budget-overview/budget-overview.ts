@@ -13,12 +13,12 @@ export class BudgetOverviewComponent {
   budget$: Observable<IBudget>;
   budget: IBudget;
   rowTitles: any = [
-    "Activities",
-    "Inputs",
-    "Family Labour",
-    "Outputs",
-    "Produce Consumed",
-    "Cash Balance"
+    { type: "activities", label: "Activities" },
+    { type: "inputs", label: "Inputs" },
+    { type: "familyLabour", label: "Family Labour" },
+    { type: "outputs", label: "Outputs" },
+    { type: "produceConsumed", label: "Produce Consumed" },
+    { type: "cashBalance", label: "Cash Balance" }
   ];
 
   data: any;
@@ -32,8 +32,6 @@ export class BudgetOverviewComponent {
   constructor(public toastCtrl: ToastController, public events: Events) {
     this.budget$.subscribe(budget => (this.budget = budget));
     this.highlightActivity = { 0: true ***REMOVED***
-
-    console.log("budget", this.budget);
     this.dots = {
       large: 50000,
       medium: 10000,
@@ -47,10 +45,6 @@ export class BudgetOverviewComponent {
     // );
 ***REMOVED***
   cardUpdate(periodIndex, type, values) {
-    console.log("updating card");
-    console.log("period", periodIndex);
-    console.log("type", type);
-    console.log("value", values);
     this.budget.data[periodIndex][type] = [];
     for (const key in values) {
       this.budget.data[periodIndex][type].push(values[key]);
@@ -59,7 +53,6 @@ export class BudgetOverviewComponent {
 ***REMOVED***
 
   edit(type, period) {
-    console.log("editing", type, period);
     // let selected = period[type];
     // let modal = this.modalCtrl.create(
     //   "CardSelectPage",
@@ -82,37 +75,7 @@ export class BudgetOverviewComponent {
   ***REMOVED***
     return index;
 ***REMOVED***
-  newAndLoad(operation) {
-    console.log("operation", operation);
-    // let modal = this.modalCtrl.create(
-    //   "BudgetSettingsPage",
-    //   { operation: operation, budget: this.budget },
-    //   { enableBackdropDismiss: false }
-    // );
-    // modal.onDidDismiss(data => {
-    //   this.budget = data;
-    //   this.calculateBalance();
-    // });
-    // console.log("presenting modal");
-    // modal.present();
-***REMOVED***
-  saveBudget() {
-    // console.log("saving budget");
-    // this.storagePrvdr
-    //   .saveUserDoc(this.budget, true, "budgets", this.budget._key)
-    //   .then(res => {
-    //     console.log("save res", res);
-    //     const toast = this.toastCtrl.create({
-    //       message: "Budget Saved",
-    //       duration: 3000
-    //   ***REMOVED***);
-    //     toast.present();
-    // ***REMOVED***);
-***REMOVED***
-  newBudget() {
-    // this.budget = this.bdg.createNewBudget()
-    // console.log('new budget', this.budget)
-***REMOVED***
+
   _toArray(value) {
     console.log("converting to array", value);
     return new Array(value).fill(0);
