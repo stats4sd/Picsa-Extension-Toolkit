@@ -1,5 +1,7 @@
+import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { Events, ToastController } from "ionic-angular";
+import { Observable } from "rxjs";
 import { IBudget } from "../../budget-tool.models";
 
 @Component({
@@ -7,6 +9,8 @@ import { IBudget } from "../../budget-tool.models";
   templateUrl: "budget-overview.html"
 })
 export class BudgetOverviewComponent {
+  @select(["budget", "active"])
+  budget$: Observable<IBudget>;
   budget: IBudget;
   data: any;
   rowTitles: any = [
@@ -25,11 +29,9 @@ export class BudgetOverviewComponent {
   editDotValue: boolean = false;
 
   constructor(public toastCtrl: ToastController, public events: Events) {
-    // this.data = budgetPrvdr.allData;
+    this.budget$.subscribe(budget => (this.budget = budget));
     this.highlightActivity = { 0: true ***REMOVED***
-    // this.budget = navParams.data.title
-    //   ? navParams.data
-    //   : budgetPrvdr.loadSampleBudget();
+
     console.log("budget", this.budget);
     this.dots = {
       large: 50000,
@@ -96,7 +98,7 @@ export class BudgetOverviewComponent {
   saveBudget() {
     // console.log("saving budget");
     // this.storagePrvdr
-    //   .saveUserDoc(this.budget, true, "budgets", this.budget.id)
+    //   .saveUserDoc(this.budget, true, "budgets", this.budget._key)
     //   .then(res => {
     //     console.log("save res", res);
     //     const toast = this.toastCtrl.create({

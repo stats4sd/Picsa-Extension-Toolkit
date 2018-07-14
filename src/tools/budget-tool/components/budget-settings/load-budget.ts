@@ -10,11 +10,11 @@ import { defaults } from "../../data";
   template: `<div padding class="saved-budgets">
   <h2>Saved Budgets</h2>
   <ion-scroll style="flex:1">
-    <ion-list *ngIf="savedBudgets$ | async">
-      <div *ngFor="let budget of savedBudgets$ | async">
+    <ion-list *ngIf="savedBudgets">
+      <div *ngFor="let budget of savedBudgets">
         <ion-item *ngIf="!budget.archived">
           <div class="saved-budget" style="display:flex">
-            <div class="saved-details" (click)="loadBudget(budget,false)" style="flex-basis:100%">
+            <div class="saved-details" (click)="loadBudget(budget)" style="flex-basis:100%">
               <div>{{budget.title}}</div>
               <div>{{budget.created | date:'mediumDate'}}</div>
             </div>
@@ -24,7 +24,7 @@ import { defaults } from "../../data";
         </ion-item>
       </div>
     </ion-list>
-    <div *ngIf="!(savedBudgets$ | async)">
+    <div *ngIf="!savedBudgets">
         <p>There are no saved budgets</p>
     </div>
   </ion-scroll>
@@ -35,23 +35,30 @@ import { defaults } from "../../data";
 </div>`
 })
 export class BudgetLoadComponent {
-  apiVersion: 2;
+  apiVersion = 2;
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
   @select(["user", "budgets"])
   savedBudgets$: Observable<IBudget[]>;
+  savedBudgets: IBudget[];
   constructor(public actions: BudgetToolActions) {}
-  ngOnInit() {}
+  ngOnInit() {
+    this.savedBudgets$.subscribe(budgets => {
+      if (budgets) {
+        this.savedBudgets = Object.values(budgets);
+        console.log("saved budgets", budgets);
+    ***REMOVED***
+  ***REMOVED***);
+***REMOVED***
   startNew() {
-    const d = new Date();
     const budget: IBudget = {
       apiVersion: this.apiVersion,
       archived: false,
-      created: d.toLocaleString(),
+      created: new Date().toISOString(),
       data: null,
       description: null,
       enterprise: null,
-      id: null,
+      _key: null,
       periods: defaults.periods.days,
       title: null,
       scale: null,
@@ -60,26 +67,15 @@ export class BudgetLoadComponent {
   ***REMOVED***;
     this.actions.setActiveBudget(budget);
 ***REMOVED***
-  loadBudget(b, isNew) {
-    // click function to return selected budget
-    // console.log("loading budget", b);
-    // if (isNew) {
-    //   b.created = new Date();
-    //   b.id = this.storagePrvdr.generatePushID();
-    //   b.data = this.createDataTemplates(b.periods.labels);
-    // }
-    // if (this.modalMode) {
-    //   this.viewCtrl.dismiss(b);
-    // } else {
-    //   this.navCtrl.push("BudgetToolPage", b);
-    // }
+  loadBudget(budget: IBudget) {
+    this.actions.setActiveBudget(budget);
 ***REMOVED***
 
   // archive(budget) {
   //   // console.log("archiving budget", budget);
   //   // budget.archived = true;
   //   // this.storagePrvdr
-  //   //   .saveUserDoc(budget, true, "budgets", budget.id)
+  //   //   .saveUserDoc(budget, true, "budgets", budget._key)
   //   //   .then(() => {
   //   //     this.loadSavedBudgets();
   //   //     const toast = this.toastCtrl.create({

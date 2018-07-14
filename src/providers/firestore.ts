@@ -39,18 +39,21 @@ export class FirestoreStorageProvider {
 ***REMOVED***
 
   updateDoc(path, data) {
-    // clean data to remove undefined values
+    return this.db.doc(path).update(this._cleanData(data));
+***REMOVED***
+
+  setDoc(path: string, data) {
+    return this.db.doc(path).set(this._cleanData(data));
+***REMOVED***
+
+  // clean data to remove undefined values
+  _cleanData(data) {
     Object.keys(data).forEach(key => {
       if (typeof data[key] == "undefined") {
         data[key] = null;
     ***REMOVED***
   ***REMOVED***);
-    console.log("cleaned data", data);
-    return this.db.doc(path).update(data);
-***REMOVED***
-
-  setDoc(path: string, data) {
-    return this.db.doc(path).set(data);
+    return data;
 ***REMOVED***
 
   addToCollection(path: string, data, key?) {

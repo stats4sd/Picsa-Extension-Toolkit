@@ -1,4 +1,5 @@
 budget-overview {
+  $viewHeight: calc(100vh - 64px);
   #budget {
     padding: 10px;
 ***REMOVED***
@@ -10,7 +11,7 @@ budget-overview {
     align-content: center;
 ***REMOVED***
   .flex-basis {
-    flex-basis: 100%
+    flex-basis: 100%;
 ***REMOVED***
   .card-image {
     max-height: 100%;
@@ -24,7 +25,7 @@ budget-overview {
     font-size: 0.8em;
     width: 1em;
     height: 1em;
-    text-align: center
+    text-align: center;
 ***REMOVED***
   .grid-card {
     height: 100%;
@@ -55,7 +56,7 @@ budget-overview {
   .cell-footer {
     height: 2vh;
     line-height: 1vh;
-    font-size: 2vh
+    font-size: 2vh;
 ***REMOVED***
   .cell-main {
     height: 8vh;
@@ -64,20 +65,20 @@ budget-overview {
     max-height: 2em;
 ***REMOVED***
   .image-holder {
-    height: 100%
+    height: 100%;
 ***REMOVED***
   img {
     max-width: 100%;
     max-height: 5em;
 ***REMOVED***
   .card-select-popover {
-    width: 80%
+    width: 80%;
 ***REMOVED***
   .family-icon {
     padding: 1px;
 ***REMOVED***
   .person-icon {
-    margin-right: 5px
+    margin-right: 5px;
 ***REMOVED***
   .dot-value {
     height: 1em;
@@ -87,25 +88,25 @@ budget-overview {
     margin: 1px;
 ***REMOVED***
   .text-input {
-    margin: 0
+    margin: 0;
 ***REMOVED***
   .one-em {
-    height: 1em
+    height: 1em;
 ***REMOVED***
   .number-value {
     z-index: 2;
-    background-color: rgba(255, 255, 255, 0.8)
+    background-color: rgba(255, 255, 255, 0.8);
 ***REMOVED***
   h1 {
     text-align: center;
     margin: 0;
-    font-size: large
+    font-size: large;
 ***REMOVED***
   ion-fab[top] {
-    top: 0
+    top: 0;
 ***REMOVED***
   .total-column {
-    background-color: wheat
+    background-color: wheat;
 ***REMOVED***
   .counterBadge {
     border-radius: 4px;
@@ -117,6 +118,6 @@ budget-overview {
     padding: 2px;
 ***REMOVED***
   .consumed {
-    background-color: lightcoral
+    background-color: lightcoral;
 ***REMOVED***
 }

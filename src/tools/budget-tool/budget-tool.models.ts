@@ -1,4 +1,5 @@
 export interface IBudget {
+  _key: string;
   title: string;
   archived: boolean;
   periods: periods;
@@ -7,7 +8,6 @@ export interface IBudget {
   enterpriseType: string;
   scale: string;
   created: string;
-  id: string;
   data: BudgetEntry[];
   apiVersion: number;
   view: string;

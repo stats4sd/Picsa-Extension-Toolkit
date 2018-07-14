@@ -50,7 +50,7 @@ export class UserProvider {
 ***REMOVED***
 
   // set user doc
-  set(userFieldKey, value) {
+  updateUser(userFieldKey, value) {
     let user = this.user;
     if (!user) {
       user = { lang: "en" ***REMOVED***
