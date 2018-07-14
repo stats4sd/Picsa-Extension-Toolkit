@@ -1,12 +1,7 @@
 import { Component } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  Platform
-} from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -86,9 +81,9 @@ export class ResourcesPage {
   ***REMOVED***
     this.file
       .copyFile(
-        this.file.applicationDirectory + "www/assets/resources/",
+        `${this.file.applicationDirectory}www/assets/resources/`,
         resource.filename,
-        this.file.externalApplicationStorageDirectory + "picsa/",
+        `${this.file.externalApplicationStorageDirectory}"picsa/`,
         resource.filename
       )
       .then(_ => {
@@ -96,9 +91,9 @@ export class ResourcesPage {
         console.log("opening file", resource.filename);
         this.fileOpener
           .open(
-            this.file.externalApplicationStorageDirectory +
-              "picsa/" +
-              resource.filename,
+            `${this.file.externalApplicationStorageDirectory}picsa/"${
+              resource.filename
+          ***REMOVED***`,
             "application/pdf"
           )
           .then(_ => console.log("openned successfully"))

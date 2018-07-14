@@ -39,17 +39,26 @@ export class BudgetToolProvider {
   ***REMOVED***
 ***REMOVED***
 
+  // automatically save any changes to the active budget
   enableAutoSave() {
     this.budget$.subscribe(budget => {
       if (budget && budget.title) {
         if (!budget.id) {
           budget.id = this.firestorePrvdr.db.createId();
       ***REMOVED***
+        this.saveBudget(budget);
     ***REMOVED***
   ***REMOVED***);
 ***REMOVED***
 
-  async saveBudget(budget: IBudget) {}
+  async saveBudget(budget: IBudget) {
+    let savedBudgets = await this.userPrvdr.user.budgets;
+    if (!savedBudgets) {
+      savedBudgets = {***REMOVED***
+  ***REMOVED***
+    savedBudgets[budget.id] = budget;
+    this.userPrvdr.set("budgets", savedBudgets);
+***REMOVED***
 
   // change single budget key/value
   patchBudget(key, val) {

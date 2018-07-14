@@ -1,9 +1,5 @@
 import { Component } from "@angular/core";
-import {
-  Events,
-  IonicPage,
-  NavController
-} from "ionic-angular";
+import { Events, IonicPage, NavController } from "ionic-angular";
 import { NetworkProvider } from "../../providers/network";
 import { StorageProvider } from "../../providers/storage";
 
@@ -33,15 +29,15 @@ export class ViewDataPage {
     this.events.subscribe("form:updated", res => {
       this.saveFormUpdate(res.formName, res.formSubmission);
   ***REMOVED***);
-    this.storagePrvdr.getUserDoc("submittedForms").then(res => {
-      console.log("res", res);
-      for (const key in res) {
-        if (this.mySubmissions.hasOwnProperty(key)) {
-          this.mySubmissions[key] = res[key];
-      ***REMOVED***
-    ***REMOVED***
-      console.log("mySubmissions", this.mySubmissions);
-  ***REMOVED***);
+    // this.storagePrvdr.getUserDoc("submittedForms").then(res => {
+    //   console.log("res", res);
+    //   for (const key in res) {
+    //     if (this.mySubmissions.hasOwnProperty(key)) {
+    //       this.mySubmissions[key] = res[key];
+    //   ***REMOVED***
+    // ***REMOVED***
+    //   console.log("mySubmissions", this.mySubmissions);
+    // });
 ***REMOVED***
 
   ionViewDidLoad() {}
@@ -60,31 +56,31 @@ export class ViewDataPage {
     // delete old form from copmleted array
     console.log("edit location", this.editLocation);
     this.mySubmissions[formName][this.editLocation].splice(this.editIndex, 1);
-    this.storagePrvdr
-      .saveUserDoc(
-        this.mySubmissions[formName],
-        false,
-        "submittedForms",
-        formName
-      )
-      .then(() => {
-        console.log("saved submission");
-        this.events.publish("message", { text: "Submission Saved" });
-        this.events.unsubscribe("form:saved");
-        this.syncForms();
-        // this.showToast('submission saved')
-        // this.uploadSavedForms(formName)
-    ***REMOVED***);
+    this.storagePrvdr;
+    // .saveUserDoc(
+    //   this.mySubmissions[formName],
+    //   false,
+    //   "submittedForms",
+    //   formName
+    // )
+    // .then(() => {
+    //   console.log("saved submission");
+    //   this.events.publish("message", { text: "Submission Saved" });
+    //   this.events.unsubscribe("form:saved");
+    //   this.syncForms();
+    //   // this.showToast('submission saved')
+    //   // this.uploadSavedForms(formName)
+    // });
 ***REMOVED***
 
   syncForms() {
-    this.networkPrvdr
-      .syncPrepare()
-      .then(res => {
-        console.log("res received, proceeding to sync");
-        const firebaseID = res;
-        this.storagePrvdr.syncForms(firebaseID);
-    ***REMOVED***)
-      .catch();
+    // this.networkPrvdr
+    //   .syncPrepare()
+    //   .then(res => {
+    //     console.log("res received, proceeding to sync");
+    //     const firebaseID = res;
+    //     // this.storagePrvdr.syncForms(firebaseID);
+    // ***REMOVED***)
+    //   .catch();
 ***REMOVED***
 }
