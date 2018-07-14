@@ -1,8 +1,22 @@
 budget-overview {
-  $viewHeight: calc(100vh - 64px);
-  #budget {
-    padding: 10px;
+  // cell height needs to accomodate header, padding and potential scrollbar
+  // $cellHeight: calc((100vh - 118px) / 6);
+
+  .budget-container {
+    display: flex;
+    overflow: auto;
+    height: 100%;
+    background-color: white;
+    color: black;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
   }
+  .time-period {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+  }
+
   .scroll-content {
     overflow-x: scroll;
   }
@@ -33,28 +47,39 @@ budget-overview {
     min-width: 150px;
   }
   .time-period {
-    border: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
     flex-grow: 1;
   }
   .row,
   .cell {
-    height: 15vh;
+    // height: $cellHeight;
+    flex-basis: calc((100% - 20px) / 6);
     display: block;
+    overflow: auto;
+  }
+  .cell.top-row {
+    height: 20px;
+    font-size: 16px;
+    text-align: center;
+    flex-basis: unset;
+  }
+  // want last row cells to adjust height to fill with/without scrollbar
+  .cell.Cash {
+    height: 100%;
+  }
+  .cell.row-title {
+    padding: 5px;
   }
   .cell {
     min-width: 100px;
   }
-  .top-row {
-    height: 3vh;
-    line-height: 3vh;
-    font-size: 2vh;
-    text-align: center;
-  }
+
   .cell {
     border-bottom: 1px solid gray;
   }
   .cell-footer {
-    height: 2vh;
+    height: 20px;
     line-height: 1vh;
     font-size: 2vh;
   }

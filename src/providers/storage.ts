@@ -12,7 +12,6 @@ import storageData from "./storage.data";
 export class StorageProvider {
   constructor(public storage: Storage, private actions: DataActions) {
     this.dataInit();
-    console.log("actions", this.actions);
   }
 
   // automatically load all data from storage into redux, where not available load from file

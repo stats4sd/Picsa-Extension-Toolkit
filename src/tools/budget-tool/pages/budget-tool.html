@@ -1,15 +1,35 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title *ngIf="!budgetTitle">{{'Budget Tool'|translate}}</ion-title>
-    <ion-title *ngIf="budgetTitle">{{budgetTitle}}</ion-title>
+  <ion-navbar hideBackButton class="title-bar">
+    <div class="title-bar">
+      <div class="budget-title">{{title$ | async}}</div>
+      <button class="nav-icon" ion-button icon-only clear (click)="setView(view)" *ngFor="let view of views" [disabled]="!budget"
+        [class.active]="(viewComponent$ | async)== view.component">
+        <ion-icon [name]="view.icon" [attr.icon]="view.icon"></ion-icon>
+      </button>
+      <button ion-button icon-only clear style="color: black" navPop>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </div>
+
   </ion-navbar>
 </ion-header>
 
+<!-- <budget-new-card *ngSwitchCase="'new-card'"></budget-new-card> -->
 
 <ion-content class="background-primary">
-  <div [ngSwitch]="view$ | async" style="height: 100%">
-    <budget-settings *ngSwitchDefault></budget-settings>
+  <!-- <div [ngSwitch]="viewComponent$ | async" style="height: 100%">
     <budget-overview *ngSwitchCase="'overview'"></budget-overview>
+    <budget-settings *ngSwitchCase="'settings'"></budget-settings>
+    <budget-cell-edit *ngSwitchCase="'cell-edit'"></budget-cell-edit>
+    <budget-load *ngSwitchCase="'load'"></budget-load>
+    <div *ngSwitchDefault>Error: No view for {{viewComponent$ | async}}</div>
+  </div> -->
+
+  <div style="height: 100%">
+    <budget-overview [style.display]="(viewComponent$ | async) =='overview'? 'initial' : 'none'"></budget-overview>
+    <budget-settings [style.display]="(viewComponent$ | async) =='settings'? 'initial' : 'none'"></budget-settings>
+    <budget-cell-edit [style.display]="(viewComponent$ | async) =='cell-edit'? 'initial' : 'none'"></budget-cell-edit>
+    <budget-load [style.display]="(viewComponent$ | async) =='load'? 'initial' : 'none'"></budget-load>
   </div>
 </ion-content>
 

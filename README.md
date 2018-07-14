@@ -36,6 +36,12 @@ $npm uninstall --save cordova-plugin-file cordova-plugin-file-transfer
 $npm install --save cordova-plugin-file cordova-plugin-file-transfer @ionic-native/file
 $ionic cordova plugin add --save cordova-plugin-file cordova-plugin-file-transfer
 
+### ionic import sources
+
+Current typescript/vscode has issue trying to import from ionic-angular/umd
+search for ionic-angular/umd and replace with ionic-angular
+(https://github.com/Microsoft/TypeScript/issues/25204)
+
 ### build fails for android - Multiple dex files
 
 possibly due to conflicts within file opener and fileopener2
