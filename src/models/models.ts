@@ -24,6 +24,7 @@ interface IUserPerimissions {
   canViewDiscussionsPage: boolean;
   canViewRecordDataPage: boolean;
   canViewViewDataPage: boolean;
+  privateWhatsappGroups: { ["id"]: boolean }[];
 }
 
 // users can register to groups which provide specific access
