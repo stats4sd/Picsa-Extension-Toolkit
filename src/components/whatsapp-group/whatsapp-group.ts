@@ -14,4 +14,5 @@ export interface IWhatsAppGroup {
   label: string;
   description: string;
   link: string;
+  private?: boolean;
 }
