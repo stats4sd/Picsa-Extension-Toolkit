@@ -1,12 +1,9 @@
+import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import {
-  AlertController,
-  IonicPage,
-  NavController,
-  NavParams,
-  ToastController
-} from "ionic-angular";
-import { NetworkProvider, StorageProvider } from "../../providers/providers";
+import { AlertController, IonicPage, ToastController } from "ionic-angular";
+import { Observable } from "rxjs";
+import { IUser } from "../../models/models";
+import { StorageProvider } from "../../providers/providers";
 
 @IonicPage()
 @Component({
@@ -14,23 +11,24 @@ import { NetworkProvider, StorageProvider } from "../../providers/providers";
   templateUrl: "settings.html"
 })
 export class SettingsPage {
-  user: any = { name: "...Loading", permissions: {} ***REMOVED***
-  lastBackup: null;
+  user: IUser;
+  lastBackup: string;
   name: string;
-  syncButton = {
-    text: "Backup Now",
-    disabled: false,
-    color: "#8A2644"
-***REMOVED***;
+  @select("user") user$: Observable<IUser>;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     public storagePrvdr: StorageProvider,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController,
-    public networkProvider: NetworkProvider
-  ) {}
+    public toastCtrl: ToastController
+  ) {
+    this.getLastBackup();
+    this.user$.subscribe(user => (this.user = user));
+***REMOVED***
+
+  async getLastBackup() {
+    const backup: string = await this.storagePrvdr.get("_lastBackup");
+    this.lastBackup = backup;
+***REMOVED***
 
   // userEdit(name) {
   //   const prompt = this.alertCtrl.create({
@@ -102,27 +100,28 @@ export class SettingsPage {
   // ***REMOVED***);
   //   prompt.present();
   // }
-  // logout() {
-  //   let alert = this.alertCtrl.create({
-  //     title: "Sign Out",
-  //     message: "Do you want to sign out of " + this.user.permissions.name,
-  //     buttons: [
-  //       {
-  //         text: "Cancel",
-  //         role: "cancel",
-  //         handler: () => {}
-  //     ***REMOVED***,
-  //       {
-  //         text: "Confirm",
-  //         handler: () => {
-  //           this.user.permissions = {***REMOVED***
-  //           this.storagePrvdr.saveUserDoc(this.user, false);
-  //       ***REMOVED***
-  //     ***REMOVED***
-  //     ]
-  // ***REMOVED***);
-  //   alert.present();
-  // }
+  logout() {
+    const alert = this.alertCtrl.create({
+      title: "Sign Out",
+      message:
+        "Note, if you log out all personal data on this device will be removed. Do you want to proceed?",
+      buttons: [
+        {
+          text: "Go back",
+          role: "cancel",
+          handler: () => {}
+      ***REMOVED***,
+        {
+          text: "Logout and clear data",
+          handler: () => {
+            // this.user.permissions = {***REMOVED***
+            // this.storagePrvdr.saveUserDoc(this.user, false);
+        ***REMOVED***
+      ***REMOVED***
+      ]
+  ***REMOVED***);
+    alert.present();
+***REMOVED***
 
   // presentToast(message) {
   //   let toast = this.toastCtrl.create({

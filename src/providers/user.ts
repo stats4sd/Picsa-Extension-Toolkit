@@ -64,7 +64,7 @@ export class UserProvider {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        console.log("user signed in", user);
+        console.log("user signed in", user.uid);
         this.actions.updateUser({
           id: user.uid,
           email: user.email,
