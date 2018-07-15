@@ -11,6 +11,30 @@ export interface IUser {
   email?: string;
   verified?: boolean;
   lang?: string;
+  groups?: string[];
+  permissions?: IUserPerimissions;
+  defaults?: IUserDefaults;
+}
+
+interface IUserDefaults {
+  country: string;
+}
+
+interface IUserPerimissions {
+  canViewDiscussionsPage: boolean;
+  canViewRecordDataPage: boolean;
+  canViewViewDataPage: boolean;
+}
+
+// users can register to groups which provide specific access
+// group order specifies a hierarchy which can be used to handle overrides
+// if overriding permissions or defaults for multiple groups
+export interface IGroup {
+  name: string;
+  id: string;
+  permissions: IUserPerimissions;
+  defaults: any;
+  order: number;
 }
 
 // data stored locally and sync'd from online
