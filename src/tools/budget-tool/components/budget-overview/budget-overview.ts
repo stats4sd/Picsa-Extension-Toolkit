@@ -30,7 +30,9 @@ export class BudgetOverviewComponent {
   editDotValue: boolean = false;
 
   constructor(public toastCtrl: ToastController, public events: Events) {
-    this.budget$.subscribe(budget => (this.budget = budget));
+    this.budget$.subscribe(budget => {
+      this.budget = budget;
+  ***REMOVED***);
     this.highlightActivity = { 0: true ***REMOVED***
     this.dots = {
       large: 50000,
@@ -38,19 +40,19 @@ export class BudgetOverviewComponent {
       small: 1000,
       half: 500
   ***REMOVED***;
-    this.dotsArray = this._objectToArray(this.dots);
+    // this.dotsArray = this._objectToArray(this.dots);
     // this.calculateBalance();
     // this.events.subscribe("card:update", d =>
     //   this.cardUpdate(d.periodIndex, d.type, d.value)
     // );
 ***REMOVED***
-  cardUpdate(periodIndex, type, values) {
-    this.budget.data[periodIndex][type] = [];
-    for (const key in values) {
-      this.budget.data[periodIndex][type].push(values[key]);
-  ***REMOVED***
-    console.log("budget", this.budget);
-***REMOVED***
+  // cardUpdate(periodIndex, type, values) {
+  //   this.budget.data[periodIndex][type] = [];
+  //   for (const key in values) {
+  //     this.budget.data[periodIndex][type].push(values[key]);
+  // ***REMOVED***
+  //   console.log("budget", this.budget);
+  // }
 
   edit(type, period) {
     // let selected = period[type];
@@ -76,135 +78,135 @@ export class BudgetOverviewComponent {
     return index;
 ***REMOVED***
 
-  _toArray(value) {
-    console.log("converting to array", value);
-    return new Array(value).fill(0);
-***REMOVED***
-  _objectToArray(object) {
-    console.log("converting object", object);
-    const arr = [];
-    for (const key in object) {
-      arr.push({ key: key, val: object[key] });
-  ***REMOVED***
-    return arr;
-***REMOVED***
-  calculateBalance() {
-    // total for current period
-    console.log("calculating balance");
-    const i = 0;
-    let runningNet = 0;
-    for (const period of this.budget.data) {
-      let inputNet = 0;
-      let outputNet = 0;
-      let consumedNet = 0;
-      let monthlyNet = 0;
-      //remember, inputs have negative effect on cash flow as need to be bought
-      let j = 0;
-      for (const input of period.inputs) {
-        if (input.quantity > 0) {
-          const temp = input;
-          temp.total = input.quantity * input.cost;
-          temp.dots = this.valueDotNotation("expense", temp.total);
-          // period           current input
-          this.budget.data[i].inputs[j] = temp;
-          inputNet = inputNet + input.quantity * input.cost;
-      ***REMOVED***
-        j++;
-    ***REMOVED***
-      for (const output of period.outputs) {
-        if (output.quantity > 0) {
-          outputNet = outputNet + output.quantity * output.cost;
-          consumedNet = consumedNet + output.consumed * output.cost;
-      ***REMOVED***
-    ***REMOVED***
-      monthlyNet = outputNet - inputNet - consumedNet;
-      runningNet = runningNet + monthlyNet;
+  // _toArray(value) {
+  //   console.log("converting to array", value);
+  //   return new Array(value).fill(0);
+  // }
+  // _objectToArray(object) {
+  //   console.log("converting object", object);
+  //   const arr = [];
+  //   for (const key in object) {
+  //     arr.push({ key: key, val: object[key] });
+  // ***REMOVED***
+  //   return arr;
+  // }
+  // calculateBalance() {
+  //   // total for current period
+  //   console.log("calculating balance");
+  //   const i = 0;
+  //   let runningNet = 0;
+  //   for (const period of this.budget.data) {
+  //     let inputNet = 0;
+  //     let outputNet = 0;
+  //     let consumedNet = 0;
+  //     let monthlyNet = 0;
+  //     //remember, inputs have negative effect on cash flow as need to be bought
+  //     let j = 0;
+  //     for (const input of period.inputs) {
+  //       if (input.quantity > 0) {
+  //         const temp = input;
+  //         temp.total = input.quantity * input.cost;
+  //         temp.dots = this.valueDotNotation("expense", temp.total);
+  //         // period           current input
+  //         this.budget.data[i].inputs[j] = temp;
+  //         inputNet = inputNet + input.quantity * input.cost;
+  //     ***REMOVED***
+  //       j++;
+  //   ***REMOVED***
+  //     for (const output of period.outputs) {
+  //       if (output.quantity > 0) {
+  //         outputNet = outputNet + output.quantity * output.cost;
+  //         consumedNet = consumedNet + output.consumed * output.cost;
+  //     ***REMOVED***
+  //   ***REMOVED***
+  //     monthlyNet = outputNet - inputNet - consumedNet;
+  //     runningNet = runningNet + monthlyNet;
 
-      const inputDots = this.valueDotNotation("expense", inputNet);
-      const outputDots = this.valueDotNotation("income", outputNet);
-      const consumedDots = this.valueDotNotation("expense", consumedNet);
-      const monthlyDots = this.valueDotNotation("", monthlyNet);
-      const runningDots = this.valueDotNotation("", runningNet);
+  //     const inputDots = this.valueDotNotation("expense", inputNet);
+  //     const outputDots = this.valueDotNotation("income", outputNet);
+  //     const consumedDots = this.valueDotNotation("expense", consumedNet);
+  //     const monthlyDots = this.valueDotNotation("", monthlyNet);
+  //     const runningDots = this.valueDotNotation("", runningNet);
 
-      // this.budget.data[i].balance = {
-      //   inputs: {
-      //     total: inputNet,
-      //     dots: inputDots
-      // ***REMOVED***,
-      //   outputs: {
-      //     total: outputNet,
-      //     dots: outputDots
-      // ***REMOVED***,
-      //   consumed: {
-      //     total: consumedNet,
-      //     dots: consumedDots
-      // ***REMOVED***,
-      //   monthly: {
-      //     total: monthlyNet,
-      //     dots: monthlyDots
-      // ***REMOVED***,
-      //   running: {
-      //     total: runningNet,
-      //     dots: runningDots
-      // ***REMOVED***
-      // ***REMOVED***
+  //     // this.budget.data[i].balance = {
+  //     //   inputs: {
+  //     //     total: inputNet,
+  //     //     dots: inputDots
+  //     // ***REMOVED***,
+  //     //   outputs: {
+  //     //     total: outputNet,
+  //     //     dots: outputDots
+  //     // ***REMOVED***,
+  //     //   consumed: {
+  //     //     total: consumedNet,
+  //     //     dots: consumedDots
+  //     // ***REMOVED***,
+  //     //   monthly: {
+  //     //     total: monthlyNet,
+  //     //     dots: monthlyDots
+  //     // ***REMOVED***,
+  //     //   running: {
+  //     //     total: runningNet,
+  //     //     dots: runningDots
+  //     // ***REMOVED***
+  //     // ***REMOVED***
 
-      // i++;
-  ***REMOVED***
-    console.log("budget", this.budget);
-***REMOVED***
-  valueDotNotation(type, val) {
-    if (val != 0) {
-      let suffix = "";
-      if (val < 0 || type == "expense") {
-        suffix = "negative";
-    ***REMOVED*** else {
-        suffix = "positive";
-    ***REMOVED***
+  //     // i++;
+  // ***REMOVED***
+  //   console.log("budget", this.budget);
+  // }
+  // valueDotNotation(type, val) {
+  //   if (val != 0) {
+  //     let suffix = "";
+  //     if (val < 0 || type == "expense") {
+  //       suffix = "negative";
+  //   ***REMOVED*** else {
+  //       suffix = "positive";
+  //   ***REMOVED***
 
-      const v = Math.abs(val);
-      //code could be tidies to loop but it's late!
-      const large = Math.abs(Math.floor(v / this.dots.large));
-      const largeRemainder = Math.abs(Math.floor(v % this.dots.large));
-      const medium = Math.abs(Math.floor(largeRemainder / this.dots.medium));
-      const mediumRemainder = Math.abs(
-        Math.floor(largeRemainder % this.dots.medium)
-      );
-      const small = Math.abs(Math.floor(mediumRemainder / this.dots.small));
-      const smallRemainder = Math.abs(
-        Math.floor(mediumRemainder % this.dots.small)
-      );
-      const half = Math.abs(Math.round(smallRemainder / this.dots.half));
+  //     const v = Math.abs(val);
+  //     //code could be tidies to loop but it's late!
+  //     const large = Math.abs(Math.floor(v / this.dots.large));
+  //     const largeRemainder = Math.abs(Math.floor(v % this.dots.large));
+  //     const medium = Math.abs(Math.floor(largeRemainder / this.dots.medium));
+  //     const mediumRemainder = Math.abs(
+  //       Math.floor(largeRemainder % this.dots.medium)
+  //     );
+  //     const small = Math.abs(Math.floor(mediumRemainder / this.dots.small));
+  //     const smallRemainder = Math.abs(
+  //       Math.floor(mediumRemainder % this.dots.small)
+  //     );
+  //     const half = Math.abs(Math.round(smallRemainder / this.dots.half));
 
-      const largeArr = new Array(large).fill({
-        src: `assets/img/budget/large-${suffix}.png`
-    ***REMOVED***);
-      const mediumArr = new Array(medium).fill({
-        src: `assets/img/budget/medium-${suffix}.png`
-    ***REMOVED***);
-      const smallArr = new Array(small).fill({
-        src: `assets/img/budget/small-${suffix}.png`
-    ***REMOVED***);
-      const halfArr = new Array(half).fill({
-        src: `assets/img/budget/half-${suffix}.png`
-    ***REMOVED***);
+  //     const largeArr = new Array(large).fill({
+  //       src: `assets/img/budget/large-${suffix}.png`
+  //   ***REMOVED***);
+  //     const mediumArr = new Array(medium).fill({
+  //       src: `assets/img/budget/medium-${suffix}.png`
+  //   ***REMOVED***);
+  //     const smallArr = new Array(small).fill({
+  //       src: `assets/img/budget/small-${suffix}.png`
+  //   ***REMOVED***);
+  //     const halfArr = new Array(half).fill({
+  //       src: `assets/img/budget/half-${suffix}.png`
+  //   ***REMOVED***);
 
-      let arr = [];
-      arr = arr.concat(largeArr, mediumArr, smallArr, halfArr);
-      return arr;
-  ***REMOVED***
+  //     let arr = [];
+  //     arr = arr.concat(largeArr, mediumArr, smallArr, halfArr);
+  //     return arr;
+  // ***REMOVED***
 
-    // if (val < 0 || type == "expense") {
-    //   arr = new Array(count).fill(negativeValue)
-    // }
-    // else if (val > 0) {
-    //   arr = new Array(count).fill(positiveValue)
-    // }
-***REMOVED***
-  toggleDotEdit() {
-    if (this.editDotValue) {
-      this.calculateBalance();
-  ***REMOVED***
-    this.editDotValue = !this.editDotValue;
-***REMOVED***
+  //   // if (val < 0 || type == "expense") {
+  //   //   arr = new Array(count).fill(negativeValue)
+  //   // }
+  //   // else if (val > 0) {
+  //   //   arr = new Array(count).fill(positiveValue)
+  //   // }
+  // }
+  // toggleDotEdit() {
+  //   if (this.editDotValue) {
+  //     this.calculateBalance();
+  // ***REMOVED***
+  //   this.editDotValue = !this.editDotValue;
+  // }
 }

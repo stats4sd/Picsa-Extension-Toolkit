@@ -8,7 +8,7 @@ export interface IBudget {
   enterpriseType: string;
   scale: string;
   created: string;
-  data: IBudgetPeriodData[];
+  data: { index?: IBudgetPeriodData ***REMOVED***
   apiVersion: number;
 }
 

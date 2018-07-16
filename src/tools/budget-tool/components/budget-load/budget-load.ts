@@ -55,7 +55,7 @@ export class BudgetLoadComponent {
       apiVersion: this.apiVersion,
       archived: false,
       created: new Date().toISOString(),
-      data: [],
+      data: {},
       description: null,
       enterprise: null,
       _key: null,

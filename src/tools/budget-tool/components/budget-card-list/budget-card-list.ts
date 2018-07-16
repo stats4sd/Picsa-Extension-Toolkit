@@ -84,13 +84,15 @@ export class BudgetCardListComponent {
 
   // when the related budget period is updated want to filter all cards by type and update which
   // are already selected and any other meta data (e.g. input quantities)
-  setSelectedCards(data: IBudgetPeriodData, type) {
+  setSelectedCards(data: IBudgetPeriodData = {}, type) {
     const allCards = this.NgRedux.getState().budget.meta;
     let cards = allCards[type];
     // update cards according to what is saved
-    cards = cards.map(c => {
-      return c;
-  ***REMOVED***);
+    if (data) {
+      cards = cards.map(c => {
+        return data[c.id] ? data[c.id] : c;
+    ***REMOVED***);
+  ***REMOVED***
     this.cards = cards;
 ***REMOVED***
 }
