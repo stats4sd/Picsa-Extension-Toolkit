@@ -15,3 +15,10 @@ budget-card-image {
     padding: 2px;
   }
 }
+
+budget-card-image.small {
+  img.card-image {
+    height: 45px;
+    width: 45px;
+  }
+}
