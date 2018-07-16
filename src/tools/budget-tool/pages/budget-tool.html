@@ -29,7 +29,7 @@
   <div style="height: 100%">
     <budget-overview [style.display]="(viewComponent$ | async) =='overview'? 'initial' : 'none'"></budget-overview>
     <budget-settings [style.display]="(viewComponent$ | async) =='settings'? 'initial' : 'none'"></budget-settings>
-    <budget-cell-edit [style.display]="(viewComponent$ | async) =='cell-edit'? 'initial' : 'none'"></budget-cell-edit>
+    <budget-card-list [style.display]="(viewComponent$ | async) =='cell-edit'? 'initial' : 'none'"></budget-card-list>
     <budget-load [style.display]="(viewComponent$ | async) =='load'? 'initial' : 'none'"></budget-load>
   </div>
 </ion-content>

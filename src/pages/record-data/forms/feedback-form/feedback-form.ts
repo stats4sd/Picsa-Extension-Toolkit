@@ -1,5 +1,5 @@
 /*
-Note, entire system could do with overhaul, too much split logic. for should just handle updating form fields,
+*** Note, entire system could do with overhaul, too much split logic. for should just handle updating form fields,
 meta data should be done via provider so that both view-data and record-data pages have access to same methods
 */
 

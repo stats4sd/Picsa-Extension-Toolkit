@@ -91,7 +91,7 @@ export class BudgetOverviewComponent {
   calculateBalance() {
     // total for current period
     console.log("calculating balance");
-    let i = 0;
+    const i = 0;
     let runningNet = 0;
     for (const period of this.budget.data) {
       let inputNet = 0;
@@ -126,30 +126,30 @@ export class BudgetOverviewComponent {
       const monthlyDots = this.valueDotNotation("", monthlyNet);
       const runningDots = this.valueDotNotation("", runningNet);
 
-      this.budget.data[i].balance = {
-        inputs: {
-          total: inputNet,
-          dots: inputDots
-        },
-        outputs: {
-          total: outputNet,
-          dots: outputDots
-        },
-        consumed: {
-          total: consumedNet,
-          dots: consumedDots
-        },
-        monthly: {
-          total: monthlyNet,
-          dots: monthlyDots
-        },
-        running: {
-          total: runningNet,
-          dots: runningDots
-        }
-      };
+      // this.budget.data[i].balance = {
+      //   inputs: {
+      //     total: inputNet,
+      //     dots: inputDots
+      //   },
+      //   outputs: {
+      //     total: outputNet,
+      //     dots: outputDots
+      //   },
+      //   consumed: {
+      //     total: consumedNet,
+      //     dots: consumedDots
+      //   },
+      //   monthly: {
+      //     total: monthlyNet,
+      //     dots: monthlyDots
+      //   },
+      //   running: {
+      //     total: runningNet,
+      //     dots: runningDots
+      //   }
+      // };
 
-      i++;
+      // i++;
     }
     console.log("budget", this.budget);
   }

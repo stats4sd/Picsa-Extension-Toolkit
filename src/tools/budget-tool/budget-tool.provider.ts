@@ -8,7 +8,7 @@ import {
 } from "../../providers/providers";
 import { AppState } from "../../reducers/reducers";
 import { BudgetToolActions } from "./budget-tool.actions";
-import { IBudget, IBudgetCard } from "./budget-tool.models";
+import { IBudget, IBudgetCard, ICustomBudgetCard } from "./budget-tool.models";
 import { budgetMeta } from "./data";
 
 @Injectable()
@@ -62,7 +62,6 @@ export class BudgetToolProvider {
 
   // change single budget key/value
   patchBudget(key, val) {
-    console.log("patching budget", key, val);
     setTimeout(() => {
       const budget = this.ngRedux.getState().budget.active;
       if (budget) {
@@ -74,8 +73,8 @@ export class BudgetToolProvider {
 
   /*
       The methods below are used to keep firebase data sync'd locally when internet available
-      They are the same as firebase and storage provider methods, but included again
-      to retain tool independent use and subcollection paths
+      They are sinukar to firebase and storage provider methods, but included again
+      to retain tool independent use, allow subcollection paths and custom data sort
   */
 
   // watch afs data endpoints and reflect changes to redux and localstorage
@@ -83,13 +82,30 @@ export class BudgetToolProvider {
     for (const endpoint of Object.keys(budgetMeta)) {
       const collection = this.firestorePrvdr.getCollection(
         `budgetTool/meta/${endpoint}`
-      );
+      ) as Observable<ICustomBudgetCard[]>;
       collection.subscribe(data => {
-        this.actions.setBudgetMeta({ [endpoint]: data });
+        const orderedData = this._sortData(data);
+        this.actions.setBudgetMeta({ [endpoint]: orderedData });
         const meta = this.ngRedux.getState().budget.meta;
-        meta[endpoint] = data;
+        meta[endpoint] = orderedData;
         this.storagePrvdr.storage.set("_budgetMeta", meta);
       });
+    }
+  }
+
+  _sortData(collection: ICustomBudgetCard[]) {
+    try {
+      // want to first sort alphabetically
+      collection = collection.sort((a, b) => {
+        return a.name > b.name ? 1 : -1;
+      });
+      // then demote cards which are 'custom:true'
+      collection = collection.sort((a, b) => {
+        return !a.custom ? -1 : !b.custom ? 1 : -1;
+      });
+      return collection;
+    } catch (error) {
+      return collection;
     }
   }
 

@@ -8,7 +8,7 @@ import { BudgetToolActions } from "../../budget-tool.actions";
   templateUrl: "budget-cell.html"
 })
 export class BudgetCellComponent {
-  @Input("rowIndex") rowIndex: number;
+  @Input("periodIndex") periodIndex: number;
   @Input("rowLabel") rowLabel: string;
   @Input("type") type: string;
   @Input("typeLabel") typeLabel: string;
@@ -23,12 +23,14 @@ export class BudgetCellComponent {
 
   // bind to budget data entry for specific row index and type (e.g. time period 2 activities)
   _addDataSubscriber() {
-    this.NgRedux.select(["budget", "active", "data", this.rowIndex]).subscribe(
-      data => {
-        // console.log(`${this.type} ${this.rowIndex} data`, data);
-        this.cellData = data;
-      }
-    );
+    this.NgRedux.select([
+      "budget",
+      "active",
+      "data",
+      this.periodIndex
+    ]).subscribe(data => {
+      this.cellData = data;
+    });
   }
 
   editCell() {
@@ -37,7 +39,7 @@ export class BudgetCellComponent {
       title: `${this.rowLabel} ${this.typeLabel}`,
       meta: {
         type: this.type,
-        rowIndex: this.rowIndex
+        periodIndex: this.periodIndex
       }
     });
   }

@@ -8,7 +8,7 @@ export interface IBudget {
   enterpriseType: string;
   scale: string;
   created: string;
-  data: BudgetEntry[];
+  data: IBudgetPeriodData[];
   apiVersion: number;
 }
 
@@ -20,11 +20,12 @@ export interface IBudgetMeta {
   inputs?: IBudgetCard[];
 }
 
-export interface IBudgetData {
-  activities: IActivityCard[];
-  inputs: IInputCard[];
-  outputs: IOutputCard[];
-  familyLabour: any;
+export interface IBudgetPeriodData {
+  activities?: IActivityCard[];
+  inputs?: IInputCard[];
+  outputs?: IOutputCard[];
+  familyLabour?: any;
+  // balance?: IBudgetBalance;
 }
 
 export interface IBudgetView {
@@ -40,6 +41,11 @@ export interface IBudgetView {
   meta?: any;
 }
 
+export interface IBudgetViewMeta {
+  type: string;
+  periodIndex: number;
+}
+
 interface periods {
   labels: string[];
   starting: string;
@@ -47,10 +53,16 @@ interface periods {
   total: number;
 }
 
+// cards contain additional grouping (e.g. enterprise type) along with isSelected and selectedIndex populated when
+// attached to budget data
 export interface IBudgetCard {
-  group?: string;
   name: string;
   id: string;
+  group?: string;
+  isSelected?: boolean;
+  selectedIndex?: number;
+  quantity?: number;
+  cost?: number;
 }
 
 export interface ICustomBudgetCard extends IBudgetCard {
@@ -95,17 +107,12 @@ interface BalanceCounter {
   dots: any[];
 }
 
-interface BudgetEntry extends IBudgetData {
-  label: string;
-  index: number;
-  familyLabour: FamilyLabourCard;
-  balance: {
-    inputs: BalanceCounter;
-    outputs: BalanceCounter;
-    consumed: BalanceCounter;
-    monthly: BalanceCounter;
-    running: BalanceCounter;
-  };
+interface IBudgetBalance {
+  inputs: BalanceCounter;
+  outputs: BalanceCounter;
+  consumed: BalanceCounter;
+  monthly: BalanceCounter;
+  running: BalanceCounter;
 }
 
 export interface IBudgetPublicData {

@@ -27,7 +27,7 @@
     <div class="time-period-title cell top-row">{{period}}</div>
     <!--Activities-->
     <div *ngFor="let row of rowTitles" class="cell">
-      <budget-cell [rowIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
+      <budget-cell [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
     </div>
 
 
