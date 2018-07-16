@@ -10,6 +10,49 @@
   <p>In this document find recorded the main changes that have been implemented. Note, whilst the web version will always be
     kept up-to-date there may be a delay between app store releases</p>
 
+  <!-- 0.5.0 -->
+  <div class="log-item">
+    <div class="log-title">
+      <h2>0.5.0</h2>
+      <div>16th July 2018</div>
+    </div>
+    <div class="log-updates">
+      <p>
+        <strong>New Database System</strong>
+        <br> A new system has been implemented so that all data required to run the app is stored locally to work entirely offline,
+        with additional methods created to update this data from a central database when internet access is available.
+        <br>This will be useful for times when a new resource or survey is added but the user doesn't wish to download an entirely
+        new version of the app
+      </p>
+      <p>
+        <strong>Budget Tool Improvements</strong>
+        <br> The budget tool has been given a significant overhaul, rebuilding the key interactions from the ground-up to be
+        more accessible and reliable. This is still a
+        <i>work in progress</i> but the main changes currently seen include:
+      </p>
+      <ul>
+        <li>A new initial enterprise select page</li>
+        <img src="assets/img/changelog/0-5-0_1.png">
+        <li>Higher quality images (and more of them too)</li>
+        <img src="assets/img/budget/cards/pigeon-peas.svg" style="width:120px">
+        <p>These are now rendered as SVG images which means they are created mathematically and can be scaled up to any size</p>
+        <li>Sharing of custom images</li>
+        <p>The new database system has been implemented so that user-created cards are also stored locally and shared</p>
+        <br>The system will soon be extended to include optional sharing created budget templates.
+        <li>Improved budget overview sizing, navigation links and improved data binding</li>
+      </ul>
+      <p>
+        <strong>Core platform updates</strong>
+        <br> A lot of the core components have undergone an update to improve code maintainability and quality (the larger the
+        project gets the more important that things are structured in a sensible, efficient way). A number of components
+        are still being actively worked on and so may not behave exactly as expected, but most issues should be resolved
+        within the next minor updates.
+        <img src="assets/img/changelog/0-5-0_3.png">
+
+      </p>
+    </div>
+  </div>
+
   <!-- 0.4.1 -->
   <div class="log-item">
     <div class="log-title">
@@ -34,7 +77,6 @@
       </div>
       <div>{{'How are you?' | translate}}</div>
     </div>
-
   </div>
 
   <!-- 0.4.0 -->
