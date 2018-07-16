@@ -1,11 +1,11 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component, Input } from "@angular/core";
+import { Component } from "@angular/core";
 import { Events } from "ionic-angular";
+import { Observable } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudgetViewMeta } from "../../budget-tool.models";
 import { BudgetCardComponent } from "./budget-card";
-import { Observable } from "../../../../../node_modules/@firebase/util";
 
 /*
 Budget data cards are used to assign card value to nested budget data (e.g. week 1 activities)
