@@ -2,11 +2,17 @@ import { Action } from "redux";
 import { StandardAction } from "../../actions/actions";
 import { INITIAL_STATE } from "../../reducers/reducers";
 import { BudgetToolActions } from "./budget-tool.actions";
-import { IBudget, IBudgetMeta, IBudgetPublicData } from "./budget-tool.models";
+import {
+  IBudget,
+  IBudgetMeta,
+  IBudgetPublicData,
+  IBudgetView
+} from "./budget-tool.models";
 
 export interface BudgetToolState {
   active: IBudget;
   meta: IBudgetMeta;
+  view?: IBudgetView;
 
   // no additional parameters currently specified (may change)
 }

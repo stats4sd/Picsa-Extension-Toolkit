@@ -1,4 +1,7 @@
-budget-card {
+budget-card,
+budget-meta-card,
+budget-data-card,
+budget-new-card {
   ion-card.budget-card {
     cursor: pointer;
     color: black;
@@ -15,5 +18,8 @@ budget-card {
   .card-title {
     padding: 5px;
     background: #dcdcdc;
+***REMOVED***
+  .card-title.add {
+    background: transparent;
 ***REMOVED***
 }
