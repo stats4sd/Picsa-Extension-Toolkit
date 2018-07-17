@@ -42,14 +42,30 @@ export interface IGroup {
 // meta fields with '_' are not sync'd, all other data should come as arrays to populate collection
 export interface IData {
   _version?: number;
-  resources?: IResource[];
+  resources?: IResource[] | IVideoResource[];
   forms?: IForm[];
   whatsappGroups?: IWhatsAppGroup[];
 }
 
 export interface IForm {}
 
-export interface IResource {}
+export interface IResource {
+  _key: string;
+  name: string;
+  filename: string;
+  type: string;
+  weblink: string;
+  group: string;
+}
+export interface IVideoResource extends IResource {
+  description: string;
+  youtubeID: string;
+}
+
+export interface IResourceGroup {
+  name: string;
+  resources: IResource[] | IVideoResource[];
+}
 
 // Climate Tool
 export interface ISite {

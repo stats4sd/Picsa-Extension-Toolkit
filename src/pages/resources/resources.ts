@@ -1,10 +1,16 @@
 import { select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
-import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
+import {
+  Content,
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform
+} from "ionic-angular";
 import { Observable } from "rxjs";
-import { IResource } from "../../models/models";
+import { IResource, IResourceGroup } from "../../models/models";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -15,8 +21,11 @@ import { IResource } from "../../models/models";
 })
 export class ResourcesPage {
   @select(["data", "resources"])
-  resources$: Observable<IResource>;
-  // resources: any = [];
+  resources$: Observable<IResource[]>;
+  @ViewChild(Content) content: Content;
+  resourceGroups: IResourceGroup[];
+  activeResource: IResource;
+  playerWidth: number;
 
   constructor(
     public navCtrl: NavController,
@@ -26,13 +35,59 @@ export class ResourcesPage {
     public platform: Platform
   ) {
     if (this.platform.is("mobile")) {
-      console.log("mobile platform");
       this.checkFileDirectory();
-  ***REMOVED*** else {
-      console.log("not mobile platform");
-      // this.setResources();
   ***REMOVED***
 ***REMOVED***
+
+  ngOnInit() {
+    this.resources$.subscribe(resources => {
+      if (resources) {
+        this.initResources(resources);
+    ***REMOVED***
+  ***REMOVED***);
+***REMOVED***
+
+  // on init want to take list of all resources and split into groups to view in sections
+  initResources(resources: IResource[]) {
+    console.log("resource init", resources);
+    // allocate resources into groups
+    const groups: {} = {***REMOVED***
+    resources.forEach(res => {
+      if (!groups[res.group]) {
+        groups[res.group] = {
+          name: res.group,
+          resources: []
+      ***REMOVED***;
+    ***REMOVED***
+      groups[res.group].resources.push(res);
+  ***REMOVED***);
+    this.resourceGroups = Object.values(groups);
+    console.log("groups", this.resourceGroups);
+***REMOVED***
+
+  unsetResource() {
+    this.activeResource = null;
+***REMOVED***
+
+  // set active resource to clicked resource (to show/hide video player) and open
+  loadResource(resource) {
+    this._setVideoPlayerWidth();
+    console.log("content", this.content.contentWidth);
+    this.activeResource = resource;
+    console.log("loading resource", resource);
+    if (resource.type == "pdf") {
+      this.openResource(resource);
+  ***REMOVED***
+***REMOVED***
+
+  // video width needs to be set programtically
+  _setVideoPlayerWidth() {
+    const width = this.content.contentWidth;
+    this.playerWidth = width * 0.9;
+    console.log("width", this.playerWidth, window);
+***REMOVED***
+
+  // **** code tidying checkpoint - code after here needs review (cc 17th July 2018) ***
 
   checkFileDirectory() {
     console.log("checking file directory");
@@ -59,7 +114,7 @@ export class ResourcesPage {
     ***REMOVED***);
 ***REMOVED***
 
-  ionViewDidLoad() {}
+  // ionViewDidLoad() {}
 
   list(dir, path) {
     console.log("listing", path);
@@ -73,13 +128,6 @@ export class ResourcesPage {
     ***REMOVED***);
 ***REMOVED***
 
-  //works if resource placed in assets/resourrces folder. Can later use directory reader to populate list
-  loadResource(resource) {
-    console.log("loading resource", resource);
-    if (resource.type == "pdf") {
-      this.openResource(resource);
-  ***REMOVED***
-***REMOVED***
   openResource(resource) {
     if (!this.platform.is("cordova")) {
       return this.openWebResource(resource);
@@ -127,42 +175,6 @@ export class ResourcesPage {
     console.log("opening resource", resource);
     window.open(resource.weblink, "_blank");
 ***REMOVED***
-  // setResources() {
-  //   this.resources = [
-  //     {
-  //       name: "Picsa Manual",
-  //       filename: "picsa-field-manual.pdf",
-  //       type: "pdf",
-  //       image: "assets/resources/picsa-field-manual-cover.png",
-  //       weblink:
-  //         "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpicsa-field-manual.pdf?alt=media&token=c394b68a-3f67-4494-8620-c35d65151c45"
-  //   ***REMOVED***,
-  //     {
-  //       name: "Crop Information - Chileka",
-  //       filename: "crop-info-sheet-chileka.pdf",
-  //       type: "pdf",
-  //       image: "assets/resources/crop-info-sheet-chileka-cover.png",
-  //       weblink:
-  //         "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fcrop-info-sheet-chileka.pdf?alt=media&token=cb8a6243-1d37-43f6-a97c-a0a7bc0f11f2"
-  //   ***REMOVED***,
-  //     {
-  //       name: "Potential Training Schedule",
-  //       filename: "potential-PICSA-training-schedule.pdf",
-  //       type: "pdf",
-  //       image: "assets/resources/potential-PICSA-training-schedule-cover.png",
-  //       weblink:
-  //         "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpotential-PICSA-training-schedule.pdf?alt=media&token=618737d1-949b-467a-9f28-1dcc35ce3c8c"
-  //   ***REMOVED***,
-  //     {
-  //       name: "Seasonal Forecast Blantyre",
-  //       filename: "seasonal-forecast-blantyre.pdf",
-  //       type: "pdf",
-  //       image: "assets/resources/seasonal-forecast-blantyre-cover.png",
-  //       weblink:
-  //         "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-blantyre.pdf?alt=media&token=6ba42494-4c23-409f-ac55-f2fa8b3043ea"
-  //   ***REMOVED***
-  //   ];
-  // }
 }
 
 // this.file.copyFile(this.file.applicationDirectory + 'www/assets', 'picsa-field-manual.pdf', this.file.externalApplicationStorageDirectory, 'picsa-field-manual.pdf')
@@ -189,3 +201,20 @@ export class ResourcesPage {
 //       ***REMOVED***)
 //   ***REMOVED***).catch(err => { console.log(err) })
 // ***REMOVED***)
+
+// check if additional nav hashtag given to scroll to given section
+// *** not working as ionic strips extra hash on initial load
+
+//   @ViewChild(Content) content: Content;
+
+// ngAfterViewInit() {
+//   const scrollID = location.hash.split("#")[3];
+//   if (scrollID) {
+//     console.log("scrolling to id", scrollID, this.content);
+//     this._scrollTo(scrollID);
+// ***REMOVED***
+// }
+// _scrollTo(id: string) {
+//   const yOffset = document.getElementById(id).offsetTop;
+//   this.content.scrollTo(0, yOffset, 2000);
+// }

@@ -33,19 +33,19 @@ $max-app-width: 1024px;
 // *****************************************************
 //  app root centering for wide display
 // *****************************************************
-@media screen and (min-width: $max-app-width) {
-  body {
-    max-width: $max-app-width;
-    left: calc(50% - #{$max-app-width}/ 2);
-    background-color: #dedede;
-    height: 100vh;
-    margin: 0 auto;
-***REMOVED*** // add padding, background and curved edges for large devices
-  .modal-wrapper {
-    left: calc(50% - #{$max-app-width}/ 2);
-    top: 0px;
-    position: absolute;
-    width: $max-app-width;
-    height: 100vh; //margin-top:100px;
-***REMOVED***
-}
+// @media screen and (min-width: $max-app-width) {
+//   body {
+//     max-width: $max-app-width;
+//     left: calc(50% - #{$max-app-width}/ 2);
+//     background-color: #dedede;
+//     height: 100vh;
+//     margin: 0 auto;
+// ***REMOVED*** // add padding, background and curved edges for large devices
+//   .modal-wrapper {
+//     left: calc(50% - #{$max-app-width}/ 2);
+//     top: 0px;
+//     position: absolute;
+//     width: $max-app-width;
+//     height: 100vh; //margin-top:100px;
+// ***REMOVED***
+// }

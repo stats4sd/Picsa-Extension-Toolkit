@@ -11,19 +11,21 @@ const forms = [];
 const resources = [
   {
     _key: "4I4F36gD0MUef26HfPZG",
-    name: "Picsa Manual",
+    name: "PICSA Manual",
     filename: "picsa-field-manual.pdf",
     type: "pdf",
     image: "assets/resources/picsa-field-manual-cover.png",
+    group: "PICSA Manual",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpicsa-field-manual.pdf?alt=media&token=c394b68a-3f67-4494-8620-c35d65151c45"
 ***REMOVED***,
   {
-    _key: "9Pkro1VYBUlwuNg5oHok0",
+    _key: "9Pkro1VYBUlwuNg5oHok",
     name: "Crop Information - Chileka",
     filename: "crop-info-sheet-chileka.pdf",
     type: "pdf",
     image: "assets/resources/crop-info-sheet-chileka-cover.png",
+    group: "Documents",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fcrop-info-sheet-chileka.pdf?alt=media&token=cb8a6243-1d37-43f6-a97c-a0a7bc0f11f2"
 ***REMOVED***,
@@ -33,6 +35,7 @@ const resources = [
     filename: "potential-PICSA-training-schedule.pdf",
     type: "pdf",
     image: "assets/resources/potential-PICSA-training-schedule-cover.png",
+    group: "Documents",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpotential-PICSA-training-schedule.pdf?alt=media&token=618737d1-949b-467a-9f28-1dcc35ce3c8c"
 ***REMOVED***,
@@ -42,8 +45,20 @@ const resources = [
     filename: "seasonal-forecast-blantyre.pdf",
     type: "pdf",
     image: "assets/resources/seasonal-forecast-blantyre-cover.png",
+    group: "Documents",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-blantyre.pdf?alt=media&token=6ba42494-4c23-409f-ac55-f2fa8b3043ea"
+***REMOVED***,
+  {
+    _key: "m6I8TfROsyr5Wp73BcAd",
+    name: "RAM Refresher",
+    filename: "RAM Refresher.mp4",
+    type: "video",
+    image: "assets/resources/ram-refresher-cover.jpg",
+    group: "Videos",
+    weblink:
+      "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fram-refresher.mp4?alt=media&token=27939a71-0656-440b-8407-24877acaeede",
+    youtubeID: "Kw5UznKvCN8"
 ***REMOVED***
 ];
 

@@ -472,6 +472,10 @@
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.3.tgz#7f226d67d654ec9070e755f46daebf014628e9d9"
 
+"@types/youtube@0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/youtube/-/youtube-0.0.32.tgz#b53ebc75e6646d7dc46295b8eceb5f1e596f68ae"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -3326,6 +3330,13 @@ negotiator@0.6.1:
 ng2-canvas-whiteboard@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/ng2-canvas-whiteboard/-/ng2-canvas-whiteboard-1.4.5.tgz#ac7ae0a80deae863b63945fdb583e550ddc84708"
+
+ngx-youtube-player@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-youtube-player/-/ngx-youtube-player-6.0.0.tgz#9de46a98a7dc20eeadd0c0dec4d384f595704ca9"
+  dependencies:
+    "@types/youtube" "0.0.32"
+    tslib "^1.7.1"
 
 node-ensure@^0.0.0:
   version "0.0.0"
