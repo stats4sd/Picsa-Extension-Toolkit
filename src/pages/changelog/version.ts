@@ -1,5 +1,5 @@
 export default {
-  text: "0.5.0",
-  number: 5000,
-  date: "16th July"
+  text: "0.5.1",
+  number: 5010,
+  date: "17th July"
 };
