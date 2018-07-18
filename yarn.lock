@@ -447,6 +447,14 @@
   version "7946.0.4"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.4.tgz#4e049756383c3f055dd8f3d24e63fb543e98eb07"
 
+"@types/knockout@3.4.46":
+  version "3.4.46"
+  resolved "https://registry.yarnpkg.com/@types/knockout/-/knockout-3.4.46.tgz#e8bf3c356524f4b4b6b4e4159da363e49e826468"
+
+"@types/knockout@^3.4.58":
+  version "3.4.58"
+  resolved "https://registry.yarnpkg.com/@types/knockout/-/knockout-3.4.58.tgz#a7cbb98b5b13ebd47936d9c826f4a9f7270694ba"
+
 "@types/localforage@0.0.30":
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/localforage/-/localforage-0.0.30.tgz#3d60a6bf6dda38e3f8a469611598379f1f649509"
@@ -4652,6 +4660,12 @@ supports-color@^5.3.0, supports-color@^5.4.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
   dependencies:
     has-flag "^3.0.0"
+
+survey-angular@^1.0.33:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/survey-angular/-/survey-angular-1.0.33.tgz#204816b56cc36e8d058775e0eaccec91b84a2b03"
+  dependencies:
+    "@types/knockout" "3.4.46"
 
 sw-toolbox@^3.6.0:
   version "3.6.0"

@@ -1,4 +1,31 @@
-<div *ngIf="formOpen" class="form" [style.display]="formDisplay">
+<ion-header [hidden]="formOpen">
+  <ion-navbar color="primary">
+    <ion-title>{{'Record Data' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="!forms || forms.length==0" style="display: flex">
+    <ion-icon name="warning"></ion-icon>
+    <div style="margin-left:20px">
+      <div>There are no forms available for data submission</div>
+      <div>Forms become available when groups are joined from the settings page</div>
+    </div>
+  </div>
+  <div *ngIf="forms && forms.length>0">
+    Available forms:
+    <ion-card class="form-card" *ngFor="let form of forms" (click)="openForm(form)">
+      <ion-card-header>
+        <ion-icon name="clipboard"></ion-icon>
+        <span style="margin-left:5px">{{form.name | translate}}</span>
+      </ion-card-header>
+    </ion-card>
+
+  </div>
+</ion-content>
+
+
+<!-- <div *ngIf="formOpen" class="form" [style.display]="formDisplay">
   <ion-buttons end>
     <button ion-button icon-right class="form-close" (click)="closeForm()" *ngIf="formOpen">
       <span>{{'Close form'|translate}}</span>
@@ -16,53 +43,36 @@
 
 <ion-content class="forms-overview" class="background-1">
   <div padding>
-    <ion-card>
-      <div class="flex">
-        <div style="flex-basis:100%">
-          <ion-card-header>{{'Reporting and Feedback Form' | translate}}</ion-card-header>
-          <ion-card-content>
-            <div>
-              <table>
-                <tr>
-                  <td style="text-align: right">
-                    <span style="color:darkgreen">{{submittedForms.reporting.complete.length}}</span>
-                  </td>
-                  <td>
-                    <ion-icon name="checkbox-outline"></ion-icon>
-                  </td>
-                  <td>
-                    <span>{{'Complete Submissions'| translate}}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: right">
-                    <span style="color:darkgoldenrod">{{submittedForms.reporting.pending.length}}</span>
-                  </td>
-                  <td>
-                    <ion-icon name="cloud-upload"></ion-icon>
-                  </td>
-                  <td>
-                    <span>{{'Pending Upload'| translate}}</span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </ion-card-content>
-        </div>
-        <div class="hide-l-436">
-          <button ion-button icon-left class="card-button" color="save" (click)="openForm2('FeedbackForm')">
-            <ion-icon name="add-circle"></ion-icon>
-            {{'Record Data' | translate}}
-          </button>
-        </div>
-      </div>
-      <div class="show-l-436">
-        <button block ion-button icon-left color="save" style="margin:0" (click)="openForm2('FeedbackForm')">
-          <ion-icon name="add-circle"></ion-icon>
-          {{'Record Data' | translate}}
-        </button>
-      </div>
-    </ion-card>
+    
+    <ion-card-content>
+                  <div>
+                    <table>
+                      <tr>
+                        <td style="text-align: right">
+                          <span style="color:darkgreen">{{submittedForms.reporting.complete.length}}</span>
+                        </td>
+                        <td>
+                          <ion-icon name="checkbox-outline"></ion-icon>
+                        </td>
+                        <td>
+                          <span>{{'Complete Submissions'| translate}}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: right">
+                          <span style="color:darkgoldenrod">{{submittedForms.reporting.pending.length}}</span>
+                        </td>
+                        <td>
+                          <ion-icon name="cloud-upload"></ion-icon>
+                        </td>
+                        <td>
+                          <span>{{'Pending Upload'| translate}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </ion-card-content>
+                
   </div>
   <div id="info" class="footer">
     <button item-right ion-button [disabled]="uploadDisabled" style="width:100%; height:5em; margin:0" color="load" (click)="uploadSavedForms()">
@@ -70,6 +80,6 @@
       <ion-icon name="upload"></ion-icon>
       <ion-spinner *ngIf="uploadDisabled" name="dots" style="margin-left:5px"></ion-spinner>
     </button>
-    <!-- <div class="warning">No Internet Access</div> -->
+    <div class="warning">No Internet Access</div>
   </div>
-</ion-content>
+</ion-content> -->

@@ -23,38 +23,42 @@
     <ion-item>
       <div class="flex">
         <div class="flex-basis-100 list-title">Name:
-          <span class="list-value">{{user.name}}</span>
+          <span class="list-value" *ngIf="user.name">{{user.name}}</span>
+          <button ion-button outline icon-left *ngIf="!user.name" (click)="userEdit('name')">
+            <ion-icon name="add"></ion-icon>Set user name</button>
         </div>
-        <div>
-          <button ion-button icon-left (click)="userEdit('name')">
-            <ion-icon name="create"></ion-icon>Edit</button>
+        <div *ngIf="user.name">
+          <button ion-button icon-only clear (click)="userEdit('name')">
+            <ion-icon name="create"></ion-icon>
+          </button>
         </div>
       </div>
     </ion-item>
     <ion-item>
       <div class="flex">
-        <div class="flex-basis-100 list-title">Groups:
-          <span class="list-value">{{user.groups}}</span>
+        <div class="flex-basis-100 list-title" style="margin-bottom:1em">Groups:
+          <!-- <span class="list-value">{{user.groups}}</span> -->
         </div>
-        <div>
+        <!-- <div>
           <button ion-button icon-left (click)="addGroup()">
             <ion-icon name="lock"></ion-icon>
             Add group</button>
-        </div>
+        </div> -->
       </div>
+      <user-group [group]="group" *ngFor="let group of userGroups$ | async"></user-group>
     </ion-item>
-    <ion-item class="list-title">Device ID:
+    <!-- <ion-item class="list-title">Device ID:
       <span class="list-value">{{user.id}}</span>
-    </ion-item>
-    <ion-item class="list-title">Database ID:
+    </ion-item> -->
+    <!-- <ion-item class="list-title">Database ID:
       <span class="list-value">{{user.firebaseID}}</span>
-    </ion-item>
-    <ion-item>
+    </ion-item> -->
+    <!-- <ion-item>
       <div class="flex">
         <div class="flex-basis-100 list-title">Sign in with email:
-          <span class="list-value">{{user.groups}}</span>
         </div>
         <div>
+          Not Currently Available
           <button ion-button icon-left (click)="login()">
             <ion-icon name="lock"></ion-icon>
             Sign In</button>
@@ -63,15 +67,15 @@
             Logout</button>
         </div>
       </div>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
   <br>
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header icon-left>
       <ion-icon name="cloud-upload"></ion-icon>
       Data backup and restore
     </ion-list-header>
     <ion-item>Last online backup:{{user.lastBackup | date:'medium'}}</ion-item>
-  </ion-list>
+  </ion-list> -->
 
 </ion-content>

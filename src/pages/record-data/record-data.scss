@@ -1,77 +1,59 @@
 page-record-data {
-    span{
-        color: white;
-  ***REMOVED***
-    .form{
-        position: absolute;
-        top: 0;
-        width:100%;
-        height: 100%;
-        z-index: 2;
-        background-color: white
-  ***REMOVED***
-    .enketo-iframe{
-        width:100%;
-        height: 100%;
-  ***REMOVED***
-    .footer{
-        position: absolute;
-        bottom: 0;
-        background-color: #e13838;
-        width: 100%;
-  ***REMOVED***
-    .form-header{
-        min-height: 56px;
-        padding: 4px;
-  ***REMOVED***
-    .form-close{
-        box-shadow: none
-  ***REMOVED***
-    .card-button{
-        font-size: large;
-        font-weight: 500;
-        padding: 5px;
-        height: calc(100% - 16px);
-        white-space: normal;
-        margin: 8px;
-  ***REMOVED***
-    ion-icon{
-        font-size: 24px;
-        vertical-align: middle
-  ***REMOVED***
-    span{
-        color:black;
-        font-size:18px
-  ***REMOVED***
-    .form-stat{
-        line-height: 24px;
-  ***REMOVED***
-    td{
-        border-collapse: collapse;
-        padding: 2px;
-  ***REMOVED***
-    .warning{
-        text-align: center;
-        background-color: #e13838;
-        padding: 10px;
-        font-weight: 500;
-  ***REMOVED***
-    @media screen and (max-width:436px) {
-        .hide-l-436{
-            display: none
-      ***REMOVED***
-        .show-l-436{
-            display: block;
-            width: 100%
-      ***REMOVED***
-  ***REMOVED***
-    @media screen and (min-width:437px) {
-        .hide-l-436{
-            display: block
-      ***REMOVED***
-        .show-l-436{
-            display: none;
-      ***REMOVED***
-  ***REMOVED***
+  .form-card {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+***REMOVED***
 
+  // .enketo-iframe{
+  //     width:100%;
+  //     height: 100%;
+  // }
+  // .footer{
+  //     position: absolute;
+  //     bottom: 0;
+  //     background-color: #e13838;
+  //     width: 100%;
+  // }
+  // .form-close{
+  //     box-shadow: none
+  // }
+  // ion-icon{
+  //     font-size: 24px;
+  //     vertical-align: middle
+  // }
+  // span{
+  //     color:black;
+  //     font-size:18px
+  // }
+  // .form-stat{
+  //     line-height: 24px;
+  // }
+  // td{
+  //     border-collapse: collapse;
+  //     padding: 2px;
+  // }
+  // .warning{
+  //     text-align: center;
+  //     background-color: #e13838;
+  //     padding: 10px;
+  //     font-weight: 500;
+  // }
+  // @media screen and (max-width:436px) {
+  //     .hide-l-436{
+  //         display: none
+  //   ***REMOVED***
+  //     .show-l-436{
+  //         display: block;
+  //         width: 100%
+  //   ***REMOVED***
+  // }
+  // @media screen and (min-width:437px) {
+  //     .hide-l-436{
+  //         display: block
+  //   ***REMOVED***
+  //     .show-l-436{
+  //         display: none;
+  //   ***REMOVED***
+  // }
 }

@@ -61,6 +61,11 @@ or try with a higher android api version installed
 Currently bugged and removed https://github.com/DefinitelyTyped/DefinitelyTyped/issues/21794
 should recheck in future
 
+### SurveyJS integration
+
+Using survey-angular which has issue with typings. Need to install @types/knockout seperately and change
+tsconfig.json to specify "typeRoots": ["./node_modules/@types/"]"
+
 #ios build notes
 
 - will require different resources section as different external storage stuctures

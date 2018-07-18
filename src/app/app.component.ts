@@ -14,7 +14,7 @@ import { UserProvider } from "../providers/user";
 })
 export class MyApp {
   rootPage = "HomePage";
-  showSplitPane: boolean = false;
+  // showSplitPane: boolean = false;
   @ViewChild(Nav) nav: Nav;
   @select(["user", "lang"])
   readonly lang$: Observable<string>;
@@ -36,10 +36,9 @@ export class MyApp {
         this.mobileInit();
     ***REMOVED***
       // hide split pane on home page
-      this.nav.viewDidEnter.subscribe(() => {
-        console.log("nav view did enter");
-        this.showSplitPane = !this.isHomePage();
-    ***REMOVED***);
+      // this.nav.viewDidEnter.subscribe(() => {
+      //   this.showSplitPane = !this.isHomePage();
+      // });
   ***REMOVED***);
 ***REMOVED***
 

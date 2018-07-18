@@ -22,32 +22,35 @@ export class UserProvider {
     this.enableUserSync();
     this.loadUser();
     this.subscribeToFirebaseChanges();
-    this.afAuth.auth
-      .signInAnonymously()
-      .catch(err => console.log("sign in error", err));
+    // this.afAuth.auth
+    //   .signInAnonymously()
+    //   .catch(err => console.log("sign in error", err));
 ***REMOVED***
 
   // load user doc from storage on init and reflect to redux
   async loadUser() {
     const user: IUser = await this.storagePrvdr.get("user");
     if (user) {
-      console.log("user loaded from storage");
       this.actions.updateUser(user);
   ***REMOVED***
 ***REMOVED***
 
   // automatically reflect changes to user to local storage and firebase
-  // note - only want to sync if some data saved (by default 4 items are saved even for anonymous users)
+  // note - only want to sync if user authenticated (i.e logged in via email or joined group)
   enableUserSync() {
     this.user$.subscribe(user => {
       this.user = user;
-      this.storagePrvdr.set("user", user);
-      if (user && Object.keys(user).length > 4) {
-        console.log("syncing user online");
-        this.firestorePrvdr.setDoc(`users/${user.id}`, user);
+      if (user) {
+        this.storagePrvdr.set("user", user);
+        if (user && user.authenticated) {
+          console.log("syncing user online");
+          this.firestorePrvdr.setDoc(`users/${user.id}`, user);
+      ***REMOVED***
     ***REMOVED***
   ***REMOVED***);
 ***REMOVED***
+
+  joinGroup() {}
 
   // set user doc
   updateUser(userFieldKey, value) {
