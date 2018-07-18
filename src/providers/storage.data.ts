@@ -5,9 +5,6 @@ data in this file is saved locally for retrieval (via storage provider), and the
 are used to automatically sync data from the live db (via firebase provider)
 
 */
-
-const forms = [];
-
 const resources = [
   {
     _key: "4I4F36gD0MUef26HfPZG",
@@ -62,7 +59,26 @@ const resources = [
   }
 ];
 
+const groups = [
+  {
+    _key: "u3EP0KB66MDcD3Ibom0o",
+    name: "PICSA Mangochi Training 2018",
+    accessKey: "picsa",
+    defaults: null,
+    order: 10
+  }
+];
+
 const whatsappGroups = [];
+
+const forms = [
+  {
+    _key: "w7q8jUeRb0keZENZh92p",
+    name: "Test Form",
+    groups: ["u3EP0KB66MDcD3Ibom0o"],
+    surveyJson: {}
+  }
+];
 
 // make available as single export so keys can all be taken in one go
 // update version number to automatically override old data if this file has been updated in line with live db
@@ -71,6 +87,7 @@ const data: IData = {
   _version: 4010,
   forms: forms,
   resources: resources,
+  groups: groups,
   whatsappGroups: whatsappGroups
 };
 export default data;

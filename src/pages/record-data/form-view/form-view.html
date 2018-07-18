@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="form">{{form.name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left clear (click)="close()">
+        <ion-icon name="close"></ion-icon>Close</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="survey-container contentcontainer codecontainer">
+    <div id="surveyElement"></div>
+  </div>
+</ion-content>

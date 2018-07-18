@@ -1,0 +1,12 @@
+<div class="group-container" *ngIf="!group.isHidden">
+  <div class="group-name">
+    {{group.name | translate}}
+  </div>
+  <button class="join-button" ion-button block icon-left (click)="joinGroupClicked()" *ngIf="!joined">
+    <ion-icon name="add"></ion-icon>
+    {{'Join' | translate}}
+  </button>
+  <button class="join-button joined" disabled ion-button block icon-left *ngIf="joined">
+    {{'Joined' | translate}}
+  </button>
+</div>

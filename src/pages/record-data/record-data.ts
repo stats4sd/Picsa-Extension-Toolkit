@@ -1,17 +1,9 @@
+import { NgRedux, select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
-import {
-  Events,
-  IonicPage,
-  ModalController,
-  NavController,
-  ToastController
-} from "ionic-angular";
-import { IUser } from "../../models/models";
-import {
-  FirestoreStorageProvider,
-  StorageProvider
-} from "../../providers/providers";
+import { IonicPage, ModalController } from "ionic-angular";
+import { Observable } from "rxjs";
+import { IForm, IUser } from "../../models/models";
+import { AppState } from "../../reducers/reducers";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -21,72 +13,91 @@ import {
   templateUrl: "record-data.html"
 })
 export class RecordDataPage {
-  results: any = [];
-  anyErrors: boolean;
-  finished: boolean = false;
-  refreshing: boolean = false;
-  forms: any = [];
-  formOpen: boolean = false;
-  uploadDisabled: boolean = false;
-  enketoLink: any;
-  formDisplay: string = "none";
-  submittedForms: any = { reporting: { pending: [], complete: [] } };
   user: IUser;
-
+  forms: IForm[];
+  @select("user") user$: Observable<IUser>;
   constructor(
-    public nav: NavController,
-    public modalCtrl: ModalController,
-    private storagePrvdr: StorageProvider,
-    private firestorePrvdr: FirestoreStorageProvider,
-    public sanitizer: DomSanitizer,
-    public events: Events,
-    public toastCtrl: ToastController
+    private ngRedux: NgRedux<AppState>,
+    public modalCtrl: ModalController
   ) {
-    console.log("getting user from storage");
-    // this.user = this.storagePrvdr.user;
-    this.submittedForms = this.user.submittedForms;
+    this.user$.subscribe(user => this.init(user));
   }
-  ionViewDidEnter() {
-    this.events.subscribe("form:submitted", data => {
-      this.saveFormSubmission(data.formName, data.formSubmission);
+
+  // when user updated check for available forms (given user group access permissions) and updated submissions
+  init(user) {
+    this.user = user;
+    try {
+      const allForms: IForm[] = this.ngRedux.getState().data.forms;
+      this.forms = allForms.filter(form => {
+        return this._containsCommonElement(form.groups, this.user.groups);
+      });
+    } catch (error) {}
+  }
+
+  openForm(form: IForm) {
+    this.modalCtrl.create("FormViewPage", { form: form }).present();
+  }
+
+  // take 2 string arrays and return whether at least one element is shared between them
+  _containsCommonElement(arr1: string[], arr2: string[]) {
+    let common = false;
+    arr1.forEach(el => {
+      if (arr2.includes(el)) {
+        common = true;
+      }
     });
-    // this.uploadSavedForms('reporting', true)
-  }
-
-  openForm2(form) {
-    // method to open locally produced form pages and listen for save submissions
-    const page = `${form}Page`;
-    this.nav.push(page, {});
-  }
-
-  async saveFormSubmission(formName, formSubmission) {
-    // save submitted form within submitted forms object, as stringified formsubmission within reporting.formname.pending
-    console.log("saving submission", formName, formSubmission);
-    formSubmission._submissionID = this.firestorePrvdr.db.createId();
-    formSubmission._userID = this.user.id;
-    this.submittedForms[formName].pending.push(formSubmission);
-    console.log("submitted forms", this.submittedForms);
-    await this.storagePrvdr.set("submittedForms", this.submittedForms);
-    console.log("saved submission");
-    this.events.publish("message", { text: "Submission Saved" });
-    this.events.unsubscribe("form:saved");
-    this.showToast("submission saved");
-    // this.uploadSavedForms(formName);
-  }
-
-  showToast(message) {
-    this.toastCtrl
-      .create({
-        message: message,
-        duration: 3000,
-        closeButtonText: "close",
-        position: "top",
-        dismissOnPageChange: true,
-        showCloseButton: true
-      })
-      .present();
+    return common;
   }
 }
+
+/********************************************************************
+  old methods to sort
+*********************************************************************/
+//   ionViewDidEnter() {
+//     // this.events.subscribe("form:submitted", data => {
+//     //   this.saveFormSubmission(data.formName, data.formSubmission);
+//     // });
+//     // this.uploadSavedForms('reporting', true)
+//   }
+
+//   openForm2(form) {
+//     // method to open locally produced form pages and listen for save submissions
+//     const page = `${form}Page`;
+//     this.nav.push(page, {});
+//   }
+
+//   async saveFormSubmission(formName, formSubmission) {
+//     // save submitted form within submitted forms object, as stringified formsubmission within reporting.formname.pending
+//     console.log("saving submission", formName, formSubmission);
+//     formSubmission._submissionID = this.firestorePrvdr.db.createId();
+//     formSubmission._userID = this.user.id;
+//     this.submittedForms[formName].pending.push(formSubmission);
+//     console.log("submitted forms", this.submittedForms);
+//     await this.storagePrvdr.set("submittedForms", this.submittedForms);
+//     console.log("saved submission");
+//     this.events.publish("message", { text: "Submission Saved" });
+//     this.events.unsubscribe("form:saved");
+//     this.showToast("submission saved");
+//     // this.uploadSavedForms(formName);
+//   }
+
+//   showToast(message) {
+//     this.toastCtrl
+//       .create({
+//         message: message,
+//         duration: 3000,
+//         closeButtonText: "close",
+//         position: "top",
+//         dismissOnPageChange: true,
+//         showCloseButton: true
+//       })
+//       .present();
+//   }
+// }
+
+/************************************************************************
+ *  Very old methods, need to sort to see what is valid
+ *************************************************************************/
 
 //   uploadSavedForms(formName, backgroundMode?) {
 //     // upload reporting form to firebase and resave local

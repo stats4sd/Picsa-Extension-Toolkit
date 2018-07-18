@@ -12,6 +12,7 @@ export interface IUser {
   verified?: boolean;
   lang?: string;
   groups?: string[];
+  authenticated?: boolean;
   permissions?: IUserPerimissions;
   defaults?: IUserDefaults;
 }
@@ -27,27 +28,34 @@ interface IUserPerimissions {
   privateWhatsappGroups: { ["id"]: boolean }[];
 }
 
-// users can register to groups which provide specific access
-// group order specifies a hierarchy which can be used to handle overrides
-// if overriding permissions or defaults for multiple groups
-export interface IGroup {
-  name: string;
-  id: string;
-  permissions: IUserPerimissions;
-  defaults: any;
-  order: number;
-}
-
 // data stored locally and sync'd from online
 // meta fields with '_' are not sync'd, all other data should come as arrays to populate collection
 export interface IData {
   _version?: number;
   resources?: IResource[] | IVideoResource[];
   forms?: IForm[];
+  groups?: IUserGroup[];
   whatsappGroups?: IWhatsAppGroup[];
 }
 
-export interface IForm {}
+// users can register to groups which provide specific access
+// group order specifies a hierarchy which can be used to handle overrides
+// if overriding permissions or defaults for multiple groups
+export interface IUserGroup {
+  _key: string;
+  name: string;
+  accessKey: string;
+  defaults: any;
+  order: any;
+  isHidden?: boolean;
+}
+
+export interface IForm {
+  _key: string;
+  name: string;
+  groups: string[];
+  surveyJson: any;
+}
 
 export interface IResource {
   _key: string;
