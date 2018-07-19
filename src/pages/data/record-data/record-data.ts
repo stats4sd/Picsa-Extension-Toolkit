@@ -2,8 +2,8 @@ import { NgRedux, select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { IonicPage, ModalController } from "ionic-angular";
 import { Observable } from "rxjs";
-import { IForm, IUser } from "../../models/models";
-import { AppState } from "../../reducers/reducers";
+import { IForm, IUser } from "../../../models/models";
+import { AppState } from "../../../reducers/reducers";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -24,13 +24,18 @@ export class RecordDataPage {
 ***REMOVED***
 
   // when user updated check for available forms (given user group access permissions) and updated submissions
+  // only show forms which are marked as active
   init(user) {
     this.user = user;
     try {
       const allForms: IForm[] = this.ngRedux.getState().data.forms;
-      this.forms = allForms.filter(form => {
+      let forms = allForms.filter(form => {
         return this._containsCommonElement(form.groups, this.user.groups);
     ***REMOVED***);
+      forms = allForms.filter(form => {
+        return form.isActive;
+    ***REMOVED***);
+      this.forms = forms;
   ***REMOVED*** catch (error) {}
 ***REMOVED***
 

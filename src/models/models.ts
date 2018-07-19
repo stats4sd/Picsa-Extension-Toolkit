@@ -54,7 +54,15 @@ export interface IForm {
   _key: string;
   name: string;
   groups: string[];
+  isActive: boolean;
   surveyJson: any;
+}
+
+export interface IFormResponse {
+  _key: string;
+  _userID: string;
+  _submitted: string;
+  ["questionKey"]?: any;
 }
 
 export interface IResource {
