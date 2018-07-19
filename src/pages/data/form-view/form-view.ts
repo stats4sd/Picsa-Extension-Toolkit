@@ -55,9 +55,7 @@ export class FormViewPage {
 ***REMOVED***
   // custom function called when survey complete
   _surveyComplete = (sender: Survey.Model, options) => {
-    console.log("this", this);
     const responses: IFormResponse = this._addUserMeta(sender.data);
-    console.log("responses", responses);
     this.submitForm(responses);
 ***REMOVED***;
 
