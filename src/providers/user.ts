@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs";
 import { UserActions } from "../actions/user.actions";
-import { IUser } from "../models/models";
+import { IFormResponse, IUser } from "../models/models";
 // unsure why, but can't import both from ./providers - not a big issue
 import { FirestoreStorageProvider } from "./firestore";
 import { StorageProvider } from "./storage";
@@ -59,6 +59,18 @@ export class UserProvider {
       user = { lang: "en" };
     }
     user[userFieldKey] = value;
+    this.actions.updateUser(user);
+  }
+
+  saveFormResponse(formID: string, response: IFormResponse) {
+    const user = this.user;
+    if (!user.submittedForms) {
+      user.submittedForms = {};
+    }
+    if (!user.submittedForms[formID]) {
+      user.submittedForms[formID] = {};
+    }
+    user.submittedForms[formID][response._key] = response;
     this.actions.updateUser(user);
   }
 

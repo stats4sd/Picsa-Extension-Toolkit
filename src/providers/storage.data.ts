@@ -1,4 +1,5 @@
 import { IData } from "../models/models";
+import { forms } from "./storage.forms";
 
 /* 
 data in this file is saved locally for retrieval (via storage provider), and the keys
@@ -70,15 +71,6 @@ const groups = [
 ];
 
 const whatsappGroups = [];
-
-const forms = [
-  {
-    _key: "w7q8jUeRb0keZENZh92p",
-    name: "Test Form",
-    groups: ["u3EP0KB66MDcD3Ibom0o"],
-    surveyJson: {}
-  }
-];
 
 // make available as single export so keys can all be taken in one go
 // update version number to automatically override old data if this file has been updated in line with live db
