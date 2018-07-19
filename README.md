@@ -6,7 +6,7 @@ Update version number in changelog/version, package.json and config.xml
 
 _Make sure datasets and metadata.json in assets/datasets (not available on git)_
 
-_Update data from firebase database to budget-tool data.ts and storage.data.ts_
+_Update data from firebase database to budget-tool/data.ts and storage.data.ts_
 
 ### Live
 
