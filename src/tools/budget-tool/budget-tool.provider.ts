@@ -84,11 +84,13 @@ export class BudgetToolProvider {
         `budgetTool/meta/${endpoint}`
       ) as Observable<ICustomBudgetCard[]>;
       collection.subscribe(data => {
-        const orderedData = this._sortData(data);
-        this.actions.setBudgetMeta({ [endpoint]: orderedData });
-        const meta = this.ngRedux.getState().budget.meta;
-        meta[endpoint] = orderedData;
-        this.storagePrvdr.storage.set("_budgetMeta", meta);
+        if (data && data.length > 0) {
+          const orderedData = this._sortData(data);
+          this.actions.setBudgetMeta({ [endpoint]: orderedData });
+          const meta = this.ngRedux.getState().budget.meta;
+          meta[endpoint] = orderedData;
+          this.storagePrvdr.storage.set("_budgetMeta", meta);
+        }
       });
     }
   }

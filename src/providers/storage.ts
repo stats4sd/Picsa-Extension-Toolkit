@@ -18,22 +18,19 @@ export class StorageProvider {
   // if local data version > storage then override
   async dataInit() {
     const currentDataVersion = await this.storage.get("_version");
-    if (!currentDataVersion || currentDataVersion < storageData._version) {
-      this.loadDataFromFile();
-    } else {
-      this.loadDataFromCache();
-    }
+    console.log("current data version:", currentDataVersion);
+    console.log("storage data version:", storageData._version);
+    this.loadData();
   }
-  async loadDataFromFile() {
-    for (const key of Object.keys(storageData)) {
-      this.set(key, storageData[key]);
-      this.actions.loadData({ [key]: storageData[key] }, "file");
-    }
-  }
-  async loadDataFromCache() {
+  // attempt to load data from cache, if doesn't exist fallback to file
+  async loadData() {
     for (const key of Object.keys(storageData)) {
       const data = await this.storage.get(key);
-      this.actions.loadData({ [key]: data }, "storage");
+      if (data && data.length > 0) {
+        this.actions.loadData({ [key]: data }, "storage");
+      } else {
+        this.actions.loadData({ [key]: storageData[key] }, "file");
+      }
     }
   }
   // standard storage methods

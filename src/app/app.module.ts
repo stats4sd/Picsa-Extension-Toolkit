@@ -1,26 +1,25 @@
 /* tslint:disable:ordered-imports */
 import { NgModule, ErrorHandler } from "@angular/core";
-import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
+import { IonicApp, IonicModule } from "ionic-angular";
 import { BrowserModule } from "@angular/platform-browser";
-// import { HttpModule, Http } from "@angular/http";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { IonicStorageModule } from "@ionic/storage";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { File } from "@ionic-native/file";
 // Ionic native modules
+import { File } from "@ionic-native/file";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Network } from "@ionic-native/network";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
 import { FileOpener } from "@ionic-native/file-opener";
 import { StatusBar } from "@ionic-native/status-bar";
-// App pages
-import { MyApp } from "./app.component";
 // Angular firestore
 import { AngularFireModule } from "angularfire2";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { environment } from "../environments/environment";
+// App entry component
+import { MyApp } from "./app.component";
 // Providers
 import {
   FileService,
@@ -54,6 +53,16 @@ export const firebaseConfig = {
   storageBucket: "extension-toolkit.appspot.com",
   messagingSenderId: "249750594240"
 };
+// error handling
+import { SentryErrorHandler } from "../providers/error-handler";
+
+// want to use sentry-cordova, but fails when cordova not available...
+// *** should link to mobile init app component call... still seems to have issues
+// stick to raven as captures js errors fine (no device info from cordova)
+
+// Sentry.init({
+//   dsn: "https://68f91fcd849a436193d615bc943c0259@sentry.io/1249964"
+// });
 
 @NgModule({
   declarations: [MyApp],
@@ -82,7 +91,7 @@ export const firebaseConfig = {
   entryComponents: [MyApp],
 
   providers: [
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     SplashScreen,
     C3ChartProvider,
     Network,

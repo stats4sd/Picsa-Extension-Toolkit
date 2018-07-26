@@ -149,8 +149,11 @@ export const budgetMeta = {
   enterprises: [
     { group: "crop", name: "maize", id: "maize" },
     { group: "crop", name: "rice", id: "rice" },
+    { group: "crop", name: "beans", id: "beans" },
+    { group: "crop", name: "soya beans", id: "soya-beans" },
     { group: "crop", name: "groundnuts", id: "groundnuts" },
     { group: "crop", name: "pigeon peas", id: "pigeon-peas" },
+    { group: "crop", name: "cowpeas", id: "cowpeas" },
     { group: "crop", name: "sweet potatoes", id: "sweet-potatoes" },
     { group: "crop", name: "sorghum", id: "sorghum" },
     { group: "fish", name: "fish", id: "fish" },
@@ -160,8 +163,13 @@ export const budgetMeta = {
     { group: "fruits", name: "watermelon", id: "watermelon" },
     { group: "fruits", name: "mixed", id: "mixed" },
     { group: "fruits", name: "pumpkins", id: "pumpkins" },
-    { group: "livestock", name: "livestock", id: "livestock" },
-    { group: "poultry", name: "poultry", id: "poultry" }
+    { group: "livestock", name: "cattle", id: "cattle" },
+    { group: "livestock", name: "goats", id: "goats" },
+    { group: "livestock", name: "sheep", id: "sheep" },
+    { group: "livestock", name: "ducks", id: "ducks" },
+    { group: "livestock", name: "chicken", id: "chicken" },
+    { group: "livestock", name: "guinea fowl", id: "guinea-fowl" },
+    { group: "livestock", name: "pigs", id: "pigs" }
   ]
 };
 

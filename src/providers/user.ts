@@ -75,19 +75,21 @@ export class UserProvider {
   }
 
   subscribeToFirebaseChanges() {
-    // firebase auth state ch
-    this.afAuth.auth.onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in.
-        console.log("user signed in", user.uid);
-        this.actions.updateUser({
-          id: user.uid,
-          email: user.email,
-          verified: user.emailVerified
-        });
-      } else {
-        // User is signed out.
-      }
-    });
+    // wrap in try-catch as sometimes throws error if offline and trying to refresh token
+    try {
+      this.afAuth.auth.onAuthStateChanged(user => {
+        if (user) {
+          // User is signed in.
+          console.log("user signed in", user.uid);
+          this.actions.updateUser({
+            id: user.uid,
+            email: user.email,
+            verified: user.emailVerified
+          });
+        } else {
+          // User is signed out.
+        }
+      });
+    } catch (error) {}
   }
 }

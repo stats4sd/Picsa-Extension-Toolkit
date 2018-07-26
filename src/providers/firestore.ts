@@ -15,11 +15,13 @@ export class FirestoreStorageProvider {
   }
   // automatically sync firebase collection data locally using list from storage.data
   syncCollections() {
+    console.log("syncing collections from firebase");
     for (const key of Object.keys(storageCollections)) {
       // skip metadata marked with _ in key
       if (!key.includes("_")) {
         this.getCollection(key).subscribe(data => {
-          if (data) {
+          // if data returned (and not empty which can happen if never online)
+          if (data && data.length > 0) {
             this.storagePrvdr.set(key, data);
             this.actions.syncData({ [key]: data }, "firestore");
           }

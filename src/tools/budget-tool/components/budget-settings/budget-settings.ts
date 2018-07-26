@@ -35,6 +35,8 @@ export class BudgetSettingsComponent {
   filteredEnterprises: IBudgetCard[] = [];
   showIndividualEnterprises: boolean;
   timescales = ["days", "weeks", "months"];
+  days = DAYS;
+  months = MONTHS;
   enterpriseTypes: IBudgetCard[] = [];
   budget: IBudget;
   @ViewChild(Slides) slides: Slides;
@@ -81,8 +83,9 @@ export class BudgetSettingsComponent {
     enterprises.forEach(enterprise => {
       groups[enterprise.group] = true;
     });
-    // convert to array and move 'other' group to end
-    const types: string[] = Object.keys(groups);
+    // convert to array, sort alphabetically and move 'other' group to end
+    let types: string[] = Object.keys(groups);
+    types = this._sortAlphabetcially(types);
     types.push(types.splice(types.indexOf("other"), 1)[0]);
     // finally convert to standard budget card format
     const typeCards: IBudgetCard[] = types.map(type => {
@@ -101,7 +104,7 @@ export class BudgetSettingsComponent {
       enterprises = enterprises.filter(e => {
         return e.group === type;
       });
-      this.filteredEnterprises = enterprises;
+      this.filteredEnterprises = this._sortByField(enterprises, "name");
       if (type == "other") {
         this.showIndividualEnterprises = true;
       } else {
@@ -122,6 +125,17 @@ export class BudgetSettingsComponent {
       this.budgetPrvdr.patchBudget("enterprise", null);
     }
   }
+  _sortAlphabetcially(arr: string[]) {
+    return arr.sort((a, b) => {
+      return a > b ? 1 : -1;
+    });
+  }
+
+  _sortByField(arr: any[], field) {
+    return arr.sort((a, b) => {
+      return a[field] > b[field] ? 1 : -1;
+    });
+  }
 
   nextSlide() {
     console.log("next slide", this.slides);
@@ -136,20 +150,24 @@ export class BudgetSettingsComponent {
     });
   }
 
-  calculatePeriod(timescale) {
+  calculatePeriod(timescale?) {
     const budget = this.ngRedux.getState().budget.active;
     // return array representing time periods
     const starting = budget.periods.starting;
     const total = budget.periods.total;
+    if (!timescale) {
+      timescale = budget.periods.scale;
+    }
+    console.log("calculate period", timescale);
     let arr = [];
     if (timescale == "months") {
-      budget.periods.total = 12;
-      budget.periods.starting = "Jan";
+      budget.periods.total = total ? total : 12;
+      budget.periods.starting = MONTHS.includes(starting) ? starting : "Jan";
       arr = this.calculatePeriodMonths(total, starting);
     }
     if (timescale == "days") {
-      budget.periods.starting = "Mon";
-      budget.periods.total = 7;
+      budget.periods.starting = DAYS.includes(starting) ? starting : "Mon";
+      budget.periods.total = total ? total : 7;
       arr = this.calculatePeriodDays(total, starting);
     }
     if (timescale == "weeks") {

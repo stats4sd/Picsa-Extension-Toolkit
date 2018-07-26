@@ -1,53 +1,52 @@
 page-climate-tool {
-  // css for small devices
-  @media (max-width: 767px) {
-    .flex {
-      display: flex;
-    }
-    .wrap {
-      flex-wrap: wrap;
-    }
-    .chart-image>img,
-    .active-chart-image {
-      height: 120px;
-      width: 120px;
-    }
-    .chart-image>div {
-      width: 120px;
-      text-align: center;
-    }
-    .chart-image {
-      margin-right: 10px;
-      cursor: pointer;
-    }
-    .chart-image:hover {
-      font-weight: bold
-    }
-    #tools {
-      max-width: 160px;
-    }
-    .item {
-      padding-left: 8px;
-    }
-    .tool-container {
-      flex-basis: 100%;
-    }
-  } // css for tablets
-  @media (min-width: 768px) {
-    .flex {
-      display: flex;
-    }
-    .chart-image,
-    .active-chart-image {
-      max-width: 150px;
-      max-height: 150px;
-    }
+  .tool-container,
+  .definition {
+    // max-width: 200px;
+    // margin: 5px 0 0 5px;
+    padding: 10px;
+    flex: 1;
+    min-width: 200px;
   }
-  #chart {
-    height: 320px;
+  .definition {
+    background-color: wheat;
+    font-size: large;
+  }
+  #lineTool {
+    // width: 140px;
+  } // css for small devices
+  .chart-image>img,
+  .active-chart-image {
+    height: 120px;
+    width: 120px;
+  }
+  .chart-image>div {
+    width: 120px;
+    text-align: center;
+  }
+  .chart-image:hover {
+    font-weight: bold;
+  }
+  .flex {
+    display: flex;
+  }
+  .wrap {
+    flex-wrap: wrap;
+  }
+  .chart-image {
+    margin-right: 10px;
+    cursor: pointer;
   }
   .selected-crop {
     background-color: yellow;
+  }
+  #tools {
+    max-width: 160px;
+  }
+  .item {
+    padding-left: 8px;
+  }
+  #chart {
+    height: 320px;
   }
   #lineTool,
   #probability {
@@ -169,12 +168,6 @@ page-climate-tool {
   }
   .crop-select {
     margin-right: 10px;
-  }
-  .definition {
-    background-color: wheat;
-    font-size: large;
-    max-width: 200px;
-    padding: 10px;
   }
   .c3-tooltip th {
     font-size: x-large;

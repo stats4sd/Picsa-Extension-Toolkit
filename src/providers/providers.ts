@@ -1,3 +1,4 @@
+import { SentryErrorHandler } from "./error-handler";
 import { FileService } from "./file-service";
 import { FirestoreStorageProvider } from "./firestore";
 import { NetworkProvider } from "./network";
@@ -6,6 +7,7 @@ import { UserProvider } from "./user";
 import { YoutubeService } from "./youtube-service";
 
 export {
+  SentryErrorHandler,
   FileService,
   FirestoreStorageProvider,
   NetworkProvider,
