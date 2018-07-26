@@ -1,53 +1,52 @@
 page-climate-tool {
-  // css for small devices
-  @media (max-width: 767px) {
-    .flex {
-      display: flex;
-  ***REMOVED***
-    .wrap {
-      flex-wrap: wrap;
-  ***REMOVED***
-    .chart-image>img,
-    .active-chart-image {
-      height: 120px;
-      width: 120px;
-  ***REMOVED***
-    .chart-image>div {
-      width: 120px;
-      text-align: center;
-  ***REMOVED***
-    .chart-image {
-      margin-right: 10px;
-      cursor: pointer;
-  ***REMOVED***
-    .chart-image:hover {
-      font-weight: bold
-  ***REMOVED***
-    #tools {
-      max-width: 160px;
-  ***REMOVED***
-    .item {
-      padding-left: 8px;
-  ***REMOVED***
-    .tool-container {
-      flex-basis: 100%;
-  ***REMOVED***
-***REMOVED*** // css for tablets
-  @media (min-width: 768px) {
-    .flex {
-      display: flex;
-  ***REMOVED***
-    .chart-image,
-    .active-chart-image {
-      max-width: 150px;
-      max-height: 150px;
-  ***REMOVED***
+  .tool-container,
+  .definition {
+    // max-width: 200px;
+    // margin: 5px 0 0 5px;
+    padding: 10px;
+    flex: 1;
+    min-width: 200px;
 ***REMOVED***
-  #chart {
-    height: 320px;
+  .definition {
+    background-color: wheat;
+    font-size: large;
+***REMOVED***
+  #lineTool {
+    // width: 140px;
+***REMOVED*** // css for small devices
+  .chart-image>img,
+  .active-chart-image {
+    height: 120px;
+    width: 120px;
+***REMOVED***
+  .chart-image>div {
+    width: 120px;
+    text-align: center;
+***REMOVED***
+  .chart-image:hover {
+    font-weight: bold;
+***REMOVED***
+  .flex {
+    display: flex;
+***REMOVED***
+  .wrap {
+    flex-wrap: wrap;
+***REMOVED***
+  .chart-image {
+    margin-right: 10px;
+    cursor: pointer;
 ***REMOVED***
   .selected-crop {
     background-color: yellow;
+***REMOVED***
+  #tools {
+    max-width: 160px;
+***REMOVED***
+  .item {
+    padding-left: 8px;
+***REMOVED***
+  #chart {
+    height: 320px;
 ***REMOVED***
   #lineTool,
   #probability {
@@ -169,12 +168,6 @@ page-climate-tool {
 ***REMOVED***
   .crop-select {
     margin-right: 10px;
-***REMOVED***
-  .definition {
-    background-color: wheat;
-    font-size: large;
-    max-width: 200px;
-    padding: 10px;
 ***REMOVED***
   .c3-tooltip th {
     font-size: x-large;

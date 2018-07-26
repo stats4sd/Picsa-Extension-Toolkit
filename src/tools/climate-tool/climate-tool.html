@@ -52,7 +52,7 @@
           <ion-input type="number" placeholder="Input a value to test" [(ngModel)]='lineToolValue' (focusout)="lineToolValueChange($event)"></ion-input>
           <button ion-button>{{'apply' | translate}}</button>
           <!--crops-->
-          <div>{{'Or select a typical crop value' | translate}}</div>
+          <!-- <div>{{'Or select a typical crop value' | translate}}</div>
           <div class="flex">
             <div class="crop-select" *ngFor="let crop of crops" (click)="setCrop(crop)">
               <img src="{{crop.image}}" class="crop-image">
@@ -60,7 +60,7 @@
               <div class="selected-crop" *ngIf="selectedCrop[crop.name]!==undefined">{{crop.name}}</div>
               <div>{{crop[activeChart.cropTableValue+'Min']}} - {{crop[activeChart.cropTableValue+'Max']}}</div>
             </div>
-          </div>
+          </div> -->
         </div>
         <div id="probability" *ngIf="showProbabilityTool && activeChart.tools.line" class="tool-container">
           <h3>{{'Probability' | translate}}</h3>

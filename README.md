@@ -17,6 +17,13 @@ _Update data from firebase database to budget-tool/data.ts and storage.data.ts_
 `npm run deploy:staging`
 (also automatically deploys to staging on git commit)
 
+### android
+
+Test production version on android
+`npm run run:android`
+(need to check whether also want to set NODE_ENV="production", e.g.
+set NODE_ENV="production"&& ionic cordova run android --prod )
+
 ## General
 
 ## Troubleshooting:

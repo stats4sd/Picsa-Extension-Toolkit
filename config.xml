@@ -5,6 +5,7 @@
     <author email="cclarke@stats4sd.org" href="http://stats4sd.org/">Statistics for Sustainable Development</author>
     <content src="index.html" />
     <access origin="*" />
+    <access origin="sentry.io" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

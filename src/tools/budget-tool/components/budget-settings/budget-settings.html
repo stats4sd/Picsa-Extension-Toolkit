@@ -38,8 +38,11 @@
           <ion-label icon-left>
             <ion-icon name="alarm"></ion-icon>
             Starting</ion-label>
-          <ion-select (ionChange)="calculatePeriod()" [(ngModel)]="budget.periods.starting">
-            <ion-option *ngFor="let label of budget.periods.labels" [value]="label">{{label}}</ion-option>
+          <ion-select *ngIf="budget.periods.scale=='days'" (ionChange)="calculatePeriod('days')" [(ngModel)]="budget.periods.starting">
+            <ion-option *ngFor="let day of days" [value]="day">{{day}}</ion-option>
+          </ion-select>
+          <ion-select *ngIf="budget.periods.scale=='months'" (ionChange)="calculatePeriod('months')" [(ngModel)]="budget.periods.starting">
+            <ion-option *ngFor="let month of months" [value]="month">{{month}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>

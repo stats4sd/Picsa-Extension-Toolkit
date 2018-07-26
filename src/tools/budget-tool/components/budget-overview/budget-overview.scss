@@ -1,7 +1,6 @@
 budget-overview {
   // cell height needs to accomodate header, padding and potential scrollbar
   // $cellHeight: calc((100vh - 118px) / 6);
-
   .budget-container {
     display: flex;
     overflow: auto;
@@ -16,7 +15,6 @@ budget-overview {
     flex-direction: column;
     flex-basis: 100%;
 ***REMOVED***
-
   .scroll-content {
     overflow-x: scroll;
 ***REMOVED***
@@ -63,18 +61,17 @@ budget-overview {
     font-size: 16px;
     text-align: center;
     flex-basis: unset;
-***REMOVED***
-  // want last row cells to adjust height to fill with/without scrollbar
+***REMOVED*** // want last row cells to adjust height to fill with/without scrollbar
   .cell.Cash {
     height: 100%;
 ***REMOVED***
   .cell.row-title {
     padding: 5px;
+    font-size: large;
 ***REMOVED***
   .cell {
     min-width: 100px;
 ***REMOVED***
-
   .cell {
     border-bottom: 1px solid gray;
 ***REMOVED***

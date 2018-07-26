@@ -31,6 +31,8 @@
     <budget-settings [style.display]="(viewComponent$ | async) =='settings'? 'initial' : 'none'"></budget-settings>
     <budget-card-list [style.display]="(viewComponent$ | async) =='cell-edit'? 'initial' : 'none'"></budget-card-list>
     <budget-load [style.display]="(viewComponent$ | async) =='load'? 'initial' : 'none'"></budget-load>
+    <div padding [style.display]="(viewComponent$ | async) =='export'? 'initial' : 'none'">Coming Soon...</div>
+
   </div>
 </ion-content>
 
