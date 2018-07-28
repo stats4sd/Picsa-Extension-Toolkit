@@ -1,8 +1,8 @@
 <div class="budget-cell-container" (click)="editCell()">
   <div *ngIf="cellData">
-    <div [ngSwitch]="type">
+    <div [ngSwitch]="type" style="height:100%">
       <div *ngSwitchDefault style="display: flex; flex-wrap: wrap">
-        <budget-card-image class="small" *ngFor="let card of cellData" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+        <budget-card-image *ngFor="let card of cellData" [class]="cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
       </div>
     </div>
   </div>

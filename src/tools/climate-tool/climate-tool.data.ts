@@ -1,5 +1,4 @@
-const cropRequirements = {***REMOVED***
+import { availableCharts } from "./data/availableCharts";
+import { cropRequirements } from "./data/cropRequirements";
 
-export default {
-  waterRequirements: cropRequirements
-***REMOVED***
+export { availableCharts, cropRequirements ***REMOVED***

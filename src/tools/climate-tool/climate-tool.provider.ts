@@ -2,12 +2,11 @@ import { Injectable } from "@angular/core";
 import * as c3 from "c3";
 import * as Papa from "papaparse";
 import { ISite } from "../../models/models";
-import crops from "./malawi-crops";
 
 declare const d3;
 
 @Injectable()
-export class C3ChartProvider {
+export class ClimateToolProvider {
   public datasets: any;
   public columns: any;
   public chart: c3.ChartAPI;
@@ -20,7 +19,7 @@ export class C3ChartProvider {
   site: any;
   columnsObserver: any;
   initialRender: boolean = true;
-  crops: any = crops;
+  metaData: any;
   constructor() {}
 
   generate(xAxis: string) {
@@ -274,6 +273,30 @@ export class C3ChartProvider {
   ***REMOVED*** else {
       return value;
   ***REMOVED***
+***REMOVED***
+  getMetaData() {
+    alert("no get meta data function");
+    // return new Promise(resolve => {
+    //   if (this.metaData) {
+    //     resolve(this.metaData);
+    // ***REMOVED*** else {
+    //     this.loadFile("assets/datasets/metadata.json").then(res => {
+    //       this.metaData = res;
+    //       resolve(this.metaData);
+    //   ***REMOVED***);
+    // ***REMOVED***
+    // });
+***REMOVED***
+
+  loadFile(url) {
+    alert("no load file function");
+    //   if (!this.metaData) {
+    //     return new Promise(resolve => {
+    //       this.http.get(url).subscribe(data => {
+    //         resolve(data);
+    //     ***REMOVED***);
+    //   ***REMOVED***);
+    // ***REMOVED***
 ***REMOVED***
 }
 

@@ -34,16 +34,10 @@ export class HomePage {
         icon: "chatbubbles",
         page: "DiscussionsPage"
     ***REMOVED***,
-      // {name:' Videos', color:'picsa-videos', icon:'logo-youtube', page:VideosPage},
       {
-        name: "Record Data",
-        icon: "create",
+        name: "Data Collection",
+        img: "data-collection",
         page: "RecordDataPage"
-    ***REMOVED***,
-      {
-        name: "View Data",
-        icon: "stats",
-        page: "ViewDataPage"
     ***REMOVED***,
       {
         name: "Settings",
