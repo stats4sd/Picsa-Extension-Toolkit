@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { C3ChartProvider } from "../../../../providers/c3-chart/c3-chart";
+import { ClimateToolProvider } from "../../climate-tool.provider";
 
 @Component({
   selector: "combined-probability",
@@ -15,7 +15,7 @@ export class CombinedProbabilityComponent {
   dayValue: number;
   test: string = "red";
 
-  constructor(public c3Provider: C3ChartProvider) {
+  constructor(public climatePrvdr: ClimateToolProvider) {
     this.plantDate = { min: 1, max: 8, value: 3, step: 1 };
     this.labels = {
       1: "Week 1, November",
@@ -27,16 +27,16 @@ export class CombinedProbabilityComponent {
       7: "Week 3, December",
       8: "Week 4, December"
     };
-    this.crops = this.c3Provider.crops;
-    for (const crop of this.crops) {
-      this.crops[crop.index].lengthProbability = { reversePercentage: null };
-      this.crops[crop.index].rainfallProbability = { reversePercentage: null };
-    }
+    // this.crops = this.c3Provider.crops;
+    // for (const crop of this.crops) {
+    //   this.crops[crop.index].lengthProbability = { reversePercentage: null };
+    //   this.crops[crop.index].rainfallProbability = { reversePercentage: null };
+    // }
   }
   plantDateChange(e) {
     //manually set 1 October as day 274 and multiple by 7.6 (rough number of days in 1/4 month)
     this.dayValue = 305 + (365 / 48) * this.plantDate.value;
-    this.startProbability = this.c3Provider.calculateProbability([
+    this.startProbability = this.climatePrvdr.calculateProbability([
       { key: "Start", value: this.dayValue, operator: "<=" }
     ]);
     this.calculateCropProbabilities();
@@ -47,7 +47,7 @@ export class CombinedProbabilityComponent {
     for (const crop of this.crops) {
       this.crops[
         crop.index
-      ].lengthProbability = this.c3Provider.calculateProbability([
+      ].lengthProbability = this.climatePrvdr.calculateProbability([
         {
           key: "End",
           value: (this.dayValue + crop.lengthAvg) % 366,
@@ -56,7 +56,7 @@ export class CombinedProbabilityComponent {
       ]);
       this.crops[
         crop.index
-      ].rainfallProbability = this.c3Provider.calculateProbability([
+      ].rainfallProbability = this.climatePrvdr.calculateProbability([
         {
           key: "Rainfall",
           value: crop.waterAvg * (1 + this.plantDate.value / 16),

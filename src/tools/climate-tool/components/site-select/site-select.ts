@@ -1,11 +1,9 @@
 import { Component } from "@angular/core";
 import * as L from "leaflet";
 import "leaflet-ajax";
-import { ClimateToolActions } from "../../../../actions/climate-tool.actions";
-import malawiGeo1 from "../../../../assets/geoJson/Malawi-admin-1";
-// import malawiGeo2 from "../../../../assets/geoJson/Malawi-admin-2-Blantyre";
-import { ISite } from "../../../../models/models";
-import { MalawiDataProvider } from "../../../../providers/c3-chart/malawi-data";
+import { ClimateToolActions } from "../../climate-tool.actions";
+import { GEOJSON, SITES } from "../../climate-tool.data";
+import { ISite } from "../../climate-tool.models";
 
 @Component({
   selector: "site-select",
@@ -14,14 +12,13 @@ import { MalawiDataProvider } from "../../../../providers/c3-chart/malawi-data";
 export class SiteSelectComponent {
   map: any;
 
-  constructor(
-    private malawiData: MalawiDataProvider,
-    private actions: ClimateToolActions
-  ) {}
+  constructor(private actions: ClimateToolActions) {}
 
   ngOnInit() {
     this.mapInit();
+    this.sitesInit();
   }
+  // create map base layers and set malawi geojson
   mapInit() {
     this.map = L.map("siteSelect", {
       attributionControl: false
@@ -34,53 +31,43 @@ export class SiteSelectComponent {
       maxZoom: 15,
       attribution: osmAttrib
     });
-    // start the map in South-East England
     this.map.setView(new L.LatLng(-13.7, 33.21), 6);
-    // this.map.addLayer(osm);
-    //cast L to any as typings sometimes not working
-
-    const geojsonLayer = L.geoJSON(malawiGeo1, {
+    const geojsonLayer = L.geoJSON(GEOJSON.malawiAdmin, {
       onEachFeature: this.setFeature.bind(this),
       middleware: function(data) {
         return data;
       },
-      // filter:filterFunction
       style: this._getStyle()
     });
     geojsonLayer.addTo(this.map);
-    // console.log('geojson bounds',geojsonLayer.getBounds())
     this.map.fitBounds([[-16.01463, 34.7183], [-15.34875, 35.13236]]);
     // this.map.on('click',function(e){
     //   console.log('clicked')
     // })
-    this.malawiData.getMetaData().then(res => {
-      const sites = res["sites"];
-      for (const site of sites) {
-        console.log("site", site);
-        const marker = L.marker([site.latitude, site.longitude], {
-          icon: weatherIcon
-        });
-
-        const container = L.DomUtil.create("div");
-        const btn = L.DomUtil.create("button", "", container);
-        btn.setAttribute("type", "button");
-        btn.innerHTML = `<div class="site-select-button">${site.name} 🡺</div>`;
-        const popup = L.popup().setContent(btn);
-        L.DomEvent.on(btn, "click", btn => {
-          this.selectSite(site);
-        });
-        marker.bindPopup(popup);
-        marker.addTo(this.map);
-        marker.on({
-          click: function(e) {
-            console.log("marker clicked", e);
-          }.bind(this)
-        });
-      }
-    });
   }
-  markerClick() {
-    console.log("marker clicked");
+
+  sitesInit() {
+    for (const site of SITES) {
+      console.log("site", site);
+      const marker = L.marker([site.latitude, site.longitude], {
+        icon: weatherIcon
+      });
+      const container = L.DomUtil.create("div");
+      const btn = L.DomUtil.create("button", "", container);
+      btn.setAttribute("type", "button");
+      btn.innerHTML = `<div class="site-select-button">${site.name} 🡺</div>`;
+      const popup = L.popup().setContent(btn);
+      L.DomEvent.on(btn, "click", btn => {
+        this.selectSite(site);
+      });
+      marker.bindPopup(popup);
+      marker.addTo(this.map);
+      marker.on({
+        click: function(e) {
+          console.log("marker clicked", e);
+        }.bind(this)
+      });
+    }
   }
 
   setFeature(feature, layer) {
@@ -89,27 +76,8 @@ export class SiteSelectComponent {
       "TA Machinjili": [-15.67858, 35.07111]
     };
     layer.on({
-      // mouseover: function () {
-      //     this.setStyle({
-      //         'fillColor': '#b45501',
-      //     });
-      // },
-      // mouseout: function () {
-      //     this.setStyle({
-      //         'fillColor': '#f0d1b1',
-      //     });
-      // },
       click: function(e) {
-        // console.log('feature',feature)
         console.log("e", e);
-        // e.target.setStyle({
-        //     'fillColor': '#80FF9F',
-        //     'fillOpacity':1
-        // });
-        // this.selectSite(e)
-
-        //possible add code to recolour previous points
-        //e.g. https://stackoverflow.com/questions/25773389/changing-the-style-of-each-feature-in-a-leaflet-geojson-layer
       }.bind(this)
     });
 
@@ -146,7 +114,6 @@ export class SiteSelectComponent {
     };
   }
   selectSite(site: ISite) {
-    // let data = e.target.feature.properties
     this.actions.selectSite(site);
   }
 }
@@ -154,7 +121,6 @@ export class SiteSelectComponent {
 const weatherIcon = L.icon({
   iconUrl: "assets/img/station.png",
   shadowUrl: "leaf-shadow.png",
-
   iconSize: [38, 38], // size of the icon
   shadowSize: [50, 64], // size of the shadow
   iconAnchor: [22, 94], // point of the icon which will correspond to marker's location

@@ -1,159 +1,63 @@
+import { select } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
-import * as c3 from "c3";
 import * as Papa from "papaparse";
-import { ISite } from "../../models/models";
-
-declare const d3;
+import { Observable } from "rxjs";
+import { ClimateToolActions } from "./climate-tool.actions";
+import { ISite } from "./climate-tool.models";
 
 @Injectable()
 export class ClimateToolProvider {
+  @select(["climate", "site"])
+  readonly site$: Observable<ISite>;
   public datasets: any;
   public columns: any;
   public chart: c3.ChartAPI;
   public activeChart: any = {
     x: "Rainfall"
   };
-  public lineToolValues: any = {};
+
   public lineToolActive: boolean = false;
 
   site: any;
   columnsObserver: any;
-  initialRender: boolean = true;
   metaData: any;
-  constructor() {}
-
-  generate(xAxis: string) {
-    console.log("active chart", this.activeChart);
-    const s = this.site;
-    const keys = [];
-    for (const key in s.summaries[0]) {
-      keys.push(key);
-    }
-    this.chart = c3.generate({
-      bindto: "#chart",
-      size: {
-        height: 320
-      },
-      data: {
-        json: s.summaries,
-        hide: true,
-        keys: {
-          value: keys
-        },
-        x: "Year",
-        classes: { LineTool: "LineTool" },
-        color: function(color, d) {
-          if (d.value >= this.lineToolValues[this.activeChart.x]) {
-            return "#739B65";
-          }
-          if (d.value < this.lineToolValues[this.activeChart.x]) {
-            return "#BF7720";
-          }
-          return seriesColors[this.activeChart.x];
-        }.bind(this)
-      },
-      tooltip: {
-        grouped: false,
-        format: {
-          // title: function (d) { return 'Data ' + d; },
-          value: function(value, ratio, id) {
-            if (this.activeChart.yFormat == "value") {
-              return `${parseInt(value).toString()} ${this.activeChart.units}`;
-            } else {
-              return `${this.formatAxis(value, this.activeChart.yFormat)} ${
-                this.activeChart.units
-              }`;
-            }
-          }.bind(this)
-        }
-      },
-      axis: {
-        y: {
-          tick: {
-            format: function(d) {
-              return this.formatAxis(d, this.activeChart.yFormat);
-            }.bind(this)
-          }
-        }
-      },
-      legend: {
-        hide: true
-      },
-      point: {
-        r: function(d) {
-          // if(d.value>this.lineToolValue){
-          //   return 8
-          // }
-          return 5;
-        }.bind(this)
-      },
-
-      onrendered: function() {
-        this.firstRender();
-      }.bind(this)
+  constructor(private actions: ClimateToolActions) {
+    this.site$.subscribe(site => {
+      if (site) {
+        this.siteChanged(site);
+      }
     });
-    //this.chart.show("SeasonA")
-    // this.chart.show("Year")
   }
 
-  firstRender() {
-    if (this.initialRender) {
-      this.initialRender = false;
+  // when site changed load the relevant summaries and push to redux
+  async siteChanged(site: ISite) {
+    if (!site.summaries) {
+      const filePath = `assets/climate/summaries/${site.fileName}.csv`;
+      site.summaries = await this.loadCSV(filePath);
+      console.log("site", site);
+      this.actions.selectSite(site);
     }
   }
 
-  setDataset(site: ISite) {
-    this.site = site;
-    console.log("loading file", site.filePath);
-    //try to load cache first
-    //load from csv
+  async loadCSV(filePath) {
+    console.log("loading csv", filePath);
     return new Promise((resolve, reject) => {
-      Papa.parse(site.filePath, {
+      Papa.parse(filePath, {
         download: true,
         dynamicTyping: true,
         header: true,
         complete: function(res, file) {
-          this.site.summaries = res.data;
-          //process data
-          console.log("site", this.site);
-          //create first dummy set
-          this.generate("Rainfall");
-          resolve(this.site);
+          // resolve(this.site);
+          resolve(res.data);
         }.bind(this),
         error: function(err) {
+          console.error("err", err);
           reject(err);
         }
       });
     });
   }
 
-  setChart(chart) {
-    if (this.chart) {
-      console.log("setting chart", chart.x);
-      this.activeChart = chart;
-      this.chart.hide();
-      this.chart.legend.hide();
-      this.chart.show(chart.x, { withLegend: true });
-    }
-  }
-
-  resize(size) {
-    console.log("resizing chart", size);
-    this.chart.resize({
-      height: size.height,
-      width: size.width
-    });
-  }
-  setLineToolValue(value) {
-    this.lineToolValues[this.activeChart.x] = value;
-    const lineArray = Array(this.site.summaries.length).fill(value);
-    lineArray.unshift("LineTool");
-    this.chart.load({
-      columns: [lineArray],
-      classes: { LineTool: "LineTool" }
-    });
-    this.chart.show("LineTool", { withLegend: true });
-  }
   calculateProbabilities(value) {
     const points = this.chart.data.values(this.activeChart.x);
     let above = 0,
@@ -243,66 +147,4 @@ export class ClimateToolProvider {
       color: color
     };
   }
-  formatAxis(value, type) {
-    if (type == "date-from-July") {
-      //181 based on local met +182 and -1 for index starting at 0
-      const dayNumber = (value + 181) % 366;
-      //simply converts number to day rough date value (same method as local met office)
-      //initialise year
-      const d = new Date(2001, 0);
-      d.setDate(dayNumber);
-      const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan"
-      ];
-      const string = `${d.getDate()}-${monthNames[d.getMonth()]}`;
-      return string;
-    } else if (type == "value") {
-      return value;
-    } else {
-      return value;
-    }
-  }
-  getMetaData() {
-    alert("no get meta data function");
-    // return new Promise(resolve => {
-    //   if (this.metaData) {
-    //     resolve(this.metaData);
-    //   } else {
-    //     this.loadFile("assets/datasets/metadata.json").then(res => {
-    //       this.metaData = res;
-    //       resolve(this.metaData);
-    //     });
-    //   }
-    // });
-  }
-
-  loadFile(url) {
-    alert("no load file function");
-    //   if (!this.metaData) {
-    //     return new Promise(resolve => {
-    //       this.http.get(url).subscribe(data => {
-    //         resolve(data);
-    //       });
-    //     });
-    //   }
-  }
 }
-
-const seriesColors = {
-  Rainfall: "#377eb8",
-  Start: "#e41a1c",
-  End: "#984ea3",
-  Length: "#4daf4a"
-};

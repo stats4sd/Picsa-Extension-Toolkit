@@ -7,13 +7,14 @@
 
 <ion-content>
   <site-select *ngIf="!selectedSite"></site-select>
+  <div style="height: 1em"></div>
+  <climate-chart></climate-chart>
   <div *ngIf="selectedSite" padding>
     <!--chart-->
-    <div id="chart" [hidden]="activeChart.name=='Combined Probability'"></div>
-    <div [hidden]="!fullScreenView">
+    <div>
       <!--combined probability component-->
-      <combined-probability *ngIf="activeChart.name=='Combined Probability'"></combined-probability>
-      <div id="selectChart" class="flex wrap" *ngIf="!showTools">
+      <!-- <combined-probability *ngIf="activeChart && activeChart.name=='Combined Probability'"></combined-probability> -->
+      <div id="selectChart" class="flex wrap" *ngIf="!activeChart">
         <div *ngFor="let chart of availableCharts" (click)="setChart(chart)" class="chart-image">
           <img src="{{chart.image}}">
           <div>{{chart.name | translate}}</div>

@@ -46,8 +46,8 @@ $ionic cordova plugin add --save cordova-plugin-file cordova-plugin-file-transfe
 
 ### ionic import sources
 
-Current typescript/vscode has issue trying to import from ionic-angular/umd
-search for ionic-angular/umd and replace with ionic-angular
+Current typescript/vscode has issue trying to import from ionic-angular
+search for ionic-angular and replace with ionic-angular
 (https://github.com/Microsoft/TypeScript/issues/25204)
 
 ### build fails for android - Multiple dex files

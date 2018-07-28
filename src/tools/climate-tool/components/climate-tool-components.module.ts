@@ -1,12 +1,21 @@
 import { NgModule } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { IonicModule } from "ionic-angular";
+import { ClimateChartComponent } from "./climate-chart/climate-chart";
 import { CombinedProbabilityComponent } from "./combined-probability/combined-probability";
 import { SiteSelectComponent } from "./site-select/site-select";
 
 @NgModule({
-  declarations: [CombinedProbabilityComponent, SiteSelectComponent],
+  declarations: [
+    ClimateChartComponent,
+    CombinedProbabilityComponent,
+    SiteSelectComponent
+  ],
   imports: [IonicModule, TranslateModule.forChild()],
-  exports: [CombinedProbabilityComponent, SiteSelectComponent]
+  exports: [
+    ClimateChartComponent,
+    CombinedProbabilityComponent,
+    SiteSelectComponent
+  ]
 })
 export class ClimateToolComponentsModule {}
