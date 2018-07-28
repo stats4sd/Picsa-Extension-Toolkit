@@ -6,14 +6,34 @@ budget-new-card {
     cursor: pointer;
     color: black;
     width: unset;
-    height: 130px;
-    width: 130px;
     display: inline-block;
     text-align: center;
+***REMOVED***
+  ion-card.budget-card {
+    height: 130px;
+    width: 130px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 ***REMOVED***
   ion-card.budget-card[selected="true"] {
     font-weight: bold;
     background: color($colors, selected);
+***REMOVED***
+  ion-card.budget-card.inputs[selected="true"] {
+    width: 260px;
+***REMOVED***
+  .card-inputs-list {
+    height: 88px;
+    .item {
+      background-color: #fbf1d1;
+      color: black;
+  ***REMOVED***
+    .label {
+      margin-top: 5px;
+  ***REMOVED***
+    .text-input {
+      margin: 6px 0;
+  ***REMOVED***
 ***REMOVED***
   .card-title {
     padding: 5px;
