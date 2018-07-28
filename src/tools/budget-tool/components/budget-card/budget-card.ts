@@ -10,6 +10,7 @@ import { IBudgetCard } from "../../budget-tool.models";
 })
 export class BudgetCardComponent {
   @Input("card") card: IBudgetCard;
+  @Input("type") type: string;
   selected: boolean;
 
   constructor(

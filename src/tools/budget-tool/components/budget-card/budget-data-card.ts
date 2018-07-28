@@ -38,9 +38,12 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
     this.selected ? this.unselectCard(budget) : this.updateCard(budget);
     this.selected = !this.selected;
   }
+  triggerUpdate() {
+    const budget = this.ngRedux.getState().budget.active;
+    this.updateCard(budget);
+  }
   updateCard(budget) {
     const cellData = budget.data[this.viewMeta.periodIndex][this.viewMeta.type];
-    // this.card.isSelected = true;
     // avoid making changes directly to card as has strange redux binding back to orginal meta object
     cellData[this.card.id] = { ...this.card, ...{ isSelected: true } };
     this.actions.setActiveBudget(budget);
