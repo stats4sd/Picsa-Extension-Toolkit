@@ -35,6 +35,7 @@ export class BudgetMetaCardComponent extends BudgetCardComponent {
     ]);
     pathValue$.subscribe(v => {
       this.card.isSelected = v === this.card.id;
+      this.selected = this.card.isSelected;
     });
   }
 
@@ -46,6 +47,7 @@ export class BudgetMetaCardComponent extends BudgetCardComponent {
     } else {
       budget[this.valuePath] = this.card.id;
     }
+    this.selected = !this.selected;
     this.actions.setActiveBudget(budget);
   }
 }

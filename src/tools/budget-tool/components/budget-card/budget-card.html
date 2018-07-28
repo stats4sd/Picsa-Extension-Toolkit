@@ -1,4 +1,10 @@
-<ion-card class="budget-card selectable" [attr.selected]="card.isSelected" (click)="cardClicked()">
-  <budget-card-image [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
-  <div [class]="'card-title '+card.id">{{card.name}}</div>
+<ion-card class="budget-card selectable" [attr.selected]="selected" (click)="cardClicked()">
+  <div style="display: flex">
+    <div>
+      <budget-card-image [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+      <div [class]="'card-title '+card.id">{{card.name}}</div>
+    </div>
+    <div>Edit Card</div>
+  </div>
+
 </ion-card>

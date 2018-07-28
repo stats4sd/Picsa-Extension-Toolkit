@@ -10,6 +10,7 @@ import { IBudgetCard } from "../../budget-tool.models";
 })
 export class BudgetCardComponent {
   @Input("card") card: IBudgetCard;
+  selected: boolean;
 
   constructor(
     public ngRedux: NgRedux<AppState>,

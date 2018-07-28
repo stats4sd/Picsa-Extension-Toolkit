@@ -1,9 +1,6 @@
-import { NgRedux } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavParams, ViewController } from "ionic-angular";
+import { Events, IonicPage, NavParams, ViewController } from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { AppState } from "../../../../reducers/reducers";
-import { BudgetToolActions } from "../../budget-tool.actions";
 import { ICustomBudgetCard } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
 
@@ -19,9 +16,8 @@ export class BudgetNewCardPage {
   constructor(
     private navParams: NavParams,
     private viewCtrl: ViewController,
-    private actions: BudgetToolActions,
-    private ngRedux: NgRedux<AppState>,
-    private budgetToolProvider: BudgetToolProvider
+    private budgetToolProvider: BudgetToolProvider,
+    private events: Events
   ) {}
 
   saveCard() {
@@ -37,11 +33,12 @@ export class BudgetNewCardPage {
       created: new Date().toString(),
       createdBy: "*** get by redux ***"
     };
-    this.budgetToolProvider.firestorePrvdr.addToCollection(
-      `budgetTool/meta/${endpoint}`,
-      card,
-      id
-    );
+    this.budgetToolProvider.firestorePrvdr
+      .addToCollection(`budgetTool/meta/${endpoint}`, card, id)
+      .then(() => {
+        // publish notification for budget card list to repopulate with new cards
+        this.events.publish("customCards:updated");
+      });
     this.viewCtrl.dismiss();
   }
 

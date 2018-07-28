@@ -77,7 +77,8 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.1.11",
+    "@ionic/app-scripts": "^3.1.10",
+    "@ionic/cli-plugin-ionic-angular": "1.4.1",
     "@types/c3": "^0.6.0",
     "@types/knockout": "^3.4.58",
     "@types/papaparse": "4.1.34",

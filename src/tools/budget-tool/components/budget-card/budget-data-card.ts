@@ -18,6 +18,7 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
   viewMeta: IBudgetViewMeta;
   @select(["budget", "view", "meta"])
   viewMeta$: Observable<IBudgetViewMeta>;
+  selected: boolean;
   constructor(
     public ngRedux: NgRedux<AppState>,
     public actions: BudgetToolActions,
@@ -29,21 +30,27 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
   ngOnInit() {
     this.viewMeta$.subscribe(meta => (this.viewMeta = meta));
     this.viewMeta = this.ngRedux.getState().budget.view.meta;
+    this.selected = this.card.isSelected;
   }
 
   cardClicked() {
     const budget = this.ngRedux.getState().budget.active;
-    this.card.isSelected ? this.unselectCard(budget) : this.updateCard(budget);
-    this.card.isSelected = !this.card.isSelected;
+    this.selected ? this.unselectCard(budget) : this.updateCard(budget);
+    this.selected = !this.selected;
   }
   updateCard(budget) {
     const cellData = budget.data[this.viewMeta.periodIndex][this.viewMeta.type];
-    cellData[this.card.id] = this.card;
+    // this.card.isSelected = true;
+    // avoid making changes directly to card as has strange redux binding back to orginal meta object
+    cellData[this.card.id] = { ...this.card, ...{ isSelected: true } };
     this.actions.setActiveBudget(budget);
     this._fireUpdateEvent(cellData);
   }
+  // when unselected also want to delete the isSelected field to avoid having to check for
+  // both existence and value (card.isSelected vs card.isSelected===true)
   unselectCard(budget) {
     const cellData = budget.data[this.viewMeta.periodIndex][this.viewMeta.type];
+    // delete this.card.isSelected;
     delete cellData[this.card.id];
     this.actions.setActiveBudget(budget);
     this._fireUpdateEvent(cellData);

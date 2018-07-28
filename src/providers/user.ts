@@ -43,7 +43,6 @@ export class UserProvider {
       if (user) {
         this.storagePrvdr.set("user", user);
         if (user && user.authenticated) {
-          console.log("syncing user online");
           this.firestorePrvdr.setDoc(`users/${user.id}`, user);
         }
       }
