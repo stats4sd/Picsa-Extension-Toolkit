@@ -20,7 +20,8 @@
   <div class="link-holder">
     <div *ngFor="let link of links" [navPush]="link.page" color="primary" class="link">
       <div class="flex">
-        <ion-icon name="{{link.icon}}"></ion-icon>
+        <ion-icon name="{{link.icon}}" *ngIf="link.icon"></ion-icon>
+        <img class="icon img-icon" [src]="'assets/img/'+link.img+'.svg'" *ngIf="link.img">
         <div class="button-text">{{link.name | translate}}</div>
       </div>
     </div>

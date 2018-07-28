@@ -20,9 +20,9 @@
         </div>
       </div>
 
-      <div id="activeChart" class="flex wrap" *ngIf="showTools">
+      <div id="activeChart" class="flex wrap" *ngIf="showTools && activeChart">
         <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
-        <div id="tools">
+        <div id="tools" *ngIf="activeChart.tools">
           <ion-list>
             <ion-item *ngIf="activeChart.definition">
               <ion-label>{{'Definition' |translate}}</ion-label>
@@ -46,22 +46,7 @@
         </div>
         <!-- definition -->
         <div class="definition" *ngIf="showDefinition && activeChart.definition">{{activeChart.definition | translate}}</div>
-        <!--line tool-->
-        <div id="lineTool" *ngIf="showLineTool && activeChart.tools.line" class="tool-container">
-          <h3>{{'Line Tool' | translate}}</h3>
-          <ion-input type="number" placeholder="Input a value to test" [(ngModel)]='lineToolValue' (focusout)="lineToolValueChange($event)"></ion-input>
-          <button ion-button>{{'apply' | translate}}</button>
-          <!--crops-->
-          <!-- <div>{{'Or select a typical crop value' | translate}}</div>
-          <div class="flex">
-            <div class="crop-select" *ngFor="let crop of crops" (click)="setCrop(crop)">
-              <img src="{{crop.image}}" class="crop-image">
-              <div *ngIf="selectedCrop[crop.name]==undefined">{{crop.name}}</div>
-              <div class="selected-crop" *ngIf="selectedCrop[crop.name]!==undefined">{{crop.name}}</div>
-              <div>{{crop[activeChart.cropTableValue+'Min']}} - {{crop[activeChart.cropTableValue+'Max']}}</div>
-            </div>
-          </div> -->
-        </div>
+        <!-- probability -->
         <div id="probability" *ngIf="showProbabilityTool && activeChart.tools.line" class="tool-container">
           <h3>{{'Probability' | translate}}</h3>
           <div id="blocks" class="flex">
@@ -83,6 +68,35 @@
             </div>
           </div>
         </div>
+        <!--line tool-->
+        <div id="lineTool" *ngIf="showLineTool && activeChart.tools.line" class="tool-container">
+          <h3>{{'Line Tool' | translate}}</h3>
+          <!--crops-->
+          <ion-input type="number" placeholder="{{'Enter a custom value or select a crop below' | translate}}" [(ngModel)]='lineToolValue'
+            (focusout)="lineToolValueChange($event)"></ion-input>
+          <div style="margin-top:1em">
+            <div class="crop-select" *ngFor="let crop of crops" (click)="setCrop(crop)" style="display: flex">
+              <div class="crop-img-container">
+                <img [src]="'assets/img/budget/cards/'+crop.image+'.svg'" class="crop-image">
+              </div>
+              <div>
+                <div class="crop-type">{{crop.crop}}</div>
+                <div class="crop-variety">{{crop.variety}}</div>
+                <div class="crop-water-req crop-meta">
+                  <img class="crop-info-img" src="assets/img/budget/water.svg">
+                  <span>{{crop.waterMin}} - {{crop.waterMax}}</span>
+                </div>
+                <div class="crop-days-req crop-meta">
+                  <img class="crop-info-img" src="assets/img/budget/days.svg">
+                  <span>{{crop.daysMin}}</span>
+                  <span *ngIf="crop.daysMax"> - {{crop.daysMax}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </div>
 

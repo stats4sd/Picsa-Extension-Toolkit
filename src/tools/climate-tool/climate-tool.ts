@@ -11,8 +11,10 @@ import {
 import { Observable } from "rxjs";
 import { ClimateToolActions } from "../../actions/climate-tool.actions";
 import { ISite } from "../../models/models";
-import { C3ChartProvider } from "../../providers/c3-chart/c3-chart";
-import { MalawiDataProvider } from "../../providers/c3-chart/malawi-data";
+import { CropRequirement } from "../climate-tool.models";
+import * as DATA from "./climate-tool.data";
+import { ClimateToolProvider } from "./climate-tool.provider";
+
 // import { CombinedProbabilityComponentModule} from './components/combined-probability/combined-probability.module'
 
 @IonicPage({
@@ -30,12 +32,12 @@ export class ClimateToolPage {
   selectedSite: ISite;
   selectedChart: string;
   availableCharts: any;
-  showTools: boolean = false;
-  showDefinition: boolean = true;
+  showTools: boolean = true;
+  showDefinition: boolean = false;
   lineToolValue: number;
   probabilities: any;
   activeChart: any = { name: null };
-  crops: any;
+  crops = DATA.cropRequirements;
   selectedCrop: any = {};
   fullScreenView: boolean = true;
   columns = [];
@@ -44,9 +46,8 @@ export class ClimateToolPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public menuCtrl: MenuController,
-    public c3Provider: C3ChartProvider,
+    public climatePrvdr: ClimateToolProvider,
     public modalCtrl: ModalController,
-    public malawiData: MalawiDataProvider,
     public loadingCtrl: LoadingController,
     private actions: ClimateToolActions
   ) {
@@ -63,12 +64,12 @@ export class ClimateToolPage {
     console.log("resize?");
     console.log("screen", window.screen);
     if (!this.fullScreenView) {
-      this.c3Provider.resize({
+      this.climatePrvdr.resize({
         height: window.screen.height - 80,
         width: window.screen.width - 20
       });
     } else {
-      this.c3Provider.resize({
+      this.climatePrvdr.resize({
         height: 320,
         width: window.screen.width - 20
       });
@@ -76,7 +77,7 @@ export class ClimateToolPage {
   }
 
   siteChanged(site) {
-    this.c3Provider.setDataset(site).then(
+    this.climatePrvdr.setDataset(site).then(
       res => {
         this.columns = res[0];
         this.setAvailableCharts(this.columns);
@@ -96,7 +97,7 @@ export class ClimateToolPage {
         this.activeChart = {};
         this.activeChart = chart;
         console.log("activeChart", chart);
-        this.c3Provider.setChart(chart);
+        this.climatePrvdr.setChart(chart);
         this.showTools = true;
         this.lineToolValue = null;
         this.selectedCrop = {};
@@ -116,67 +117,36 @@ export class ClimateToolPage {
     this.actions.selectSite(null);
   }
   setAvailableCharts(list) {
-    this.availableCharts = [
-      {
-        name: "Seasonal Rainfall",
-        image: "assets/img/charts/season-rainfall.png",
-        cropTableValue: "water",
-        x: "Rainfall",
-        yFormat: "value",
-        tools: { line: true },
-        units: "mm",
-        definition:
-          "Seasonal rainfall is defined as the total rain recorded from the start of the season until the end of the season"
-      },
-      {
-        name: "Start of Season",
-        image: "assets/img/charts/season-start.png",
-        x: "Start",
-        yFormat: "date-from-July",
-        tools: { line: false },
-        units: "",
-        definition:
-          "Start of season is defined as the first occasion (from 1st October) with more than 25mm in a 3 day period and no dry spell of 10 days or more within the following 30 days"
-      },
-      {
-        name: "End of Season",
-        image: "assets/img/charts/season-end.png",
-        x: "End",
-        yFormat: "date-from-July",
-        tools: { line: false },
-        units: "",
-        definition:
-          "End of season is defined as the last day in the season (1st October - 30th April) with more than 10mm of rainfall."
-      },
-      {
-        name: "Length of Season",
-        image: "assets/img/charts/season-length.png",
-        cropTableValue: "length",
-        x: "Length",
-        yFormat: "value",
-        tools: { line: true },
-        units: "days",
-        definition:
-          "Length of season is defined as the total days from the start of the season until the end of the season as defined"
-      }
-      // {name: "Combined Probability", image: "assets/img/charts/combined-probability.png", page: "CombinedProbabilityPage", tools: { line: false }},
-    ];
+    this.availableCharts = DATA.availableCharts;
   }
   lineToolValueChange(e?) {
     //if manually input triggers event so deselect crop
     if (e != undefined) {
       this.selectedCrop = {};
     }
-    this.c3Provider.setLineToolValue(this.lineToolValue);
-    this.probabilities = this.c3Provider.calculateProbabilities(
+    this.climatePrvdr.setLineToolValue(this.lineToolValue);
+    this.probabilities = this.climatePrvdr.calculateProbabilities(
       this.lineToolValue
     );
     console.log("probabilities", this.probabilities);
   }
-  setCrop(crop) {
-    this.selectedCrop = {};
-    this.selectedCrop[crop.name] = true;
-    this.lineToolValue = crop[`${this.activeChart.cropTableValue}Avg`];
+  setCrop(crop: CropRequirement) {
+    console.log("chart", this.chart);
+    this.lineToolValue = this._calculateMean([crop.daysMin, crop.daysMax]);
+    this.lineToolValue = this._calculateMean([crop.waterMin, crop.waterMax]);
     this.lineToolValueChange();
+  }
+
+  _calculateMean(numbers: number[]) {
+    // remove null values
+    numbers = numbers.filter(n => {
+      return n ? true : false;
+    });
+    let total = 0,
+      i;
+    for (i = 0; i < numbers.length; i += 1) {
+      total += numbers[i];
+    }
+    return total / numbers.length;
   }
 }

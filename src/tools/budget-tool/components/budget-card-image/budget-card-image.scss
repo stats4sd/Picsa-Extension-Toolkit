@@ -10,7 +10,6 @@ budget-card-image {
     width: 60px;
     margin-top: 20px;
   }
-
   .card-image-holder {
     padding: 2px;
   }
@@ -20,5 +19,13 @@ budget-card-image.small {
   img.card-image {
     height: 45px;
     width: 45px;
+  }
+}
+
+budget-card-image.medium {
+  img.card-image {
+    height: 80px;
+    width: 80px;
+    margin: auto;
   }
 }

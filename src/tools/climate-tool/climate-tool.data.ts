@@ -1,5 +1,4 @@
-const cropRequirements = {};
+import { availableCharts } from "./data/availableCharts";
+import { cropRequirements } from "./data/cropRequirements";
 
-export default {
-  waterRequirements: cropRequirements
-};
+export { availableCharts, cropRequirements };

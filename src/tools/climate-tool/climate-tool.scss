@@ -36,9 +36,6 @@ page-climate-tool {
     margin-right: 10px;
     cursor: pointer;
   }
-  .selected-crop {
-    background-color: yellow;
-  }
   #tools {
     max-width: 160px;
   }
@@ -54,8 +51,29 @@ page-climate-tool {
     padding: 2px;
     background-color: #ebebeb;
   }
+  .crop-img-container {
+    width: 60px;
+    margin-right: 10px;
+    text-align: center;
+  }
   .crop-image {
     height: 60px;
+  }
+  .crop-info-img {
+    height: 1em;
+    width: 1em;
+    margin-right: 5px;
+  }
+  .crop-variety {
+    font-weight: bold;
+  }
+  .crop-select {
+    margin-right: 10px;
+    margin-bottom: 1em;
+    border-bottom: 1px solid gray;
+  }
+  .crop-selected {
+    background-color: yellow;
   }
   #filterImages img {
     width: 100px;
@@ -165,9 +183,6 @@ page-climate-tool {
   }
   h3 {
     margin-bottom: 0;
-  }
-  .crop-select {
-    margin-right: 10px;
   }
   .c3-tooltip th {
     font-size: x-large;
