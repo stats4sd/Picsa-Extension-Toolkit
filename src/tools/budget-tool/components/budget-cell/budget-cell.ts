@@ -42,7 +42,6 @@ export class BudgetCellComponent {
 ***REMOVED***
   setCellData(data: IBudgetPeriodData) {
     if (data) {
-      console.log("data update", this.periodIndex, this.type);
       const cards = Object.values(data);
       if (cards.length > 0) {
         this.cellData = cards;

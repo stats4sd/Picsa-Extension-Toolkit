@@ -146,6 +146,7 @@ export const budgetMeta = {
       id: "wood"
   ***REMOVED***
   ],
+  familyLabour: [{ name: "family labour", id: "family-labour" }],
   enterprises: [
     { group: "crop", name: "maize", id: "maize" },
     { group: "crop", name: "rice", id: "rice" },

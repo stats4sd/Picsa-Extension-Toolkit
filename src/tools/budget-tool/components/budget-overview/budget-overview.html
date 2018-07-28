@@ -27,7 +27,10 @@
     <div class="time-period-title cell top-row">{{period}}</div>
     <!--Activities-->
     <div *ngFor="let row of rowTitles" class="cell">
-      <budget-cell [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
+      <div [ngSwitch]="row.type">
+        <div *ngSwitchCase="'cashBalance'">Cash Balance</div>
+        <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
+      </div>
     </div>
 
 

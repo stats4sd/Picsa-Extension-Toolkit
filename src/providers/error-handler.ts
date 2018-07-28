@@ -22,8 +22,7 @@ export class SentryErrorHandler extends IonicErrorHandler {
 ***REMOVED***
   handleError(error: any) {
     if (window.location.hostname == "localhost") {
-      console.log("error", error);
-      // super.handleError(error);
+      super.handleError(error);
   ***REMOVED*** else {
       try {
         Raven.setExtraContext({
