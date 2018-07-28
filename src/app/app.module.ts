@@ -29,8 +29,6 @@ import {
   UserProvider,
   YoutubeService
 } from "../providers/providers";
-import { C3ChartProvider } from "../providers/c3-chart/c3-chart";
-import { MalawiDataProvider } from "../providers/c3-chart/malawi-data";
 // redux
 import {
   NgRedux,
@@ -41,9 +39,10 @@ import { AppState, INITIAL_STATE, rootReducer } from "../reducers/reducers";
 import { UserActions } from "../actions/user.actions";
 import { DataActions } from "../actions/data.actions";
 // Tools
-import { BudgetToolProvider } from "../tools/budget-tool/budget-tool.provider";
-import { ClimateToolActions } from "../actions/climate-tool.actions";
 import { BudgetToolActions } from "../tools/budget-tool/budget-tool.actions";
+import { BudgetToolProvider } from "../tools/budget-tool/budget-tool.provider";
+import { ClimateToolActions } from "../tools/climate-tool/climate-tool.actions";
+import { ClimateToolProvider } from "../tools/climate-tool/climate-tool.provider";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -93,9 +92,8 @@ import { SentryErrorHandler } from "../providers/error-handler";
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     SplashScreen,
-    C3ChartProvider,
+    ClimateToolProvider,
     Network,
-    MalawiDataProvider,
     FileOpener,
     File,
     StatusBar,

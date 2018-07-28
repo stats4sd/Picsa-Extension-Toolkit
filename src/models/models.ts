@@ -82,12 +82,3 @@ export interface IResourceGroup {
   name: string;
   resources: IResource[] | IVideoResource[];
 }
-
-// Climate Tool
-export interface ISite {
-  name: string;
-  fileName: string;
-  filePath: string;
-  latitude: number;
-  longitude: number;
-}

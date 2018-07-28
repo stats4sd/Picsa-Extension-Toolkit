@@ -4,7 +4,10 @@ import {
   BudgetToolReducer,
   BudgetToolState
 } from "../tools/budget-tool/budget-tool.reducer";
-import { ClimateToolReducer, ClimateToolState } from "./climate-tool.reducer";
+import {
+  ClimateToolReducer,
+  ClimateToolState
+} from "../tools/climate-tool/climate-tool.reducer";
 import { DataReducer } from "./data.reducer";
 import { UserReducer } from "./user.reducer";
 

@@ -1,5 +1,10 @@
 import { Component, ViewChild } from "@angular/core";
-import { Events, IonicPage, NavParams, ViewController } from "ionic-angular";
+import {
+  Events,
+  IonicPage,
+  NavParams,
+  ViewController
+} from "ionic-angular";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
 import { ICustomBudgetCard } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
