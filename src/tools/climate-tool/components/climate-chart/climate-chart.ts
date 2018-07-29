@@ -23,7 +23,7 @@ export class ClimateChartComponent {
   readonly activeChart$: Observable<IChartMeta>;
   activeChartSubscription: Subscription;
   chart: any;
-  lineToolValues: any = {};
+  lineToolValue: number;
   isFirstRender: boolean = true;
   activeChart: IChartMeta = availableCharts[0];
 
@@ -32,22 +32,24 @@ export class ClimateChartComponent {
     private ngRedux: NgRedux<AppState>,
     private actions: ClimateToolActions
   ) {
-    this._addValueSubscribers();
+    this._addSubscriptions();
   }
   ngOnDestroy() {
     console.log("component destroyed");
-    this._removeValueSubscribers();
+    this._removeSubscriptions();
   }
 
-  _addValueSubscribers() {
-    console.log("adding value subscribers");
+  _addSubscriptions() {
+    console.log("adding climate chart subscriptions");
     this.chartDataSubscription = this.chartData$.subscribe(data => {
       if (data) {
         this.dataUpdated(data);
       }
     });
     this.lineToolValueSubscription = this.lineToolValue$.subscribe(v => {
-      console.log("line tool value updated", v);
+      if (v) {
+        this.setLineToolValue(v);
+      }
     });
     this.activeChartSubscription = this.activeChart$.subscribe(chart => {
       if (chart) {
@@ -55,7 +57,7 @@ export class ClimateChartComponent {
       }
     });
   }
-  _removeValueSubscribers() {
+  _removeSubscriptions() {
     this.chartDataSubscription.unsubscribe();
     this.lineToolValueSubscription.unsubscribe();
     this.activeChartSubscription.unsubscribe();
@@ -73,8 +75,9 @@ export class ClimateChartComponent {
   }
 
   // create chart given columns of data and a particular key to make visible
-  generateChart(data: IChartSummary[], xAxis: string) {
+  generateChart(data: IChartSummary[], yAxis: string) {
     // generate chart keys from csv row titles
+    console.log("generating chart");
     const keys = [];
     for (const key in data[0]) {
       keys.push(key);
@@ -85,19 +88,22 @@ export class ClimateChartComponent {
       size: {
         height: 320
       },
+      padding: {
+        right: 10
+      },
       data: {
         json: data,
         hide: true,
         keys: {
           value: keys
         },
-        x: xAxis,
+        x: "Year",
         classes: { LineTool: "LineTool" },
         color: (color, d) => {
-          if (d.value >= this.lineToolValues[xAxis]) {
+          if (d.value >= this.lineToolValue) {
             return "#739B65";
           }
-          if (d.value < this.lineToolValues[xAxis]) {
+          if (d.value < this.lineToolValue) {
             return "#BF7720";
           }
           // default return color for series key, attached to d.id
@@ -119,12 +125,16 @@ export class ClimateChartComponent {
         }
       },
       axis: {
+        x: {
+          label: "Year"
+        },
         y: {
           tick: {
             format: function(d) {
               return this.formatAxis(d, this.activeChart.yFormat);
             }.bind(this)
           }
+          // label: `${this.activeChart.name} (${this.activeChart.units})`
         }
       },
       legend: {
@@ -160,7 +170,8 @@ export class ClimateChartComponent {
 
   setLineToolValue(value) {
     const data = this.ngRedux.getState().climate.site.summaries;
-    this.lineToolValues[this.activeChart.x] = value;
+    this.lineToolValue = value;
+    // this.lineToolValues[this.activeChart.y] = value;
     const lineArray = Array(data.length).fill(value);
     lineArray.unshift("LineTool");
     this.chart.load({
@@ -179,13 +190,14 @@ export class ClimateChartComponent {
       // this.activeChart = {};
       this.activeChart = chart;
       console.log("activeChart", chart);
-      // this.showTools = true;
-      // this.lineToolValue = null;
-      // this.selectedCrop = {};
       this.chart.hide();
       this.chart.legend.hide();
-      this.chart.show(chart.x, { withLegend: true });
+      this.chart.show(chart.y, { withLegend: true });
       loader.dismiss();
+      // reload new line tool value
+      if (this.lineToolValue) {
+        this.setLineToolValue(this.lineToolValue);
+      }
     });
   }
 

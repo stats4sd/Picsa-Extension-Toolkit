@@ -74,9 +74,9 @@
           <h3>{{'Line Tool' | translate}}</h3>
           <!--crops-->
           <ion-input type="number" placeholder="{{'Enter a custom value or select a crop below' | translate}}" [(ngModel)]='lineToolValue'
-            (focusout)="lineToolValueChange($event)"></ion-input>
+            (focusout)="setLineToolValue()"></ion-input>
           <div style="margin-top:1em">
-            <div class="crop-select" *ngFor="let crop of crops" (click)="setCrop(crop)" style="display: flex">
+            <div class="crop-select" *ngFor="let crop of crops" (click)="setCrop(crop)" [attr.selected]="selectedCrop && selectedCrop.variety==crop.variety ? 'true' : 'false'">
               <div class="crop-img-container">
                 <img [src]="'assets/img/budget/cards/'+crop.image+'.svg'" class="crop-image">
               </div>
@@ -85,7 +85,8 @@
                 <div class="crop-variety">{{crop.variety}}</div>
                 <div class="crop-water-req crop-meta">
                   <img class="crop-info-img" src="assets/img/budget/water.svg">
-                  <span>{{crop.waterMin}} - {{crop.waterMax}}</span>
+                  <span>{{crop.waterMin}}</span>
+                  <span *ngIf="crop.waterMax"> - {{crop.waterMax}}</span>
                 </div>
                 <div class="crop-days-req crop-meta">
                   <img class="crop-info-img" src="assets/img/budget/days.svg">

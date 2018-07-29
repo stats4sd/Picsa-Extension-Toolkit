@@ -37,7 +37,7 @@ export class ClimateToolPage {
   lineToolValue: number;
   probabilities: any;
   crops = DATA.cropRequirements;
-  selectedCrop: any = {};
+  selectedCrop: ICropRequirement;
   fullScreenView: boolean = true;
   columns = [];
 
@@ -60,6 +60,10 @@ export class ClimateToolPage {
     this.activeChart$.subscribe(chart => {
       if (chart) {
         this.activeChart = chart;
+        // update selected crop to pick new line tool value
+        if (this.selectedCrop) {
+          this.setCrop(this.selectedCrop);
+        }
       }
     });
   }
@@ -71,6 +75,67 @@ export class ClimateToolPage {
 
   setChart(chart: IChartMeta) {
     this.actions.selectChart(chart);
+  }
+
+  async siteChanged(site: ISite) {
+    this.selectedSite = site;
+  }
+
+  showAllCharts() {
+    this.activeChart = null;
+  }
+  close() {
+    this.navCtrl.pop();
+  }
+  selectSite() {
+    this.actions.selectSite(null);
+  }
+  setAvailableCharts(list) {
+    this.availableCharts = DATA.availableCharts;
+  }
+  // when manually setting line tool value unselect all crops
+  setLineToolValue() {
+    this.selectedCrop = null;
+    this.lineToolValueChange();
+  }
+  lineToolValueChange() {
+    this.actions.updateSite({
+      lineToolValue: this.lineToolValue
+    });
+    // this.climatePrvdr.setLineToolValue(this.lineToolValue);
+    this.probabilities = this.climatePrvdr.calculateProbabilities(
+      this.lineToolValue
+    );
+    console.log("probabilities", this.probabilities);
+  }
+  setCrop(crop: ICropRequirement) {
+    this.selectedCrop = crop;
+    const yVar = this.activeChart.y;
+    let lineToolValue;
+    if (yVar == "Rainfall") {
+      lineToolValue = this._calculateMean([crop.waterMin, crop.waterMax]);
+    }
+    if (yVar == "Length") {
+      lineToolValue = this._calculateMean([crop.daysMin, crop.daysMax]);
+    }
+    // only update if not already set (i.e. only change once when updating crop and triggering function)
+    if (lineToolValue != this.lineToolValue) {
+      this.lineToolValue = lineToolValue;
+      this.lineToolValueChange();
+    }
+  }
+
+  _calculateMean(numbers: number[]) {
+    // remove null values
+    numbers = numbers.filter(n => {
+      return n ? true : false;
+    });
+    let total = 0,
+      i;
+    for (i = 0; i < numbers.length; i += 1) {
+      total += numbers[i];
+    }
+    return total / numbers.length;
   }
 
   // toggleFullScreen() {
@@ -89,53 +154,4 @@ export class ClimateToolPage {
   //     });
   //   }
   // }
-
-  async siteChanged(site: ISite) {
-    this.selectedSite = site;
-  }
-
-  showAllCharts() {
-    this.activeChart = null;
-  }
-  close() {
-    this.navCtrl.pop();
-  }
-  selectSite() {
-    this.actions.selectSite(null);
-  }
-  setAvailableCharts(list) {
-    this.availableCharts = DATA.availableCharts;
-  }
-  lineToolValueChange(e?) {
-    //if manually input triggers event so deselect crop
-    if (e != undefined) {
-      this.selectedCrop = {};
-    }
-    this.actions.updateSite({
-      lineToolValue: this.lineToolValue
-    });
-    // this.climatePrvdr.setLineToolValue(this.lineToolValue);
-    this.probabilities = this.climatePrvdr.calculateProbabilities(
-      this.lineToolValue
-    );
-    console.log("probabilities", this.probabilities);
-  }
-  setCrop(crop: ICropRequirement) {
-    this.lineToolValue = this._calculateMean([crop.daysMin, crop.daysMax]);
-    this.lineToolValue = this._calculateMean([crop.waterMin, crop.waterMax]);
-    this.lineToolValueChange();
-  }
-
-  _calculateMean(numbers: number[]) {
-    // remove null values
-    numbers = numbers.filter(n => {
-      return n ? true : false;
-    });
-    let total = 0,
-      i;
-    for (i = 0; i < numbers.length; i += 1) {
-      total += numbers[i];
-    }
-    return total / numbers.length;
-  }
 }
