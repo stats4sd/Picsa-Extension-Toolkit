@@ -195,7 +195,7 @@ export class ClimateChartComponent {
       this.chart.show(chart.y, { withLegend: true });
       loader.dismiss();
       // reload new line tool value
-      if (this.lineToolValue) {
+      if (this.lineToolValue && chart.tools.line) {
         this.setLineToolValue(this.lineToolValue);
       }
     });

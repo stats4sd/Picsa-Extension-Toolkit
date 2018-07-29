@@ -22,7 +22,14 @@
       </div>
 
       <div id="activeChart" class="flex wrap" *ngIf="showTools && activeChart">
-        <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
+        <div>
+          <img src="{{activeChart.image}}" class="active-chart-image" (click)="showAllCharts()">
+          <div style="display: flex; margin-top:10px">
+            <div *ngFor="let chart of availableCharts">
+              <img [src]="chart.image" *ngIf="activeChart.image!=chart.image" (click)="setChart(chart)" class="chart-image small">
+            </div>
+          </div>
+        </div>
         <div id="tools" *ngIf="activeChart.tools">
           <ion-list>
             <ion-item *ngIf="activeChart.definition">
@@ -37,12 +44,12 @@
               <ion-label>{{'Probability' | translate}}</ion-label>
               <ion-toggle [(ngModel)]="showProbabilityTool" [disabled]="!lineToolValue"></ion-toggle>
             </ion-item>
-            <ion-item>
+            <!-- <ion-item>
               <button ion-button icon-start full outline (click)="showAllCharts()">
                 <ion-icon name="arrow-round-back"></ion-icon>
                 {{'All Charts' | translate}}
               </button>
-            </ion-item>
+            </ion-item> -->
           </ion-list>
         </div>
         <!-- definition -->
