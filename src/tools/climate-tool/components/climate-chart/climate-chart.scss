@@ -1,120 +1,10 @@
 // *** copy-pasted from climate-tool.scss, should sort which goes where
-c3-chart {
-  .tool-container,
-  .definition {
-    // max-width: 200px;
-    // margin: 5px 0 0 5px;
-    padding: 10px;
-    flex: 1;
-    min-width: 200px;
-***REMOVED***
-  .definition {
-    background-color: wheat;
-    font-size: large;
-***REMOVED***
-  .chart-image>img,
-  .active-chart-image {
-    height: 120px;
-    width: 120px;
-***REMOVED***
-  .chart-image>div {
-    width: 120px;
-    text-align: center;
-***REMOVED***
-  .chart-image:hover {
-    font-weight: bold;
-***REMOVED***
-  .flex {
-    display: flex;
-***REMOVED***
-  .wrap {
-    flex-wrap: wrap;
-***REMOVED***
-  .chart-image {
-    margin-right: 10px;
-    cursor: pointer;
-***REMOVED***
-  #tools {
-    max-width: 160px;
-***REMOVED***
-  .item {
-    padding-left: 8px;
-***REMOVED***
+climate-chart {
   #chart {
     height: 320px;
 ***REMOVED***
-  #lineTool,
-  #probability {
-    border: 1px solid black;
-    padding: 2px;
-    background-color: #ebebeb;
-***REMOVED***
-  .crop-img-container {
-    width: 60px;
-    margin-right: 10px;
+  .chart-title {
     text-align: center;
-***REMOVED***
-  .crop-image {
-    height: 60px;
-***REMOVED***
-  .crop-info-img {
-    height: 1em;
-    width: 1em;
-    margin-right: 5px;
-***REMOVED***
-  .crop-variety {
-    font-weight: bold;
-***REMOVED***
-  .crop-select {
-    margin-right: 10px;
-    margin-bottom: 1em;
-    border-bottom: 1px solid gray;
-***REMOVED***
-  .crop-selected {
-    background-color: yellow;
-***REMOVED***
-  #filterImages img {
-    width: 100px;
-    margin: 1px;
-***REMOVED***
-  #SeasonRainfall.selected {
-    border-color: #377eb8;
-***REMOVED***
-  #LengthOfSeason.selected {
-    border-color: #e41a1c;
-***REMOVED***
-  #SeasonStart.selected {
-    border-color: #984ea3;
-***REMOVED***
-  #SeasonEnd.selected {
-    border-color: #4daf4a;
-***REMOVED***
-  .selected {
-    box-shadow: 0px 12px 22px 1px #333;
-    border: solid;
-***REMOVED***
-  #sitePickerIcon img {
-    width: 70px;
-    float: right;
-    margin: 5px 0px 5px 10px;
-***REMOVED***
-  .toolTip {
-    width: 100px;
-    background-color: #fdff7a;
-    font-size: larger;
-    border: 2px solid black;
-***REMOVED***
-  .selectedStation {
-    border: thick #e47172;
-    border-radius: 4px;
-    border-style: double;
-***REMOVED***
-  #sites-button {
-    padding-top: 10px;
-    margin-top: 25px;
-***REMOVED***
-  .ui-icon-wrench:after {
-    background-image: url("images/icons-png/wrench.png");
 ***REMOVED***
   .c3-line {
     stroke-width: 2px;
@@ -126,33 +16,6 @@ c3-chart {
   .c3-circles-LineTool {
     display: none;
 ***REMOVED***
-  #sites-button {
-    padding-bottom: 30px;
-    border-right-width: 1px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 30px;
-***REMOVED***
-  #chartTools {
-    font-size: larger !important;
-***REMOVED***
-  #mapContent {
-    padding: 0px !important;
-***REMOVED***
-  .lineToolPicRepLeft,
-  .lineToolPicRepRight {
-    border: 5px solid black;
-    padding-left: 20px;
-    display: inline;
-***REMOVED***
-  .lineToolPicRepRight {
-    color: #9a2c04;
-    background-color: #9a2c04;
-***REMOVED***
-  .lineToolPicRepLeft {
-    color: #25a234;
-    background-color: #25a234;
-***REMOVED***
   .c3 text {
     font-size: larger;
 ***REMOVED***
@@ -161,25 +24,6 @@ c3-chart {
     /*fill: rgb(90, 50, 50)!important;*/
     stroke: #000000 !important;
     stroke-width: 2;
-***REMOVED***
-  .block {
-    outline: 1px solid black;
-    flex-grow: 1;
-    min-width: 15px;
-***REMOVED***
-  .block.good {
-    background-color: #739b65;
-    color: #739b65;
-***REMOVED***
-  .block.bad {
-    background-color: #bf7720;
-    color: #bf7720;
-***REMOVED***
-  #calculation {
-    padding-top: 15px;
-***REMOVED***
-  h3 {
-    margin-bottom: 0;
 ***REMOVED***
   .c3-tooltip th {
     font-size: x-large;

@@ -36,7 +36,7 @@ export class CombinedProbabilityComponent {
   plantDateChange(e) {
     //manually set 1 October as day 274 and multiple by 7.6 (rough number of days in 1/4 month)
     this.dayValue = 305 + (365 / 48) * this.plantDate.value;
-    this.startProbability = this.climatePrvdr.calculateProbability([
+    this.startProbability = this.climatePrvdr.calculateCombinedProbability([
       { key: "Start", value: this.dayValue, operator: "<=" }
     ]);
     this.calculateCropProbabilities();
@@ -47,7 +47,7 @@ export class CombinedProbabilityComponent {
     for (const crop of this.crops) {
       this.crops[
         crop.index
-      ].lengthProbability = this.climatePrvdr.calculateProbability([
+      ].lengthProbability = this.climatePrvdr.calculateCombinedProbability([
         {
           key: "End",
           value: (this.dayValue + crop.lengthAvg) % 366,
@@ -56,7 +56,7 @@ export class CombinedProbabilityComponent {
       ]);
       this.crops[
         crop.index
-      ].rainfallProbability = this.climatePrvdr.calculateProbability([
+      ].rainfallProbability = this.climatePrvdr.calculateCombinedProbability([
         {
           key: "Rainfall",
           value: crop.waterAvg * (1 + this.plantDate.value / 16),

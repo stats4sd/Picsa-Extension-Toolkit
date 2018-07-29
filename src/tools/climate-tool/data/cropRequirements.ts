@@ -76,8 +76,8 @@ export const cropRequirements = [
     name: null,
     daysMin: 120,
     daysMax: 130,
-    waterMin: null,
-    waterMax: 400
+    waterMin: 400,
+    waterMax: null
 ***REMOVED***,
   {
     crop: "Maize",
@@ -86,8 +86,8 @@ export const cropRequirements = [
     name: null,
     daysMin: 120,
     daysMax: 130,
-    waterMin: null,
-    waterMax: 400
+    waterMin: 400,
+    waterMax: null
 ***REMOVED***,
   {
     crop: "Maize",

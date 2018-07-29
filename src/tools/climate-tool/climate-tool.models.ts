@@ -37,7 +37,7 @@ export interface IChartMeta {
   name: string;
   image: string;
   cropTableValue?: string;
-  x: string;
+  y: string;
   yFormat: string;
   tools: { line: boolean ***REMOVED***
   units: string;
