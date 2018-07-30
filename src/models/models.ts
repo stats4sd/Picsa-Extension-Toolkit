@@ -70,8 +70,12 @@ export interface IResource {
   name: string;
   filename: string;
   type: string;
+  image: string;
   weblink: string;
+  viewableBy?: string[];
   group: string;
+  description?: string;
+  youtubeID?: string;
 }
 export interface IVideoResource extends IResource {
   description: string;

@@ -10,7 +10,9 @@ import {
   Platform
 } from "ionic-angular";
 import { Observable } from "rxjs";
+
 import { IResource, IResourceGroup } from "../../models/models";
+import mimetypes from "./mimetypes";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -26,6 +28,8 @@ export class ResourcesPage {
   resourceGroups: IResourceGroup[];
   activeResource: IResource;
   playerWidth: number;
+  externalDir: string;
+  platformIsWeb = false;
 
   constructor(
     public navCtrl: NavController,
@@ -33,23 +37,86 @@ export class ResourcesPage {
     private fileOpener: FileOpener,
     private file: File,
     public platform: Platform
-  ) {
+  ) {}
+  ngOnInit() {
     if (this.platform.is("mobile")) {
-      this.checkFileDirectory();
+      this.initMobileStorageDirectory();
+    } else {
+      this.platformIsWeb = true;
+      this._addSubscribers();
     }
   }
+  ngAfterViewInit() {
+    this._setVideoPlayerWidth();
+  }
 
-  ngOnInit() {
+  _addSubscribers() {
     this.resources$.subscribe(resources => {
       if (resources) {
-        this.initResources(resources);
+        this.updateResources(resources);
       }
     });
   }
+  _removeSubscribers() {}
 
-  // on init want to take list of all resources and split into groups to view in sections
-  initResources(resources: IResource[]) {
+  async initMobileStorageDirectory() {
+    this.externalDir = await this.checkFileDirectoryExists();
+    // console.log("externalDir", externalDir);
+    const appDir = this.file.applicationDirectory;
+    // console.log("directory exists", externalDir);
+    const hardResources = await this._listHardResources();
+    // console.log("hardResources", hardResources);
+    const savedResources = await this.list(this.externalDir, "picsa");
+    // console.log("saved resources", savedResources);
+    // copy hard resources
+    if (hardResources.length != savedResources.length) {
+      for (const resource of hardResources) {
+        {
+          try {
+            console.log("copying file", resource);
+            await this.file.copyFile(
+              `${appDir}www/assets/resources`,
+              resource.name,
+              `${this.externalDir}picsa`,
+              resource.name
+            );
+            console.log("file copied succes");
+          } catch (error) {
+            console.log("file not copied", error, resource.name);
+          }
+        }
+      }
+    } else {
+      console.log("all resources exist :D");
+    }
+    this._addSubscribers();
+  }
+
+  async _listHardResources() {
+    try {
+      const resources = (await this.file.listDir(
+        this.file.applicationDirectory,
+        "www/assets/resources"
+      )) as any;
+      return resources;
+    } catch (error) {
+      console.error("could not list hard resources", error);
+      return [];
+    }
+  }
+
+  // take list of all resources and split into groups to view in sections
+  updateResources(resources: IResource[]) {
     console.log("resource init", resources);
+    // filter for what user should be able to access
+    //  current placeholder filters out 2017 content
+    //***add trigger for group change
+    resources = resources.filter(r => {
+      if (r.viewableBy && !r.viewableBy.includes("EXAMPLE")) {
+        return false;
+      }
+      return true;
+    });
     // allocate resources into groups
     const groups: {} = {};
     resources.forEach(res => {
@@ -71,13 +138,10 @@ export class ResourcesPage {
 
   // set active resource to clicked resource (to show/hide video player) and open
   loadResource(resource) {
-    this._setVideoPlayerWidth();
-    console.log("content", this.content.contentWidth);
-    this.activeResource = resource;
     console.log("loading resource", resource);
-    if (resource.type == "pdf") {
-      this.openResource(resource);
-    }
+    this.activeResource = resource;
+
+    this.openResource(resource);
   }
 
   // video width needs to be set programtically
@@ -87,92 +151,115 @@ export class ResourcesPage {
     console.log("width", this.playerWidth, window);
   }
 
-  // **** code tidying checkpoint - code after here needs review (cc 17th July 2018) ***
-
-  checkFileDirectory() {
+  async checkFileDirectoryExists() {
     console.log("checking file directory");
-    this.file
-      .checkDir(this.file.externalApplicationStorageDirectory, "picsa")
-      .then(_ => {
-        console.log("file directory exists");
-        // this.setResources();
-      })
-      .catch(err => {
-        this.file
-          .createDir(
-            this.file.externalApplicationStorageDirectory,
-            "picsa",
-            false
-          )
-          .then(() => {
-            console.log("pics directory created");
-            // this.setResources();
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      });
+    try {
+      await this.file.checkDir(
+        this.file.externalApplicationStorageDirectory,
+        "picsa"
+      );
+      return this.file.externalApplicationStorageDirectory;
+    } catch (error) {
+      console.log("picsa directory does not exist, creating");
+      try {
+        await this.file.createDir(
+          this.file.externalApplicationStorageDirectory,
+          "picsa",
+          false
+        );
+        return this.file.externalApplicationStorageDirectory;
+      } catch (error) {
+        console.log("could not create application storage directory");
+        throw new Error(JSON.stringify(error));
+      }
+    }
   }
 
-  // ionViewDidLoad() {}
-
-  list(dir, path) {
+  // list directory contents for specified path
+  async list(dir, path) {
     console.log("listing", path);
-    this.file
-      .listDir(dir, path)
-      .then(res => {
-        console.log("list:", path, res);
-      })
-      .catch(err => {
-        console.log("err", err);
-      });
+    try {
+      const files = await this.file.listDir(dir, path);
+      return files;
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
   }
 
-  openResource(resource) {
+  async copyApplicationFileLocally(filename) {}
+
+  _getMimetype(filename: string) {
+    console.log("getting mimetype", filename);
+    const fileNameSplit = filename.split(".");
+    const extension: string = fileNameSplit[fileNameSplit.length - 1];
+    console.log("mimetype", extension, mimetypes[extension]);
+    return mimetypes[extension];
+  }
+  async openResource(resource: IResource) {
     if (!this.platform.is("cordova")) {
       return this.openWebResource(resource);
     }
-    this.file
-      .copyFile(
-        `${this.file.applicationDirectory}www/assets/resources/`,
-        resource.filename,
-        `${this.file.externalApplicationStorageDirectory}"picsa/`,
-        resource.filename
-      )
-      .then(_ => {
-        console.log("file copied successfully", resource.filename);
-        console.log("opening file", resource.filename);
-        this.fileOpener
-          .open(
-            `${this.file.externalApplicationStorageDirectory}picsa/"${
-              resource.filename
-            }`,
-            "application/pdf"
-          )
-          .then(_ => console.log("openned successfully"))
-          .catch(err => {
-            err => console.log("file opener err", err);
-            this.list(this.file.externalApplicationStorageDirectory, "picsa");
-          });
-      })
-      .catch(err => {
-        console.log("file copy error", err);
-        this.fileOpener
-          .open(
-            this.file.externalApplicationStorageDirectory + resource.filename,
-            "application/pdf"
-          )
-          .then(_ => console.log("opened successfuly"))
-          .catch(err => {
-            err => console.log("file opener error", err);
-            this.list(this.file.externalApplicationStorageDirectory, "picsa");
-          });
-      });
+    const mimetype = this._getMimetype(resource.filename);
+    const filepath = `${this.externalDir}picsa/${resource.filename}`;
+    console.log("opening file", filepath, mimetype);
+    this.fileOpener.open(filepath, mimetype);
+    // const file = await this.file.checkFile(
+    //   `${this.file.applicationStorageDirectory}www/assets/resources`,
+    //   resource.filename
+    // );
+    // console.log("file exists?", file);
+    // try {
+    //   await this.file.copyFile(
+    //     `${this.file.applicationStorageDirectory}www/assets/resources/`,
+    //     resource.filename,
+    //     `${this.file.externalApplicationStorageDirectory}"picsa/`,
+    //     resource.filename
+    //   );
+    //   console.log("file copied successfully", resource.filename);
+    //   console.log("opening file", resource.filename);
+    // } catch (error) {
+    //   console.error("file copy error", error);
+    //   console.log(
+    //     "application directory",
+    //     this.file.applicationStorageDirectory
+    //   );
+    //   const files1 = await this.file.listDir(
+    //     this.file.applicationDirectory,
+    //     "www/assets/resources"
+    //   );
+    //   console.log("files1", files1);
+    //   return console.error(error);
+    // }
+    // try {
+    //   await this.fileOpener
+    //     .open(
+    //       `${this.file.externalApplicationStorageDirectory}picsa/"${
+    //         resource.filename
+    //       }`,
+    //       "application/pdf"
+    //     )
+    //     .then(_ => console.log("openned successfully"))
+    //     .catch(err => {
+    //       err => console.log("file opener err", err);
+    //       this.list(this.file.externalApplicationStorageDirectory, "picsa");
+    //     });
+    // } catch (error) {
+    //   return console.error("file copy error", error);
+    // }
+    // try {
+    //   await this.fileOpener.open(
+    //     this.file.externalApplicationStorageDirectory + resource.filename,
+    //     "application/pdf"
+    //   );
+    //   console.log("opened successfuly");
+    // } catch (error) {
+    //   return console.error("file opener error", error);
+    // }
   }
+
   openWebResource(resource) {
     // open resource for browser or simulator version. Currently files manually added to firebase storage and url copied. In future could automate.
     // refs: https://firebase.google.com/docs/storage/web/download-files
-    console.log("opening resource", resource);
     window.open(resource.weblink, "_blank");
   }
 }

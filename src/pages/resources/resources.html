@@ -6,7 +6,8 @@
 
 
 <ion-content>
-  <div class="video-resource-container" [style.display]="activeResource && activeResource.youtubeID ? 'block' : 'none'" (click)="unsetResource()">
+  <div class="video-resource-container" [style.display]="activeResource && platformIsWeb && activeResource.youtubeID ? 'block' : 'none'"
+    (click)="unsetResource()">
     <div class="video-resource-content">
       <div class="video-close-button">
         <button ion-button icon-only clear>
