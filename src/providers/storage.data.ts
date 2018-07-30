@@ -1,4 +1,4 @@
-import { IData } from "../models/models";
+import { IData, IResource } from "../models/models";
 import { forms } from "./storage.forms";
 
 /* 
@@ -6,7 +6,7 @@ data in this file is saved locally for retrieval (via storage provider), and the
 are used to automatically sync data from the live db (via firebase provider)
 
 */
-const resources = [
+const resources: IResource[] = [
   {
     _key: "4I4F36gD0MUef26HfPZG",
     name: "PICSA Manual",
@@ -24,6 +24,7 @@ const resources = [
     type: "pdf",
     image: "assets/resources/crop-info-sheet-chileka-cover.png",
     group: "Documents",
+    viewableBy: ["wfp-2017"],
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fcrop-info-sheet-chileka.pdf?alt=media&token=cb8a6243-1d37-43f6-a97c-a0a7bc0f11f2"
 ***REMOVED***,
@@ -44,6 +45,7 @@ const resources = [
     type: "pdf",
     image: "assets/resources/seasonal-forecast-blantyre-cover.png",
     group: "Documents",
+    viewableBy: ["wfp-2017"],
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-blantyre.pdf?alt=media&token=6ba42494-4c23-409f-ac55-f2fa8b3043ea"
 ***REMOVED***,
