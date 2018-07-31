@@ -31,15 +31,7 @@ export class BudgetCardListComponent {
     private events: Events
   ) {}
   ngOnInit() {
-    this._addCustomCardsSubscriber();
-    // when view changes (e.g. activity list -> outputs list) want to check path exists to populate data
-    // and update cards list
-    this.viewMeta$.subscribe(meta => {
-      if (meta) {
-        this._checkBudgetDataPath(meta.periodIndex, meta.type);
-        this._generateCardList(meta);
-    ***REMOVED***
-  ***REMOVED***);
+    this._addSubscribers();
 ***REMOVED***
 
   // check if the given time period index exists on budget data and card type within period
@@ -73,9 +65,24 @@ export class BudgetCardListComponent {
 
   // watch for updates to custom cards and add to list accordingly
   // triggered from events as the new card builder is launched as a model and doens't update state
-  _addCustomCardsSubscriber() {
+  _addSubscribers() {
     this.events.subscribe("customCards:updated", () => {
       this.updateCardList({}, this.type);
+  ***REMOVED***);
+    // when view changes (e.g. activity list -> outputs list) want to check path exists to populate data
+    // and update cards list
+    // this.viewMeta$.subscribe(meta => {
+    //   if (meta) {
+    //     this._checkBudgetDataPath(meta.periodIndex, meta.type);
+    //     this._generateCardList(meta);
+    // ***REMOVED***
+    // });
+    // use both events and redux as redux alone fails to trigger uipdate when period index changed
+    // but type remains (e.g. activity 1 => activity 2)
+    this.events.subscribe("cell:selected", meta => {
+      this.cards = [];
+      this._checkBudgetDataPath(meta.periodIndex, meta.type);
+      this._generateCardList(meta);
   ***REMOVED***);
 ***REMOVED***
 

@@ -53,6 +53,12 @@ export class BudgetCellComponent {
 ***REMOVED***
 
   editCell() {
+    // use both events and redux as redux alone fails to trigger uipdate when period index changed
+    // but type remains (e.g. activity 1 => activity 2)
+    this.events.publish("cell:selected", {
+      type: this.type,
+      periodIndex: this.periodIndex
+  ***REMOVED***);
     this.actions.setBudgetView({
       component: "cell-edit",
       title: `${this.rowLabel} ${this.typeLabel}`,

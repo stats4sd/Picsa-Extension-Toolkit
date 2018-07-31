@@ -2,7 +2,7 @@
 <div [ngSwitch]="source" *ngIf="!imageData" class="card-image-holder">
   <img *ngSwitchCase="'svg'" [src]="'assets/img/budget/cards/'+imageId+'.svg'" (error)="svgError()" [class]="'card-image '+imageId">
   <img *ngSwitchCase="'png'" [src]="'assets/img/budget/cards/'+imageId+'.png'" (error)="pngError()" [class]="'card-image '+imageId">
-  <img *ngSwitchDefault class="card-image" src="assets/img/budget/cards/no-image.png">
+  <img *ngSwitchCase="'fallback'" class="card-image" src="assets/img/budget/cards/no-image.png">
 </div>
 
 <!-- image loaded from custom drawing -->

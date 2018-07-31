@@ -4,7 +4,7 @@ import { Events } from "ionic-angular";
 import { Observable } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
-import { IBudgetViewMeta } from "../../budget-tool.models";
+import { IBudgetViewMeta, IBudgetCard } from "../../budget-tool.models";
 import { BudgetCardComponent } from "./budget-card";
 
 /*
@@ -38,10 +38,34 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
     this.selected ? this.unselectCard(budget) : this.updateCard(budget);
     this.selected = !this.selected;
 ***REMOVED***
-  triggerUpdate() {
+  triggerUpdate(type: string) {
+    this.card = this._convertStringsToNumbers(this.card);
+    if (type == "inputs") {
+      this.card = this._makeValuesNegative(this.card);
+  ***REMOVED***
     const budget = this.ngRedux.getState().budget.active;
     this.updateCard(budget);
 ***REMOVED***
+
+  // ion-input saves number fields as strings so need to convert back
+  _convertStringsToNumbers(card) {
+    const fields = ["quantity", "cost", "days", "people"];
+    for (const field of fields) {
+      if (card.hasOwnProperty(field)) {
+        card[field] = parseInt(card[field]);
+    ***REMOVED***
+  ***REMOVED***
+    return card;
+***REMOVED***
+
+  // outputs should be tracked as negative
+  _makeValuesNegative(card: IBudgetCard) {
+    if (card.cost && card.cost >= 0) {
+      card.cost = -card.cost;
+  ***REMOVED***
+    return card;
+***REMOVED***
+
   updateCard(budget) {
     const cellData = budget.data[this.viewMeta.periodIndex][this.viewMeta.type];
     // avoid making changes directly to card as has strange redux binding back to orginal meta object
@@ -49,6 +73,7 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
     this.actions.setActiveBudget(budget);
     this._fireUpdateEvent(cellData);
 ***REMOVED***
+
   // when unselected also want to delete the isSelected field to avoid having to check for
   // both existence and value (card.isSelected vs card.isSelected===true)
   unselectCard(budget) {
@@ -58,6 +83,7 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
     this.actions.setActiveBudget(budget);
     this._fireUpdateEvent(cellData);
 ***REMOVED***
+
   // deep select observers don't seem to be working consistently, also using events as fallback
   _fireUpdateEvent(cellData) {
     this.events.publish(

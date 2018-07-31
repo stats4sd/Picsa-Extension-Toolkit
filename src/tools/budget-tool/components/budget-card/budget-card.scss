@@ -15,12 +15,19 @@ budget-new-card {
     margin-right: 5px;
     margin-bottom: 5px;
 ***REMOVED***
-  ion-card.budget-card[selected="true"] {
+  ion-card.budget-card[selected="true"],
+  ion-card.budget-card.enterprise[selected="true"] {
     font-weight: bold;
     background: color($colors, selected);
 ***REMOVED***
-  ion-card.budget-card.inputs[selected="true"] {
+  ion-card.budget-card.inputs[selected="true"],
+  ion-card.budget-card.outputs[selected="true"],
+  ion-card.budget-card.familyLabour[selected="true"],
+    {
     width: 260px;
+***REMOVED***
+  ion-card.budget-card.enterprise {
+    background: white;
 ***REMOVED***
   .card-inputs-list {
     height: 88px;

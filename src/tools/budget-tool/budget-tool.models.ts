@@ -7,6 +7,7 @@ export interface IBudget {
   enterprise: string;
   enterpriseType: string;
   scale: string;
+  dotValues: IBudgetDotValues;
   created: string;
   data: { index?: IBudgetPeriodData ***REMOVED***
   apiVersion: number;
@@ -26,6 +27,12 @@ export interface IBudgetPeriodData {
   outputs?: IOutputCard[];
   familyLabour?: any;
   // balance?: IBudgetBalance;
+}
+export interface IBudgetDotValues {
+  large: number;
+  medium: number;
+  small: number;
+  half: number;
 }
 
 export interface IBudgetView {

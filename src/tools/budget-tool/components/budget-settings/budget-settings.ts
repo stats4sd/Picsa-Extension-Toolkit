@@ -115,13 +115,11 @@ export class BudgetSettingsComponent {
           // otherwise set enterprise as null (if not already defined)
           this.showIndividualEnterprises = true;
           if (!this.budget || !this.budget.enterprise) {
-            console.log("preparing null patch", this.budget);
             this.budgetPrvdr.patchBudget("enterprise", null);
         ***REMOVED***
       ***REMOVED***
     ***REMOVED***
   ***REMOVED*** else {
-      console.log("null patch 2");
       this.budgetPrvdr.patchBudget("enterprise", null);
   ***REMOVED***
 ***REMOVED***
@@ -138,7 +136,6 @@ export class BudgetSettingsComponent {
 ***REMOVED***
 
   nextSlide() {
-    console.log("next slide", this.slides);
     this.slides.slideNext();
 ***REMOVED***
 
@@ -220,41 +217,4 @@ export class BudgetSettingsComponent {
   ***REMOVED***
     return array.slice(0, total);
 ***REMOVED***
-
-  // createDataTemplates(labels) {
-  //   const arr = [];
-  //   labels.forEach((label, i) => {
-  //     arr.push({
-  //       label: label,
-  //       index: i,
-  //       activities: [],
-  //       inputs: [],
-  //       outputs: [],
-  //       familyLabour: { people: 0, days: 0 },
-  //       balance: {
-  //         inputs: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         outputs: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         consumed: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         monthly: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***,
-  //         running: {
-  //           total: 0,
-  //           dots: []
-  //       ***REMOVED***
-  //     ***REMOVED***
-  //   ***REMOVED***);
-  // ***REMOVED***);
-  //   return arr;
-  // }
 }

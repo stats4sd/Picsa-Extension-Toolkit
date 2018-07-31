@@ -1,7 +1,7 @@
 <div class="editor-container" padding>
-  <h2>Select Cards</h2>
+  <h2>Select cards</h2>
   <div style="display: flex; flex-wrap: wrap">
     <budget-data-card *ngFor="let card of cards" [card]="card" [type]="type"></budget-data-card>
-    <budget-new-card [newCardType]="type"></budget-new-card>
+    <budget-new-card [newCardType]="type" *ngIf="type!='familyLabour'"></budget-new-card>
   </div>
 </div>
