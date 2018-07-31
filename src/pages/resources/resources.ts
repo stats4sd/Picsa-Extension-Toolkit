@@ -118,7 +118,8 @@ export class ResourcesPage {
       return true;
   ***REMOVED***);
     // allocate resources into groups
-    const groups: {} = {***REMOVED***
+    const groups = {***REMOVED***
+    console.log("building resource groups");
     resources.forEach(res => {
       if (!groups[res.group]) {
         groups[res.group] = {
@@ -128,8 +129,9 @@ export class ResourcesPage {
     ***REMOVED***
       groups[res.group].resources.push(res);
   ***REMOVED***);
-    this.resourceGroups = Object.values(groups);
-    console.log("groups", this.resourceGroups);
+    console.log("groups", groups);
+    this.resourceGroups = _jsonObjectValues(groups);
+    console.log("this.resources", this.resourceGroups);
 ***REMOVED***
 
   unsetResource() {
@@ -189,10 +191,8 @@ export class ResourcesPage {
   async copyApplicationFileLocally(filename) {}
 
   _getMimetype(filename: string) {
-    console.log("getting mimetype", filename);
     const fileNameSplit = filename.split(".");
     const extension: string = fileNameSplit[fileNameSplit.length - 1];
-    console.log("mimetype", extension, mimetypes[extension]);
     return mimetypes[extension];
 ***REMOVED***
   async openResource(resource: IResource) {
@@ -201,60 +201,7 @@ export class ResourcesPage {
   ***REMOVED***
     const mimetype = this._getMimetype(resource.filename);
     const filepath = `${this.externalDir}picsa/${resource.filename}`;
-    console.log("opening file", filepath, mimetype);
     this.fileOpener.open(filepath, mimetype);
-    // const file = await this.file.checkFile(
-    //   `${this.file.applicationStorageDirectory}www/assets/resources`,
-    //   resource.filename
-    // );
-    // console.log("file exists?", file);
-    // try {
-    //   await this.file.copyFile(
-    //     `${this.file.applicationStorageDirectory}www/assets/resources/`,
-    //     resource.filename,
-    //     `${this.file.externalApplicationStorageDirectory}"picsa/`,
-    //     resource.filename
-    //   );
-    //   console.log("file copied successfully", resource.filename);
-    //   console.log("opening file", resource.filename);
-    // } catch (error) {
-    //   console.error("file copy error", error);
-    //   console.log(
-    //     "application directory",
-    //     this.file.applicationStorageDirectory
-    //   );
-    //   const files1 = await this.file.listDir(
-    //     this.file.applicationDirectory,
-    //     "www/assets/resources"
-    //   );
-    //   console.log("files1", files1);
-    //   return console.error(error);
-    // }
-    // try {
-    //   await this.fileOpener
-    //     .open(
-    //       `${this.file.externalApplicationStorageDirectory}picsa/"${
-    //         resource.filename
-    //     ***REMOVED***`,
-    //       "application/pdf"
-    //     )
-    //     .then(_ => console.log("openned successfully"))
-    //     .catch(err => {
-    //       err => console.log("file opener err", err);
-    //       this.list(this.file.externalApplicationStorageDirectory, "picsa");
-    //   ***REMOVED***);
-    // } catch (error) {
-    //   return console.error("file copy error", error);
-    // }
-    // try {
-    //   await this.fileOpener.open(
-    //     this.file.externalApplicationStorageDirectory + resource.filename,
-    //     "application/pdf"
-    //   );
-    //   console.log("opened successfuly");
-    // } catch (error) {
-    //   return console.error("file opener error", error);
-    // }
 ***REMOVED***
 
   openWebResource(resource) {
@@ -263,34 +210,6 @@ export class ResourcesPage {
     window.open(resource.weblink, "_blank");
 ***REMOVED***
 }
-
-// this.file.copyFile(this.file.applicationDirectory + 'www/assets', 'picsa-field-manual.pdf', this.file.externalApplicationStorageDirectory, 'picsa-field-manual.pdf')
-//   .then(_ => {
-//     console.log('external data', this.file.externalApplicationStorageDirectory)
-//     FileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
-// ***REMOVED***).catch(
-//   err => {
-//     console.log(err)
-//     FileOpener.open(this.file.externalApplicationStorageDirectory + '/picsa-field-manual.pdf', 'application/pdf')
-// ***REMOVED***
-//   )
-
-// this.file.checkDir(this.file.dataDirectory, 'picsa')
-//   .then(_ => {
-//     console.log('Directory exists')
-// ***REMOVED***)
-//   .catch(err => {
-//     this.file.createDir(this.file.dataDirectory, 'picsa', false).then(() => {
-//       this.file.copyDir(this.file.applicationDirectory + 'www/assets', 'resources', this.file.dataDirectory + '/picsa', 'resources')
-//         .then(_ => {
-//           console.log('folder successfully copied')
-//           this.list(this.file.dataDirectory, 'picsa/assets')
-//       ***REMOVED***)
-//   ***REMOVED***).catch(err => { console.log(err) })
-// ***REMOVED***)
-
-// check if additional nav hashtag given to scroll to given section
-// *** not working as ionic strips extra hash on initial load
 
 //   @ViewChild(Content) content: Content;
 
@@ -305,3 +224,13 @@ export class ResourcesPage {
 //   const yOffset = document.getElementById(id).offsetTop;
 //   this.content.scrollTo(0, yOffset, 2000);
 // }
+
+function _jsonObjectValues(json: any) {
+  const values = [];
+  for (const key in json) {
+    if (json.hasOwnProperty(key)) {
+      values.push(json[key]);
+  ***REMOVED***
+***REMOVED***
+  return values;
+}

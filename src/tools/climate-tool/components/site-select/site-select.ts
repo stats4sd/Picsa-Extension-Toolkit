@@ -31,7 +31,7 @@ export class SiteSelectComponent {
       maxZoom: 15,
       attribution: osmAttrib
   ***REMOVED***);
-    this.map.setView(new L.LatLng(-13.7, 33.21), 6);
+    this.map.setView(new L.LatLng(-13.7, 34.9), 6);
     const geojsonLayer = L.geoJSON(GEOJSON.malawiAdmin, {
       onEachFeature: this.setFeature.bind(this),
       middleware: function(data) {
@@ -40,7 +40,8 @@ export class SiteSelectComponent {
       style: this._getStyle()
   ***REMOVED***);
     geojsonLayer.addTo(this.map);
-    this.map.fitBounds([[-16.01463, 34.7183], [-15.34875, 35.13236]]);
+    // *** ADD METHOD TO CALCULATE AND AUTO FIT BOUNDS DEPENDENT ON USER
+    this.map.fitBounds([[-13.4787, 35.77], [-14.797, 34.7358]]);
     // this.map.on('click',function(e){
     //   console.log('clicked')
     // })
@@ -77,7 +78,7 @@ export class SiteSelectComponent {
   ***REMOVED***;
     layer.on({
       click: function(e) {
-        console.log("e", e);
+        this.layerClick(e.target);
     ***REMOVED***.bind(this)
   ***REMOVED***);
 
@@ -104,6 +105,18 @@ export class SiteSelectComponent {
   ***REMOVED***
 ***REMOVED***
 
+  layerClick(layer) {
+    console.log("layer", layer);
+    try {
+      const NEBounds = _jsonObjectValues(layer._bounds._northEast);
+      const SWBounds = _jsonObjectValues(layer._bounds._southWest);
+      console.log("fitting bounds", NEBounds, SWBounds);
+      this.map.fitBounds([NEBounds, SWBounds]);
+  ***REMOVED*** catch (error) {
+      console.error("could not fit bounds", error);
+  ***REMOVED***
+***REMOVED***
+
   _getStyle() {
     return {
       fillColor: "#f0d1b1",
@@ -120,10 +133,20 @@ export class SiteSelectComponent {
 
 const weatherIcon = L.icon({
   iconUrl: "assets/img/station.png",
-  shadowUrl: "leaf-shadow.png",
+  // shadowUrl: "assets/img/leaf-shadow.png",
   iconSize: [38, 38], // size of the icon
   shadowSize: [50, 64], // size of the shadow
   iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   shadowAnchor: [4, 62], // the same for the shadow
   popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
+
+function _jsonObjectValues(json: any) {
+  const values = [];
+  for (const key in json) {
+    if (json.hasOwnProperty(key)) {
+      values.push(json[key]);
+  ***REMOVED***
+***REMOVED***
+  return values;
+}

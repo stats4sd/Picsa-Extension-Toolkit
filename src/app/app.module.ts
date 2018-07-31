@@ -1,4 +1,5 @@
 /* tslint:disable:ordered-imports */
+console.log("app module.ts");
 import { NgModule, ErrorHandler } from "@angular/core";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { BrowserModule } from "@angular/platform-browser";

@@ -45,7 +45,7 @@ export class BudgetLoadComponent {
   ngOnInit() {
     this.savedBudgets$.subscribe(budgets => {
       if (budgets) {
-        this.savedBudgets = Object.values(budgets);
+        this.savedBudgets = _jsonObjectValues(budgets);
         console.log("saved budgets", budgets);
     ***REMOVED***
   ***REMOVED***);
@@ -112,4 +112,14 @@ export class BudgetLoadComponent {
     //   console.log("saved budgets", this.saved);
     // });
 ***REMOVED***
+}
+
+function _jsonObjectValues(json: any) {
+  const values = [];
+  for (const key in json) {
+    if (json.hasOwnProperty(key)) {
+      values.push(json[key]);
+  ***REMOVED***
+***REMOVED***
+  return values;
 }

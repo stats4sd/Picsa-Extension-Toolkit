@@ -42,7 +42,7 @@ export class BudgetCellComponent {
 ***REMOVED***
   setCellData(data: IBudgetPeriodData) {
     if (data) {
-      const cards = Object.values(data);
+      const cards = _jsonObjectValues(data);
       if (cards.length > 0) {
         this.cellData = cards;
     ***REMOVED*** else {
@@ -62,4 +62,14 @@ export class BudgetCellComponent {
     ***REMOVED***
   ***REMOVED***);
 ***REMOVED***
+}
+
+function _jsonObjectValues(json: any) {
+  const values = [];
+  for (const key in json) {
+    if (json.hasOwnProperty(key)) {
+      values.push(json[key]);
+  ***REMOVED***
+***REMOVED***
+  return values;
 }
