@@ -7,8 +7,6 @@ import { Events, Nav, Platform } from "ionic-angular";
 import { Observable } from "rxjs";
 import { UserProvider } from "../providers/user";
 
-// declare var FCMPlugin;
-
 @Component({
   templateUrl: "app.html"
 })
@@ -26,8 +24,9 @@ export class MyApp {
     private translate: TranslateService,
     private userPrvdr: UserProvider
   ) {
-    this.initTranslate();
+    console.log("app component constructor");
     platform.ready().then(() => {
+      this.initTranslate();
       // load user
       this.userPrvdr.init();
       // mobile init
@@ -35,10 +34,6 @@ export class MyApp {
       if (platform.is("cordova")) {
         this.mobileInit();
       }
-      // hide split pane on home page
-      // this.nav.viewDidEnter.subscribe(() => {
-      //   this.showSplitPane = !this.isHomePage();
-      // });
     });
   }
 
@@ -46,9 +41,9 @@ export class MyApp {
     // hide splash
     setTimeout(() => {
       this.splashScreen.hide();
+      // default status bar style, could be changed
+      this.statusBar.styleDefault();
     }, 100);
-    // default status bar style, could be changed
-    this.statusBar.styleDefault();
   }
 
   isHomePage() {
@@ -62,13 +57,3 @@ export class MyApp {
     this.translate.use(code);
   }
 }
-
-// FCMPlugin.getToken(
-//   function(token) {
-//     console.log('subscribing to fcm topic "chris"');
-//     FCMPlugin.subscribeToTopic("chris");
-//   },
-//   function(err) {
-//     console.log("error retrieving token: ", err);
-//   }
-// );

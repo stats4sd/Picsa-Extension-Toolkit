@@ -2,7 +2,7 @@
   "name": "picsa-extension-toolkit",
   "author": "Statistics for Sustainable Development",
   "homepage": "https://stats4sd.org/",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -15,12 +15,22 @@
     "run:android": "ionic cordova run android --prod",
     "serve:prod": "npm run build:prod && firebase serve",
     "deploy:prod": "firebase use master && npm run build:prod && firebase deploy",
-    "deploy:staging": "firebase use staging && npm run build:prod && firebase deploy"
+    "deploy:staging": "firebase use staging && npm run build:prod && firebase deploy",
+    "open": "http-server www -o -a localhost -p 1234",
+    "android:build": "npm run build:prod && cordova build android --prod --release",
+    "android:sign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore platforms/android/aiming-high.keystore %npm_package_config_androidreleasepath%/android-release-unsigned.apk alias_name",
+    "android:zip": "%npm_package_config_zipalignpath% -v -p 4 %npm_package_config_androidunsignedpath% %npm_package_config_androidreleasepath%/%npm_package_version%.signed.apk",
+    "android:open": "%SystemRoot%/explorer.exe \"C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\platforms\\android\\build\\outputs\\apk\\release\"",
+    "android:release": "npm run android:build && npm run android:sign && android:zip && android:openfolder"
   },
   "config": {
     "ionic_copy": "./config/copy.config.js",
     "ionic_webpack": "./config/webpack.config.js",
-    "ionic_generate_source_map": "true"
+    "ionic_generate_source_map": "true",
+    "release_path": "platforms/android/build/outputs/apk/release",
+    "zipalignpath": "C:\\Users\\chris\\AppData\\Local\\Android\\sdk\\build-tools\\26.0.2\\zipalign",
+    "androidreleasepath": "platforms/android/build/outputs/apk/release",
+    "androidunsignedpath": "platforms/android/build/outputs/apk/release/android-release-unsigned.apk"
   },
   "dependencies": {
     "@angular-redux/store": "9",
@@ -45,10 +55,10 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "angularfire2": "5.0.0-rc.11",
     "c3": "^0.6.2",
-    "cordova-android": "^7.1.0",
-    "cordova-android-support-gradle-release": "^1.4.3",
+    "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-opener2": "^2.0.19",
@@ -56,11 +66,10 @@
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
-    "cordova-sqlite-storage": "^2.3.2",
+    "cordova-sqlite-storage": "^2.3.3",
     "firebase": "5.3.0",
     "flux-standard-action": "^2.0.3",
     "ionic-angular": "3.9.2",
-    "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "4.1.2",
     "leaflet": "1.3.1",
     "leaflet-ajax": "^2.1.0",
@@ -75,7 +84,8 @@
     "rxjs-compat": "6.2.0",
     "survey-angular": "^1.0.33",
     "workbox-sw": "3.2.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-android": "~7.0.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.10",
@@ -95,15 +105,6 @@
     "workbox-cli": "3.2.0",
     "workbox-webpack-plugin": "^3.2.0"
   },
-  "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
-    "cordova-plugin-statusbar",
-    "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
-  ],
-  "cordovaPlatforms": [],
   "description": "picsa-extension-toolkit: For use by extension training with PICSA",
   "cordova": {
     "platforms": [
@@ -116,13 +117,13 @@
       "cordova-sqlite-storage": {},
       "cordova-plugin-device": {},
       "cordova-plugin-whitelist": {},
-      "ionic-plugin-keyboard": {},
       "cordova-plugin-console": {},
       "cordova-plugin-file-opener2": {},
       "cordova-plugin-file": {},
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "26.+"
-      }
+      },
+      "cordova-plugin-crosswalk-webview": {}
     }
   }
 }

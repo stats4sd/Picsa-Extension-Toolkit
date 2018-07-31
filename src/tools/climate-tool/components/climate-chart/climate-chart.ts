@@ -4,7 +4,6 @@ import * as c3 from "c3";
 import { LoadingController } from "ionic-angular";
 import { Observable, Subscription } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
-import { ClimateToolActions } from "../../climate-tool.actions";
 import { IChartMeta, IChartSummary } from "../../climate-tool.models";
 import { availableCharts } from "../../data/availableCharts";
 
@@ -29,8 +28,7 @@ export class ClimateChartComponent {
 
   constructor(
     public loadingCtrl: LoadingController,
-    private ngRedux: NgRedux<AppState>,
-    private actions: ClimateToolActions
+    private ngRedux: NgRedux<AppState>
   ) {
     this._addSubscriptions();
   }
