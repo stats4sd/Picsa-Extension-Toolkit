@@ -1,7 +1,7 @@
 <ion-card [class]="'budget-card selectable '+type" [attr.selected]="selected">
   <div style="display: flex">
-    <div>
-      <budget-card-image [imageId]="card.id" [imageData]="card.customImg" (click)="cardClicked()"></budget-card-image>
+    <div style="width:100%">
+      <budget-card-image [imageId]="card.id" [imageData]="card.customImg" (click)="cardClicked()" [type]="type"></budget-card-image>
       <!-- <div *ngIf="card.custom">
         <button ion-button icon-only>
           <ion-icon name="create"></ion-icon>
@@ -10,15 +10,37 @@
     </div>
     <div *ngIf="selected">
       <div [ngSwitch]="type">
-        <!-- quantity and cost -->
+        <!-- inputs quantity and cost -->
         <ion-list *ngSwitchCase="'inputs'" class="card-inputs-list">
           <ion-item>
             <ion-label stacked>How many units?</ion-label>
-            <ion-input type="number" [(ngModel)]="card.quantity" (ionBlur)="triggerUpdate()"></ion-input>
+            <ion-input type="number" [(ngModel)]="card.quantity" (ionBlur)="triggerUpdate('inputs')"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Unit cost (MK)</ion-label>
-            <ion-input id="unitCost" [(ngModel)]="card.cost" type="number" (ionBlur)="triggerUpdate()"></ion-input>
+            <ion-input id="unitCost" [(ngModel)]="card.cost" type="number" (ionBlur)="triggerUpdate('inputs')"></ion-input>
+          </ion-item>
+        </ion-list>
+        <!-- outputs quantity and cost -->
+        <ion-list *ngSwitchCase="'outputs'" class="card-inputs-list">
+          <ion-item>
+            <ion-label stacked>How many units?</ion-label>
+            <ion-input type="number" [(ngModel)]="card.quantity" (ionBlur)="triggerUpdate('outputs')"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Unit cost (MK)</ion-label>
+            <ion-input id="unitCost" [(ngModel)]="card.cost" type="number" (ionBlur)="triggerUpdate('outputs')"></ion-input>
+          </ion-item>
+        </ion-list>
+        <!-- familyLabour -->
+        <ion-list *ngSwitchCase="'familyLabour'" class="card-inputs-list">
+          <ion-item>
+            <ion-label stacked>How many people?</ion-label>
+            <ion-input type="number" [(ngModel)]="card.people" (ionBlur)="triggerUpdate('familyLabour')"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>How many days</ion-label>
+            <ion-input id="unitCost" [(ngModel)]="card.days" type="number" (ionBlur)="triggerUpdate('familyLabour')"></ion-input>
           </ion-item>
         </ion-list>
       </div>

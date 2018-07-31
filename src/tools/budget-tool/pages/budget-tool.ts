@@ -1,6 +1,6 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { IonicPage } from "ionic-angular";
+import { Events, IonicPage } from "ionic-angular";
 import { Observable } from "rxjs";
 import { BudgetToolActions } from "../budget-tool.actions";
 import { IBudget, IBudgetView } from "../budget-tool.models";
@@ -28,7 +28,8 @@ export class BudgetToolPage {
   ];
   constructor(
     private budgetPrvdr: BudgetToolProvider,
-    private actions: BudgetToolActions
+    private actions: BudgetToolActions,
+    private events: Events
   ) {
     // show load screen when first opened
     this.actions.setBudgetView({ component: "load", title: "Budget Tool" });
@@ -43,5 +44,8 @@ export class BudgetToolPage {
       title: title,
       meta: null
     });
+    if (view.component == "overview") {
+      this.events.publish("calculate:budget");
+    }
   }
 }

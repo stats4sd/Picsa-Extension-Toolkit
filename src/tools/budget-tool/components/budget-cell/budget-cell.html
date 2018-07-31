@@ -1,6 +1,21 @@
 <div class="budget-cell-container" (click)="editCell()">
   <div *ngIf="cellData">
     <div [ngSwitch]="type" style="height:100%">
+      <!-- inputs -->
+      <div *ngSwitchCase="'inputs'" style="display: flex; flex-wrap: wrap">
+        <div *ngFor="let card of cellData">
+          <budget-card-image [class]="cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+          <budget-cell-value *ngIf="card.quantity && card.cost" [quantity]="card.quantity" [cost]="card.cost"></budget-cell-value>
+        </div>
+      </div>
+      <!-- outputs -->
+      <div *ngSwitchCase="'outputs'" style="display: flex; flex-wrap: wrap">
+        <div *ngFor="let card of cellData">
+          <budget-card-image [class]="cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+          <budget-cell-value *ngIf="card.quantity && card.cost" [quantity]="card.quantity" [cost]="card.cost"></budget-cell-value>
+        </div>
+      </div>
+      <!-- default (activities) -->
       <div *ngSwitchDefault style="display: flex; flex-wrap: wrap">
         <budget-card-image *ngFor="let card of cellData" [class]="cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
       </div>

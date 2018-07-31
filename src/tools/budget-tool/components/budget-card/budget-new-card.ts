@@ -29,6 +29,7 @@ export class BudgetNewCardComponent extends BudgetCardComponent {
       id: "add",
       name: "Add New"
     };
+    this.type = "new";
   }
   // when adding a new card opens modal
   // *** note, this should be changed to use view meta instead and load as component instead of page

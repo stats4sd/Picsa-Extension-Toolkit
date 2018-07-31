@@ -4,18 +4,13 @@
     <div class="time-period-title cell top-row"></div>
     <div [class]="'cell row-title '+title.label" *ngFor="let title of rowTitles">
       <div>{{title.label}}</div>
-      <div *ngIf="title=='Cash Balance'" class="cash-balance">
-        <div *ngFor="let dot of dotsArray">
-          <!-- <div class=flex (click)="toggleDotEdit()"> -->
-          <div class=flex>
+      <div *ngIf="title.type=='cashBalance'" class="cash-balance">
+        <div *ngFor="let dot of dotsLegend">
+          <div style="display: flex; font-size: small">
             <div>
               <img class="dot-value-image" [src]="'assets/img/budget/'+dot.key+'-positive.png'">
             </div>
-            <div *ngIf="!editDotValue">= {{dot.val}}</div>
-          </div>
-          <div *ngIf="editDotValue">
-            <ion-input class="dot-value-input" type="number" [(ngModel)]="dots.large"></ion-input>
-            <button ion-button (click)="toggleDotEdit()">Save</button>
+            <div *ngIf="!editDotValue">= {{dot.value}}</div>
           </div>
         </div>
       </div>
@@ -25,10 +20,16 @@
   <!-- Time periods calculated Vertically -->
   <div class="time-period " *ngFor="let period of budget.periods.labels; let i = index">
     <div class="time-period-title cell top-row">{{period}}</div>
-    <!--Activities-->
+
     <div *ngFor="let row of rowTitles" class="cell">
-      <div [ngSwitch]="row.type">
-        <div *ngSwitchCase="'cashBalance'">Cash Balance</div>
+      <div [ngSwitch]="row.type" style="height: 100%">
+        <!-- Cash Balance -->
+        <div *ngSwitchCase="'cashBalance'">
+          <div *ngIf="balance && balance[i]">
+            <div>{{period}}: {{balance[i].period}}</div>
+            <div>running: {{balance[i].running}}</div>
+          </div>
+        </div>
         <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
       </div>
     </div>

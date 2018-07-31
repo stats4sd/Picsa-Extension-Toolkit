@@ -1,5 +1,6 @@
 budget-card-image {
-  img.card-image {
+  img.card-image,
+  .card-image-holder {
     height: 100px;
     width: 100px;
     object-fit: contain;
@@ -11,21 +12,29 @@ budget-card-image {
     margin-top: 20px;
   }
   .card-image-holder {
-    padding: 2px;
+    margin: 2px;
+  }
+  img.error-not-fixed {
+    opacity: 0;
+  }
+  img.error-fixed {
+    opacity: 1;
   }
 }
 
 budget-card-image.small {
-  img.card-image {
+  img.card-image,
+  .card-image-holder {
     height: 45px;
     width: 45px;
   }
 }
 
 budget-card-image.medium {
-  img.card-image {
-    height: 80px;
-    width: 80px;
+  img.card-image,
+  .card-image-holder {
+    height: 70px;
+    width: 70px;
     margin: auto;
   }
 }

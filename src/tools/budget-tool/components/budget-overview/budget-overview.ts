@@ -1,8 +1,14 @@
-import { select } from "@angular-redux/store";
+import { NgRedux, select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { Events, ToastController } from "ionic-angular";
 import { Observable } from "rxjs";
-import { IBudget } from "../../budget-tool.models";
+import { AppState } from "../../../../reducers/reducers";
+import {
+  IBudget,
+  IBudgetCard,
+  IBudgetDotValues,
+  IBudgetPeriodData
+} from "../../budget-tool.models";
 
 @Component({
   selector: "budget-overview",
@@ -11,6 +17,8 @@ import { IBudget } from "../../budget-tool.models";
 export class BudgetOverviewComponent {
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
+  @select(["budget", "active", "dotValues"])
+  dotValues$: Observable<IBudgetDotValues>;
   budget: IBudget;
   rowTitles: any = [
     { type: "activities", label: "Activities" },
@@ -18,54 +26,39 @@ export class BudgetOverviewComponent {
     { type: "familyLabour", label: "Family Labour" },
     { type: "outputs", label: "Outputs" },
     { type: "produceConsumed", label: "Produce Consumed" },
-    { type: "cashBalance", label: "Cash Balance" }
+    { type: "cashBalance", label: "Balance" }
   ];
+  dotsLegend = [];
+  balance: any;
 
-  data: any;
-  highlightActivity: any;
-  highlighted: any = { activity: {} };
-  dots: any;
-  dotsArray = [];
-  backup = {};
-  editDotValue: boolean = false;
-
-  constructor(public toastCtrl: ToastController, public events: Events) {
+  constructor(
+    public toastCtrl: ToastController,
+    public events: Events,
+    private ngRedux: NgRedux<AppState>
+  ) {
     this.budget$.subscribe(budget => {
       this.budget = budget;
     });
-    this.highlightActivity = { 0: true };
-    this.dots = {
-      large: 50000,
-      medium: 10000,
-      small: 1000,
-      half: 500
-    };
-    // this.dotsArray = this._objectToArray(this.dots);
-    // this.calculateBalance();
-    // this.events.subscribe("card:update", d =>
-    //   this.cardUpdate(d.periodIndex, d.type, d.value)
-    // );
+    this.dotValues$.subscribe(values => {
+      if (values) {
+        this.dotsLegend = this._objectToArray(values);
+        console.log("dots legend", this.dotsLegend);
+      }
+    });
+    this.events.subscribe("calculate:budget", () => {
+      this.calculateBalance();
+    });
   }
-  // cardUpdate(periodIndex, type, values) {
-  //   this.budget.data[periodIndex][type] = [];
-  //   for (const key in values) {
-  //     this.budget.data[periodIndex][type].push(values[key]);
-  //   }
-  //   console.log("budget", this.budget);
-  // }
+  _objectToArray(json) {
+    const array = [];
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        array.push({ key: key, value: json[key] });
+      }
+    }
+    return array;
+  }
 
-  edit(type, period) {
-    // let selected = period[type];
-    // let modal = this.modalCtrl.create(
-    //   "CardSelectPage",
-    //   { type: type, selected: selected, period: period, budget: this.budget },
-    //   { enableBackdropDismiss: false }
-    // );
-    // modal.onDidDismiss(() => {
-    //   this.calculateBalance();
-    // });
-    // modal.present();
-  }
   getIndex(array, card) {
     let index: number = -1;
     let i = 0;
@@ -78,135 +71,119 @@ export class BudgetOverviewComponent {
     return index;
   }
 
-  // _toArray(value) {
-  //   console.log("converting to array", value);
-  //   return new Array(value).fill(0);
-  // }
-  // _objectToArray(object) {
-  //   console.log("converting object", object);
-  //   const arr = [];
-  //   for (const key in object) {
-  //     arr.push({ key: key, val: object[key] });
-  //   }
-  //   return arr;
-  // }
-  // calculateBalance() {
-  //   // total for current period
-  //   console.log("calculating balance");
-  //   const i = 0;
-  //   let runningNet = 0;
-  //   for (const period of this.budget.data) {
-  //     let inputNet = 0;
-  //     let outputNet = 0;
-  //     let consumedNet = 0;
-  //     let monthlyNet = 0;
-  //     //remember, inputs have negative effect on cash flow as need to be bought
-  //     let j = 0;
-  //     for (const input of period.inputs) {
-  //       if (input.quantity > 0) {
-  //         const temp = input;
-  //         temp.total = input.quantity * input.cost;
-  //         temp.dots = this.valueDotNotation("expense", temp.total);
-  //         // period           current input
-  //         this.budget.data[i].inputs[j] = temp;
-  //         inputNet = inputNet + input.quantity * input.cost;
-  //       }
-  //       j++;
+  calculateBalance() {
+    // total for current period
+    console.log("calculating balance");
+    const data = this.ngRedux.getState().budget.active.data;
+    const totals = {};
+    let runningTotal = 0;
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const periodTotal = this._calculatePeriodTotal(data[key]);
+        runningTotal = runningTotal + periodTotal;
+        totals[key] = {
+          period: periodTotal,
+          running: runningTotal
+        };
+      }
+    }
+    console.log("balance", totals);
+    this.balance = totals;
+  }
+  _calculatePeriodTotal(period: IBudgetPeriodData) {
+    let balance = 0;
+    if (period) {
+      console.log("calculating period total", period);
+      const inputCards = _jsonObjectValues(period.inputs);
+      const inputsBalance = this._calculatePeriodCardTotals(inputCards);
+      const outputCards = _jsonObjectValues(period.outputs);
+      const outputsBalance = this._calculatePeriodCardTotals(outputCards);
+      balance = inputsBalance + outputsBalance;
+    }
+    return balance;
+  }
+  _calculatePeriodCardTotals(cards: IBudgetCard[]) {
+    let total = 0;
+    if (cards && cards.length > 0) {
+      console.log("calulcating card totals", cards);
+      cards.forEach(card => {
+        if (card.quantity && card.cost) {
+          total = total + card.quantity * card.cost;
+        }
+      });
+    }
+    return total;
+  }
+
+  // const i = 0;
+  // let runningNet = 0;
+  // for (const period of this.budget.data) {
+  //   let inputNet = 0;
+  //   let outputNet = 0;
+  //   let consumedNet = 0;
+  //   let monthlyNet = 0;
+  //   //remember, inputs have negative effect on cash flow as need to be bought
+  //   let j = 0;
+  //   for (const input of period.inputs) {
+  //     if (input.quantity > 0) {
+  //       const temp = input;
+  //       temp.total = input.quantity * input.cost;
+  //       temp.dots = this.valueDotNotation("expense", temp.total);
+  //       // period           current input
+  //       this.budget.data[i].inputs[j] = temp;
+  //       inputNet = inputNet + input.quantity * input.cost;
   //     }
-  //     for (const output of period.outputs) {
-  //       if (output.quantity > 0) {
-  //         outputNet = outputNet + output.quantity * output.cost;
-  //         consumedNet = consumedNet + output.consumed * output.cost;
-  //       }
-  //     }
-  //     monthlyNet = outputNet - inputNet - consumedNet;
-  //     runningNet = runningNet + monthlyNet;
-
-  //     const inputDots = this.valueDotNotation("expense", inputNet);
-  //     const outputDots = this.valueDotNotation("income", outputNet);
-  //     const consumedDots = this.valueDotNotation("expense", consumedNet);
-  //     const monthlyDots = this.valueDotNotation("", monthlyNet);
-  //     const runningDots = this.valueDotNotation("", runningNet);
-
-  //     // this.budget.data[i].balance = {
-  //     //   inputs: {
-  //     //     total: inputNet,
-  //     //     dots: inputDots
-  //     //   },
-  //     //   outputs: {
-  //     //     total: outputNet,
-  //     //     dots: outputDots
-  //     //   },
-  //     //   consumed: {
-  //     //     total: consumedNet,
-  //     //     dots: consumedDots
-  //     //   },
-  //     //   monthly: {
-  //     //     total: monthlyNet,
-  //     //     dots: monthlyDots
-  //     //   },
-  //     //   running: {
-  //     //     total: runningNet,
-  //     //     dots: runningDots
-  //     //   }
-  //     // };
-
-  //     // i++;
+  //     j++;
   //   }
-  //   console.log("budget", this.budget);
-  // }
-  // valueDotNotation(type, val) {
-  //   if (val != 0) {
-  //     let suffix = "";
-  //     if (val < 0 || type == "expense") {
-  //       suffix = "negative";
-  //     } else {
-  //       suffix = "positive";
+  //   for (const output of period.outputs) {
+  //     if (output.quantity > 0) {
+  //       outputNet = outputNet + output.quantity * output.cost;
+  //       consumedNet = consumedNet + output.consumed * output.cost;
   //     }
-
-  //     const v = Math.abs(val);
-  //     //code could be tidies to loop but it's late!
-  //     const large = Math.abs(Math.floor(v / this.dots.large));
-  //     const largeRemainder = Math.abs(Math.floor(v % this.dots.large));
-  //     const medium = Math.abs(Math.floor(largeRemainder / this.dots.medium));
-  //     const mediumRemainder = Math.abs(
-  //       Math.floor(largeRemainder % this.dots.medium)
-  //     );
-  //     const small = Math.abs(Math.floor(mediumRemainder / this.dots.small));
-  //     const smallRemainder = Math.abs(
-  //       Math.floor(mediumRemainder % this.dots.small)
-  //     );
-  //     const half = Math.abs(Math.round(smallRemainder / this.dots.half));
-
-  //     const largeArr = new Array(large).fill({
-  //       src: `assets/img/budget/large-${suffix}.png`
-  //     });
-  //     const mediumArr = new Array(medium).fill({
-  //       src: `assets/img/budget/medium-${suffix}.png`
-  //     });
-  //     const smallArr = new Array(small).fill({
-  //       src: `assets/img/budget/small-${suffix}.png`
-  //     });
-  //     const halfArr = new Array(half).fill({
-  //       src: `assets/img/budget/half-${suffix}.png`
-  //     });
-
-  //     let arr = [];
-  //     arr = arr.concat(largeArr, mediumArr, smallArr, halfArr);
-  //     return arr;
   //   }
+  //   monthlyNet = outputNet - inputNet - consumedNet;
+  //   runningNet = runningNet + monthlyNet;
 
-  //   // if (val < 0 || type == "expense") {
-  //   //   arr = new Array(count).fill(negativeValue)
-  //   // }
-  //   // else if (val > 0) {
-  //   //   arr = new Array(count).fill(positiveValue)
-  //   // }
+  // this.budget.data[i].balance = {
+  //   inputs: {
+  //     total: inputNet,
+  //     dots: inputDots
+  //   },
+  //   outputs: {
+  //     total: outputNet,
+  //     dots: outputDots
+  //   },
+  //   consumed: {
+  //     total: consumedNet,
+  //     dots: consumedDots
+  //   },
+  //   monthly: {
+  //     total: monthlyNet,
+  //     dots: monthlyDots
+  //   },
+  //   running: {
+  //     total: runningNet,
+  //     dots: runningDots
+  //   }
+  // };
+
+  // i++;
   // }
+  // }
+
   // toggleDotEdit() {
   //   if (this.editDotValue) {
   //     this.calculateBalance();
   //   }
   //   this.editDotValue = !this.editDotValue;
   // }
+}
+function _jsonObjectValues(json: any) {
+  const values = [];
+  for (const key in json) {
+    if (json.hasOwnProperty(key)) {
+      values.push(json[key]);
+    }
+  }
+  return values;
 }

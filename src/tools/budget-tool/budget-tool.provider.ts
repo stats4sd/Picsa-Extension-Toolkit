@@ -8,13 +8,19 @@ import {
 } from "../../providers/providers";
 import { AppState } from "../../reducers/reducers";
 import { BudgetToolActions } from "./budget-tool.actions";
-import { IBudget, IBudgetCard, ICustomBudgetCard } from "./budget-tool.models";
+import {
+  IBudget,
+  IBudgetCard,
+  IBudgetDotValues,
+  ICustomBudgetCard
+} from "./budget-tool.models";
 import { budgetMeta } from "./data";
 
 @Injectable()
 export class BudgetToolProvider {
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
+  dotValues: IBudgetDotValues;
   constructor(
     public firestorePrvdr: FirestoreStorageProvider,
     public userPrvdr: UserProvider,

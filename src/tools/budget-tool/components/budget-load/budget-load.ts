@@ -1,5 +1,6 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
+import { Events } from "ionic-angular";
 import { Observable } from "rxjs";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
@@ -18,8 +19,7 @@ import { defaults } from "../../data";
               <div>{{budget.title}}</div>
               <div>{{budget.created | date:'mediumDate'}}</div>
             </div>
-            <button padding icon-left ion-button color="danger" (click)="archive(b)">
-              <ion-icon name="trash"></ion-icon>Archive</button>
+            
           </div>
         </ion-item>
       </div>
@@ -41,7 +41,7 @@ export class BudgetLoadComponent {
   @select(["user", "budgets"])
   savedBudgets$: Observable<IBudget[]>;
   savedBudgets: IBudget[];
-  constructor(public actions: BudgetToolActions) {}
+  constructor(public actions: BudgetToolActions, private events: Events) {}
   ngOnInit() {
     this.savedBudgets$.subscribe(budgets => {
       if (budgets) {
@@ -62,7 +62,13 @@ export class BudgetLoadComponent {
       periods: defaults.periods.days,
       title: null,
       scale: null,
-      enterpriseType: null
+      enterpriseType: null,
+      dotValues: {
+        large: 50000,
+        medium: 10000,
+        small: 1000,
+        half: 500
+      }
     };
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
@@ -76,7 +82,16 @@ export class BudgetLoadComponent {
       component: "overview",
       title: budget.title
     });
+    this.events.publish("calculate:budget");
   }
+  archive(budget: IBudget) {
+    budget.archived = true;
+    this.actions.setActiveBudget(budget);
+  }
+  /*
+  <button padding icon-left ion-button color="danger" (click)="archive(b)">
+              <ion-icon name="trash"></ion-icon>Archive</button>
+              */
 
   // archive(budget) {
   //   // console.log("archiving budget", budget);

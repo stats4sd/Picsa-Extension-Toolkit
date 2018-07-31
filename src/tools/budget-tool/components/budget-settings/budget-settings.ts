@@ -115,13 +115,11 @@ export class BudgetSettingsComponent {
           // otherwise set enterprise as null (if not already defined)
           this.showIndividualEnterprises = true;
           if (!this.budget || !this.budget.enterprise) {
-            console.log("preparing null patch", this.budget);
             this.budgetPrvdr.patchBudget("enterprise", null);
           }
         }
       }
     } else {
-      console.log("null patch 2");
       this.budgetPrvdr.patchBudget("enterprise", null);
     }
   }
@@ -138,7 +136,6 @@ export class BudgetSettingsComponent {
   }
 
   nextSlide() {
-    console.log("next slide", this.slides);
     this.slides.slideNext();
   }
 
@@ -220,41 +217,4 @@ export class BudgetSettingsComponent {
     }
     return array.slice(0, total);
   }
-
-  // createDataTemplates(labels) {
-  //   const arr = [];
-  //   labels.forEach((label, i) => {
-  //     arr.push({
-  //       label: label,
-  //       index: i,
-  //       activities: [],
-  //       inputs: [],
-  //       outputs: [],
-  //       familyLabour: { people: 0, days: 0 },
-  //       balance: {
-  //         inputs: {
-  //           total: 0,
-  //           dots: []
-  //         },
-  //         outputs: {
-  //           total: 0,
-  //           dots: []
-  //         },
-  //         consumed: {
-  //           total: 0,
-  //           dots: []
-  //         },
-  //         monthly: {
-  //           total: 0,
-  //           dots: []
-  //         },
-  //         running: {
-  //           total: 0,
-  //           dots: []
-  //         }
-  //       }
-  //     });
-  //   });
-  //   return arr;
-  // }
 }
