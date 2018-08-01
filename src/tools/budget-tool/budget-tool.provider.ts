@@ -41,6 +41,7 @@ export class BudgetToolProvider {
       await this.storagePrvdr.storage.set("_budgetMeta", budgetMeta);
       this.init();
     } else {
+      console.log("setting budget meta", budgetMeta);
       this.actions.setBudgetMeta(budgetMeta);
     }
   }
@@ -92,10 +93,11 @@ export class BudgetToolProvider {
       collection.subscribe(data => {
         if (data && data.length > 0) {
           const orderedData = this._sortData(data);
-          this.actions.setBudgetMeta({ [endpoint]: orderedData });
-          const meta = this.ngRedux.getState().budget.meta;
-          meta[endpoint] = orderedData;
-          this.storagePrvdr.storage.set("_budgetMeta", meta);
+          console.log("updating syncd budget meta", data);
+          this.actions.patchBudgetMeta({ [endpoint]: orderedData });
+          // const meta = this.ngRedux.getState().budget.meta;
+          // meta[endpoint] = orderedData;
+          // this.storagePrvdr.storage.set("_budgetMeta", meta);
         }
       });
     }
