@@ -27,7 +27,10 @@
         <div *ngSwitchCase="'cashBalance'">
           <div *ngIf="balance && balance[i]">
             <div>{{period}}: {{balance[i].period}}</div>
+            <budget-cell-value quantity=1 [cost]="balance[i].period"></budget-cell-value>
+            <hr>
             <div>running: {{balance[i].running}}</div>
+            <budget-cell-value quantity=1 [cost]="balance[i].running"></budget-cell-value>
           </div>
         </div>
         <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
@@ -36,7 +39,7 @@
 
 
 
-
+    <!-- OLD COLDE THAT MAY BE MIGRATED -->
     <div *ngIf="NEED_TO_MIGRATE">
       <!--Inputs-->
       <div class="cell" (click)="edit('inputs',period)">
@@ -114,38 +117,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- Totals column -->
-  <div class="time-period ">
-    <div class="time-period-title cell top-row total-column">Total</div>
-    <!--Activities-->
-    <div class="cell total-column">
-    </div>
-    <!--Inputs-->
-    <div class="cell total-column">
-      <div class="grid-card flex">
-      </div>
-    </div>
-    <!--Family Labour-->
-    <div class="cell total-column">
-      <div class="grid-card flex">
-      </div>
-    </div>
-    <!--Outputs-->
-    <div class="cell total-column">
-      <div class="grid-card flex">
-      </div>
-    </div>
-    <!--Consumed-->
-    <div class="cell total-column">
-      <div class="grid-card flex">
-      </div>
-    </div>
-    <!--balance-->
-    <div class="cell total-column Cash">
-      <div class="grid-card flex">
       </div>
     </div>
   </div>
