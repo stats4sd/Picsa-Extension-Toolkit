@@ -49,7 +49,8 @@
           <ion-label inset icon-left>
             <ion-icon name="calculator"></ion-icon>
             Total Periods</ion-label>
-          <ion-input (ionChange)="calculatePeriod()" type="number" [(ngModel)]="budget.periods.total" class="input-right"></ion-input>
+          <ion-input (ionBlur)="calculatePeriod()" (ionFocus)="clearPeriodInput()" type="number" [(ngModel)]="budget.periods.total"
+            class="input-right"></ion-input>
         </ion-item>
       </ion-list>
       <button ion-button color="primary-inverse" [disabled]="!(enterprise$ | async)" block outline icon-right round (click)="nextSlide()">Continue

@@ -19,9 +19,7 @@ export interface AppState {
 }
 
 export const INITIAL_STATE: AppState = {
-  user: {
-    lang: "en"
-***REMOVED***,
+  user: null,
   climate: null,
   budget: {
     active: null,

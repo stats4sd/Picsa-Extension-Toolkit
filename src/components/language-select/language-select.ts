@@ -1,25 +1,39 @@
 import { select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { Select } from "ionic-angular";
 import { Observable } from "rxjs";
 import { UserActions } from "../../actions/user.actions";
 
+interface ILanguage {
+  label: string;
+  code: string;
+}
 @Component({
   selector: "language-select",
   templateUrl: "language-select.html"
 })
 export class LanguageSelectComponent {
-  languages = [
+  languages: ILanguage[] = [
     { label: "English", code: "en" },
     { label: "Chichewa", code: "ny" }
   ];
-  language: any = {***REMOVED***
+  language: ILanguage;
   @select(["user", "lang"])
-  readonly lang$: Observable<string>;
+  readonly langCode$: Observable<string>;
+  @ViewChild(Select) select: Select;
 
   constructor(private userActions: UserActions) {
-    this.lang$.subscribe(code => {
-      this.setLanguage(code, "redux");
+    this.langCode$.subscribe(code => {
+      if (code) {
+        this.setLanguage(code, "redux");
+    ***REMOVED*** else {
+        console.log("no language specified, setting default");
+        this.language = this.languages[0];
+    ***REMOVED***
   ***REMOVED***);
+***REMOVED***
+  openLanguageSelect() {
+    this.select.open();
 ***REMOVED***
 
   // send language update to redux or update local ngmodel depending on source of update
@@ -28,7 +42,7 @@ export class LanguageSelectComponent {
       if (code && this.language.code != code) {
         this.language = this.languages.filter(l => {
           return l.code === code;
-      ***REMOVED***);
+      ***REMOVED***)[0];
     ***REMOVED***
   ***REMOVED*** else {
       this.userActions.updateUser({

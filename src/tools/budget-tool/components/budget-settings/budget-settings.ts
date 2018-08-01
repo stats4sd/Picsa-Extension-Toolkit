@@ -217,4 +217,8 @@ export class BudgetSettingsComponent {
   ***REMOVED***
     return array.slice(0, total);
 ***REMOVED***
+
+  clearPeriodInput() {
+    this.budget.periods.total = null;
+***REMOVED***
 }

@@ -1,5 +1,6 @@
 import { select } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs";
 import { UserActions } from "../actions/user.actions";
@@ -12,24 +13,35 @@ import { StorageProvider } from "./storage";
 export class UserProvider {
   user: IUser;
   @select("user") user$: Observable<IUser>;
+  @select(["user", "lang"])
+  readonly lang$: Observable<string>;
   constructor(
     private afAuth: AngularFireAuth,
     private storagePrvdr: StorageProvider,
     private actions: UserActions,
-    private firestorePrvdr: FirestoreStorageProvider
+    private firestorePrvdr: FirestoreStorageProvider,
+    private translate: TranslateService
   ) {}
-  init() {
-    this.enableUserSync();
-    this.loadUser();
+  async init() {
+    this.initTranslate();
+    await this.loadUser();
+    await this.enableUserSync();
     this.subscribeToFirebaseChanges();
-    // this.afAuth.auth
-    //   .signInAnonymously()
-    //   .catch(err => console.log("sign in error", err));
+***REMOVED***
+
+  initTranslate() {
+    this.translate.setDefaultLang("en");
+    this.lang$.subscribe(lang => {
+      if (lang) {
+        this.changeLanguage(lang);
+    ***REMOVED***
+  ***REMOVED***);
 ***REMOVED***
 
   // load user doc from storage on init and reflect to redux
   async loadUser() {
     const user: IUser = await this.storagePrvdr.get("user");
+    console.log("user loaded", user);
     if (user) {
       this.actions.updateUser(user);
   ***REMOVED***
@@ -37,11 +49,13 @@ export class UserProvider {
 
   // automatically reflect changes to user to local storage and firebase
   // note - only want to sync if user authenticated (i.e logged in via email or joined group)
-  enableUserSync() {
-    this.user$.subscribe(user => {
+  async enableUserSync() {
+    this.user$.subscribe(async user => {
       this.user = user;
       if (user) {
-        this.storagePrvdr.set("user", user);
+        console.log("updating user", user);
+        await this.storagePrvdr.set("user", user);
+        console.log("user updated successfully");
         if (user && user.authenticated) {
           this.firestorePrvdr.setDoc(`users/${user.id}`, user);
       ***REMOVED***
@@ -49,7 +63,11 @@ export class UserProvider {
   ***REMOVED***);
 ***REMOVED***
 
-  joinGroup() {}
+  changeLanguage(code: string) {
+    this.translate.use(code);
+***REMOVED***
+
+  // joinGroup() {}
 
   // set user doc
   updateUser(userFieldKey, value) {
