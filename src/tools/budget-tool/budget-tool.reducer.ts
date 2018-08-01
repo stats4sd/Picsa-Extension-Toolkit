@@ -36,6 +36,16 @@ export function BudgetToolReducer(
       const newMeta = { ...state.meta, ...budgetMeta.payload ***REMOVED***
       return { ...state, meta: newMeta ***REMOVED***
 
+    // merge arrays of existing and incoming meta
+    // e.g. hard-coded activities and custom
+    case BudgetToolActions.PATCH_BUDGET_META:
+      const budgetMetaPatch = action as StandardAction;
+      const meta = { ...state.meta ***REMOVED***
+      Object.keys(budgetMetaPatch.payload).forEach(key => {
+        meta[key] = [...state.meta[key], ...budgetMetaPatch.payload[key]];
+    ***REMOVED***);
+      return { ...state, meta: meta ***REMOVED***
+
     case BudgetToolActions.SET_BUDGET_VIEW:
       const budgetView = action as StandardAction;
       return { ...state, view: budgetView.payload ***REMOVED***

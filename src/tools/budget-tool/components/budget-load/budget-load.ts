@@ -75,6 +75,8 @@ export class BudgetLoadComponent {
       component: "settings",
       title: "Settings"
   ***REMOVED***);
+    // publish event to force card list update
+    this.events.publish("load:budget");
 ***REMOVED***
   loadBudget(budget: IBudget) {
     this.actions.setActiveBudget(budget);
@@ -83,6 +85,8 @@ export class BudgetLoadComponent {
       title: budget.title
   ***REMOVED***);
     this.events.publish("calculate:budget");
+    // publish event to force card list update
+    this.events.publish("load:budget");
 ***REMOVED***
   archive(budget: IBudget) {
     budget.archived = true;

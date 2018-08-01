@@ -57,15 +57,8 @@ export class BudgetCellComponent {
     // but type remains (e.g. activity 1 => activity 2)
     this.events.publish("cell:selected", {
       type: this.type,
-      periodIndex: this.periodIndex
-  ***REMOVED***);
-    this.actions.setBudgetView({
-      component: "cell-edit",
-      title: `${this.rowLabel} ${this.typeLabel}`,
-      meta: {
-        type: this.type,
-        periodIndex: this.periodIndex
-    ***REMOVED***
+      periodIndex: this.periodIndex,
+      title: `${this.rowLabel} ${this.typeLabel}`
   ***REMOVED***);
 ***REMOVED***
 }
