@@ -5,9 +5,11 @@ import { FileOpener } from "@ionic-native/file-opener";
 import {
   Content,
   IonicPage,
+  LoadingController,
   NavController,
   NavParams,
-  Platform
+  Platform,
+  
 } from "ionic-angular";
 import { Observable } from "rxjs";
 
@@ -36,7 +38,8 @@ export class ResourcesPage {
     public navParams: NavParams,
     private fileOpener: FileOpener,
     private file: File,
-    public platform: Platform
+    public platform: Platform,
+    private loader:LoadingController
   ) {}
   ngOnInit() {
     if (this.platform.is("mobile")) {
@@ -60,6 +63,12 @@ export class ResourcesPage {
   _removeSubscribers() {}
 
   async initMobileStorageDirectory() {
+    const loader = this.loader.create({
+      content:"Preapring Resources",
+      dismissOnPageChange:true,
+      enableBackdropDismiss:false
+  ***REMOVED***)
+    await loader.present()
     this.externalDir = await this.checkFileDirectoryExists();
     // console.log("externalDir", externalDir);
     const appDir = this.file.applicationDirectory;
@@ -90,6 +99,7 @@ export class ResourcesPage {
       console.log("all resources exist :D");
   ***REMOVED***
     this._addSubscribers();
+    loader.dismiss()
 ***REMOVED***
 
   async _listHardResources() {

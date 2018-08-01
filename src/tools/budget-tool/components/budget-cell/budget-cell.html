@@ -15,6 +15,12 @@
           <budget-cell-value *ngIf="card.quantity && card.cost" [quantity]="card.quantity" [cost]="card.cost"></budget-cell-value>
         </div>
       </div>
+      <!-- family labour -->
+      <div *ngSwitchCase="'familyLabour'" style="display: flex; flex-wrap: wrap">
+        <div *ngFor="let card of cellData">
+          <budget-cell-labour *ngIf="card.people && card.days" [people]="card.days" [days]="card.people"></budget-cell-labour>
+        </div>
+      </div>
       <!-- default (activities) -->
       <div *ngSwitchDefault style="display: flex; flex-wrap: wrap">
         <budget-card-image *ngFor="let card of cellData" [class]="cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>

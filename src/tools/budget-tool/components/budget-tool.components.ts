@@ -8,6 +8,7 @@ import { BudgetCardComponent } from "./budget-card/budget-card";
 import { BudgetDataCardComponent } from "./budget-card/budget-data-card";
 import { BudgetMetaCardComponent } from "./budget-card/budget-meta-card";
 import { BudgetNewCardComponent } from "./budget-card/budget-new-card";
+import { BudgetCellLabourComponent } from "./budget-cell-labour/budget-cell-labour";
 import { BudgetCellValueComponent } from "./budget-cell-value/budget-cell-value";
 import { BudgetCellComponent } from "./budget-cell/budget-cell";
 import { BudgetLoadComponent } from "./budget-load/budget-load";
@@ -24,6 +25,7 @@ import { CardSelectComponent } from "./card-select/card-select";
     BudgetCardImageComponent,
     BudgetCardListComponent,
     BudgetCellComponent,
+    BudgetCellLabourComponent,
     BudgetCellValueComponent,
     BudgetLoadComponent,
     BudgetOverviewComponent,
@@ -39,6 +41,7 @@ import { CardSelectComponent } from "./card-select/card-select";
     BudgetCardImageComponent,
     BudgetCardListComponent,
     BudgetCellComponent,
+    BudgetCellLabourComponent,
     BudgetCellValueComponent,
     BudgetLoadComponent,
     BudgetOverviewComponent,

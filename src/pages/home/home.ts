@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, Platform, ToastController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  Platform,
+  ToastController
+} from "ionic-angular";
 import { StorageProvider } from "../../providers/storage";
 import version from "../changelog/version";
 
@@ -16,7 +21,7 @@ export class HomePage {
     public navCtrl: NavController,
     public storagePrvdr: StorageProvider,
     private toastCtrl: ToastController,
-    private platform:Platform
+    private platform: Platform
   ) {
     this.links = [
       // {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
@@ -31,7 +36,7 @@ export class HomePage {
         page: "ToolsPage"
     ***REMOVED***,
       {
-        name: " Discussions",
+        name: "Discussions",
         icon: "chatbubbles",
         page: "DiscussionsPage"
     ***REMOVED***,
@@ -49,14 +54,14 @@ export class HomePage {
 ***REMOVED***
   ionViewDidEnter() {
     console.log("loading db");
-    if(!this.platform.is('cordova')){
+    if (!this.platform.is("cordova")) {
       this.checkForSWUpdates();
   ***REMOVED***
 ***REMOVED***
 
   checkForSWUpdates() {
     // https://medium.com/progressive-web-apps/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
-    console.log('checking for service worker updates')
+    console.log("checking for service worker updates");
     window["isUpdateAvailable"]()
       .then(
         isAvailable => {
