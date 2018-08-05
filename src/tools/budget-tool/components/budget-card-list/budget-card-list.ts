@@ -8,8 +8,7 @@ import {
   IBudget,
   IBudgetCard,
   IBudgetPeriodData,
-  IBudgetViewMeta,
-  ICustomBudgetCard
+  IBudgetViewMeta
 } from "../../budget-tool.models";
 
 @Component({
@@ -29,6 +28,7 @@ export class BudgetCardListComponent {
     private actions: BudgetToolActions,
     private events: Events
   ) {}
+  // *** reviewed all this in a rush, need to work on
   ngOnInit() {
     this._addSubscribers();
 ***REMOVED***
@@ -57,22 +57,23 @@ export class BudgetCardListComponent {
       const periodData = this.NgRedux.getState().budget.active.data[
         periodIndex
       ][type];
-      this.updateCardList(periodData, type);
+      this.periodData = periodData;
   ***REMOVED*** catch (error) {
-      this.updateCardList({}, type);
-      //no data for period, initialise default set
+      // no data for period
   ***REMOVED***
+    this.updateCardList();
 ***REMOVED***
 
   // watch for updates to custom cards and add to list accordingly
   // triggered from events as the new card builder is launched as a model and doens't update state
   _addSubscribers() {
-    this.events.subscribe("customCards:updated", () => {
-      console.log("custom cards updated");
-      this.updateCardList({}, this.type);
-  ***REMOVED***);
     this.events.subscribe("load:budget", () => {
       this._generateCardList("enterprises", null);
+  ***REMOVED***);
+    console.log("adding custom cards subscriber");
+    this.events.subscribe("customCards:updated", customCards => {
+      console.log("custom cards updated");
+      this.updateCardList(customCards);
   ***REMOVED***);
     // when view changes (e.g. activity list -> outputs list) want to check path exists to populate data
     // and update cards list
@@ -91,6 +92,7 @@ export class BudgetCardListComponent {
         console.log("cards updated", cards);
         this._generateCardList(meta.type, meta.periodIndex);
     ***REMOVED***);
+
       // set view after path checked
       this.actions.setBudgetView({
         component: "cell-edit",
@@ -105,26 +107,48 @@ export class BudgetCardListComponent {
 
   // when the related budget period is updated want to filter all cards by type and update which
   // are already selected and any other meta data (e.g. input quantities)
-  updateCardList(data, type) {
-    if (data && type) {
-      console.log("update card list", type);
-      const allCards = this.NgRedux.getState().budget.meta;
-      // replace consumed cards with outputs (allow full list in case of consumption before full output harvested)
-      if (type == "produceConsumed") {
-        type = "outputs";
-    ***REMOVED***
-      // use timeout so that cards can be properly destroyed and not repopulated if same field selected in different time period
-      setTimeout(() => {
-        // update cards according to what is saved
-        if (Object.keys(data).length == 0) {
-          // when no data return full set
-          this.cards = [...allCards[type]];
-      ***REMOVED*** else {
-          this.cards = allCards[type].map(c => {
-            return data[c.id] ? data[c.id] : c;
-        ***REMOVED***);
-      ***REMOVED***
-    ***REMOVED***, 100);
+  updateCardList(customCards?) {
+    let type = this.type;
+    const data = this.periodData;
+    // replace consumed cards with outputs (allow full list in case of consumption before full output harvested)
+    if (type == "produceConsumed") {
+      type = "outputs";
   ***REMOVED***
+    const typeCards = this.NgRedux.getState().budget.meta[this.type];
+    let allTypeCards = this.mergeCustomCards(typeCards, customCards);
+    if (data && Object.keys(data).length > 0 && allTypeCards) {
+      // update cards according to what is saved
+      allTypeCards = allTypeCards.map(c => {
+        return data[c.id] ? data[c.id] : c;
+    ***REMOVED***);
+  ***REMOVED***
+    // use timeout so that cards can be properly destroyed and not repopulated if same field selected in different time period
+    this.cards = null;
+    setTimeout(() => {
+      this.cards = allTypeCards;
+  ***REMOVED***, 100);
+***REMOVED***
+
+  // merge custom type cards with hard-coded type cards
+  mergeCustomCards(typeCards, customCards?) {
+    if (typeCards) {
+      if (!customCards) {
+        try {
+          customCards = this.NgRedux.getState().user.budgetCustomCards[
+            this.type
+          ];
+          if (!customCards) {
+            customCards = {***REMOVED***
+        ***REMOVED***
+      ***REMOVED*** catch (error) {
+          customCards = {***REMOVED***
+      ***REMOVED***
+    ***REMOVED***
+      console.log("custom cards", customCards);
+      Object.keys(customCards).forEach(key => {
+        typeCards.push(customCards[key]);
+    ***REMOVED***);
+  ***REMOVED***
+    return typeCards;
 ***REMOVED***
 }

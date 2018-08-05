@@ -52,7 +52,7 @@ const resources: IResource[] = [
   {
     _key: "m6I8TfROsyr5Wp73BcAd",
     name: "RAM Refresher",
-    filename: "RAM Refresher.mp4",
+    filename: "ram-refresher.mp4",
     type: "video",
     image: "assets/resources/ram-refresher-cover.jpg",
     group: "Videos",
@@ -66,7 +66,7 @@ const groups = [
   {
     _key: "u3EP0KB66MDcD3Ibom0o",
     name: "PICSA Mangochi Training 2018",
-    accessKey: "picsa",
+    accessKey: "hippo",
     defaults: null,
     order: 10
 ***REMOVED***

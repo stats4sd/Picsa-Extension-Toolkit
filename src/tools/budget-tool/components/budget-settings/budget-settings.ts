@@ -1,6 +1,6 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
-import { Slides } from "ionic-angular";
+import { Events, Slides } from "ionic-angular";
 import { Observable } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
@@ -28,9 +28,13 @@ export class BudgetSettingsComponent {
   timescale$: Observable<string>;
   @select(["budget", "meta", "enterprises"])
   enterprises$: Observable<ICustomBudgetCard[]>;
+  @select(["user", "budgetCustomCards", "enterprises"])
+  customEnterprises$: Observable<ICustomBudgetCard[]>;
   @select(["budget", "active", "created"])
   created$: Observable<string>;
   // additional properties
+  metaEnterprises: IBudgetCard[] = [];
+  customEnterprises: IBudgetCard[] = [];
   allEnterprises: IBudgetCard[] = [];
   filteredEnterprises: IBudgetCard[] = [];
   showIndividualEnterprises: boolean;
@@ -44,7 +48,8 @@ export class BudgetSettingsComponent {
   constructor(
     public actions: BudgetToolActions,
     public ngRedux: NgRedux<AppState>,
-    public budgetPrvdr: BudgetToolProvider
+    public budgetPrvdr: BudgetToolProvider,
+    private events: Events
   ) {}
 
   ngOnInit() {
@@ -59,10 +64,22 @@ export class BudgetSettingsComponent {
     // update enterprise types and filter list when enterprises changes
     this.enterprises$.subscribe(enterprises => {
       if (enterprises) {
-        this.allEnterprises = enterprises;
-        this.enterpriseTypes = this._generateEnterpriseTypes(enterprises);
-        const type = this.budget ? this.budget.enterpriseType : null;
-        this._filterEnterprises(type, enterprises);
+        this.metaEnterprises = enterprises;
+        this.enterprisesInit();
+    ***REMOVED***
+  ***REMOVED***);
+    this.customEnterprises$.subscribe(enterprises => {
+      console.log("custom enterprises updated", enterprises);
+      if (enterprises) {
+        this.customEnterprises = enterprises;
+        this.enterprisesInit();
+    ***REMOVED***
+  ***REMOVED***);
+    // *** including event subscriber as redux doesn't seem to update - need to resolve why
+    this.events.subscribe("customCards:updated", customCards => {
+      if (customCards && customCards.enterprises) {
+        this.customEnterprises = customCards.enterprises;
+        this.enterprisesInit();
     ***REMOVED***
   ***REMOVED***);
     // calculate time periods when new timescale specified
@@ -74,6 +91,14 @@ export class BudgetSettingsComponent {
     this.budget$.subscribe(budget => {
       this.budget = budget;
   ***REMOVED***);
+***REMOVED***
+  enterprisesInit() {
+    console.log("enterprises init", this.customEnterprises);
+    this.allEnterprises = this.metaEnterprises.concat(this.customEnterprises);
+    this.enterpriseTypes = this._generateEnterpriseTypes(this.allEnterprises);
+    const type = this.budget ? this.budget.enterpriseType : null;
+    this._filterEnterprises(type, this.allEnterprises);
+    console.log("all enterprises", this.allEnterprises);
 ***REMOVED***
 
   // iterate over enterprises and populate groups that exist

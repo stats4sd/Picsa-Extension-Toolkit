@@ -2,75 +2,106 @@ import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { Platform } from "ionic-angular";
 
-declare const cordova: any;
-
 @Injectable()
 export class FileService {
   platforms: any;
-  mainPlatform: string;
-  fs: any;
+  isCordova: boolean;
+  appDir: string;
+  externalDir: string;
+  externalBackupDir: string;
 
   constructor(public platform: Platform, private file: File) {
     this.checkPlatform();
-    if (this.mainPlatform == "mobile") {
-      console.log("platform mobile, cordova enabled?");
-      this.fs = cordova.file.dataDirectory;
-  ***REMOVED*** else {
-      this.fs = undefined;
+    if (this.isCordova) {
+      this.mobileInit();
   ***REMOVED***
+***REMOVED***
+  async mobileInit() {
+    console.log("platform mobile, cordova enabled?");
+    this.appDir = this.file.applicationDirectory;
+    this.externalDir = await this.checkFileDirectoryExists();
+    this.externalBackupDir = await this.checkFileDirectoryExists(true);
 ***REMOVED***
   checkPlatform() {
     console.log("checking platform");
     this.platforms = this.platform.platforms();
-    if (this.platform.is("mobile")) {
-      this.mainPlatform = "mobile";
-  ***REMOVED***
-    if (this.platform.is("core")) {
-      this.mainPlatform = "desktop";
+    this.isCordova = this.platform.is("cordova");
+***REMOVED***
+  async checkFileDirectoryExists(backup?: boolean) {
+    console.log("checking file directory");
+    const basePath = backup
+      ? this.file.externalApplicationStorageDirectory
+      : this.file.externalRootDirectory;
+    try {
+      await this.file.checkDir(basePath, "picsa");
+      return this.file.externalApplicationStorageDirectory;
+  ***REMOVED*** catch (error) {
+      console.log("picsa directory does not exist, creating");
+      await this.createDirectory(basePath, "picsa", false);
   ***REMOVED***
 ***REMOVED***
 
-  listDirectory(path: string) {
-    if (this.fs) {
-      console.log("listing directory");
-      return new Promise((resolve, reject) => {
-        this.file
-          .listDir(this.fs, path)
-          .then(res => resolve(res))
-          .catch(err => resolve(err));
-    ***REMOVED***);
+  // list directory contents for specified path
+  async listDirectory(dir, path) {
+    console.log("listing", path);
+    try {
+      const files = await this.file.listDir(dir, path);
+      return files;
+  ***REMOVED*** catch (error) {
+      throw new Error(JSON.stringify(error));
+  ***REMOVED***
+***REMOVED***
+  async createDirectory(path: string, name: string, replace: boolean) {
+    try {
+      await this.file.createDir(path, name, replace);
+      return path;
+  ***REMOVED*** catch (error) {
+      return new Error(`${name} directory could not be created`);
   ***REMOVED***
 ***REMOVED***
 
-  createDirectory(name: string) {
-    if (this.fs) {
-      console.log("creating directory:", name);
-      return new Promise((resolve, reject) => {
-        this.file
-          .createDir(this.fs, name, false)
-          .then(res => resolve(res))
-          .catch(err => resolve(err));
+  // create files in external picsa directory
+  // optionally can use backupStorage location to make independent of app
+  async createFile(
+    filename: string,
+    data: any,
+    replace: boolean,
+    backupStorage: boolean
+  ) {
+    try {
+      const fileBase = backupStorage
+        ? this.file.externalRootDirectory
+        : this.file.externalApplicationStorageDirectory;
+      console.log("creating file", filename, fileBase);
+      await this.file.createFile(fileBase, `picsa/${filename}`, replace);
+      console.log("file created succesfully");
+      if (typeof data != "string") {
+        data = JSON.stringify(data);
+    ***REMOVED***
+      console.log("writing file data", data);
+      await this.file.writeFile(fileBase, `picsa/${filename}`, data, {
+        replace: true
     ***REMOVED***);
+      console.log(filename, "written successfully");
+  ***REMOVED*** catch (error) {
+      console.log("could not create or write file", error);
+      throw new Error("could not create file");
   ***REMOVED***
 ***REMOVED***
 
-  createFile(filepath, filename: string, data: any, replace: boolean) {
-    if (this.fs) {
-      return new Promise((resolve, reject) => {
-        this.file
-          .createFile(this.fs + filepath, filename, true)
-          .then(res => {
-            console.log("file created");
-            this.file
-              .writeFile(this.fs + filepath, filename, data, {})
-              .then(res => resolve("file written"))
-              .catch(err => resolve(err));
-        ***REMOVED***)
-          .catch(err => {
-            console.log("file could not be created");
-            resolve(err);
-        ***REMOVED***);
-    ***REMOVED***);
+  // read files from the external picsa directory
+  async readTextFile(filename: string, backupStorage?: boolean) {
+    const fileBase = backupStorage
+      ? this.file.externalRootDirectory
+      : this.file.externalApplicationStorageDirectory;
+    console.log("reading file", fileBase, `picsa/${filename}`);
+    try {
+      const fileTxt = await this.file.readAsText(fileBase, `picsa/${filename}`);
+      console.log("file read", fileTxt);
+      return fileTxt;
+  ***REMOVED*** catch (error) {
+      console.error("could not read file", error);
+      return null;
   ***REMOVED***
 ***REMOVED***
 }

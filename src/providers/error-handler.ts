@@ -24,14 +24,13 @@ export class SentryErrorHandler extends IonicErrorHandler {
     if (window.location.hostname == "localhost") {
       super.handleError(error);
   ***REMOVED*** else {
+      console.error(error);
       try {
         Raven.setExtraContext({
           appState: this.ngRedux.getState()
       ***REMOVED***);
         Raven.captureException(error.originalError || error);
-    ***REMOVED*** catch (e) {
-        console.error(e);
-    ***REMOVED***
+    ***REMOVED*** catch (e) {}
   ***REMOVED***
 ***REMOVED***
 }

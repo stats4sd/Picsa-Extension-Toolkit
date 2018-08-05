@@ -6,7 +6,8 @@ import {
   IBudget,
   IBudgetMeta,
   IBudgetPublicData,
-  IBudgetView
+  IBudgetView,
+  IBudgetCard
 } from "./budget-tool.models";
 
 export interface BudgetToolState {
@@ -36,13 +37,16 @@ export function BudgetToolReducer(
       const newMeta = { ...state.meta, ...budgetMeta.payload ***REMOVED***
       return { ...state, meta: newMeta ***REMOVED***
 
-    // merge arrays of existing and incoming meta
-    // e.g. hard-coded activities and custom
+    // merge arrays of existing and incoming meta, overwriting duplicates
+    // e.g. hard-coded activities and custom cards
     case BudgetToolActions.PATCH_BUDGET_META:
       const budgetMetaPatch = action as StandardAction;
       const meta = { ...state.meta ***REMOVED***
       Object.keys(budgetMetaPatch.payload).forEach(key => {
-        meta[key] = [...state.meta[key], ...budgetMetaPatch.payload[key]];
+        meta[key] = _mergeBudgetCardsArrays(
+          state.meta[key],
+          budgetMetaPatch.payload[key]
+        );
     ***REMOVED***);
       return { ...state, meta: meta ***REMOVED***
 
@@ -53,4 +57,22 @@ export function BudgetToolReducer(
     default:
       return state;
 ***REMOVED***
+}
+
+//
+function _mergeBudgetCardsArrays(arr1: IBudgetCard[], arr2: IBudgetCard[]) {
+  const json = {***REMOVED***
+  arr1.forEach(el => {
+    json[el.id] = el;
+***REMOVED***);
+  arr2.forEach(el => {
+    json[el.id] = el;
+***REMOVED***);
+  // convert json back to array
+  const arr = [];
+  Object.keys(json).forEach(key => {
+    if (json.hasOwnProperty(key)) {
+      arr.push(json[key]);
+  ***REMOVED***
+***REMOVED***);
 }
