@@ -32,10 +32,6 @@ export class ClimateChartComponent {
   ) {
     this._addSubscriptions();
   }
-  ngOnDestroy() {
-    console.log("component destroyed");
-    this._removeSubscriptions();
-  }
 
   _addSubscriptions() {
     console.log("adding climate chart subscriptions");
@@ -55,11 +51,13 @@ export class ClimateChartComponent {
       }
     });
   }
-  _removeSubscriptions() {
-    this.chartDataSubscription.unsubscribe();
-    this.lineToolValueSubscription.unsubscribe();
-    this.activeChartSubscription.unsubscribe();
-  }
+  // removing can sometimes cause whitescreen bug, removing until can be figured out
+  // at least shouldn't add multiple subscribers due to this definition
+  // _removeSubscriptions() {
+  //   this.chartDataSubscription.unsubscribe();
+  //   this.lineToolValueSubscription.unsubscribe();
+  //   this.activeChartSubscription.unsubscribe();
+  // }
 
   // when new data columns specified redraw any graphs
   // if no graph previously specified, default to rainfall

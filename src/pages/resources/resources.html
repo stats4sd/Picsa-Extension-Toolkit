@@ -14,7 +14,7 @@
           <ion-icon name="close"></ion-icon>
         </button>
       </div>
-      <youtube-player [videoId]="activeResource.youtubeID" *ngIf="activeResource && activeResource.youtubeID" [width]="playerWidth"></youtube-player>
+      <youtube-player [videoId]="activeResource.youtubeID" *ngIf="activeResource && !platformIsWeb" [width]="playerWidth"></youtube-player>
     </div>
   </div>
   <div *ngFor="let group of resourceGroups" class="resource-group-container" [id]="group.name" padding>
@@ -22,7 +22,7 @@
       {{group.name | translate}}
     </h2>
     <div style="display: flex; flex-wrap: wrap">
-      <ion-card class="resource" *ngFor="let resource of group.resources" (click)="loadResource(resource,$event)">
+      <ion-card class="resource" *ngFor="let resource of group.resources" (click)="openResource(resource,$event)">
         <img class="resource-image" [src]="resource.image">
         <div class="resource-name">{{resource.name | translate}}</div>
       </ion-card>

@@ -73,6 +73,7 @@ export interface IBudgetCard {
 }
 
 export interface ICustomBudgetCard extends IBudgetCard {
+  type: string;
   custom: boolean;
   customImg: string;
   created: string;

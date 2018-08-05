@@ -8,12 +8,12 @@ import {
   LoadingController,
   NavController,
   NavParams,
-  Platform,
-  
+  Platform
 } from "ionic-angular";
 import { Observable } from "rxjs";
 
 import { IResource, IResourceGroup } from "../../models/models";
+import { FileService } from "../../providers/providers";
 import mimetypes from "./mimetypes";
 
 @IonicPage({
@@ -39,7 +39,8 @@ export class ResourcesPage {
     private fileOpener: FileOpener,
     private file: File,
     public platform: Platform,
-    private loader:LoadingController
+    private loader: LoadingController,
+    private filePrvdr: FileService
   ) {}
   ngOnInit() {
     if (this.platform.is("mobile")) {
@@ -62,21 +63,21 @@ export class ResourcesPage {
   }
   _removeSubscribers() {}
 
+  // on load copy resources from app to external directory, checking directory exists first
   async initMobileStorageDirectory() {
     const loader = this.loader.create({
-      content:"Preapring Resources",
-      dismissOnPageChange:true,
-      enableBackdropDismiss:false
-    })
-    await loader.present()
-    this.externalDir = await this.checkFileDirectoryExists();
-    // console.log("externalDir", externalDir);
-    const appDir = this.file.applicationDirectory;
-    // console.log("directory exists", externalDir);
+      content: "Preapring Resources",
+      dismissOnPageChange: true,
+      enableBackdropDismiss: false
+    });
+    await loader.present();
+    this.externalDir = await this.filePrvdr.checkFileDirectoryExists();
+    const appDir = this.filePrvdr.appDir;
     const hardResources = await this._listHardResources();
-    // console.log("hardResources", hardResources);
-    const savedResources = await this.list(this.externalDir, "picsa");
-    // console.log("saved resources", savedResources);
+    const savedResources = await this.filePrvdr.listDirectory(
+      this.externalDir,
+      "picsa"
+    );
     // copy hard resources
     if (hardResources.length != savedResources.length) {
       for (const resource of hardResources) {
@@ -99,7 +100,7 @@ export class ResourcesPage {
       console.log("all resources exist :D");
     }
     this._addSubscribers();
-    loader.dismiss()
+    loader.dismiss();
   }
 
   async _listHardResources() {
@@ -148,54 +149,11 @@ export class ResourcesPage {
     this.activeResource = null;
   }
 
-  // set active resource to clicked resource (to show/hide video player) and open
-  loadResource(resource) {
-    console.log("loading resource", resource);
-    this.activeResource = resource;
-
-    this.openResource(resource);
-  }
-
   // video width needs to be set programtically
   _setVideoPlayerWidth() {
     const width = this.content.contentWidth;
     this.playerWidth = width * 0.9;
     console.log("width", this.playerWidth, window);
-  }
-
-  async checkFileDirectoryExists() {
-    console.log("checking file directory");
-    try {
-      await this.file.checkDir(
-        this.file.externalApplicationStorageDirectory,
-        "picsa"
-      );
-      return this.file.externalApplicationStorageDirectory;
-    } catch (error) {
-      console.log("picsa directory does not exist, creating");
-      try {
-        await this.file.createDir(
-          this.file.externalApplicationStorageDirectory,
-          "picsa",
-          false
-        );
-        return this.file.externalApplicationStorageDirectory;
-      } catch (error) {
-        console.log("could not create application storage directory");
-        throw new Error(JSON.stringify(error));
-      }
-    }
-  }
-
-  // list directory contents for specified path
-  async list(dir, path) {
-    console.log("listing", path);
-    try {
-      const files = await this.file.listDir(dir, path);
-      return files;
-    } catch (error) {
-      throw new Error(JSON.stringify(error));
-    }
   }
 
   async copyApplicationFileLocally(filename) {}
@@ -205,13 +163,22 @@ export class ResourcesPage {
     const extension: string = fileNameSplit[fileNameSplit.length - 1];
     return mimetypes[extension];
   }
+
+  // depending on mobile/web, use cordova fileopener or new tab to show resources
   async openResource(resource: IResource) {
+    this.activeResource = resource;
     if (!this.platform.is("cordova")) {
       return this.openWebResource(resource);
+    } else {
+      this.openCordovaResource(resource);
     }
+  }
+
+  openCordovaResource(resource) {
     const mimetype = this._getMimetype(resource.filename);
     const filepath = `${this.externalDir}picsa/${resource.filename}`;
-    this.fileOpener.open(filepath, mimetype);
+    console.log("opening resource", filepath, mimetype);
+    this.fileOpener.open(filepath, mimetype).catch(err => console.error(err));
   }
 
   openWebResource(resource) {

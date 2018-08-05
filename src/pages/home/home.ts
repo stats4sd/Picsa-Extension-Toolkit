@@ -24,7 +24,6 @@ export class HomePage {
     private platform: Platform
   ) {
     this.links = [
-      // {name:' Picsa Manual', color:'picsa-manual', icon:'book',page:'PicsaManualPage', text:''},
       {
         name: "Resources",
         icon: "book",
@@ -53,7 +52,6 @@ export class HomePage {
     ];
   }
   ionViewDidEnter() {
-    console.log("loading db");
     if (!this.platform.is("cordova")) {
       this.checkForSWUpdates();
     }

@@ -44,6 +44,11 @@ $npm uninstall --save cordova-plugin-file cordova-plugin-file-transfer
 $npm install --save cordova-plugin-file cordova-plugin-file-transfer @ionic-native/file
 $ionic cordova plugin add --save cordova-plugin-file cordova-plugin-file-transfer
 
+### video player
+
+At time of writing cordova 8 had deprecated --nofetch flag and videoplayer plugin not
+available properly via npm resulting in unable to fetch. manually copied to plugins folder from git repo instead.
+
 ### ionic import sources
 
 Current typescript/vscode has issue trying to import from ionic-angular

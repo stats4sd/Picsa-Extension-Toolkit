@@ -29,7 +29,7 @@ export class BudgetToolProvider {
     private ngRedux: NgRedux<AppState>
   ) {
     this.init();
-    this.syncData();
+    // this.syncData();
     this.enableAutoSave();
   }
 
@@ -82,9 +82,11 @@ export class BudgetToolProvider {
       The methods below are used to keep firebase data sync'd locally when internet available
       They are sinukar to firebase and storage provider methods, but included again
       to retain tool independent use, allow subcollection paths and custom data sort
-  */
+  
+      */
 
   // watch afs data endpoints and reflect changes to redux and localstorage
+  // NOTE this is just for main card types and not custom (which is stored to user)
   async syncData() {
     for (const endpoint of Object.keys(budgetMeta)) {
       const collection = this.firestorePrvdr.getCollection(

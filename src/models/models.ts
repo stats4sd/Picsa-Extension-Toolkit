@@ -3,10 +3,12 @@ import { IBudget, IBudgetMeta } from "../tools/budget-tool/budget-tool.models";
 
 // user doc format stored locally under 'user' key and reflected to firebase
 export interface IUser {
+  appVersion?: string;
   name?: string;
   type?: string;
   id?: string;
   budgets?: { ["key"]?: IBudget };
+  budgetCustomCards?: IBudgetMeta;
   submittedForms?: any;
   email?: string;
   verified?: boolean;
@@ -76,6 +78,7 @@ export interface IResource {
   group: string;
   description?: string;
   youtubeID?: string;
+  filepath?: string;
 }
 export interface IVideoResource extends IResource {
   description: string;
