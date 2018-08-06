@@ -39,7 +39,7 @@ export class LanguageSelectComponent {
   // send language update to redux or update local ngmodel depending on source of update
   setLanguage(code: string, source: "redux" | "home") {
     if (source == "redux") {
-      if (code && this.language.code != code) {
+      if (code && this.language && this.language.code != code) {
         this.language = this.languages.filter(l => {
           return l.code === code;
       ***REMOVED***)[0];

@@ -65,4 +65,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.4.0" />
     <engine name="android" spec="~7.0.0" />
+    <allow-navigation href="http://192.168.192.29:8100" />
 </widget>
