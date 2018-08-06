@@ -181,9 +181,12 @@ export class UserProvider {
             verified: user.emailVerified
         ***REMOVED***);
       ***REMOVED*** else {
+          console.log("no user signed in");
           // User is signed out.
       ***REMOVED***
     ***REMOVED***);
-  ***REMOVED*** catch (error) {}
+  ***REMOVED*** catch (error) {
+      console.error(error);
+  ***REMOVED***
 ***REMOVED***
 }

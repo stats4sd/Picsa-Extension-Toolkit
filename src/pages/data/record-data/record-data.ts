@@ -29,14 +29,24 @@ export class RecordDataPage {
     this.user = user;
     try {
       const allForms: IForm[] = this.ngRedux.getState().data.forms;
+      console.log("forms", allForms);
       let forms = allForms.filter(form => {
-        return this._containsCommonElement(form.groups, this.user.groups);
+        // only filter forms which has groups specified (otherwise assume available to all)
+        if (form.groups) {
+          return this._containsCommonElement(form.groups, this.user.groups);
+      ***REMOVED*** else {
+          return true;
+      ***REMOVED***
     ***REMOVED***);
-      forms = allForms.filter(form => {
+      // also filter out inactive
+      forms = forms.filter(form => {
         return form.isActive;
     ***REMOVED***);
       this.forms = forms;
-  ***REMOVED*** catch (error) {}
+      console.log("forms", this.forms);
+  ***REMOVED*** catch (error) {
+      console.error(error);
+  ***REMOVED***
 ***REMOVED***
 
   openForm(form: IForm) {
@@ -44,178 +54,15 @@ export class RecordDataPage {
 ***REMOVED***
 
   // take 2 string arrays and return whether at least one element is shared between them
-  _containsCommonElement(arr1: string[], arr2: string[]) {
+  _containsCommonElement(arr1: string[], arr2: string[] = []) {
     let common = false;
+    console.log("checking common", arr1, arr2);
     arr1.forEach(el => {
       if (arr2.includes(el)) {
         common = true;
     ***REMOVED***
   ***REMOVED***);
+    console.log("common?", common);
     return common;
 ***REMOVED***
 }
-
-/********************************************************************
-  old methods to sort
-*********************************************************************/
-//   ionViewDidEnter() {
-//     // this.events.subscribe("form:submitted", data => {
-//     //   this.saveFormSubmission(data.formName, data.formSubmission);
-//     // });
-//     // this.uploadSavedForms('reporting', true)
-// ***REMOVED***
-
-//   openForm2(form) {
-//     // method to open locally produced form pages and listen for save submissions
-//     const page = `${form}Page`;
-//     this.nav.push(page, {});
-// ***REMOVED***
-
-//   async saveFormSubmission(formName, formSubmission) {
-//     // save submitted form within submitted forms object, as stringified formsubmission within reporting.formname.pending
-//     console.log("saving submission", formName, formSubmission);
-//     formSubmission._submissionID = this.firestorePrvdr.db.createId();
-//     formSubmission._userID = this.user.id;
-//     this.submittedForms[formName].pending.push(formSubmission);
-//     console.log("submitted forms", this.submittedForms);
-//     await this.storagePrvdr.set("submittedForms", this.submittedForms);
-//     console.log("saved submission");
-//     this.events.publish("message", { text: "Submission Saved" });
-//     this.events.unsubscribe("form:saved");
-//     this.showToast("submission saved");
-//     // this.uploadSavedForms(formName);
-// ***REMOVED***
-
-//   showToast(message) {
-//     this.toastCtrl
-//       .create({
-//         message: message,
-//         duration: 3000,
-//         closeButtonText: "close",
-//         position: "top",
-//         dismissOnPageChange: true,
-//         showCloseButton: true
-//     ***REMOVED***)
-//       .present();
-// ***REMOVED***
-// }
-
-/************************************************************************
- *  Very old methods, need to sort to see what is valid
- *************************************************************************/
-
-//   uploadSavedForms(formName, backgroundMode?) {
-//     // upload reporting form to firebase and resave local
-//     // background mode prevents notification messages
-//     if (this.submittedForms.reporting.pending.length > 0) {
-//       this.uploadDisabled = true;
-//       this.networkPrvdr
-//         .syncPrepare()
-//         .then(
-//           res => {
-//             console.log("res received, proceeding to sync");
-//             const firebaseID = res;
-//             this.storagePrvdr.syncForms(firebaseID).then(res => {
-//               console.log("submitted successfully!");
-//               if (!backgroundMode) {
-//                 this.showToast("forms submitted succesffully");
-//             ***REMOVED***
-//               this.submittedForms.reporting.pending.forEach(e => {
-//                 this.submittedForms.reporting.complete.push(e);
-//             ***REMOVED***);
-//               this.submittedForms.reporting.pending = [];
-//               console.log("forms", this.submittedForms.reporting);
-//               this.storagePrvdr.saveUserDoc(
-//                 this.submittedForms.reporting,
-//                 false,
-//                 "submittedForms",
-//                 "reporting"
-//               );
-//               this.uploadDisabled = false;
-//           ***REMOVED***);
-//         ***REMOVED***,
-//           rej => {
-//             console.log("rej", rej);
-//             this.uploadDisabled = false;
-//             if (!backgroundMode) {
-//               this.showToast(rej.message);
-//           ***REMOVED***
-//         ***REMOVED***
-//         )
-
-//         .catch(err => {
-//           console.log("err", err);
-//           this.uploadDisabled = false;
-//           if (!backgroundMode) {
-//             this.showToast(err.message);
-//         ***REMOVED***
-//       ***REMOVED***);
-//   ***REMOVED*** else {
-//       if (!backgroundMode) {
-//         this.showToast("all forms already uploaded");
-//     ***REMOVED***
-//   ***REMOVED***
-// ***REMOVED***
-// }
-
-// getForms() {
-//   this.refreshing = true;
-//   this.anyErrors=false;
-//   this.koboApi.koboRequest('https://kc.kobotoolbox.org/api/v1/forms').subscribe(
-//     result => {
-//       this.forms = result
-//       this.refreshing=false
-//   ***REMOVED***  ,
-//       error => {
-//         console.log(error);
-//         this.anyErrors = true;
-//         this.finished = true;
-//         this.refreshing = false
-//     ***REMOVED***,
-//       () => {
-//         this.finished = true;
-//         this.refreshing = false
-//         let i=0;
-//         this.storagePrvdr.saveUserDoc('forms',this.forms);
-//         for(let form of this.forms){
-//           this.getLinks(form, i);
-//           i++
-//       ***REMOVED***}
-//   );
-// }
-
-// getLinks(form, index){
-//   this.koboApi.koboRequest(form.url + '/enketo').subscribe(
-//       //**need to also save link to cache
-//       result =>{
-//         this.forms[index].enketoLink = result['enketo_url'].replace('https://','http://')
-//     ***REMOVED***,
-//       error =>{console.log(error)},
-//       () => {
-//         this.storagePrvdr.saveUserDoc('forms',this.forms);
-//     ***REMOVED***)
-// }
-
-// openForm(form) {
-//   console.log('form',form)
-//   console.log('enketo link', form.enketoLink)
-//   //http://ee.kobotoolbox.org/x/#YCOj
-//   var stringLength = form.enketoLink.length
-//   var linkPrefix = form.enketoLink.slice(0, stringLength - 7)
-//   var linkSuffix = form.enketoLink.slice(stringLength - 5)
-//   var link = linkPrefix + '_/?d[/'+form.id_string+'/User_ID_from_Tablet]=' + this.user.id + linkSuffix
-//   console.log('link',link)
-//   this.formOpen = true;
-//   this.enketoLink = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-//   this.formDisplay='block'
-// }
-// closeForm() {
-//   this.formOpen = false;
-//   this.formDisplay = 'none'
-// }
-
-// refresh(){
-//   console.log('refreshing');
-//   this.finished=false;
-//   this.getForms();
-// }

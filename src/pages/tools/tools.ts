@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, LoadingController, NavController } from "ionic-angular";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -11,10 +11,11 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 export class ToolsPage {
   tools: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private loader: LoadingController
+  ) {
     this.tools = [
-      // { name: 'Participatory Budget', image: 'assets/img/budget.png', url: 'assets/tools/budget/index.html' },
-      // { name: 'Climate Tool', image: 'assets/img/climate.png', url: 'assets/tools/climate/index.html' },
       {
         name: "Climate Tool",
         image: "assets/img/climate-tool.svg",
@@ -28,15 +29,17 @@ export class ToolsPage {
     ];
 ***REMOVED***
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad ToolsPage");
-***REMOVED***
   loadTool(tool) {
-    console.log("tool", tool);
-    if (tool.page) {
-      this.navCtrl.push(tool.page);
-  ***REMOVED*** else {
-      this.navCtrl.push("IframePage", tool);
-  ***REMOVED***
+    const loader = this.loader.create({
+      content: `${tool.name} Loading...`,
+      dismissOnPageChange: true
+  ***REMOVED***);
+    loader.present().then(_ => {
+      if (tool.page) {
+        this.navCtrl.push(tool.page);
+    ***REMOVED*** else {
+        this.navCtrl.push("IframePage", tool);
+    ***REMOVED***
+  ***REMOVED***);
 ***REMOVED***
 }
