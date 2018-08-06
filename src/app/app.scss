@@ -30,6 +30,11 @@ $max-app-width: 1024px;
   top: 0;
 }
 
+// prevent keyboard from pushing content up
+.scroll-content {
+  padding-bottom: 0 !important;
+}
+
 // *****************************************************
 //  app root centering for wide display
 // *****************************************************

@@ -18,53 +18,34 @@
   </div>
 
   <!-- Time periods calculated Vertically -->
-  <div class="time-period " *ngFor="let period of budget.periods.labels; let i = index">
-    <div class="time-period-title cell top-row">{{period}}</div>
+  <div style="display: flex; flex-basis: 100%" *ngIf="budgetUpdated">
+    <div class="time-period " *ngFor="let period of budget.periods.labels; let i = index">
+      <div class="time-period-title cell top-row">{{period}}</div>
 
-    <div *ngFor="let row of rowTitles" class="cell">
-      <div [ngSwitch]="row.type" style="height: 100%">
-        <!-- Cash Balance -->
-        <div *ngSwitchCase="'cashBalance'">
-          <div *ngIf="balance && balance[i]">
-            <div>{{period}}: {{balance[i].period}}</div>
-            <budget-cell-value quantity=1 [cost]="balance[i].period"></budget-cell-value>
-            <hr>
-            <div>running: {{balance[i].running}}</div>
-            <budget-cell-value quantity=1 [cost]="balance[i].running"></budget-cell-value>
+      <div *ngFor="let row of rowTitles" class="cell">
+        <div [ngSwitch]="row.type" style="height: 100%">
+          <!-- Cash Balance -->
+          <div *ngSwitchCase="'cashBalance'">
+            <div *ngIf="balance && balance[i]">
+              <div>{{period}}: {{balance[i].period}}</div>
+              <budget-cell-value quantity=1 [cost]="balance[i].period"></budget-cell-value>
+              <hr>
+              <div>running: {{balance[i].running}}</div>
+              <budget-cell-value quantity=1 [cost]="balance[i].running"></budget-cell-value>
+            </div>
           </div>
+          <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period" [cellData]="budget.data && budget.data[i] && budget.data[i][row.type] ? budget.data[i][row.type] : null"></budget-cell>
         </div>
-        <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"></budget-cell>
       </div>
     </div>
 
 
 
+
+
     <!-- OLD COLDE THAT MAY BE MIGRATED -->
     <div *ngIf="NEED_TO_MIGRATE">
-      <!--Inputs-->
-      <div class="cell" (click)="edit('inputs',period)">
-        <div class="grid-card flex" *ngIf="budget.data[i] && budget.data[i].inputs">
-          <div *ngFor="let input of period.inputs; let i=index" class="grow">
-            <img class="card-image cell-main" [src]="input.Image">
-            <div class="cell-footer flex">
-              <div class="dot-value" *ngFor="let dot of input.dots || []">
-                <img class="dot-value-image" [src]="dot.src">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Family Labour-->
-      <div class="cell" (click)="edit('familyLabour',period)">
-        <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].familyLabour">
-          <div *ngFor="let person of _toArray(period.familyLabour.people)" class="flex">
-            <ion-icon class="family-icon person-icon" name="person"></ion-icon>
-            <div *ngFor="let days of _toArray(period.familyLabour.days)">
-              <ion-icon class="family-icon clock-icon" name="clock"></ion-icon>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <!--Outputs-->
       <div class="cell" (click)="edit('outputs',period)">
         <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].outputs">
@@ -96,24 +77,6 @@
             <div *ngIf="output.consumed>0">
               <img class="card-image cell-multiple consumed" [src]="output.Image">
               <span class="counterBadge consumed">x{{output.consumed}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--balance-->
-      <div class="cell Cash">
-        <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].balance">
-          <div class="one-em number-value">{{period.label}}: {{period.balance.monthly.total | number:'1.0-0'}}</div>
-          <div class="flex one-em">
-            <div class="dot-value" *ngFor="let dot of period.balance.monthly.dots">
-              <img class="dot-value-image" [src]="dot.src">
-            </div>
-          </div>
-          <hr>
-          <div class="one-em number-value">Balance: {{period.balance.running.total | number:'1.0-0'}}</div>
-          <div class="flex one-em">
-            <div class="dot-value" *ngFor="let dot of period.balance.running.dots">
-              <img class="dot-value-image" [src]="dot.src">
             </div>
           </div>
         </div>
