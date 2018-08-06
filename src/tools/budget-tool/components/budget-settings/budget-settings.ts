@@ -69,7 +69,6 @@ export class BudgetSettingsComponent {
       }
     });
     this.customEnterprises$.subscribe(enterprises => {
-      console.log("custom enterprises updated", enterprises);
       if (enterprises) {
         this.customEnterprises = enterprises;
         this.enterprisesInit();
@@ -93,12 +92,10 @@ export class BudgetSettingsComponent {
     });
   }
   enterprisesInit() {
-    console.log("enterprises init", this.customEnterprises);
     this.allEnterprises = this.metaEnterprises.concat(this.customEnterprises);
     this.enterpriseTypes = this._generateEnterpriseTypes(this.allEnterprises);
     const type = this.budget ? this.budget.enterpriseType : null;
     this._filterEnterprises(type, this.allEnterprises);
-    console.log("all enterprises", this.allEnterprises);
   }
 
   // iterate over enterprises and populate groups that exist

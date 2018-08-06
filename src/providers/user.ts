@@ -92,9 +92,7 @@ export class UserProvider {
     this.user$.subscribe(async user => {
       this.user = user;
       if (user) {
-        console.log("updating user", user);
         await this.storagePrvdr.set("user", user);
-        console.log("user updated successfully");
         if (user && user.authenticated) {
           this.firestorePrvdr.setDoc(`users/${user.id}`, user);
         }
@@ -106,19 +104,16 @@ export class UserProvider {
   }
 
   async _backupUserToDisk() {
-    console.log("backing up user to disk");
     await this.filePrvdr.createFile(
       "picsaUserBackup.txt",
       this.user,
       true,
       true
     );
-    console.log("user backed up to disk");
     return;
   }
 
   async _checkIfUserBackupExists() {
-    console.log("checking for user backup file");
     const fileTxt = await this.filePrvdr.readTextFile(
       "picsaUserBackup.txt",
       true
@@ -174,14 +169,12 @@ export class UserProvider {
       this.afAuth.auth.onAuthStateChanged(user => {
         if (user) {
           // User is signed in.
-          console.log("user signed in", user.uid);
           this.actions.updateUser({
             id: user.uid,
             email: user.email,
             verified: user.emailVerified
           });
         } else {
-          console.log("no user signed in");
           // User is signed out.
         }
       });
