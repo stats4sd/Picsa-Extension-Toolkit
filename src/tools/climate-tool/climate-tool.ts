@@ -7,7 +7,7 @@ import {
   NavController,
   NavParams
 } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { ClimateToolActions } from "./climate-tool.actions";
 import * as DATA from "./climate-tool.data";
 import { IChartMeta, ICropRequirement, ISite } from "./climate-tool.models";
@@ -25,8 +25,10 @@ import { ClimateToolProvider } from "./climate-tool.provider";
 export class ClimateToolPage {
   @select(["climate", "site"])
   readonly site$: Observable<ISite>;
+  siteSubscription: Subscription;
   @select(["climate", "chart"])
   readonly activeChart$: Observable<IChartMeta>;
+  activeChartSubscription: Subscription;
   activeChart: IChartMeta;
   sites: any;
   selectedSite: ISite;
@@ -52,12 +54,12 @@ export class ClimateToolPage {
     this._addSubscriptions();
   }
   _addSubscriptions() {
-    this.site$.subscribe(site => {
+    this.siteSubscription = this.site$.subscribe(site => {
       if (site) {
         this.siteChanged(site);
       }
     });
-    this.activeChart$.subscribe(chart => {
+    this.activeChartSubscription = this.activeChart$.subscribe(chart => {
       if (chart) {
         this.activeChart = chart;
         // update selected crop to pick new line tool value
@@ -67,7 +69,12 @@ export class ClimateToolPage {
       }
     });
   }
-  _removeSubscriptions() {}
+  _removeSubscriptions() {
+    try {
+      this.siteSubscription.unsubscribe();
+      this.activeChartSubscription.unsubscribe();
+    } catch (error) {}
+  }
   ngOnDestroy() {
     this.actions.resetState();
     this._removeSubscriptions();

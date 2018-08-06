@@ -33,7 +33,10 @@ export class BudgetCardListComponent {
     this._addSubscribers();
   }
   ngOnDestroy() {
-    this.cardSubscriber.unsubscribe();
+    // wrap unsubscribe in catch as sometimes 'this' is undefined before can be used
+    try {
+      this.cardSubscriber.unsubscribe();
+    } catch (error) {}
   }
 
   // check if the given time period index exists on budget data and card type within period

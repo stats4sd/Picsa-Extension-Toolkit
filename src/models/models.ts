@@ -55,7 +55,8 @@ export interface IUserGroup {
 export interface IForm {
   _key: string;
   name: string;
-  groups: string[];
+  groups?: string[];
+  icon?: string;
   isActive: boolean;
   surveyJson: any;
 }

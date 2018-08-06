@@ -181,9 +181,12 @@ export class UserProvider {
             verified: user.emailVerified
           });
         } else {
+          console.log("no user signed in");
           // User is signed out.
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

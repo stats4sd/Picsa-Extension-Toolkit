@@ -35,6 +35,8 @@ export class FormViewPage {
     // e.g. message prompting whether would like to save draft first
     this.viewCtrl.dismiss();
   }
+  // when user submits a form two version are saved, one to user profile and one to firebase collection
+  // if no user id (never has authenticated) then user info may be retrieved at a future date through the response key
   submitForm(response: IFormResponse) {
     // add to user forms
     this.userPrvdr.saveFormResponse(this.form._key, response);
@@ -44,7 +46,9 @@ export class FormViewPage {
       response,
       response._key
     );
-    this.viewCtrl.dismiss();
+    setTimeout(() => {
+      this.viewCtrl.dismiss();
+    }, 1500);
   }
   _surveyInit() {
     const s = new Survey.Model(this.surveyJson);
@@ -62,7 +66,7 @@ export class FormViewPage {
   // add additional user meta keys to the data
   _addUserMeta(data: any) {
     const user: IUser = this.userPrvdr.user;
-    data._userID = user.id;
+    data._userID = user.id ? user.id : null;
     data._submitted = new Date().toString();
     data._key = this.firestoreProvider.db.createId();
     return data;

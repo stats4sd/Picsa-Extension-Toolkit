@@ -19,6 +19,7 @@
         <ion-icon name="clipboard"></ion-icon>
         <span style="margin-left:5px">{{form.name | translate}}</span>
       </ion-card-header>
+      <img [src]="'assets/img/'+form.icon+'.svg'" *ngIf="form.icon" class="form-icon">
     </ion-card>
 
   </div>
