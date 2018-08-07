@@ -47,8 +47,8 @@ export class ResourcesPage {
       this.initMobileStorageDirectory();
   ***REMOVED*** else {
       this.platformIsWeb = true;
-      this._addSubscribers();
   ***REMOVED***
+    this._addSubscribers();
 ***REMOVED***
   ngAfterViewInit() {
     this._setVideoPlayerWidth();
@@ -99,7 +99,6 @@ export class ResourcesPage {
   ***REMOVED*** else {
       console.log("all resources exist :D");
   ***REMOVED***
-    this._addSubscribers();
     loader.dismiss();
 ***REMOVED***
 
