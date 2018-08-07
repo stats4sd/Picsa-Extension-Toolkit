@@ -4,10 +4,9 @@ import { INITIAL_STATE } from "../../reducers/reducers";
 import { BudgetToolActions } from "./budget-tool.actions";
 import {
   IBudget,
+  IBudgetCard,
   IBudgetMeta,
-  IBudgetPublicData,
-  IBudgetView,
-  IBudgetCard
+  IBudgetView
 } from "./budget-tool.models";
 
 export interface BudgetToolState {
