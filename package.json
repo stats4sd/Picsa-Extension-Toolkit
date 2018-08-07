@@ -2,7 +2,7 @@
   "name": "picsa-extension-toolkit",
   "author": "Statistics for Sustainable Development",
   "homepage": "https://stats4sd.org/",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -12,6 +12,7 @@
     "ionic:serve": "ionic-app-scripts serve",
     "build:prod": "shx rm -rf www/* && npm run build --prod && node ./cache-busting.js && workbox injectManifest",
     "build:android": "npm run build:prod && cordova build android",
+    "build:androidRelease":"npm run build:prod && cordova build android --release",
     "run:android": "ionic cordova run android --prod",
     "serve:prod": "npm run build:prod && firebase serve",
     "deploy:prod": "firebase use master && npm run build:prod && firebase deploy",
