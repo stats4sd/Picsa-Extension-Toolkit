@@ -10,9 +10,7 @@ import storageData from "./storage.data";
 
 @Injectable()
 export class StorageProvider {
-  constructor(public storage: Storage, private actions: DataActions) {
-    this.dataInit();
-  }
+  constructor(public storage: Storage, private actions: DataActions) {}
 
   // automatically load all data from storage into redux, where not available load from file
   // if local data version > storage then override

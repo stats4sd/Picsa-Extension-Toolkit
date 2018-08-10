@@ -2,6 +2,8 @@ import { Component, ViewChild } from "@angular/core";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { Events, Nav, Platform } from "ionic-angular";
+import { FileService } from "../providers/providers";
+import { StorageProvider } from "../providers/storage";
 import { UserProvider } from "../providers/user";
 
 @Component({
@@ -17,12 +19,17 @@ export class MyApp {
     public events: Events,
     public splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private userPrvdr: UserProvider
+    private userPrvdr: UserProvider,
+    private storagePrvdr: StorageProvider,
+    private filePrvdr: FileService
   ) {
-    console.log("app component constructor");
     platform.ready().then(() => {
+      console.log("platform ready");
       // load user
+      console.log("user init");
       this.userPrvdr.init();
+      this.storagePrvdr.dataInit();
+      this.filePrvdr.init();
       // mobile init
       console.log("platforms", platform.platforms());
       if (platform.is("cordova")) {

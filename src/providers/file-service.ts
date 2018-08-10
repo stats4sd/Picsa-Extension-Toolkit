@@ -11,13 +11,18 @@ export class FileService {
   externalBackupDir: string;
 
   constructor(public platform: Platform, private file: File) {
+    // want to keep functions out of constructor as sometimes initialise before
+    // cordova ready. Better to call init function after platform ready
+  }
+  init() {
     this.checkPlatform();
     if (this.isCordova) {
       this.mobileInit();
     }
   }
   async mobileInit() {
-    console.log("platform mobile, cordova enabled?");
+    console.log("platform mobile, cordova enabled");
+    console.log("file plugin", this.file);
     this.appDir = this.file.applicationDirectory;
     this.externalDir = await this.checkFileDirectoryExists();
     this.externalBackupDir = await this.checkFileDirectoryExists(true);
