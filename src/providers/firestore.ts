@@ -10,9 +10,7 @@ export class FirestoreStorageProvider {
     public db: AngularFirestore,
     private actions: DataActions,
     private storagePrvdr: StorageProvider
-  ) {
-    this.syncCollections();
-***REMOVED***
+  ) {}
   // automatically sync firebase collection data locally using list from storage.data
   syncCollections() {
     console.log("syncing collections from firebase");

@@ -28,9 +28,11 @@ export class UserProvider {
     private toast: ToastController
   ) {}
   async init() {
+    console.log("user init");
     this.initTranslate();
     await this.loadUser();
     await this.enableUserSync();
+    this.firestorePrvdr.syncCollections();
     this.subscribeToFirebaseChanges();
 ***REMOVED***
 

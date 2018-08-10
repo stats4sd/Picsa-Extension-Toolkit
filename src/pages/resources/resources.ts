@@ -41,7 +41,9 @@ export class ResourcesPage {
     public platform: Platform,
     private loader: LoadingController,
     private filePrvdr: FileService
-  ) {}
+  ) {
+    console.log("resources constructor");
+***REMOVED***
   ngOnInit() {
     if (this.platform.is("mobile")) {
       this.initMobileStorageDirectory();

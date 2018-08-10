@@ -1,5 +1,5 @@
 export default {
-  text: "1.0.1",
-  number: 100001,
+  text: "1.0.4",
+  number: 100004,
   date: "7th August"
 ***REMOVED***
