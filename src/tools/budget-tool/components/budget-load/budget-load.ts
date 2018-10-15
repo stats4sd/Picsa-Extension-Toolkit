@@ -1,38 +1,15 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { Events } from "ionic-angular";
+import { Events, ToastController } from "ionic-angular";
 import { Observable } from "rxjs";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
+import { BudgetToolProvider } from "../../budget-tool.provider";
 import { defaults } from "../../data";
 
 @Component({
   selector: "budget-load",
-  template: `<div padding class="budget-load-container">
-  <h2>Saved Budgets</h2>
-  <div class="saved-budgets-container">
-    <ion-list *ngIf="savedBudgets">
-      <div *ngFor="let budget of savedBudgets">
-        <ion-item *ngIf="!budget.archived">
-          <div class="saved-budget" style="display:flex">
-            <div class="saved-details" (click)="loadBudget(budget)" style="flex-basis:100%">
-              <div>{{budget.title}}</div>
-              <div>{{budget.created | date:'mediumDate'}}</div>
-            </div>
-            
-          </div>
-        </ion-item>
-      </div>
-    </ion-list>
-    <div *ngIf="!savedBudgets">
-        <p>There are no saved budgets</p>
-    </div>
-  </div>
-  <button block ion-button (click)="startNew()" color="primary" style="max-width: 400px">
-    <ion-icon name="add" class="large-icon"></ion-icon>
-    <span style="margin-left:10px">Create a new Budget</span>
-  </button>
-</div>`
+  templateUrl: `budget-load.html`
 })
 export class BudgetLoadComponent {
   apiVersion = 2;
@@ -41,7 +18,13 @@ export class BudgetLoadComponent {
   @select(["user", "budgets"])
   savedBudgets$: Observable<IBudget[]>;
   savedBudgets: IBudget[];
-  constructor(public actions: BudgetToolActions, private events: Events) {}
+  showArchived: boolean;
+  constructor(
+    public actions: BudgetToolActions,
+    private events: Events,
+    private toastCtrl: ToastController,
+    private budgetPrvdr: BudgetToolProvider
+  ) {}
   ngOnInit() {
     this.savedBudgets$.subscribe(budgets => {
       if (budgets) {
@@ -88,10 +71,30 @@ export class BudgetLoadComponent {
     // publish event to force card list update
     this.events.publish("load:budget");
 ***REMOVED***
-  archive(budget: IBudget) {
+  archiveBudget(budget: IBudget) {
     budget.archived = true;
-    this.actions.setActiveBudget(budget);
+    this.toastCtrl
+      .create({
+        message: "Budget archived",
+        duration: 3000
+    ***REMOVED***)
+      .present();
+    this.budgetPrvdr.saveBudget(budget);
 ***REMOVED***
+  restoreBudget(budget: IBudget) {
+    budget.archived = false;
+    this.toastCtrl
+      .create({
+        message: "Budget restored",
+        duration: 3000
+    ***REMOVED***)
+      .present();
+    this.budgetPrvdr.saveBudget(budget);
+***REMOVED***
+  showArchivedBudgets() {
+    this.showArchived = true;
+***REMOVED***
+
   /*
   <button padding icon-left ion-button color="danger" (click)="archive(b)">
               <ion-icon name="trash"></ion-icon>Archive</button>

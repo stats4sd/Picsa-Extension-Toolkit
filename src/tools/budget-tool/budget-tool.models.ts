@@ -9,7 +9,7 @@ export interface IBudget {
   scale: string;
   dotValues: IBudgetDotValues;
   created: string;
-  data: { index?: IBudgetPeriodData ***REMOVED***
+  data: { [index: string]: IBudgetPeriodData ***REMOVED***
   apiVersion: number;
 }
 
@@ -22,10 +22,11 @@ export interface IBudgetMeta {
 }
 
 export interface IBudgetPeriodData {
-  activities?: IActivityCard[];
-  inputs?: IInputCard[];
-  outputs?: IOutputCard[];
+  activities?: { [index: string]: IActivityCard ***REMOVED***
+  inputs?: { [index: string]: IInputCard ***REMOVED***
+  outputs?: { [index: string]: IOutputCard ***REMOVED***
   familyLabour?: any;
+  produceConsumed?: any;
   // balance?: IBudgetBalance;
 }
 export interface IBudgetDotValues {
@@ -57,7 +58,8 @@ interface periods {
   labels: string[];
   starting: string;
   scale: string;
-  total: number;
+  // v1-2 cast string, v3 upgrade to number
+  total: string | number;
 }
 
 // cards contain additional grouping (e.g. enterprise type) along with isSelected and selectedIndex populated when
@@ -80,9 +82,7 @@ export interface ICustomBudgetCard extends IBudgetCard {
   createdBy: string;
 }
 
-export interface IActivityCard extends IBudgetCard {
-  // Type: "activity";
-}
+export interface IActivityCard extends IBudgetCard {}
 export interface IInputCard extends IBudgetCard {
   // Type: "input";
   quantity?: number;
