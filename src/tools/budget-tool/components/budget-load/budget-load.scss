@@ -16,4 +16,9 @@ budget-load {
   .item {
     cursor: pointer;
   }
+  #createNewBudget {
+    margin-top: 2em;
+    align-self: center;
+    min-width: 33%;
+  }
 }
