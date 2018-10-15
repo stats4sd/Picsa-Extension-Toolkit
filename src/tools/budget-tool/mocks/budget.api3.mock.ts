@@ -1,7 +1,7 @@
-import { IBudget } from "../tools/budget-tool/budget-tool.models";
+import { IBudget } from "../budget-tool.models";
 
-export const PB_MOCK: IBudget = {
-  apiVersion: 2,
+export const PB_MOCK_API_3: IBudget = {
+  apiVersion: 3,
   archived: false,
   created: "2018-10-15T10:12:47.118Z",
   data: {
@@ -196,14 +196,14 @@ export const PB_MOCK: IBudget = {
   },
   description: "Example by Chris to test Maize budget",
   enterprise: null,
-  _key: "_v2_Demo_Maize",
+  _key: "_v3_Demo_Maize",
   periods: {
     labels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
     starting: "Oct",
     scale: "months",
-    total: "6"
+    total: 6
   },
-  title: "Maize Demo",
+  title: "Maize Demo (v3)",
   scale: null,
   enterpriseType: "crop",
   dotValues: {

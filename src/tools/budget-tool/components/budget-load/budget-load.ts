@@ -1,18 +1,21 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { Events, ToastController } from "ionic-angular";
+import { Events, LoadingController, ToastController } from "ionic-angular";
 import { Observable } from "rxjs";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
+import { BUDGET_API_VERSION, upgradeBudget } from "../../budget.upgrade";
 import { defaults } from "../../data";
+import { PB_MOCK_API_2, PB_MOCK_API_3 } from "../../mocks/budget.mocks";
 
 @Component({
   selector: "budget-load",
   templateUrl: `budget-load.html`
 })
 export class BudgetLoadComponent {
-  apiVersion = 2;
+  apiVersion = BUDGET_API_VERSION;
+  _adminBudgets = [PB_MOCK_API_2, PB_MOCK_API_3];
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
   @select(["user", "budgets"])
@@ -23,9 +26,11 @@ export class BudgetLoadComponent {
     public actions: BudgetToolActions,
     private events: Events,
     private toastCtrl: ToastController,
-    private budgetPrvdr: BudgetToolProvider
+    private budgetPrvdr: BudgetToolProvider,
+    private loadingCtrl: LoadingController
   ) {}
   ngOnInit() {
+    console.log("api version", this.apiVersion);
     this.savedBudgets$.subscribe(budgets => {
       if (budgets) {
         this.savedBudgets = _jsonObjectValues(budgets);
@@ -35,7 +40,7 @@ export class BudgetLoadComponent {
   }
   startNew() {
     const budget: IBudget = {
-      apiVersion: this.apiVersion,
+      apiVersion: BUDGET_API_VERSION,
       archived: false,
       created: new Date().toISOString(),
       data: {},
@@ -61,7 +66,12 @@ export class BudgetLoadComponent {
     // publish event to force card list update
     this.events.publish("load:budget");
   }
-  loadBudget(budget: IBudget) {
+  async loadBudget(budget: IBudget) {
+    const loader = this.loadingCtrl.create({
+      content: "Preparing budget"
+    });
+    await loader.present();
+    budget = this.checkForBudgetUpgrades(budget);
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
       component: "overview",
@@ -70,6 +80,21 @@ export class BudgetLoadComponent {
     this.events.publish("calculate:budget");
     // publish event to force card list update
     this.events.publish("load:budget");
+    // give small timeout to give appearance of smoother rendering
+    setTimeout(() => {
+      loader.dismiss();
+    }, 1000);
+  }
+  // recursively go through budget and if api version less than current perform incremental upgrade
+  checkForBudgetUpgrades(budget: IBudget) {
+    console.log("checking for upgrade", budget.apiVersion, this.apiVersion);
+    if (budget.apiVersion < this.apiVersion) {
+      budget = upgradeBudget(budget);
+      return this.checkForBudgetUpgrades(budget);
+    } else {
+      console.log("budget up to date");
+      return budget;
+    }
   }
   archiveBudget(budget: IBudget) {
     budget.archived = true;
@@ -94,45 +119,9 @@ export class BudgetLoadComponent {
   showArchivedBudgets() {
     this.showArchived = true;
   }
-
-  /*
-  <button padding icon-left ion-button color="danger" (click)="archive(b)">
-              <ion-icon name="trash"></ion-icon>Archive</button>
-              */
-
-  // archive(budget) {
-  //   // console.log("archiving budget", budget);
-  //   // budget.archived = true;
-  //   // this.storagePrvdr
-  //   //   .saveUserDoc(budget, true, "budgets", budget._key)
-  //   //   .then(() => {
-  //   //     this.loadSavedBudgets();
-  //   //     const toast = this.toastCtrl.create({
-  //   //       message: "Budget Archived",
-  //   //       duration: 3000
-  //   //     });
-  //   //     toast.present();
-  //   //   });
-  // }
-
-  getSavedBudgets() {
-    // load saved budgets from cache
-    // this.storagePrvdr.getAll("budgets").then(res => {
-    //   const arr = [];
-    //   for (const key in res) {
-    //     let budget = res[key];
-    //     if (budget.archived) {
-    //       this.archived.push(budget);
-    //     } else {
-    //       if (!budget.hasOwnProperty("title")) {
-    //         budget = this.upgradeBudget(budget);
-    //       }
-    //       arr.push(budget);
-    //     }
-    //   }
-    //   this.saved = arr.reverse();
-    //   console.log("saved budgets", this.saved);
-    // });
+  _ADMIN_LoadBudgetMocks() {
+    console.log("loading admin budget", this._adminBudgets);
+    this.loadBudget(this._adminBudgets[0]);
   }
 }
 
