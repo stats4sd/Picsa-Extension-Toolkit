@@ -2,6 +2,7 @@ import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { Events, LoadingController, ToastController } from "ionic-angular";
 import { Observable } from "rxjs";
+import { UtilsProvider } from "../../../../providers/utils";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
@@ -25,9 +26,9 @@ export class BudgetLoadComponent {
   constructor(
     public actions: BudgetToolActions,
     private events: Events,
-    private toastCtrl: ToastController,
     private budgetPrvdr: BudgetToolProvider,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private utils: UtilsProvider
   ) {}
   ngOnInit() {
     console.log("api version", this.apiVersion);
@@ -67,10 +68,7 @@ export class BudgetLoadComponent {
     this.events.publish("load:budget");
   }
   async loadBudget(budget: IBudget) {
-    const loader = this.loadingCtrl.create({
-      content: "Preparing budget"
-    });
-    await loader.present();
+    await this.utils.presentLoader({ content: "Preparing budget" });
     budget = this.checkForBudgetUpgrades(budget);
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
@@ -82,7 +80,7 @@ export class BudgetLoadComponent {
     this.events.publish("load:budget");
     // give small timeout to give appearance of smoother rendering
     setTimeout(() => {
-      loader.dismiss();
+      this.utils.dismissLoader();
     }, 1000);
   }
   // recursively go through budget and if api version less than current perform incremental upgrade
@@ -98,22 +96,18 @@ export class BudgetLoadComponent {
   }
   archiveBudget(budget: IBudget) {
     budget.archived = true;
-    this.toastCtrl
-      .create({
-        message: "Budget archived",
-        duration: 3000
-      })
-      .present();
+    this.utils.presentToast({
+      message: "Budget archived",
+      duration: 3000
+    });
     this.budgetPrvdr.saveBudget(budget);
   }
   restoreBudget(budget: IBudget) {
     budget.archived = false;
-    this.toastCtrl
-      .create({
-        message: "Budget restored",
-        duration: 3000
-      })
-      .present();
+    this.utils.presentToast({
+      message: "Budget restored",
+      duration: 3000
+    });
     this.budgetPrvdr.saveBudget(budget);
   }
   showArchivedBudgets() {

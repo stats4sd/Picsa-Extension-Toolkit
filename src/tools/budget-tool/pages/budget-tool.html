@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar hideBackButton class="title-bar">
     <div class="title-bar">
-      <div class="budget-title">{{title$ | async}}</div>
+      <div class="budget-title">{{title$ | async | translate}}</div>
       <!-- nav bar for main views -->
       <div *ngIf="(viewComponent$ | async) !='cell-edit'">
-        <button class="nav-icon" ion-button icon-only clear (click)="setView(view)" *ngFor="let view of views" [disabled]="!budget"
-          [class.active]="(viewComponent$ | async)== view.component">
+        <button class="nav-icon" ion-button icon-only clear (click)="setView(view)" *ngFor="let view of views"
+          [disabled]="!budget" [class.active]="(viewComponent$ | async)== view.component">
           <ion-icon [name]="view.icon" [attr.icon]="view.icon"></ion-icon>
         </button>
         <button ion-button icon-only clear style="color: black" navPop>
@@ -15,7 +15,7 @@
       <!-- nav bar for cell edit mode -->
       <div *ngIf="(viewComponent$ | async) =='cell-edit'">
         <button ion-button outline icon-right (click)="setView(views[0])">
-          Continue
+          {{'Continue' | translate}}
           <ion-icon name="checkmark"></ion-icon>
         </button>
       </div>

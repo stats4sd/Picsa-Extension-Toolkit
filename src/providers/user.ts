@@ -2,7 +2,6 @@ import { select } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AngularFireAuth } from "angularfire2/auth";
-import { ToastController } from "ionic-angular";
 import { Observable } from "rxjs";
 import { UserActions } from "../actions/user.actions";
 import { IFormResponse, IUser } from "../models/models";
@@ -11,6 +10,7 @@ import version from "../pages/changelog/version";
 import { FileService } from "./file-service";
 import { FirestoreStorageProvider } from "./firestore";
 import { StorageProvider } from "./storage";
+import { UtilsProvider } from "./utils";
 
 @Injectable()
 export class UserProvider {
@@ -25,7 +25,7 @@ export class UserProvider {
     private firestorePrvdr: FirestoreStorageProvider,
     private translate: TranslateService,
     private filePrvdr: FileService,
-    private toast: ToastController
+    private utils:UtilsProvider
   ) {}
   async init() {
     console.log("user init");
@@ -129,15 +129,12 @@ export class UserProvider {
 
   // present toast with timeout to allow content to be fully registered
   presentToast(msg: string) {
-    const toast = this.toast.create({
+    this.utils.presentToast({
       duration: 2000,
       dismissOnPageChange: true,
       position: "bottom",
       message: msg
-    });
-    setTimeout(() => {
-      toast.present();
-    }, 500);
+    },500);
   }
 
   changeLanguage(code: string) {

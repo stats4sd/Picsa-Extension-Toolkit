@@ -1,5 +1,5 @@
 <div padding class="budget-load-container">
-  <h2>Saved Budgets</h2>
+  <h2>{{'Saved Budgets' | translate}}</h2>
   <div class="saved-budgets-container">
     <ion-list *ngIf="savedBudgets">
       <div *ngFor="let budget of savedBudgets">
@@ -16,7 +16,7 @@
         </ion-item>
       </div>
       <div *ngIf="showArchived">
-        <ion-list-header *ngIf="showArchived">Archived Budgets</ion-list-header>
+        <ion-list-header *ngIf="showArchived">{{'Archived Budgets' | translate}}</ion-list-header>
         <div *ngFor="let budget of savedBudgets">
           <ion-item *ngIf="budget.archived">
             <div class="saved-budget" style="display:flex">
@@ -24,20 +24,20 @@
                 <div>{{budget.title}}</div>
                 <div>{{budget.created | date:'mediumDate'}}</div>
               </div>
-              <button ion-button clear>Restore</button>
+              <button ion-button clear (click)="restoreBudget(budget)">{{'Restore' | translate}}</button>
             </div>
           </ion-item>
         </div>
       </div>
     </ion-list>
-    <button *ngIf="!showArchived" ion-button clear (click)="showArchivedBudgets()">Show Archived</button>
+    <button *ngIf="!showArchived" ion-button clear (click)="showArchivedBudgets()">{{'Show archived' | translate}}</button>
     <div *ngIf="!savedBudgets">
-      <p>There are no saved budgets</p>
+      <p>{{'There are no saved budgets' | translate}}</p>
     </div>
   </div>
   <button ion-button (click)="startNew()" color="primary" id="createNewBudget" style="max-width: 400px">
     <ion-icon name="add" class="large-icon"></ion-icon>
-    <span style="margin-left:10px">Create a new Budget</span>
+    <span style="margin-left:10px">{{'Create a new budget' | translate}}</span>
   </button>
   <!-- <button ion-button (click)="_ADMIN_LoadBudgetMocks()">Admin Load Budgets</button> -->
 </div>
