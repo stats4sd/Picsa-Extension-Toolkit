@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { IonicPage, LoadingController, NavController } from "ionic-angular";
+import { IonicPage, NavController } from "ionic-angular";
+import { UtilsProvider } from "../../providers/utils";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -11,10 +12,7 @@ import { IonicPage, LoadingController, NavController } from "ionic-angular";
 export class ToolsPage {
   tools: any;
 
-  constructor(
-    public navCtrl: NavController,
-    private loader: LoadingController
-  ) {
+  constructor(public navCtrl: NavController, public utils: UtilsProvider) {
     this.tools = [
       {
         name: "Climate Tool",
@@ -29,17 +27,15 @@ export class ToolsPage {
     ];
   }
 
-  loadTool(tool) {
-    const loader = this.loader.create({
-      content: `${tool.name} Loading...`,
+  async loadTool(tool) {
+    await this.utils.presentLoader({
+      content: `Loading...`,
       dismissOnPageChange: true
     });
-    loader.present().then(_ => {
-      if (tool.page) {
-        this.navCtrl.push(tool.page);
-      } else {
-        this.navCtrl.push("IframePage", tool);
-      }
-    });
+    if (tool.page) {
+      this.navCtrl.push(tool.page);
+    } else {
+      this.navCtrl.push("IframePage", tool);
+    }
   }
 }

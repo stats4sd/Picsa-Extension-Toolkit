@@ -5,15 +5,14 @@ import { FileOpener } from "@ionic-native/file-opener";
 import {
   Content,
   IonicPage,
-  LoadingController,
   NavController,
   NavParams,
   Platform
 } from "ionic-angular";
 import { Observable } from "rxjs";
-
 import { IResource, IResourceGroup } from "../../models/models";
 import { FileService } from "../../providers/providers";
+import { UtilsProvider } from "../../providers/utils";
 import mimetypes from "./mimetypes";
 
 @IonicPage({
@@ -39,8 +38,8 @@ export class ResourcesPage {
     private fileOpener: FileOpener,
     private file: File,
     public platform: Platform,
-    private loader: LoadingController,
-    private filePrvdr: FileService
+    private filePrvdr: FileService,
+    private utils: UtilsProvider
   ) {
     console.log("resources constructor");
   }
@@ -67,12 +66,11 @@ export class ResourcesPage {
 
   // on load copy resources from app to external directory, checking directory exists first
   async initMobileStorageDirectory() {
-    const loader = this.loader.create({
+    await this.utils.presentLoader({
       content: "Preapring Resources",
       dismissOnPageChange: true,
       enableBackdropDismiss: false
     });
-    await loader.present();
     this.externalDir = await this.filePrvdr.checkFileDirectoryExists();
     const appDir = this.filePrvdr.appDir;
     const hardResources = await this._listHardResources();
@@ -101,7 +99,7 @@ export class ResourcesPage {
     } else {
       console.log("all resources exist :D");
     }
-    loader.dismiss();
+    this.utils.dismissLoader();
   }
 
   async _listHardResources() {
