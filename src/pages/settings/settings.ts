@@ -1,6 +1,6 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { AlertController, IonicPage, ToastController } from "ionic-angular";
+import { AlertController, IonicPage } from "ionic-angular";
 import { Observable } from "rxjs";
 import { UserActions } from "../../actions/user.actions";
 import { IUser, IUserGroup } from "../../models/models";
@@ -24,7 +24,6 @@ export class SettingsPage {
   constructor(
     public storagePrvdr: StorageProvider,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController,
     private actions: UserActions
   ) {
     this.getLastBackup();
@@ -68,71 +67,4 @@ export class SettingsPage {
     this.user[key] = val;
     this.actions.updateUser(this.user);
 ***REMOVED***
-  // login() {
-  //   let prompt = this.alertCtrl.create({
-  //     title: "Login",
-  //     message: "Enter organisation access code in the box below",
-  //     inputs: [
-  //       {
-  //         name: "accessCode",
-  //         placeholder: "Code",
-  //         type: "password"
-  //     ***REMOVED***
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: "Cancel",
-  //         handler: data => {}
-  //     ***REMOVED***,
-  //       {
-  //         text: "Save",
-  //         handler: data => {
-  //           this.storagePrvdr
-  //             .assignPermissions(data.accessCode)
-  //             .then(
-  //               user => {
-  //                 console.log("user", user);
-  //                 this.user = user;
-  //             ***REMOVED***
-  //               // this.presentToast('Successfully signed in as '+user.name)
-  //             )
-  //             .catch(err => {
-  //               console.log("err", err);
-  //           ***REMOVED***);
-  //       ***REMOVED***
-  //     ***REMOVED***
-  //     ]
-  // ***REMOVED***);
-  //   prompt.present();
-  // }
-  // logout() {
-  //   const alert = this.alertCtrl.create({
-  //     title: "Sign Out",
-  //     message:
-  //       "Note, if you log out all personal data on this device will be removed. Do you want to proceed?",
-  //     buttons: [
-  //       {
-  //         text: "Go back",
-  //         role: "cancel",
-  //         handler: () => {}
-  //     ***REMOVED***,
-  //       {
-  //         text: "Logout and clear data",
-  //         handler: () => {
-  //           // this.user.permissions = {***REMOVED***
-  //           // this.storagePrvdr.saveUserDoc(this.user, false);
-  //       ***REMOVED***
-  //     ***REMOVED***
-  //     ]
-  // ***REMOVED***);
-  //   alert.present();
-  // }
-
-  // presentToast(message) {
-  //   let toast = this.toastCtrl.create({
-  //     message: message,
-  //     duration: 3000
-  // ***REMOVED***);
-  //   toast.present();
-  // }
 }

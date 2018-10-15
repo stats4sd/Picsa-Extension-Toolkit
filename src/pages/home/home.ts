@@ -6,6 +6,7 @@ import {
   ToastController
 } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage";
+import { UtilsProvider } from "../../providers/utils";
 import version from "../changelog/version";
 
 @IonicPage()
@@ -21,6 +22,7 @@ export class HomePage {
     public navCtrl: NavController,
     public storagePrvdr: StorageProvider,
     private toastCtrl: ToastController,
+    private utils: UtilsProvider,
     private platform: Platform
   ) {
     this.links = [
@@ -57,17 +59,19 @@ export class HomePage {
   ***REMOVED***
 ***REMOVED***
 
-  checkForSWUpdates() {
+  async checkForSWUpdates() {
     // https://medium.com/progressive-web-apps/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
     console.log("checking for service worker updates");
     window["isUpdateAvailable"]()
       .then(
-        isAvailable => {
+        async isAvailable => {
           console.log("update available?", isAvailable);
           if (isAvailable) {
+            const message = await this.utils.translateText(
+              "New Update available! Reload this page to see the latest version."
+            );
             const toast = this.toastCtrl.create({
-              message:
-                "New Update available! Reload this page to see the latest version.",
+              message: message,
               position: "bottom",
               showCloseButton: true,
               closeButtonText: "Reload"

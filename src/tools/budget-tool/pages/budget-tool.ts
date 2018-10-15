@@ -2,9 +2,9 @@ import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { Events, IonicPage } from "ionic-angular";
 import { Observable } from "rxjs";
+import { UtilsProvider } from "../../../providers/utils";
 import { BudgetToolActions } from "../budget-tool.actions";
 import { IBudget, IBudgetView } from "../budget-tool.models";
-import { BudgetToolProvider } from "../budget-tool.provider";
 
 @IonicPage({
   defaultHistory: ["HomePage", "ToolsPage"]
@@ -27,7 +27,7 @@ export class BudgetToolPage {
     { component: "export", title: "Share Budget", icon: "share" }
   ];
   constructor(
-    private budgetPrvdr: BudgetToolProvider,
+    private utils: UtilsProvider,
     private actions: BudgetToolActions,
     private events: Events
   ) {
@@ -37,8 +37,10 @@ export class BudgetToolPage {
     this.budget$.subscribe(budget => (this.budget = budget));
 ***REMOVED***
 
-  setView(view: IBudgetView) {
-    const title = view.title ? view.title : this.budget.title;
+  async setView(view: IBudgetView) {
+    const title = view.title
+      ? await this.utils.translateText(view.title)
+      : this.budget.title;
     this.actions.setBudgetView({
       component: view.component,
       title: title,
