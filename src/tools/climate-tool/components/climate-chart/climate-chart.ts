@@ -1,8 +1,8 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import * as c3 from "c3";
-import { LoadingController } from "ionic-angular";
 import { Observable, Subscription } from "rxjs";
+import { UtilsProvider } from "../../../../providers/utils";
 import { AppState } from "../../../../reducers/reducers";
 import { IChartMeta, IChartSummary } from "../../climate-tool.models";
 import { availableCharts } from "../../data/availableCharts";
@@ -27,8 +27,8 @@ export class ClimateChartComponent {
   activeChart: IChartMeta = availableCharts[0];
 
   constructor(
-    public loadingCtrl: LoadingController,
-    private ngRedux: NgRedux<AppState>
+    private ngRedux: NgRedux<AppState>,
+    private utils: UtilsProvider
   ) {
     this._addSubscriptions();
 ***REMOVED***
@@ -177,24 +177,20 @@ export class ClimateChartComponent {
     this.chart.show("LineTool", { withLegend: true });
 ***REMOVED***
 
-  setChart(chart: IChartMeta) {
-    const loader = this.loadingCtrl.create({
+  async setChart(chart: IChartMeta) {
+    await this.utils.presentLoader({
       content: "Loading..."
-      // duration: 3000
   ***REMOVED***);
-    loader.present().then(() => {
-      // this.activeChart = {***REMOVED***
-      this.activeChart = chart;
-      console.log("activeChart", chart);
-      this.chart.hide();
-      this.chart.legend.hide();
-      this.chart.show(chart.y, { withLegend: true });
-      loader.dismiss();
-      // reload new line tool value
-      if (this.lineToolValue && chart.tools.line) {
-        this.setLineToolValue(this.lineToolValue);
-    ***REMOVED***
-  ***REMOVED***);
+    this.activeChart = chart;
+    console.log("activeChart", chart);
+    this.chart.hide();
+    this.chart.legend.hide();
+    this.chart.show(chart.y, { withLegend: true });
+    this.utils.dismissLoader();
+    // reload new line tool value
+    if (this.lineToolValue && chart.tools.line) {
+      this.setLineToolValue(this.lineToolValue);
+  ***REMOVED***
 ***REMOVED***
 
   formatAxis(value, type) {

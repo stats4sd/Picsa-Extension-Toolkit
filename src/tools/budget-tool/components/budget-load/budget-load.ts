@@ -1,6 +1,6 @@
 import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { Events, LoadingController, ToastController } from "ionic-angular";
+import { Events } from "ionic-angular";
 import { Observable } from "rxjs";
 import { UtilsProvider } from "../../../../providers/utils";
 import { BudgetToolActions } from "../../budget-tool.actions";
@@ -27,7 +27,6 @@ export class BudgetLoadComponent {
     public actions: BudgetToolActions,
     private events: Events,
     private budgetPrvdr: BudgetToolProvider,
-    private loadingCtrl: LoadingController,
     private utils: UtilsProvider
   ) {}
   ngOnInit() {

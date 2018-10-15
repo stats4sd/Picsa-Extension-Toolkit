@@ -1,6 +1,6 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component } from "@angular/core";
-import { Events, ToastController } from "ionic-angular";
+import { Events } from "ionic-angular";
 import { Observable } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { AppState } from "../../../../reducers/reducers";
@@ -33,11 +33,7 @@ export class BudgetOverviewComponent {
   balance: any;
   budgetUpdated = true;
 
-  constructor(
-    public toastCtrl: ToastController,
-    public events: Events,
-    private ngRedux: NgRedux<AppState>
-  ) {
+  constructor(public events: Events, private ngRedux: NgRedux<AppState>) {
     // on changes refresh whole budget
     // *** inefficient but otherwise difficult to get bindings triggering correctly
     // tried cdr and application ref but neither seemed to work. Also tried listening

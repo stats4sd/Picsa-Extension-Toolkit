@@ -1,7 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
-import { AlertController, Events, ToastController } from "ionic-angular";
+import { Component } from "@angular/core";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { StorageProvider } from "../../../../providers/storage";
 
 @Component({
   selector: "card-select",
@@ -26,7 +24,6 @@ export class CardSelectComponent {
   // newCard: any;
   // constructor(
   //   public storagePrvdr: StorageProvider,
-  //   public toatsCtrl: ToastController,
   //   public alertCtrl: AlertController,
   //   public events: Events
   // ) {
