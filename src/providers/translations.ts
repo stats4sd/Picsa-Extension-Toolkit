@@ -19,7 +19,7 @@ export class TranslationsProvider implements OnDestroy {
   ) {
     this.init();
 ***REMOVED***
-  // subscribe to language changes and retranslate static translations
+  // subscrib to language changes and retranslate static translations
   init() {
     this.translate.onLangChange.subscribe(lang => {
       this.prepareStaticTranslations();

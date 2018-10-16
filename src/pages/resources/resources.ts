@@ -1,5 +1,5 @@
 import { select } from "@angular-redux/store";
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { File } from "@ionic-native/file";
 import { FileOpener } from "@ionic-native/file-opener";
 import {
@@ -9,7 +9,7 @@ import {
   NavParams,
   Platform
 } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { IResource, IResourceGroup } from "../../models/models";
 import { FileService } from "../../providers/providers";
 import { TranslationsProvider } from "../../providers/translations";
@@ -22,7 +22,8 @@ import mimetypes from "./mimetypes";
   selector: "page-resources",
   templateUrl: "resources.html"
 })
-export class ResourcesPage {
+export class ResourcesPage implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["data", "resources"])
   resources$: Observable<IResource[]>;
   @ViewChild(Content) content: Content;
@@ -51,18 +52,21 @@ export class ResourcesPage {
   ***REMOVED***
     this._addSubscribers();
 ***REMOVED***
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+***REMOVED***
   ngAfterViewInit() {
     this._setVideoPlayerWidth();
 ***REMOVED***
 
   _addSubscribers() {
-    this.resources$.subscribe(resources => {
+    this.resources$.takeUntil(this.componentDestroyed).subscribe(resources => {
       if (resources) {
         this.updateResources(resources);
     ***REMOVED***
   ***REMOVED***);
 ***REMOVED***
-  _removeSubscribers() {}
 
   // on load copy resources from app to external directory, checking directory exists first
   async initMobileStorageDirectory() {

@@ -1,7 +1,7 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { Events, Slides } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { DAYS, MONTHS } from "../../../../providers/translations";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
@@ -16,7 +16,8 @@ import { BudgetToolProvider } from "../../budget-tool.provider";
   selector: "budget-settings",
   templateUrl: "budget-settings.html"
 })
-export class BudgetSettingsComponent {
+export class BudgetSettingsComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   // budget property observers
   @select(["budget", "active", "enterpriseType"])
   enterpriseType$: Observable<string>;
@@ -57,24 +58,33 @@ export class BudgetSettingsComponent {
     this._addSubscribers();
 ***REMOVED***
 
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+***REMOVED***
+
   // various listeners for budget change actions
   _addSubscribers() {
-    this.enterpriseType$.subscribe(type => {
+    this.enterpriseType$.takeUntil(this.componentDestroyed).subscribe(type => {
       this._filterEnterprises(type, this.allEnterprises);
   ***REMOVED***);
     // update enterprise types and filter list when enterprises changes
-    this.enterprises$.subscribe(enterprises => {
-      if (enterprises) {
-        this.metaEnterprises = enterprises;
-        this.enterprisesInit();
-    ***REMOVED***
-  ***REMOVED***);
-    this.customEnterprises$.subscribe(enterprises => {
-      if (enterprises) {
-        this.customEnterprises = enterprises;
-        this.enterprisesInit();
-    ***REMOVED***
-  ***REMOVED***);
+    this.enterprises$
+      .takeUntil(this.componentDestroyed)
+      .subscribe(enterprises => {
+        if (enterprises) {
+          this.metaEnterprises = enterprises;
+          this.enterprisesInit();
+      ***REMOVED***
+    ***REMOVED***);
+    this.customEnterprises$
+      .takeUntil(this.componentDestroyed)
+      .subscribe(enterprises => {
+        if (enterprises) {
+          this.customEnterprises = enterprises;
+          this.enterprisesInit();
+      ***REMOVED***
+    ***REMOVED***);
     // *** including event subscriber as redux doesn't seem to update - need to resolve why
     this.events.subscribe("customCards:updated", customCards => {
       if (customCards && customCards.enterprises) {
@@ -83,12 +93,12 @@ export class BudgetSettingsComponent {
     ***REMOVED***
   ***REMOVED***);
     // calculate time periods when new timescale specified
-    this.timescale$.subscribe(scale => {
+    this.timescale$.takeUntil(this.componentDestroyed).subscribe(scale => {
       if (scale) {
         this.calculatePeriod(scale);
     ***REMOVED***
   ***REMOVED***);
-    this.budget$.subscribe(budget => {
+    this.budget$.takeUntil(this.componentDestroyed).subscribe(budget => {
       this.budget = budget;
   ***REMOVED***);
 ***REMOVED***

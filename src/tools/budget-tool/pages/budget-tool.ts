@@ -1,7 +1,7 @@
 import { select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Events, IonicPage } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { TranslationsProvider } from "../../../providers/translations";
 import { BudgetToolActions } from "../budget-tool.actions";
 import { IBudget, IBudgetView } from "../budget-tool.models";
@@ -13,7 +13,8 @@ import { IBudget, IBudgetView } from "../budget-tool.models";
   selector: "page-budget-tool",
   templateUrl: "budget-tool.html"
 })
-export class BudgetToolPage {
+export class BudgetToolPage implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["budget", "active"])
   readonly budget$: Observable<IBudget>;
   @select(["budget", "view", "component"])
@@ -34,7 +35,13 @@ export class BudgetToolPage {
     // show load screen when first opened
     this.actions.setBudgetView({ component: "load", title: "Budget Tool" });
     this.actions.setActiveBudget(null);
-    this.budget$.subscribe(budget => (this.budget = budget));
+    this.budget$
+      .takeUntil(this.componentDestroyed)
+      .subscribe(budget => (this.budget = budget));
+***REMOVED***
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
 ***REMOVED***
 
   async setView(view: IBudgetView) {

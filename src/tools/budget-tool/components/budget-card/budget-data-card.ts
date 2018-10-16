@@ -1,10 +1,10 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Events } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
-import { IBudgetViewMeta, IBudgetCard } from "../../budget-tool.models";
+import { IBudgetCard, IBudgetViewMeta } from "../../budget-tool.models";
 import { BudgetCardComponent } from "./budget-card";
 
 /*
@@ -14,7 +14,9 @@ Budget data cards are used to assign card value to nested budget data (e.g. week
   selector: "budget-data-card",
   templateUrl: "budget-card.html"
 })
-export class BudgetDataCardComponent extends BudgetCardComponent {
+export class BudgetDataCardComponent extends BudgetCardComponent
+  implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   viewMeta: IBudgetViewMeta;
   @select(["budget", "view", "meta"])
   viewMeta$: Observable<IBudgetViewMeta>;
@@ -28,9 +30,15 @@ export class BudgetDataCardComponent extends BudgetCardComponent {
 ***REMOVED***
 
   ngOnInit() {
-    this.viewMeta$.subscribe(meta => (this.viewMeta = meta));
+    this.viewMeta$
+      .takeUntil(this.componentDestroyed)
+      .subscribe(meta => (this.viewMeta = meta));
     this.viewMeta = this.ngRedux.getState().budget.view.meta;
     this.selected = this.card.isSelected;
+***REMOVED***
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
 ***REMOVED***
 
   cardClicked() {

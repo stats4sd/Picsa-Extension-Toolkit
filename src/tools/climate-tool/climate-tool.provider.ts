@@ -1,18 +1,17 @@
 import { select } from "@angular-redux/store";
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import * as Papa from "papaparse";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { ClimateToolActions } from "./climate-tool.actions";
 import { IChartMeta, ISite } from "./climate-tool.models";
 
 @Injectable()
-export class ClimateToolProvider {
+export class ClimateToolProvider implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["climate", "site"])
   readonly site$: Observable<ISite>;
-  siteSubscription: Subscription;
   @select(["climate", "chart"])
   readonly activeChart$: Observable<IChartMeta>;
-  activeChartSubscription: Subscription;
   public activeSite: ISite;
   public activeChart: IChartMeta;
   public yValues: number[];
@@ -22,7 +21,8 @@ export class ClimateToolProvider {
 ***REMOVED***
 
   ngOnDestroy() {
-    this._removeSubscriptions();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
 ***REMOVED***
 
   // when site changed load the relevant summaries and push to redux
@@ -160,22 +160,17 @@ export class ClimateToolProvider {
 ***REMOVED***
 
   _addSubscriptions() {
-    this.activeChartSubscription = this.activeChart$.subscribe(chart => {
+    this.activeChart$.takeUntil(this.componentDestroyed).subscribe(chart => {
       if (chart) {
         this.activeChart = chart;
         this._chartChanged(chart);
     ***REMOVED***
   ***REMOVED***);
-    this.siteSubscription = this.site$.subscribe(site => {
+    this.site$.takeUntil(this.componentDestroyed).subscribe(site => {
       if (site) {
         this.activeSite = site;
         this._siteChanged(site);
     ***REMOVED***
   ***REMOVED***);
-***REMOVED***
-  _removeSubscriptions() {
-    console.log("removing chart provider subscriptions");
-    this.activeChartSubscription.unsubscribe();
-    this.siteSubscription.unsubscribe();
 ***REMOVED***
 }

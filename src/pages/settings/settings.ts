@@ -1,7 +1,7 @@
 import { select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { AlertController, IonicPage } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { UserActions } from "../../actions/user.actions";
 import { IUser, IUserGroup } from "../../models/models";
 import { StorageProvider } from "../../providers/providers";
@@ -13,7 +13,8 @@ import { StorageProvider } from "../../providers/providers";
   selector: "page-settings",
   templateUrl: "settings.html"
 })
-export class SettingsPage {
+export class SettingsPage implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   user: IUser;
   lastBackup: string;
   name: string;
@@ -27,7 +28,13 @@ export class SettingsPage {
     private actions: UserActions
   ) {
     this.getLastBackup();
-    this.user$.subscribe(user => (this.user = user));
+    this.user$
+      .takeUntil(this.componentDestroyed)
+      .subscribe(user => (this.user = user));
+***REMOVED***
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
 ***REMOVED***
 
   async getLastBackup() {

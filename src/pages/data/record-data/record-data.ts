@@ -1,7 +1,7 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { IonicPage, ModalController } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { IForm, IUser } from "../../../models/models";
 import { AppState } from "../../../reducers/reducers";
 
@@ -12,7 +12,9 @@ import { AppState } from "../../../reducers/reducers";
   selector: "page-record-data",
   templateUrl: "record-data.html"
 })
-export class RecordDataPage {
+export class RecordDataPage implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
+
   user: IUser;
   forms: IForm[];
   @select("user") user$: Observable<IUser>;
@@ -20,7 +22,13 @@ export class RecordDataPage {
     private ngRedux: NgRedux<AppState>,
     public modalCtrl: ModalController
   ) {
-    this.user$.subscribe(user => this.init(user));
+    this.user$
+      .takeUntil(this.componentDestroyed)
+      .subscribe(user => this.init(user));
+***REMOVED***
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
 ***REMOVED***
 
   // when user updated check for available forms (given user group access permissions) and updated submissions

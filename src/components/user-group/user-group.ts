@@ -1,7 +1,7 @@
 import { select } from "@angular-redux/store";
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnDestroy } from "@angular/core";
 import { AlertController } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { UserActions } from "../../actions/user.actions";
 import { IUser, IUserGroup } from "../../models/models";
 
@@ -9,7 +9,8 @@ import { IUser, IUserGroup } from "../../models/models";
   selector: "user-group",
   templateUrl: "user-group.html"
 })
-export class UserGroupComponent {
+export class UserGroupComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @Input("group") group: IUserGroup;
   @select("user") user$: Observable<IUser>;
   user: IUser;
@@ -20,9 +21,14 @@ export class UserGroupComponent {
     private actions: UserActions
   ) {}
 
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+***REMOVED***
+
   ngOnInit(): void {
-    // subscribe after group input bind so can use group key
-    this.user$.subscribe(user => {
+    // subscrib after group input bind so can use group key
+    this.user$.takeUntil(this.componentDestroyed).subscribe(user => {
       if (user) {
         this.userUpdate(user);
     ***REMOVED***

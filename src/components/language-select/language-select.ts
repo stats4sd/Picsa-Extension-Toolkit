@@ -1,7 +1,7 @@
 import { select } from "@angular-redux/store";
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { Select } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { UserActions } from "../../actions/user.actions";
 
 interface ILanguage {
@@ -12,7 +12,8 @@ interface ILanguage {
   selector: "language-select",
   templateUrl: "language-select.html"
 })
-export class LanguageSelectComponent {
+export class LanguageSelectComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   languages: ILanguage[] = [
     { label: "English", code: "en" },
     { label: "Chichewa", code: "ny" }
@@ -23,7 +24,7 @@ export class LanguageSelectComponent {
   @ViewChild(Select) select: Select;
 
   constructor(private userActions: UserActions) {
-    this.langCode$.subscribe(code => {
+    this.langCode$.takeUntil(this.componentDestroyed).subscribe(code => {
       if (code) {
         this.setLanguage(code, "redux");
     ***REMOVED*** else {
@@ -31,6 +32,10 @@ export class LanguageSelectComponent {
         this.language = this.languages[0];
     ***REMOVED***
   ***REMOVED***);
+***REMOVED***
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
 ***REMOVED***
   openLanguageSelect() {
     this.select.open();
