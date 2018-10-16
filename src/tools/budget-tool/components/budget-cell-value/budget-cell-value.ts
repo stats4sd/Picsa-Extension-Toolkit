@@ -1,6 +1,6 @@
 import { select } from "@angular-redux/store";
-import { Component, Input } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
+import { Component, Input, OnDestroy } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 import { IBudgetDotValues } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
 
@@ -8,7 +8,8 @@ import { BudgetToolProvider } from "../../budget-tool.provider";
   selector: "budget-cell-value",
   templateUrl: "budget-cell-value.html"
 })
-export class BudgetCellValueComponent {
+export class BudgetCellValueComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @Input()
   set quantity(quantity: number) {
     this._quantity = quantity;
@@ -21,7 +22,6 @@ export class BudgetCellValueComponent {
   }
   @select(["budget", "active", "dotValues"])
   dotValues$: Observable<IBudgetDotValues>;
-  dotValueSubcription: Subscription;
   _quantity: number;
   _cost: number;
   dotValues: IBudgetDotValues;
@@ -32,7 +32,8 @@ export class BudgetCellValueComponent {
     this._addSubscribers();
   }
   ngOnDestroy() {
-    this._removeSubscribers();
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   // given updates to cost or quantity split the total into components of the large, medium, small and half values
@@ -62,13 +63,8 @@ export class BudgetCellValueComponent {
     return new Array(length).fill(sign);
   }
 
-  _removeSubscribers() {
-    this.dotValueSubcription.unsubscribe();
-  }
-
-  // subscribe to dotValues and recalculate on change
   _addSubscribers() {
-    this.dotValueSubcription = this.dotValues$.subscribe(values => {
+    this.dotValues$.takeUntil(this.componentDestroyed).subscribe(values => {
       if (values) {
         this.dotValues = values;
         this.generateRepresentation();

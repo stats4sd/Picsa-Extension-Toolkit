@@ -1,5 +1,5 @@
 import { select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import {
   IonicPage,
   MenuController,
@@ -7,7 +7,7 @@ import {
   NavController,
   NavParams
 } from "ionic-angular";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { ClimateToolActions } from "./climate-tool.actions";
 import * as DATA from "./climate-tool.data";
 import { IChartMeta, ICropRequirement, ISite } from "./climate-tool.models";
@@ -22,13 +22,12 @@ import { ClimateToolProvider } from "./climate-tool.provider";
   selector: "page-climate-tool",
   templateUrl: "climate-tool.html"
 })
-export class ClimateToolPage {
+export class ClimateToolPage implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["climate", "site"])
   readonly site$: Observable<ISite>;
-  siteSubscription: Subscription;
   @select(["climate", "chart"])
   readonly activeChart$: Observable<IChartMeta>;
-  activeChartSubscription: Subscription;
   activeChart: IChartMeta;
   sites: any;
   selectedSite: ISite;
@@ -53,13 +52,18 @@ export class ClimateToolPage {
   ) {
     this._addSubscriptions();
   }
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+    this.actions.resetState();
+  }
   _addSubscriptions() {
-    this.siteSubscription = this.site$.subscribe(site => {
+    this.site$.takeUntil(this.componentDestroyed).subscribe(site => {
       if (site) {
         this.siteChanged(site);
       }
     });
-    this.activeChartSubscription = this.activeChart$.subscribe(chart => {
+    this.activeChart$.takeUntil(this.componentDestroyed).subscribe(chart => {
       if (chart) {
         this.activeChart = chart;
         // update selected crop to pick new line tool value
@@ -68,16 +72,6 @@ export class ClimateToolPage {
         }
       }
     });
-  }
-  _removeSubscriptions() {
-    try {
-      this.siteSubscription.unsubscribe();
-      this.activeChartSubscription.unsubscribe();
-    } catch (error) {}
-  }
-  ngOnDestroy() {
-    this.actions.resetState();
-    this._removeSubscriptions();
   }
 
   setChart(chart: IChartMeta) {

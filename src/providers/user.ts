@@ -1,8 +1,8 @@
 import { select } from "@angular-redux/store";
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AngularFireAuth } from "angularfire2/auth";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { UserActions } from "../actions/user.actions";
 import { IFormResponse, IUser } from "../models/models";
 import version from "../pages/changelog/version";
@@ -13,7 +13,8 @@ import { StorageProvider } from "./storage";
 import { TranslationsProvider } from "./translations";
 
 @Injectable()
-export class UserProvider {
+export class UserProvider implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   user: IUser;
   @select("user") user$: Observable<IUser>;
   @select(["user", "lang"])
@@ -27,6 +28,11 @@ export class UserProvider {
     private filePrvdr: FileService,
     private utils: TranslationsProvider
   ) {}
+
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+  }
   async init() {
     console.log("user init");
     this.initTranslate();
@@ -38,7 +44,7 @@ export class UserProvider {
 
   initTranslate() {
     this.translate.setDefaultLang("en");
-    this.lang$.subscribe(lang => {
+    this.lang$.takeUntil(this.componentDestroyed).subscribe(lang => {
       if (lang) {
         this.changeLanguage(lang);
       }
@@ -91,7 +97,7 @@ export class UserProvider {
   // automatically reflect changes to user to local storage and firebase
   // note - only want to sync if user authenticated (i.e logged in via email or joined group)
   async enableUserSync() {
-    this.user$.subscribe(async user => {
+    this.user$.takeUntil(this.componentDestroyed).subscribe(async user => {
       this.user = user;
       if (user) {
         await this.storagePrvdr.set("user", user);

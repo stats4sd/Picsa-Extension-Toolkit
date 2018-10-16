@@ -1,5 +1,5 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import * as c3 from "c3";
 import { Observable, Subject } from "rxjs";
 import { TranslationsProvider } from "../../../../providers/translations";
@@ -11,7 +11,7 @@ import { availableCharts } from "../../data/availableCharts";
   selector: "climate-chart",
   templateUrl: "climate-chart.html"
 })
-export class ClimateChartComponent {
+export class ClimateChartComponent implements OnDestroy {
   private componentDestroyed: Subject<any> = new Subject();
   @select(["climate", "site", "summaries"])
   readonly chartData$: Observable<IChartSummary[]>;

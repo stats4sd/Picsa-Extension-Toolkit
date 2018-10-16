@@ -1,5 +1,6 @@
 import { NgRedux } from "@angular-redux/store";
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnDestroy } from "@angular/core";
+import { Subject } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { BudgetCardComponent } from "./budget-card";
@@ -11,7 +12,9 @@ Budget meta cards are used to assign card value to top-level budget object data 
   selector: "budget-meta-card",
   templateUrl: "budget-card.html"
 })
-export class BudgetMetaCardComponent extends BudgetCardComponent {
+export class BudgetMetaCardComponent extends BudgetCardComponent
+  implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @Input("valuePath") valuePath: string;
 
   constructor(
@@ -24,19 +27,21 @@ export class BudgetMetaCardComponent extends BudgetCardComponent {
   ngOnInit() {
     this._addValueSubscriber();
   }
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+  }
 
   // budget meta cards listen directly to their corresponding value field and update isselected property on change
   // *** note - this could all be done through budget-card-list element to avoid so many subscriptions, but assumed fine for now)
   _addValueSubscriber() {
-    const pathValue$ = this.ngRedux.select([
-      "budget",
-      "active",
-      this.valuePath
-    ]);
-    pathValue$.subscribe(v => {
-      this.card.isSelected = v === this.card.id;
-      this.selected = this.card.isSelected;
-    });
+    this.ngRedux
+      .select(["budget", "active", this.valuePath])
+      .takeUntil(this.componentDestroyed)
+      .subscribe(v => {
+        this.card.isSelected = v === this.card.id;
+        this.selected = this.card.isSelected;
+      });
   }
 
   // assign card id to value path on select (and remove if already selected)

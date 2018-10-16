@@ -1,7 +1,7 @@
 import { select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Events } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { TranslationsProvider } from "../../../../providers/translations";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
@@ -14,7 +14,8 @@ import { PB_MOCK_API_2, PB_MOCK_API_3 } from "../../mocks/budget.mocks";
   selector: "budget-load",
   templateUrl: `budget-load.html`
 })
-export class BudgetLoadComponent {
+export class BudgetLoadComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   apiVersion = BUDGET_API_VERSION;
   _adminBudgets = [PB_MOCK_API_2, PB_MOCK_API_3];
   @select(["budget", "active"])
@@ -31,12 +32,16 @@ export class BudgetLoadComponent {
   ) {}
   ngOnInit() {
     console.log("api version", this.apiVersion);
-    this.savedBudgets$.subscribe(budgets => {
+    this.savedBudgets$.takeUntil(this.componentDestroyed).subscribe(budgets => {
       if (budgets) {
         this.savedBudgets = _jsonObjectValues(budgets);
         console.log("saved budgets", budgets);
       }
     });
+  }
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
   startNew() {
     const budget: IBudget = {

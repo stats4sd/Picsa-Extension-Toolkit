@@ -1,7 +1,7 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Events } from "ionic-angular";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { AppState } from "../../../../reducers/reducers";
 import {
@@ -15,7 +15,8 @@ import {
   selector: "budget-overview",
   templateUrl: "budget-overview.html"
 })
-export class BudgetOverviewComponent {
+export class BudgetOverviewComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["budget", "active"])
   budget$: Observable<IBudget>;
   @select(["budget", "active", "dotValues"])
@@ -38,14 +39,17 @@ export class BudgetOverviewComponent {
     // *** inefficient but otherwise difficult to get bindings triggering correctly
     // tried cdr and application ref but neither seemed to work. Also tried listening
     // on child components but again was tempermental
-    this.budget$.pipe(debounceTime(250)).subscribe(budget => {
-      this.budgetUpdated = false;
-      this.budget = budget;
-      setTimeout(() => {
-        this.budgetUpdated = true;
-      }, 50);
-    });
-    this.dotValues$.subscribe(values => {
+    this.budget$
+      .pipe(debounceTime(250))
+      .takeUntil(this.componentDestroyed)
+      .subscribe(budget => {
+        this.budgetUpdated = false;
+        this.budget = budget;
+        setTimeout(() => {
+          this.budgetUpdated = true;
+        }, 50);
+      });
+    this.dotValues$.takeUntil(this.componentDestroyed).subscribe(values => {
       if (values) {
         this.dotsLegend = this._objectToArray(values);
       }
@@ -53,6 +57,10 @@ export class BudgetOverviewComponent {
     this.events.subscribe("calculate:budget", () => {
       this.calculateBalance();
     });
+  }
+  ngOnDestroy() {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
   _objectToArray(json) {
     const array = [];
