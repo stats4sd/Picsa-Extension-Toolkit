@@ -43,6 +43,7 @@ export class BudgetOverviewComponent implements OnDestroy {
       .pipe(debounceTime(250))
       .takeUntil(this.componentDestroyed)
       .subscribe(budget => {
+        console.log("budget updated");
         this.budgetUpdated = false;
         this.budget = budget;
         setTimeout(() => {

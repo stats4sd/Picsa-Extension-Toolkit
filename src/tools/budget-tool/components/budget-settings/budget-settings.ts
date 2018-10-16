@@ -173,6 +173,7 @@ export class BudgetSettingsComponent implements OnDestroy {
   }
 
   viewBudget() {
+    console.log("view budget");
     this.actions.setActiveBudget(this.budget);
     this.actions.setBudgetView({
       component: "overview",

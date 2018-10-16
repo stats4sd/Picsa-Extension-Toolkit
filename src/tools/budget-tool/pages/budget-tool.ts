@@ -45,6 +45,7 @@ export class BudgetToolPage implements OnDestroy {
   }
 
   async setView(view: IBudgetView) {
+    console.log("setting view", view);
     const title = view.title
       ? await this.translations.translateText(view.title)
       : this.budget.title;

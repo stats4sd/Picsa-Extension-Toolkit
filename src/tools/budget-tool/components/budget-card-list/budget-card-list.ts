@@ -1,7 +1,7 @@
 import { NgRedux, select } from "@angular-redux/store";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Events } from "ionic-angular";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subject, Subscription } from "rxjs";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import {
@@ -15,13 +15,14 @@ import {
   selector: "budget-card-list",
   templateUrl: "budget-card-list.html"
 })
-export class BudgetCardListComponent {
+export class BudgetCardListComponent implements OnDestroy {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["budget", "view", "meta"])
   viewMeta$: Observable<IBudgetViewMeta>;
   cards: IBudgetCard[];
-  cardSubscriber: Subscription;
   periodData: IBudgetPeriodData;
   type: string;
+  cardSubscriber$: Subscription;
 
   constructor(
     private NgRedux: NgRedux<AppState>,
@@ -33,23 +34,27 @@ export class BudgetCardListComponent {
     this._addSubscribers();
   }
   ngOnDestroy() {
-    // wrap unsubscribe in catch as sometimes 'this' is undefined before can be used
-    try {
-      this.cardSubscriber.unsubscribe();
-    } catch (error) {}
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   // check if the given time period index exists on budget data and card type within period
   // if not intialise values
   _checkBudgetDataPath(periodIndex, type) {
     const budget: IBudget = this.NgRedux.getState().budget.active;
+    let dispatchUpdate;
     if (!budget.data[periodIndex]) {
       budget.data[periodIndex] = {};
+      dispatchUpdate = true;
     }
     if (!budget.data[periodIndex][type]) {
       budget.data[periodIndex][type] = {};
+      dispatchUpdate = true;
     }
-    this.actions.setActiveBudget(budget);
+    // only trigger update if things have changed
+    if (dispatchUpdate) {
+      this.actions.setActiveBudget(budget);
+    }
   }
 
   // every time view changed recalculate what should be shown
@@ -83,18 +88,18 @@ export class BudgetCardListComponent {
     // use events redux alone fails to trigger uipdate when period index changed
     // but type remains (e.g. activity 1 => activity 2)
     this.events.subscribe("cell:selected", meta => {
+      console.log("cell selected", meta);
       this.cards = [];
       this._checkBudgetDataPath(meta.periodIndex, meta.type);
       // when type specified add subscriber to the list of cards (including updates to custom)
       // to generate list on update
-      this.cardSubscriber = this.NgRedux.select([
-        "budget",
-        "meta",
-        meta.type
-      ]).subscribe(cards => {
-        console.log("cards updated", cards);
-        this._generateCardList(meta.type, meta.periodIndex);
-      });
+      console.log("building cards subscriber");
+      this.cardSubscriber$ = this.NgRedux.select(["budget", "meta", meta.type])
+        .takeUntil(this.componentDestroyed)
+        .subscribe(cards => {
+          console.log("cards updated", cards);
+          this._generateCardList(meta.type, meta.periodIndex);
+        });
 
       // set view after path checked
       this.actions.setBudgetView({

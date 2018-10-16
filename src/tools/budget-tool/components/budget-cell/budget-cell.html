@@ -21,9 +21,16 @@
           <budget-cell-labour *ngIf="card.people && card.days" [people]="card.days" [days]="card.people"></budget-cell-labour>
         </div>
       </div>
+      <!-- produce consumed -->
+      <div *ngSwitchCase="'produceConsumed'" style="display: flex; flex-wrap: wrap">
+        <div *ngFor="let card of _cellData">
+          <div>Consumed: card.id</div>
+        </div>
+      </div>
       <!-- default (activities) -->
       <div *ngSwitchDefault style="display: flex; flex-wrap: wrap">
-        <budget-card-image *ngFor="let card of _cellData" [class]="_cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+        <budget-card-image *ngFor="let card of _cellData" [class]="_cellData.length>1?'small':'medium'" [imageId]="card.id"
+          [imageData]="card.customImg"></budget-card-image>
       </div>
     </div>
   </div>

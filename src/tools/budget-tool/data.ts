@@ -196,7 +196,7 @@ export const defaults = {
     days: {
       labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
       starting: "Mon",
-      scale: "days",
+      scale: "Days",
       total: 7
     }
   }

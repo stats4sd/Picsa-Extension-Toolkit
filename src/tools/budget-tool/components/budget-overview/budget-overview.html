@@ -21,7 +21,6 @@
   <div style="display: flex; flex-basis: 100%" *ngIf="budgetUpdated">
     <div class="time-period " *ngFor="let period of budget.periods.labels; let i = index">
       <div class="time-period-title cell top-row">{{period}}</div>
-
       <div *ngFor="let row of rowTitles" class="cell">
         <div [ngSwitch]="row.type" style="height: 100%">
           <!-- Cash Balance -->
@@ -34,51 +33,8 @@
               <budget-cell-value quantity=1 [cost]="balance[i].running"></budget-cell-value>
             </div>
           </div>
-          <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period" [cellData]="budget.data && budget.data[i] && budget.data[i][row.type] ? budget.data[i][row.type] : null"></budget-cell>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-    <!-- OLD COLDE THAT MAY BE MIGRATED -->
-    <div *ngIf="NEED_TO_MIGRATE">
-
-      <!--Outputs-->
-      <div class="cell" (click)="edit('outputs',period)">
-        <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].outputs">
-          <div *ngFor="let output of period.outputs; let i=index" class="flex">
-            <!-- multiple counter -->
-            <!-- <div *ngIf="output.quantity <= 5">
-                <img class="card-image cell-multiple" [src]="output.Image" *ngFor="let o of output.arrayCounter">
-              </div> -->
-            <div>
-              <img class="card-image cell-multiple" [src]="output.Image">
-              <span class="counterBadge">x{{output.quantity}}</span>
-            </div>
-          </div>
-          <div class="cell-footer flex">
-            <div class="dot-value" *ngFor="let dot of period.balance.outputs.dots">
-              <img class="dot-value-image" [src]="dot.src">
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Consumed-->
-      <div class="cell" (click)="edit('consumed',period)">
-        <div class="grid-card" *ngIf="budget.data[i] && budget.data[i].outputs">
-          <div *ngFor="let output of period.outputs; let i=index" class="flex">
-            <!-- multiple counter -->
-            <!-- <div *ngIf="output.consumed <= 5">
-                <img class="card-image cell-multiple consumed" [src]="output.Image" *ngFor="let o of output.arrayCounterConsumed">
-              </div> -->
-            <div *ngIf="output.consumed>0">
-              <img class="card-image cell-multiple consumed" [src]="output.Image">
-              <span class="counterBadge consumed">x{{output.consumed}}</span>
-            </div>
-          </div>
+          <budget-cell *ngSwitchDefault [periodIndex]="i" [type]="row.type" [typeLabel]="row.label" [rowLabel]="period"
+            [cellData]="budget.data && budget.data[i] && budget.data[i][row.type] ? budget.data[i][row.type] : null"></budget-cell>
         </div>
       </div>
     </div>

@@ -29,11 +29,15 @@ const v1Upgrade = (budget: IBudget | any) => {
 };
 
 // 15/10/2018
-// recase budget period data period from string to number
+// recast budget period data period from string to number and capitlise scale
 const v2Upgrade = (budget: IBudget | any) => {
   try {
     if (budget.periods && budget.periods.total) {
       budget.periods.total = Number(budget.periods.total);
+      const lowerScale: string = budget.periods.scale;
+      const upperSacle: string =
+        lowerScale.charAt(0).toUpperCase() + lowerScale.substring(1);
+      budget.periods.scale = upperSacle;
     }
     budget.apiVersion = 3;
     console.log("v2 upgrade successful");

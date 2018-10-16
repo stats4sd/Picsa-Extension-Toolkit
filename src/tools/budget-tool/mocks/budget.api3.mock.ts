@@ -200,7 +200,7 @@ export const PB_MOCK_API_3: IBudget = {
   periods: {
     labels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
     starting: "Oct",
-    scale: "months",
+    scale: "Months",
     total: 6
   },
   title: "Maize Demo (v3)",
