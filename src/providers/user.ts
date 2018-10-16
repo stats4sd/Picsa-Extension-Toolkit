@@ -10,7 +10,7 @@ import version from "../pages/changelog/version";
 import { FileService } from "./file-service";
 import { FirestoreStorageProvider } from "./firestore";
 import { StorageProvider } from "./storage";
-import { UtilsProvider } from "./utils";
+import { TranslationsProvider } from "./translations";
 
 @Injectable()
 export class UserProvider {
@@ -25,7 +25,7 @@ export class UserProvider {
     private firestorePrvdr: FirestoreStorageProvider,
     private translate: TranslateService,
     private filePrvdr: FileService,
-    private utils:UtilsProvider
+    private utils: TranslationsProvider
   ) {}
   async init() {
     console.log("user init");
@@ -129,12 +129,15 @@ export class UserProvider {
 
   // present toast with timeout to allow content to be fully registered
   presentToast(msg: string) {
-    this.utils.presentToast({
-      duration: 2000,
-      dismissOnPageChange: true,
-      position: "bottom",
-      message: msg
-    },500);
+    this.utils.presentTranslatedToast(
+      {
+        duration: 2000,
+        dismissOnPageChange: true,
+        position: "bottom",
+        message: msg
+      },
+      500
+    );
   }
 
   changeLanguage(code: string) {

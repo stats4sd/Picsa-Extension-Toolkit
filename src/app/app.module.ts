@@ -55,7 +55,7 @@ export const firebaseConfig = {
 };
 // error handling
 import { SentryErrorHandler } from "../providers/error-handler";
-import { UtilsProvider } from "../providers/utils";
+import { TranslationsProvider } from "../providers/translations";
 
 // want to use sentry-cordova, but fails when cordova not available...
 // *** should link to mobile init app component call... still seems to have issues
@@ -110,7 +110,7 @@ import { UtilsProvider } from "../providers/utils";
     BudgetToolActions,
     BudgetToolProvider,
     DataActions,
-    UtilsProvider
+    TranslationsProvider
   ]
 })
 export class AppModule {

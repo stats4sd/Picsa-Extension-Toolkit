@@ -2,7 +2,7 @@ import { select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import { Events } from "ionic-angular";
 import { Observable } from "rxjs";
-import { UtilsProvider } from "../../../../providers/utils";
+import { TranslationsProvider } from "../../../../providers/translations";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
@@ -27,7 +27,7 @@ export class BudgetLoadComponent {
     public actions: BudgetToolActions,
     private events: Events,
     private budgetPrvdr: BudgetToolProvider,
-    private utils: UtilsProvider
+    private translations: TranslationsProvider
   ) {}
   ngOnInit() {
     console.log("api version", this.apiVersion);
@@ -67,7 +67,9 @@ export class BudgetLoadComponent {
     this.events.publish("load:budget");
   }
   async loadBudget(budget: IBudget) {
-    await this.utils.presentLoader({ content: "Preparing budget" });
+    await this.translations.presentTranslatedLoader({
+      content: "Preparing budget"
+    });
     budget = this.checkForBudgetUpgrades(budget);
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
@@ -79,7 +81,7 @@ export class BudgetLoadComponent {
     this.events.publish("load:budget");
     // give small timeout to give appearance of smoother rendering
     setTimeout(() => {
-      this.utils.dismissLoader();
+      this.translations.dismissLoader();
     }, 1000);
   }
   // recursively go through budget and if api version less than current perform incremental upgrade
@@ -95,7 +97,7 @@ export class BudgetLoadComponent {
   }
   archiveBudget(budget: IBudget) {
     budget.archived = true;
-    this.utils.presentToast({
+    this.translations.presentTranslatedToast({
       message: "Budget archived",
       duration: 3000
     });
@@ -103,7 +105,7 @@ export class BudgetLoadComponent {
   }
   restoreBudget(budget: IBudget) {
     budget.archived = false;
-    this.utils.presentToast({
+    this.translations.presentTranslatedToast({
       message: "Budget restored",
       duration: 3000
     });

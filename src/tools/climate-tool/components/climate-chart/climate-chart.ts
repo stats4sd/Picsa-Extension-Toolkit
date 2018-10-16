@@ -1,8 +1,8 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component } from "@angular/core";
 import * as c3 from "c3";
-import { Observable, Subscription } from "rxjs";
-import { UtilsProvider } from "../../../../providers/utils";
+import { Observable, Subject } from "rxjs";
+import { TranslationsProvider } from "../../../../providers/translations";
 import { AppState } from "../../../../reducers/reducers";
 import { IChartMeta, IChartSummary } from "../../climate-tool.models";
 import { availableCharts } from "../../data/availableCharts";
@@ -12,15 +12,13 @@ import { availableCharts } from "../../data/availableCharts";
   templateUrl: "climate-chart.html"
 })
 export class ClimateChartComponent {
+  private componentDestroyed: Subject<any> = new Subject();
   @select(["climate", "site", "summaries"])
   readonly chartData$: Observable<IChartSummary[]>;
-  chartDataSubscription: Subscription;
   @select(["climate", "site", "lineToolValue"])
   readonly lineToolValue$: Observable<number>;
-  lineToolValueSubscription: Subscription;
   @select(["climate", "chart"])
   readonly activeChart$: Observable<IChartMeta>;
-  activeChartSubscription: Subscription;
   chart: any;
   lineToolValue: number;
   isFirstRender: boolean = true;
@@ -28,36 +26,35 @@ export class ClimateChartComponent {
 
   constructor(
     private ngRedux: NgRedux<AppState>,
-    private utils: UtilsProvider
+    private translationsPrvdr: TranslationsProvider
   ) {
     this._addSubscriptions();
   }
+  ngOnDestroy() {
+    // want to remove subscriptions on destroy (note automatically handled for @select bound to async pipe in html)
+    // using subject emits value manually (like event emitter) by calling the 'next()' function
+    // on destroy we want to emit any value so that the takeUntil subscription records it no longer needs to subscribe
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+  }
 
   _addSubscriptions() {
-    console.log("adding climate chart subscriptions");
-    this.chartDataSubscription = this.chartData$.subscribe(data => {
+    this.chartData$.takeUntil(this.componentDestroyed).subscribe(data => {
       if (data) {
         this.dataUpdated(data);
       }
     });
-    this.lineToolValueSubscription = this.lineToolValue$.subscribe(v => {
+    this.lineToolValue$.takeUntil(this.componentDestroyed).subscribe(v => {
       if (v) {
         this.setLineToolValue(v);
       }
     });
-    this.activeChartSubscription = this.activeChart$.subscribe(chart => {
+    this.activeChart$.takeUntil(this.componentDestroyed).subscribe(chart => {
       if (chart) {
         this.setChart(chart);
       }
     });
   }
-  // removing can sometimes cause whitescreen bug, removing until can be figured out
-  // at least shouldn't add multiple subscribers due to this definition
-  // _removeSubscriptions() {
-  //   this.chartDataSubscription.unsubscribe();
-  //   this.lineToolValueSubscription.unsubscribe();
-  //   this.activeChartSubscription.unsubscribe();
-  // }
 
   // when new data columns specified redraw any graphs
   // if no graph previously specified, default to rainfall
@@ -157,7 +154,6 @@ export class ClimateChartComponent {
   }
 
   resize(size) {
-    console.log("resizing chart", size);
     this.chart.resize({
       height: size.height,
       width: size.width
@@ -178,7 +174,7 @@ export class ClimateChartComponent {
   }
 
   async setChart(chart: IChartMeta) {
-    await this.utils.presentLoader({
+    await this.translationsPrvdr.presentTranslatedLoader({
       content: "Loading..."
     });
     this.activeChart = chart;
@@ -186,7 +182,7 @@ export class ClimateChartComponent {
     this.chart.hide();
     this.chart.legend.hide();
     this.chart.show(chart.y, { withLegend: true });
-    this.utils.dismissLoader();
+    this.translationsPrvdr.dismissLoader();
     // reload new line tool value
     if (this.lineToolValue && chart.tools.line) {
       this.setLineToolValue(this.lineToolValue);
@@ -201,22 +197,12 @@ export class ClimateChartComponent {
       //initialise year
       const d = new Date(2001, 0);
       d.setDate(dayNumber);
-      const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan"
-      ];
-      const string = `${d.getDate()}-${monthNames[d.getMonth()]}`;
+      const monthNames: string[] = this.translationsPrvdr.monthNames;
+      // just take first 3 letters
+      const string = `${d.getDate()}-${monthNames[d.getMonth() % 12].substring(
+        0,
+        3
+      )}`;
       return string;
     } else if (type == "value") {
       return value;

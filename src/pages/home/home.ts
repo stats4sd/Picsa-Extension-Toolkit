@@ -6,7 +6,7 @@ import {
   ToastController
 } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage";
-import { UtilsProvider } from "../../providers/utils";
+import { TranslationsProvider } from "../../providers/translations";
 import version from "../changelog/version";
 
 @IonicPage()
@@ -22,7 +22,7 @@ export class HomePage {
     public navCtrl: NavController,
     public storagePrvdr: StorageProvider,
     private toastCtrl: ToastController,
-    private utils: UtilsProvider,
+    private translations: TranslationsProvider,
     private platform: Platform
   ) {
     this.links = [
@@ -67,7 +67,7 @@ export class HomePage {
         async isAvailable => {
           console.log("update available?", isAvailable);
           if (isAvailable) {
-            const message = await this.utils.translateText(
+            const message = await this.translations.translateText(
               "New Update available! Reload this page to see the latest version."
             );
             const toast = this.toastCtrl.create({

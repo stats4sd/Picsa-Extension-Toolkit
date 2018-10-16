@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController } from "ionic-angular";
-import { UtilsProvider } from "../../providers/utils";
+import { TranslationsProvider } from "../../providers/translations";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -12,7 +12,10 @@ import { UtilsProvider } from "../../providers/utils";
 export class ToolsPage {
   tools: any;
 
-  constructor(public navCtrl: NavController, public utils: UtilsProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public translations: TranslationsProvider
+  ) {
     this.tools = [
       {
         name: "Climate Tool",
@@ -28,7 +31,7 @@ export class ToolsPage {
   }
 
   async loadTool(tool) {
-    await this.utils.presentLoader({
+    await this.translations.presentTranslatedLoader({
       content: `Loading...`,
       dismissOnPageChange: true
     });
