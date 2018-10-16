@@ -12,7 +12,7 @@ import {
 import { Observable } from "rxjs";
 import { IResource, IResourceGroup } from "../../models/models";
 import { FileService } from "../../providers/providers";
-import { UtilsProvider } from "../../providers/utils";
+import { TranslationsProvider } from "../../providers/translations";
 import mimetypes from "./mimetypes";
 
 @IonicPage({
@@ -39,7 +39,7 @@ export class ResourcesPage {
     private file: File,
     public platform: Platform,
     private filePrvdr: FileService,
-    private utils: UtilsProvider
+    private translations: TranslationsProvider
   ) {
     console.log("resources constructor");
 ***REMOVED***
@@ -66,7 +66,7 @@ export class ResourcesPage {
 
   // on load copy resources from app to external directory, checking directory exists first
   async initMobileStorageDirectory() {
-    await this.utils.presentLoader({
+    await this.translations.presentTranslatedLoader({
       content: "Preapring Resources",
       dismissOnPageChange: true,
       enableBackdropDismiss: false
@@ -99,7 +99,7 @@ export class ResourcesPage {
   ***REMOVED*** else {
       console.log("all resources exist :D");
   ***REMOVED***
-    this.utils.dismissLoader();
+    this.translations.dismissLoader();
 ***REMOVED***
 
   async _listHardResources() {

@@ -2,6 +2,7 @@ import { NgRedux, select } from "@angular-redux/store";
 import { Component, ViewChild } from "@angular/core";
 import { Events, Slides } from "ionic-angular";
 import { Observable } from "rxjs";
+import { DAYS, MONTHS } from "../../../../providers/translations";
 import { AppState } from "../../../../reducers/reducers";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import {
@@ -10,7 +11,6 @@ import {
   ICustomBudgetCard
 } from "../../budget-tool.models";
 import { BudgetToolProvider } from "../../budget-tool.provider";
-import { DAYS, MONTHS } from "../../data";
 
 @Component({
   selector: "budget-settings",
@@ -38,7 +38,8 @@ export class BudgetSettingsComponent {
   allEnterprises: IBudgetCard[] = [];
   filteredEnterprises: IBudgetCard[] = [];
   showIndividualEnterprises: boolean;
-  timescales = ["days", "weeks", "months"];
+  timescales = ["Days", "Weeks", "Months"];
+  // note, keeping days and months hardcoded in english instead of translate, using translate pipe
   days = DAYS;
   months = MONTHS;
   enterpriseTypes: IBudgetCard[] = [];
@@ -179,17 +180,19 @@ export class BudgetSettingsComponent {
   ***REMOVED***
     console.log("calculate period", timescale);
     let arr = [];
-    if (timescale == "months") {
+    if (timescale == "Months") {
       budget.periods.total = total ? total : 12;
-      budget.periods.starting = MONTHS.includes(starting) ? starting : "Jan";
+      budget.periods.starting = MONTHS.includes(starting)
+        ? starting
+        : MONTHS[0];
       arr = this.calculatePeriodMonths(total, starting);
   ***REMOVED***
-    if (timescale == "days") {
-      budget.periods.starting = DAYS.includes(starting) ? starting : "Mon";
+    if (timescale == "Days") {
+      budget.periods.starting = DAYS.includes(starting) ? starting : "Monday";
       budget.periods.total = total ? total : 7;
       arr = this.calculatePeriodDays(total, starting);
   ***REMOVED***
-    if (timescale == "weeks") {
+    if (timescale == "Weeks") {
       budget.periods.starting = null;
       budget.periods.total = 4;
       arr = this.calculatePeriodConsecutive(total, "week");
