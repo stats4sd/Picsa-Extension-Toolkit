@@ -1,0 +1,14 @@
+<ion-content padding>
+  <div class="container">
+    <img class="error-image" src="assets/img/error.png">
+    <div style="margin-top:2em">
+      <h2>{{'Something went wrong...' | translate}}</h2>
+      <div>{{'Click on the button below to retry' | translate}}</div>
+      <button [disabled]="reloading" class="reload-button" ion-button icon-left (click)="reloadPage()">
+        <ion-icon name="refresh"></ion-icon>
+        {{'Reload' | translate}}
+      </button>
+    </div>
+  </div>
+
+</ion-content>

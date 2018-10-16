@@ -41,4 +41,8 @@ export class ToolsPage {
       this.navCtrl.push("IframePage", tool);
     }
   }
+
+  _ADMIN_errorTest() {
+    throw new Error("Example error");
+  }
 }
