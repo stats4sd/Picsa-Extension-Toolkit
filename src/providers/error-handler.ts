@@ -17,6 +17,7 @@ Raven.config("https://68f91fcd849a436193d615bc943c0259@sentry.io/1249964", {
 
 @Injectable()
 export class SentryErrorHandler extends IonicErrorHandler {
+  errorDisplayOpen: boolean;
   constructor(
     private ngRedux: NgRedux<AppState>,
     public modal: ModalController
@@ -38,8 +39,12 @@ export class SentryErrorHandler extends IonicErrorHandler {
     console.error(error);
     this.showErrorPage();
 ***REMOVED***
+  // show error page modal (max once if repeated errors)
   showErrorPage() {
-    const modal = this.modal.create("ErrorPage");
-    modal.present();
+    if (!this.errorDisplayOpen) {
+      this.errorDisplayOpen = true;
+      const modal = this.modal.create("ErrorPage");
+      modal.present();
+  ***REMOVED***
 ***REMOVED***
 }

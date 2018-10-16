@@ -14,13 +14,27 @@ export class BudgetCellComponent {
   @Input("typeLabel") typeLabel: string;
   @Input()
   set cellData(cellData: IBudgetPeriodData) {
-    if (cellData) {
+    // as budget refreshed often only want to re-render when change so keep track of old data
+    // to confuse further alternates
+    // and compare json objects using simple tostring method
+    // *** still not optimal, would be better to resolve budget repopulation issues
+    if (cellData && cellData.toString() != this._oldCellData.toString()) {
+      this._oldCellData = cellData;
       this.setCellData(cellData);
   ***REMOVED***
 ***REMOVED***
+  _oldCellData: any = [];
   _cellData: IBudgetCard[];
 
   constructor(private events: Events) {}
+
+  shouldSetCellData(cellData) {
+    return (
+      cellData &&
+      cellData.length > 0 &&
+      cellData.toString != this._oldCellData.toString()
+    );
+***REMOVED***
 
   setCellData(data: IBudgetPeriodData) {
     const cards = _jsonObjectValues(data);
@@ -36,6 +50,7 @@ export class BudgetCellComponent {
   editCell() {
     // use both events and redux as redux alone fails to trigger uipdate when period index changed
     // but type remains (e.g. activity 1 => activity 2)
+    // listened to by card-list component
     this.events.publish("cell:selected", {
       type: this.type,
       periodIndex: this.periodIndex,

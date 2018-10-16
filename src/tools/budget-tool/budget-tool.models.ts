@@ -6,7 +6,7 @@ export interface IBudget {
   description: string;
   enterprise: string;
   enterpriseType: string;
-  scale: string;
+  scale: "Days" | "Months" | "Weeks";
   dotValues: IBudgetDotValues;
   created: string;
   data: { [index: string]: IBudgetPeriodData ***REMOVED***
