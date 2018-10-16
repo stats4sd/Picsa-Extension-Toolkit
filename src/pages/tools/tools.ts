@@ -41,4 +41,8 @@ export class ToolsPage {
       this.navCtrl.push("IframePage", tool);
   ***REMOVED***
 ***REMOVED***
+
+  _ADMIN_errorTest() {
+    throw new Error("Example error");
+***REMOVED***
 }

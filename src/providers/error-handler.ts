@@ -1,6 +1,6 @@
 import { NgRedux } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
-import { IonicErrorHandler } from "ionic-angular";
+import { IonicErrorHandler, ModalController } from "ionic-angular";
 import Raven from "raven-js";
 import { AppState } from "../reducers/reducers";
 
@@ -17,12 +17,15 @@ Raven.config("https://68f91fcd849a436193d615bc943c0259@sentry.io/1249964", {
 
 @Injectable()
 export class SentryErrorHandler extends IonicErrorHandler {
-  constructor(private ngRedux: NgRedux<AppState>) {
+  constructor(
+    private ngRedux: NgRedux<AppState>,
+    public modal: ModalController
+  ) {
     super();
 ***REMOVED***
   handleError(error: any) {
     if (window.location.hostname == "localhost") {
-      super.handleError(error);
+      // super.handleError(error);
   ***REMOVED*** else {
       console.error(error);
       try {
@@ -32,5 +35,11 @@ export class SentryErrorHandler extends IonicErrorHandler {
         Raven.captureException(error.originalError || error);
     ***REMOVED*** catch (e) {}
   ***REMOVED***
+    console.error(error);
+    this.showErrorPage();
+***REMOVED***
+  showErrorPage() {
+    const modal = this.modal.create("ErrorPage");
+    modal.present();
 ***REMOVED***
 }

@@ -1,0 +1,16 @@
+page-error {
+  .container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+***REMOVED***
+  .error-image {
+    object-fit: contain;
+    max-height: 33%;
+***REMOVED***
+  .reload-button {
+    margin-top: 2em;
+***REMOVED***
+}
