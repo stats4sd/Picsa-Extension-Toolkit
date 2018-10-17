@@ -44,7 +44,6 @@ export class BudgetCellValueComponent implements OnDestroy {
   // given updates to cost or quantity split the total into components of the large, medium, small and half values
   // map these values to directed arrays to populate images in the pictorial representation
   generateRepresentation() {
-    console.log("generating representation", this._quantity, this._consumed);
     if (this._cost && this._quantity) {
       const quantity = this._consumed
         ? this._quantity - this._consumed

@@ -2,6 +2,7 @@ import { select } from "@angular-redux/store";
 import { Component, OnDestroy } from "@angular/core";
 import { Events, IonicPage } from "ionic-angular";
 import { Observable, Subject } from "rxjs";
+import { PrintProvider } from "../../../providers/print";
 import { TranslationsProvider } from "../../../providers/translations";
 import { BudgetToolActions } from "../budget-tool.actions";
 import { IBudget, IBudgetView } from "../budget-tool.models";
@@ -24,13 +25,16 @@ export class BudgetToolPage implements OnDestroy {
   budget: IBudget;
   views: IBudgetView[] = [
     { component: "overview", title: null, icon: "apps" },
-    { component: "settings", title: "Settings", icon: "settings" },
-    { component: "export", title: "Share Budget", icon: "share" }
+    { component: "settings", title: "Settings", icon: "settings" }
+    // { component: "export", title: "Share Budget", icon: "share" }
   ];
+  budgetDownloading: boolean;
+  budgetDownloadMessage: string;
   constructor(
     private translations: TranslationsProvider,
     private actions: BudgetToolActions,
-    private events: Events
+    private events: Events,
+    private printPrvdr: PrintProvider
   ) {
     // show load screen when first opened
     this.actions.setBudgetView({ component: "load", title: "Budget Tool" });
@@ -57,5 +61,17 @@ export class BudgetToolPage implements OnDestroy {
     if (view.component == "overview") {
       this.events.publish("calculate:budget");
   ***REMOVED***
+***REMOVED***
+  async downloadBudget() {
+    this.budgetDownloading = true;
+    try {
+      this.budgetDownloadMessage = "preparing";
+      await this.printPrvdr.print("#budget", this.budget.title);
+      this.budgetDownloadMessage = null;
+  ***REMOVED*** catch (error) {
+      console.error(error);
+      this.budgetDownloadMessage = "error";
+  ***REMOVED***
+    this.budgetDownloading = false;
 ***REMOVED***
 }

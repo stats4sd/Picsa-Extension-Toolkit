@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D travis-encrypt
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/canvas2image -D
 
 PATH: 
-  C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Yarn\bin\;C:\Users\chris\git\flutter\bin;C:\Program Files\nodejs\;C:\cygwin64\bin;C:\Program Files\Git\cmd;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\chris\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_151;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Users\chris\AppData\Local\Android\sdk\platform-tools;C:\Users\chris\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\chris\AppData\Local\Yarn\bin;C:\Users\chris\AppData\Roaming\npm;C:\Users\chris\AppData\Roaming\Dashlane\5.12.0.19744\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\chris\AppData\Roaming\Dashlane\5.12.0.19744\ucrt
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Yarn\bin\;C:\Users\chris\git\flutter\bin;C:\cygwin64\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\chris\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\MySQL\MySQL Utilities 1.6\;C:\Program Files\Java\jdk1.8.0_151\jre\bin;C:\Program Files\Git\cmd;C:\Ruby24-x64\bin;C:\Users\chris\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_151;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Users\chris\AppData\Local\Android\sdk\platform-tools;C:\Users\chris\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\chris\AppData\Local\Yarn\bin;C:\Users\chris\AppData\Roaming\npm;C:\Users\chris\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\chris\AppData\Roaming\Dashlane\6.5.0.12978\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\chris\AppData\Roaming\Dashlane\6.5.0.12978\ucrt;C:\Users\chris\AppData\Roaming\Dashlane\6.5.0.12978\bin\Qt;C:\Users\chris\AppData\Roaming\Dashlane\6.5.0.12978\ucrt;C:\Users\chris\AppData\Roaming\Dashlane\6.5.0.12978\bin\Ssl;C:\Users\chris\AppData\Roaming\Dashlane\6.1839.0.13410\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\chris\AppData\Roaming\Dashlane\6.1839.0.13410\ucrt;C:\Users\chris\AppData\Roaming\Dashlane\6.1839.0.13410\bin\Qt;C:\Users\chris\AppData\Roaming\Dashlane\6.1839.0.13410\ucrt;C:\Users\chris\AppData\Roaming\Dashlane\6.1839.0.13410\bin\Ssl
 
 Yarn version: 
   1.5.1
@@ -18,6 +18,7 @@ npm manifest:
     "name": "picsa-extension-toolkit",
     "author": "Statistics for Sustainable Development",
     "homepage": "https://stats4sd.org/",
+    "version": "1.0.4",
     "private": true,
     "scripts": {
       "clean": "ionic-app-scripts clean",
@@ -26,13 +27,29 @@ npm manifest:
       "ionic:build": "ionic-app-scripts build",
       "ionic:serve": "ionic-app-scripts serve",
       "build:prod": "shx rm -rf www/* && npm run build --prod && node ./cache-busting.js && workbox injectManifest",
+      "run:android": "ionic cordova run android --prod",
       "serve:prod": "npm run build:prod && firebase serve",
-      "deploy:prod": "firebase use default && npm run build:prod && firebase deploy",
-      "deploy:staging": "firebase use staging && npm run build:prod && firebase deploy"
+      "deploy:prod": "firebase use master && npm run build:prod && firebase deploy",
+      "deploy:staging": "firebase use staging && npm run build:prod && firebase deploy",
+      "open": "http-server www -o -a localhost -p 1234",
+      "firebase:deployProd": "firebase use master && firebase deploy",
+      "android:build": "npm run build:prod && cordova build android --prod --release",
+      "android:sign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore  %npm_package_config_keystorePath% %npm_package_config_androidunsignedpath%  %npm_package_config_aliasname%",
+      "android:zip": "%npm_package_config_zipalignpath% -v -p 4 %npm_package_config_androidunsignedpath% %npm_package_config_androidreleasepath%/%npm_package_version%.signed.apk",
+      "android:openfolder": "%SystemRoot%/explorer.exe C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\platforms\\android\\app\\build\\outputs\\apk\\armv7\\release",
+      "android:release": "npm run android:build && npm run android:sign && android:zip && android:openfolder"
   ***REMOVED***,
     "config": {
       "ionic_copy": "./config/copy.config.js",
-      "ionic_webpack": "./config/webpack.config.js"
+      "ionic_webpack": "./config/webpack.config.js",
+      "ionic_generate_source_map": "true",
+      "release_path": "platforms/android/app/build/outputs/apk/armv7/release",
+      "zipalignpath": "C:\\Users\\chris\\AppData\\Local\\Android\\sdk\\build-tools\\26.0.2\\zipalign",
+      "appPath": "C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\platforms\\android\\app\\build\\outputs\\apk\\armv7\\release",
+      "keystorePath": "picsaextensiontoolkit.keystore",
+      "androidunsignedpath": "platforms/android/app/build/outputs/apk/armv7/release/app-armv7-release-unsigned.apk",
+      "androidreleasepath": "platforms/android/app/build/outputs/apk/armv7/release",
+      "aliasname": "picsaextensiontoolkit"
   ***REMOVED***,
     "dependencies": {
       "@angular-redux/store": "9",
@@ -46,18 +63,23 @@ npm manifest:
       "@angular/platform-browser-dynamic": "6.0.4",
       "@firebase/webchannel-wrapper": "^0.2.8",
       "@ionic-native/core": "4.7.0",
-      "@ionic-native/file": "4.7.0",
+      "@ionic-native/file": "^4.7.0",
       "@ionic-native/file-opener": "4.7.0",
       "@ionic-native/network": "4.7.0",
       "@ionic-native/splash-screen": "4.7.0",
       "@ionic-native/status-bar": "4.7.0",
+      "@ionic/app-scripts": "^3.1.11",
       "@ionic/storage": "^2.1.3",
-      "angularfire2": "5.0.0-rc.10",
+      "@ngx-translate/core": "^10.0.2",
+      "@ngx-translate/http-loader": "^3.0.1",
+      "angularfire2": "5.0.0-rc.11",
       "c3": "^0.6.2",
-      "cordova-android": "^7.1.0",
-      "cordova-android-support-gradle-release": "^1.4.3",
+      "canvas2image": "^1.0.5",
+      "cordova-android": "~7.0.0",
+      "cordova-android-support-gradle-release": "^1.4.4",
       "cordova-plugin-compat": "^1.2.0",
       "cordova-plugin-console": "^1.1.0",
+      "cordova-plugin-crosswalk-webview": "^2.4.0",
       "cordova-plugin-device": "^2.0.2",
       "cordova-plugin-file": "^6.0.1",
       "cordova-plugin-file-opener2": "^2.0.19",
@@ -65,47 +87,46 @@ npm manifest:
       "cordova-plugin-splashscreen": "^5.0.2",
       "cordova-plugin-statusbar": "^2.4.2",
       "cordova-plugin-whitelist": "^1.3.3",
-      "cordova-sqlite-storage": "^2.3.2",
-      "firebase": "^5.0.4",
+      "file": "^0.2.2",
+      "firebase": "5.3.0",
       "flux-standard-action": "^2.0.3",
+      "html2canvas": "^1.0.0-alpha.12",
       "ionic-angular": "3.9.2",
-      "ionic-plugin-keyboard": "^2.2.1",
       "ionicons": "4.1.2",
       "leaflet": "1.3.1",
       "leaflet-ajax": "^2.1.0",
       "ng2-canvas-whiteboard": "^1.4.5",
+      "ngx-youtube-player": "^6.0.0",
       "papaparse": "^4.5.0",
       "pdfjs-dist": "^2.0.489",
       "promise-polyfill": "8.0.0",
+      "raven-js": "^3.26.4",
       "redux": "^4.0.0",
       "rxjs": "6.2.0",
-      "rxjs-compat": "^6.2.0",
+      "rxjs-compat": "6.2.0",
+      "survey-angular": "^1.0.33",
       "workbox-sw": "3.2.0",
       "zone.js": "0.8.26"
   ***REMOVED***,
     "devDependencies": {
       "@ionic/app-scripts": "^3.1.10",
+      "@types/c3": "^0.6.0",
+      "@types/html2canvas": "^0.0.35",
+      "@types/knockout": "^3.4.58",
       "@types/papaparse": "4.1.34",
       "@types/request": "2.47.0",
       "http-server": "^0.11.1",
       "prettier": "^1.13.5",
       "rev-hash": "^2.0.0",
       "shx": "^0.3.0",
+      "sw-toolbox": "^3.6.0",
       "tslint": "^5.10.0",
       "tslint-config-prettier": "^1.13.0",
       "typescript": "2.7.2",
       "webpack-manifest-plugin": "^2.0.3",
-      "workbox-cli": "3.2.0"
+      "workbox-cli": "3.2.0",
+      "workbox-webpack-plugin": "^3.2.0"
   ***REMOVED***,
-    "cordovaPlugins": [
-      "cordova-plugin-whitelist",
-      "cordova-plugin-console",
-      "cordova-plugin-statusbar",
-      "cordova-plugin-device",
-      "cordova-plugin-splashscreen",
-      "ionic-plugin-keyboard"
-    ],
-    "cordovaPlatforms": [],
     "description": "picsa-extension-toolkit: For use by extension training with PICSA",
     "cordova": {
       "platforms": [
@@ -115,16 +136,15 @@ npm manifest:
         "cordova-plugin-network-information": {},
         "cordova-plugin-splashscreen": {},
         "cordova-plugin-statusbar": {},
-        "cordova-sqlite-storage": {},
         "cordova-plugin-device": {},
         "cordova-plugin-whitelist": {},
-        "ionic-plugin-keyboard": {},
         "cordova-plugin-console": {},
         "cordova-plugin-file-opener2": {},
-        "cordova-plugin-file": {},
         "cordova-android-support-gradle-release": {
           "ANDROID_SUPPORT_VERSION": "26.+"
-      ***REMOVED***
+      ***REMOVED***,
+        "cordova-plugin-crosswalk-webview": {},
+        "cordova-plugin-file": {}
     ***REMOVED***
   ***REMOVED***
 ***REMOVED***
@@ -215,23 +235,23 @@ Lockfile:
       tslib "1.9.0"
       xmlhttprequest "1.8.0"
   
-  "@firebase/auth-types@0.3.3":
-    version "0.3.3"
-    resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.3.3.tgz#950a68bdae1e1e37ece054ff69ee0082c5ecabab"
+  "@firebase/auth-types@0.3.4":
+    version "0.3.4"
+    resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.3.4.tgz#253b1b2d9b520a0b945d4617c8418f0f19a4159f"
   
-  "@firebase/auth@0.5.3":
-    version "0.5.3"
-    resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.5.3.tgz#4f0d83cd5a7c173d3a7a06f904bb1084acd8a0c4"
+  "@firebase/auth@0.7.1":
+    version "0.7.1"
+    resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.7.1.tgz#4cfaf4cc3d164cfcb10cf01ce46610de3fa0fc11"
     dependencies:
-      "@firebase/auth-types" "0.3.3"
+      "@firebase/auth-types" "0.3.4"
   
   "@firebase/database-types@0.3.2":
     version "0.3.2"
     resolved "https://registry.yarnpkg.com/@firebase/database-types/-/database-types-0.3.2.tgz#70611a64dd460e0e253c7427f860d56a1afd86fe"
   
-  "@firebase/database@0.3.3":
-    version "0.3.3"
-    resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.3.3.tgz#01123d4e0f8cb020e685ead27d795ef8794b2991"
+  "@firebase/database@0.3.4":
+    version "0.3.4"
+    resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.3.4.tgz#67fd48ed6d8fffc81c6c6f8e68bde70b99ba8ca9"
     dependencies:
       "@firebase/database-types" "0.3.2"
       "@firebase/logger" "0.1.1"
@@ -239,29 +259,29 @@ Lockfile:
       faye-websocket "0.11.1"
       tslib "1.9.0"
   
-  "@firebase/firestore-types@0.4.3":
-    version "0.4.3"
-    resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-0.4.3.tgz#0baa4f68aa8889474f582320af577f1e9a78fab6"
+  "@firebase/firestore-types@0.5.0":
+    version "0.5.0"
+    resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-0.5.0.tgz#dbf3aec64c0dfe2855038decb082059455b41a30"
   
-  "@firebase/firestore@0.5.4":
-    version "0.5.4"
-    resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.5.4.tgz#26f67fa038ffd74ef849019728c59d4a5590a324"
+  "@firebase/firestore@0.6.0":
+    version "0.6.0"
+    resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.6.0.tgz#57ca88d1f700296ecbe6e10000513b3cd7512a96"
     dependencies:
-      "@firebase/firestore-types" "0.4.3"
+      "@firebase/firestore-types" "0.5.0"
       "@firebase/logger" "0.1.1"
       "@firebase/webchannel-wrapper" "0.2.8"
       grpc "1.11.3"
       tslib "1.9.0"
   
-  "@firebase/functions-types@0.1.3":
-    version "0.1.3"
-    resolved "https://registry.yarnpkg.com/@firebase/functions-types/-/functions-types-0.1.3.tgz#17bc08a51f92b4eb5d1498f18b363f6c0e3a2df8"
+  "@firebase/functions-types@0.2.0":
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/@firebase/functions-types/-/functions-types-0.2.0.tgz#936d3f77957431a8ef1817975fee26464575802b"
   
-  "@firebase/functions@0.2.4":
-    version "0.2.4"
-    resolved "https://registry.yarnpkg.com/@firebase/functions/-/functions-0.2.4.tgz#4d7acbc1feb8a1503f12072e40ea797d42bdb6b7"
+  "@firebase/functions@0.3.0":
+    version "0.3.0"
+    resolved "https://registry.yarnpkg.com/@firebase/functions/-/functions-0.3.0.tgz#61fbf0ec7fb997c1cd5c726cc16171fa32a9fd3b"
     dependencies:
-      "@firebase/functions-types" "0.1.3"
+      "@firebase/functions-types" "0.2.0"
       "@firebase/messaging-types" "0.2.3"
       isomorphic-fetch "2.2.1"
       tslib "1.9.0"
@@ -274,9 +294,9 @@ Lockfile:
     version "0.2.3"
     resolved "https://registry.yarnpkg.com/@firebase/messaging-types/-/messaging-types-0.2.3.tgz#ed2949129dc5b3b0adff23ae1e1010bc7806f974"
   
-  "@firebase/messaging@0.3.4":
-    version "0.3.4"
-    resolved "https://registry.yarnpkg.com/@firebase/messaging/-/messaging-0.3.4.tgz#374d8e19e8fa900d81bc30f5d4e8946bd1c336a7"
+  "@firebase/messaging@0.3.5":
+    version "0.3.5"
+    resolved "https://registry.yarnpkg.com/@firebase/messaging/-/messaging-0.3.5.tgz#a77fcd0e4f0b404a974493a24a91ab35bc3bad46"
     dependencies:
       "@firebase/messaging-types" "0.2.3"
       "@firebase/util" "0.2.1"
@@ -319,9 +339,9 @@ Lockfile:
     version "4.7.0"
     resolved "https://registry.yarnpkg.com/@ionic-native/file-opener/-/file-opener-4.7.0.tgz#ad38228574649934ef9e6f55b89ca6d9dcf00465"
   
-  "@ionic-native/file@4.7.0":
-    version "4.7.0"
-    resolved "https://registry.yarnpkg.com/@ionic-native/file/-/file-4.7.0.tgz#9f3e0c3250320607d6a6259a92a4a3ff7ad7831c"
+  "@ionic-native/file@^4.7.0":
+    version "4.15.0"
+    resolved "https://registry.yarnpkg.com/@ionic-native/file/-/file-4.15.0.tgz#0da0b1a3580536766108f0742c5bc30685fd4773"
   
   "@ionic-native/network@4.7.0":
     version "4.7.0"
@@ -335,9 +355,9 @@ Lockfile:
     version "4.7.0"
     resolved "https://registry.yarnpkg.com/@ionic-native/status-bar/-/status-bar-4.7.0.tgz#f292bf67c2d5fef43b1fc7b442f5bc75139cc8e3"
   
-  "@ionic/app-scripts@^3.1.10":
-    version "3.1.10"
-    resolved "https://registry.yarnpkg.com/@ionic/app-scripts/-/app-scripts-3.1.10.tgz#222c5b9388d9c441d7649beef25edb3157c2d72d"
+  "@ionic/app-scripts@^3.1.11":
+    version "3.1.11"
+    resolved "https://registry.yarnpkg.com/@ionic/app-scripts/-/app-scripts-3.1.11.tgz#21e403930699d84d267763a82c88005657a1c2d6"
     dependencies:
       "@angular-devkit/build-optimizer" "0.0.35"
       autoprefixer "^7.2.6"
@@ -373,6 +393,18 @@ Lockfile:
       "@types/localforage" "0.0.30"
       localforage "~1.4.2"
       localforage-cordovasqlitedriver "~1.5.0"
+  
+  "@ngx-translate/core@^10.0.2":
+    version "10.0.2"
+    resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-10.0.2.tgz#5eeb78f47845b476a1e892fb2fb153dbbaf72850"
+    dependencies:
+      tslib "^1.9.0"
+  
+  "@ngx-translate/http-loader@^3.0.1":
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-3.0.1.tgz#20b0f98bc6c25321129d3e3302ab3cc489c0a42a"
+    dependencies:
+      tslib "^1.9.0"
   
   "@types/c3@^0.6.0":
     version "0.6.0"
@@ -567,8 +599,28 @@ Lockfile:
       "@types/node" "*"
   
   "@types/geojson@*":
-    version "1.0.5"
-    resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.5.tgz#ef9f12277233399c7f32086818a56a84c8952f8f"
+    version "7946.0.4"
+    resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.4.tgz#4e049756383c3f055dd8f3d24e63fb543e98eb07"
+  
+  "@types/html2canvas@^0.0.35":
+    version "0.0.35"
+    resolved "https://registry.yarnpkg.com/@types/html2canvas/-/html2canvas-0.0.35.tgz#a009681a3207a7a8302e65de034ff8d42c949cf7"
+    dependencies:
+      "@types/jquery" "*"
+  
+  "@types/jquery@*":
+    version "3.3.19"
+    resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.19.tgz#ebb1e86c89e8e6fe2797bf3206843a114831958b"
+    dependencies:
+      "@types/sizzle" "*"
+  
+  "@types/knockout@3.4.46":
+    version "3.4.46"
+    resolved "https://registry.yarnpkg.com/@types/knockout/-/knockout-3.4.46.tgz#e8bf3c356524f4b4b6b4e4159da363e49e826468"
+  
+  "@types/knockout@^3.4.58":
+    version "3.4.58"
+    resolved "https://registry.yarnpkg.com/@types/knockout/-/knockout-3.4.58.tgz#a7cbb98b5b13ebd47936d9c826f4a9f7270694ba"
   
   "@types/localforage@0.0.30":
     version "0.0.30"
@@ -591,9 +643,17 @@ Lockfile:
       "@types/node" "*"
       "@types/tough-cookie" "*"
   
+  "@types/sizzle@*":
+    version "2.3.2"
+    resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
+  
   "@types/tough-cookie@*":
     version "2.3.3"
     resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.3.tgz#7f226d67d654ec9070e755f46daebf014628e9d9"
+  
+  "@types/youtube@0.0.32":
+    version "0.0.32"
+    resolved "https://registry.yarnpkg.com/@types/youtube/-/youtube-0.0.32.tgz#b53ebc75e6646d7dc46295b8eceb5f1e596f68ae"
   
   abbrev@1:
     version "1.1.1"
@@ -673,15 +733,15 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   
-  android-versions@^1.3.0:
+  android-versions@^1.2.1:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/android-versions/-/android-versions-1.3.0.tgz#ce6f3eae2e165ce4ed49b89beb68014741093044"
     dependencies:
       semver "^5.4.1"
   
-  angularfire2@5.0.0-rc.10:
-    version "5.0.0-rc.10"
-    resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-5.0.0-rc.10.tgz#8220cfa30414dc256482b7173aee664d9855039e"
+  angularfire2@5.0.0-rc.11:
+    version "5.0.0-rc.11"
+    resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-5.0.0-rc.11.tgz#697c43bf8e74fe5b27afa436e35dad9bae54a744"
   
   ansi-align@^2.0.0:
     version "2.0.0"
@@ -870,13 +930,17 @@ Lockfile:
     version "0.1.1"
     resolved "https://registry.yarnpkg.com/base62/-/base62-0.1.1.tgz#7b4174c2f94449753b11c2651c083da841a7b084"
   
+  base64-arraybuffer@^0.1.5:
+    version "0.1.5"
+    resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz#73926771923b5a19747ad666aa5cd4bf9c6e9ce8"
+  
+  base64-js@1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
+  
   base64-js@^1.0.2:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.1.tgz#a91947da1f4a516ea38e5b4ec0ec3773675e0886"
-  
-  base64-js@^1.2.3:
-    version "1.3.0"
-    resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
   
   bcrypt-pbkdf@^1.0.0:
     version "1.0.1"
@@ -1121,6 +1185,10 @@ Lockfile:
     version "1.0.30000851"
     resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000851.tgz#3b498aebf9f92cf6cff4ab54d13b557c0b590533"
   
+  canvas2image@^1.0.5:
+    version "1.0.5"
+    resolved "https://registry.yarnpkg.com/canvas2image/-/canvas2image-1.0.5.tgz#676a094b4363888a2b7662e58b9ce5d3bfbc9d14"
+  
   capture-stack-trace@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
@@ -1329,17 +1397,17 @@ Lockfile:
     version "0.3.1"
     resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   
-  cordova-android-support-gradle-release@^1.4.3:
-    version "1.4.3"
-    resolved "https://registry.yarnpkg.com/cordova-android-support-gradle-release/-/cordova-android-support-gradle-release-1.4.3.tgz#54d4ecc83bc4cc92d45237b6be9184b665e80645"
+  cordova-android-support-gradle-release@^1.4.4:
+    version "1.4.4"
+    resolved "https://registry.yarnpkg.com/cordova-android-support-gradle-release/-/cordova-android-support-gradle-release-1.4.4.tgz#6a64db69f36c332727d95b421d53c25dfe99684d"
     dependencies:
       xml2js "~0.4.19"
   
-  cordova-android@^7.1.0:
-    version "7.1.0"
-    resolved "https://registry.yarnpkg.com/cordova-android/-/cordova-android-7.1.0.tgz#1cd36ee7b9d19bad50d3e9842b731fe590924dd5"
+  cordova-android@~7.0.0:
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/cordova-android/-/cordova-android-7.0.0.tgz#c95bedfcfbc3863b180c4d29effec4f79361d19d"
     dependencies:
-      android-versions "^1.3.0"
+      android-versions "^1.2.1"
       cordova-common "^2.2.0"
       elementtree "0.1.6"
       nopt "^3.0.1"
@@ -1348,20 +1416,20 @@ Lockfile:
       shelljs "^0.5.3"
   
   cordova-common@^2.2.0:
-    version "2.2.3"
-    resolved "https://registry.yarnpkg.com/cordova-common/-/cordova-common-2.2.3.tgz#0c5e493a472baaea4651c093ec8165c7afb224bf"
+    version "2.2.5"
+    resolved "https://registry.yarnpkg.com/cordova-common/-/cordova-common-2.2.5.tgz#f93cef2ad494cfcbf56c46e3d612aaa9cb5fcc32"
     dependencies:
       ansi "^0.3.1"
       bplist-parser "^0.1.0"
       cordova-registry-mapper "^1.1.8"
-      elementtree "0.1.7"
-      glob "^7.1.2"
+      elementtree "0.1.6"
+      glob "^5.0.13"
       minimatch "^3.0.0"
-      plist "^3.0.1"
+      plist "^2.1.0"
       q "^1.4.1"
-      shelljs "^0.8.1"
-      strip-bom "^3.0.0"
+      shelljs "^0.5.3"
       underscore "^1.8.3"
+      unorm "^1.3.3"
   
   cordova-plugin-compat@^1.2.0:
     version "1.2.0"
@@ -1370,6 +1438,10 @@ Lockfile:
   cordova-plugin-console@^1.1.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/cordova-plugin-console/-/cordova-plugin-console-1.1.0.tgz#e2fbac10290179e44cb72c5fdbc410a531c1cd6d"
+  
+  cordova-plugin-crosswalk-webview@^2.4.0:
+    version "2.4.0"
+    resolved "https://registry.yarnpkg.com/cordova-plugin-crosswalk-webview/-/cordova-plugin-crosswalk-webview-2.4.0.tgz#90717bc4315c92d3182782fcba6b7ad89e532311"
   
   cordova-plugin-device@^2.0.2:
     version "2.0.2"
@@ -1402,16 +1474,6 @@ Lockfile:
   cordova-registry-mapper@^1.1.8:
     version "1.1.15"
     resolved "https://registry.yarnpkg.com/cordova-registry-mapper/-/cordova-registry-mapper-1.1.15.tgz#e244b9185b8175473bff6079324905115f83dc7c"
-  
-  cordova-sqlite-storage-dependencies@1.2.0:
-    version "1.2.0"
-    resolved "https://registry.yarnpkg.com/cordova-sqlite-storage-dependencies/-/cordova-sqlite-storage-dependencies-1.2.0.tgz#2eb6b2fb84e813306b44639ac804a5c63bed7bcb"
-  
-  cordova-sqlite-storage@^2.3.2:
-    version "2.3.2"
-    resolved "https://registry.yarnpkg.com/cordova-sqlite-storage/-/cordova-sqlite-storage-2.3.2.tgz#b87748d93dddfa65c82594fd3c35d62417fb2e18"
-    dependencies:
-      cordova-sqlite-storage-dependencies "1.2.0"
   
   core-js@2.5.5:
     version "2.5.5"
@@ -1507,6 +1569,12 @@ Lockfile:
   crypto-random-string@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
+  
+  css-line-break@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/css-line-break/-/css-line-break-1.0.1.tgz#19f2063a33e95fb2831b86446c0b80c188af450a"
+    dependencies:
+      base64-arraybuffer "^0.1.5"
   
   currently-unhandled@^0.4.1:
     version "0.4.1"
@@ -1867,12 +1935,6 @@ Lockfile:
     dependencies:
       sax "0.3.5"
   
-  elementtree@0.1.7:
-    version "0.1.7"
-    resolved "https://registry.yarnpkg.com/elementtree/-/elementtree-0.1.7.tgz#9ac91be6e52fb6e6244c4e54a4ac3ed8ae8e29c0"
-    dependencies:
-      sax "1.1.4"
-  
   elliptic@^6.0.0:
     version "6.4.0"
     resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.4.0.tgz#cac9af8762c85836187003c8dfe193e5e2eae5df"
@@ -2197,6 +2259,10 @@ Lockfile:
     dependencies:
       escape-string-regexp "^1.0.5"
   
+  file@^0.2.2:
+    version "0.2.2"
+    resolved "https://registry.yarnpkg.com/file/-/file-0.2.2.tgz#c3dfd8f8cf3535ae455c2b423c2e52635d76b4d3"
+  
   filename-regex@^2.0.0:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
@@ -2236,16 +2302,16 @@ Lockfile:
     dependencies:
       locate-path "^2.0.0"
   
-  firebase@^5.0.4:
-    version "5.0.4"
-    resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.0.4.tgz#f367c80531c1a8a4ef82b6537b2a6bd92685e226"
+  firebase@5.3.0:
+    version "5.3.0"
+    resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.3.0.tgz#cb1823142337646a4537144b25667a9b9c62f3b8"
     dependencies:
       "@firebase/app" "0.3.3"
-      "@firebase/auth" "0.5.3"
-      "@firebase/database" "0.3.3"
-      "@firebase/firestore" "0.5.4"
-      "@firebase/functions" "0.2.4"
-      "@firebase/messaging" "0.3.4"
+      "@firebase/auth" "0.7.1"
+      "@firebase/database" "0.3.4"
+      "@firebase/firestore" "0.6.0"
+      "@firebase/functions" "0.3.0"
+      "@firebase/messaging" "0.3.5"
       "@firebase/polyfill" "0.3.3"
       "@firebase/storage" "0.2.3"
   
@@ -2414,6 +2480,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-2.0.0.tgz#81383d72db054fcccf5336daa902f182f6edbb28"
     dependencies:
       is-glob "^2.0.0"
+  
+  glob@^5.0.13:
+    version "5.0.15"
+    resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
+    dependencies:
+      inflight "^1.0.4"
+      inherits "2"
+      minimatch "2 || 3"
+      once "^1.3.0"
+      path-is-absolute "^1.0.0"
   
   glob@^6.0.4:
     version "6.0.4"
@@ -2590,6 +2666,12 @@ Lockfile:
     version "2.5.0"
     resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
   
+  html2canvas@^1.0.0-alpha.12:
+    version "1.0.0-alpha.12"
+    resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-1.0.0-alpha.12.tgz#3b1992e3c9b3f56063c35fd620494f37eba88513"
+    dependencies:
+      css-line-break "1.0.1"
+  
   http-errors@1.6.2:
     version "1.6.2"
     resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.2.tgz#0a002cc85707192a7e7946ceedc11155f60ec736"
@@ -2759,10 +2841,6 @@ Lockfile:
   ionic-angular@3.9.2:
     version "3.9.2"
     resolved "https://registry.yarnpkg.com/ionic-angular/-/ionic-angular-3.9.2.tgz#75053e4a422aaae7d7cd668cc92cfd5cb29d38cc"
-  
-  ionic-plugin-keyboard@^2.2.1:
-    version "2.2.1"
-    resolved "https://registry.yarnpkg.com/ionic-plugin-keyboard/-/ionic-plugin-keyboard-2.2.1.tgz#f2a9e169bbe9b5522400347c9fd6d3467ee3fa12"
   
   ionicons@4.1.2:
     version "4.1.2"
@@ -3450,6 +3528,13 @@ Lockfile:
     version "1.4.5"
     resolved "https://registry.yarnpkg.com/ng2-canvas-whiteboard/-/ng2-canvas-whiteboard-1.4.5.tgz#ac7ae0a80deae863b63945fdb583e550ddc84708"
   
+  ngx-youtube-player@^6.0.0:
+    version "6.0.0"
+    resolved "https://registry.yarnpkg.com/ngx-youtube-player/-/ngx-youtube-player-6.0.0.tgz#9de46a98a7dc20eeadd0c0dec4d384f595704ca9"
+    dependencies:
+      "@types/youtube" "0.0.32"
+      tslib "^1.7.1"
+  
   node-ensure@^0.0.0:
     version "0.0.0"
     resolved "https://registry.yarnpkg.com/node-ensure/-/node-ensure-0.0.0.tgz#ecae764150de99861ec5c810fd5d096b183932a7"
@@ -3822,6 +3907,12 @@ Lockfile:
     version "0.1.7"
     resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   
+  path-to-regexp@^1.0.1:
+    version "1.7.0"
+    resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
+    dependencies:
+      isarray "0.0.1"
+  
   path-type@^1.0.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/path-type/-/path-type-1.1.0.tgz#59c44f7ee491da704da415da5a4070ba4f8fe441"
@@ -3879,12 +3970,12 @@ Lockfile:
     version "2.0.4"
     resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   
-  plist@^3.0.1:
-    version "3.0.1"
-    resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.1.tgz#a9b931d17c304e8912ef0ba3bdd6182baf2e1f8c"
+  plist@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/plist/-/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
     dependencies:
-      base64-js "^1.2.3"
-      xmlbuilder "^9.0.7"
+      base64-js "1.2.0"
+      xmlbuilder "8.2.2"
       xmldom "0.1.x"
   
   portfinder@^1.0.13:
@@ -4041,6 +4132,10 @@ Lockfile:
   range-parser@~1.2.0:
     version "1.2.0"
     resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
+  
+  raven-js@^3.26.4:
+    version "3.26.4"
+    resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.26.4.tgz#32aae3a63a9314467a453c94c89a364ea43707be"
   
   raw-body@2.3.2:
     version "2.3.2"
@@ -4397,7 +4492,7 @@ Lockfile:
     version "4.0.8"
     resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
   
-  rxjs-compat@^6.2.0:
+  rxjs-compat@6.2.0:
     version "6.2.0"
     resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.2.0.tgz#2eb49cc6ac20d0d7057c6887d1895beaab0966f9"
   
@@ -4435,10 +4530,6 @@ Lockfile:
   sax@0.3.5:
     version "0.3.5"
     resolved "https://registry.yarnpkg.com/sax/-/sax-0.3.5.tgz#88fcfc1f73c0c8bbd5b7c776b6d3f3501eed073d"
-  
-  sax@1.1.4:
-    version "1.1.4"
-    resolved "https://registry.yarnpkg.com/sax/-/sax-1.1.4.tgz#74b6d33c9ae1e001510f179a91168588f1aedaa9"
   
   sax@>=0.6.0, sax@^1.2.4:
     version "1.2.4"
@@ -4502,6 +4593,10 @@ Lockfile:
       escape-html "~1.0.3"
       parseurl "~1.3.2"
       send "0.16.2"
+  
+  serviceworker-cache-polyfill@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/serviceworker-cache-polyfill/-/serviceworker-cache-polyfill-4.0.0.tgz#de19ee73bef21ab3c0740a37b33db62464babdeb"
   
   set-blocking@^2.0.0, set-blocking@~2.0.0:
     version "2.0.0"
@@ -4754,6 +4849,19 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
     dependencies:
       has-flag "^3.0.0"
+  
+  survey-angular@^1.0.33:
+    version "1.0.33"
+    resolved "https://registry.yarnpkg.com/survey-angular/-/survey-angular-1.0.33.tgz#204816b56cc36e8d058775e0eaccec91b84a2b03"
+    dependencies:
+      "@types/knockout" "3.4.46"
+  
+  sw-toolbox@^3.6.0:
+    version "3.6.0"
+    resolved "https://registry.yarnpkg.com/sw-toolbox/-/sw-toolbox-3.6.0.tgz#26df1d1c70348658e4dea2884319149b7b3183b5"
+    dependencies:
+      path-to-regexp "^1.0.1"
+      serviceworker-cache-polyfill "^4.0.0"
   
   symbol-observable@^1.2.0:
     version "1.2.0"
@@ -5026,6 +5134,10 @@ Lockfile:
     version "0.1.1"
     resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.1.tgz#fa71badd4437af4c148841e3b3b165f9e9e590b7"
   
+  unorm@^1.3.3:
+    version "1.4.1"
+    resolved "https://registry.yarnpkg.com/unorm/-/unorm-1.4.1.tgz#364200d5f13646ca8bcd44490271335614792300"
+  
   unpipe@1.0.0, unpipe@~1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
@@ -5288,7 +5400,7 @@ Lockfile:
     dependencies:
       workbox-core "^3.2.0"
   
-  workbox-cli@^3.2.0:
+  workbox-cli@3.2.0:
     version "3.2.0"
     resolved "https://registry.yarnpkg.com/workbox-cli/-/workbox-cli-3.2.0.tgz#37d8406a7e2734c527e36278df2329c734f374d4"
     dependencies:
@@ -5350,6 +5462,13 @@ Lockfile:
     version "3.2.0"
     resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-3.2.0.tgz#ccda9adff557ba2233bf1837229144b4a86276cb"
   
+  workbox-webpack-plugin@^3.2.0:
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/workbox-webpack-plugin/-/workbox-webpack-plugin-3.2.0.tgz#eab74294e88d86f4356a5dbac98cd803b22142b3"
+    dependencies:
+      json-stable-stringify "^1.0.1"
+      workbox-build "^3.2.0"
+  
   worker-loader@^1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/worker-loader/-/worker-loader-1.1.1.tgz#920d74ddac6816fc635392653ed8b4af1929fd92"
@@ -5395,9 +5514,9 @@ Lockfile:
       sax ">=0.6.0"
       xmlbuilder "~9.0.1"
   
-  xmlbuilder@^9.0.7:
-    version "9.0.7"
-    resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
+  xmlbuilder@8.2.2:
+    version "8.2.2"
+    resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
   
   xmlbuilder@~9.0.1:
     version "9.0.4"
@@ -5501,67 +5620,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.26.tgz#7bdd72f7668c5a7ad6b118148b4ea39c59d08d2d"
 
 Trace: 
-  Error: C:\Apps\stats4sd\Picsa-Extension-Toolkit\node_modules\ursa: Command failed.
-  Exit code: 1
-  Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c node-gyp rebuild
-  Directory: C:\Apps\stats4sd\Picsa-Extension-Toolkit\node_modules\ursa
-  Output:
-  C:\Apps\stats4sd\Picsa-Extension-Toolkit\node_modules\ursa>if not defined npm_config_node_gyp (node "C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin\\..\..\node_modules\node-gyp\bin\node-gyp.js" rebuild )  else (node "" rebuild ) 
-  gyp info it worked if it ends with ok
-  gyp info using node-gyp@3.6.2
-  gyp info using node@8.11.1 | win32 | x64
-  gyp info spawn C:\Python27\python.exe
-  gyp info spawn args [ 'C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp\\gyp\\gyp_main.py',
-  gyp info spawn args   'binding.gyp',
-  gyp info spawn args   '-f',
-  gyp info spawn args   'msvs',
-  gyp info spawn args   '-G',
-  gyp info spawn args   'msvs_version=auto',
-  gyp info spawn args   '-I',
-  gyp info spawn args   'C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\node_modules\\ursa\\build\\config.gypi',
-  gyp info spawn args   '-I',
-  gyp info spawn args   'C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp\\addon.gypi',
-  gyp info spawn args   '-I',
-  gyp info spawn args   'C:\\Users\\chris\\.node-gyp\\8.11.1\\include\\node\\common.gypi',
-  gyp info spawn args   '-Dlibrary=shared_library',
-  gyp info spawn args   '-Dvisibility=default',
-  gyp info spawn args   '-Dnode_root_dir=C:\\Users\\chris\\.node-gyp\\8.11.1',
-  gyp info spawn args   '-Dnode_gyp_dir=C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp',
-  gyp info spawn args   '-Dnode_lib_file=C:\\Users\\chris\\.node-gyp\\8.11.1\\<(target_arch)\\node.lib',
-  gyp info spawn args   '-Dmodule_root_dir=C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\node_modules\\ursa',
-  gyp info spawn args   '-Dnode_engine=v8',
-  gyp info spawn args   '--depth=.',
-  gyp info spawn args   '--no-parallel',
-  gyp info spawn args   '--generator-output',
-  gyp info spawn args   'C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\node_modules\\ursa\\build',
-  gyp info spawn args   '-Goutput_dir=.' ]
-  gyp info spawn C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe
-  gyp info spawn args [ 'build/binding.sln',
-  gyp info spawn args   '/clp:Verbosity=minimal',
-  gyp info spawn args   '/nologo',
-  gyp info spawn args   '/p:Configuration=Release;Platform=x64' ]
-  Building the projects in this solution one at a time. To enable parallel build, please add the "/m" switch.
-  MSBUILD : error MSB3428: Could not load the Visual C++ component "VCBuild.exe". To fix this, 1) install the .NET Framework 2.0 SDK, 2) install Microsoft Visual Studio 2005 or 3) add the location of the component to the system path if it is installed elsewhere.  [C:\Apps\stats4sd\Picsa-Extension-Toolkit\node_modules\ursa\build\binding.sln]
-  gyp ERR! build error 
-  gyp ERR! stack Error: `C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe` failed with exit code: 1
-  gyp ERR! stack     at ChildProcess.onExit (C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\build.js:258:23)
-  gyp ERR! stack     at emitTwo (events.js:126:13)
-  gyp ERR! stack     at ChildProcess.emit (events.js:214:7)
-  gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)
-  gyp ERR! System Windows_NT 10.0.16299
-  gyp ERR! command "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js" "rebuild"
-  gyp ERR! cwd C:\Apps\stats4sd\Picsa-Extension-Toolkit\node_modules\ursa
-  gyp ERR! node -v v8.11.1
-  gyp ERR! node-gyp -v v3.6.2
-  gyp ERR! not ok
-      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
+  Error: https://registry.yarnpkg.com/@types%2fcanvas2image: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65019:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:132430:22)
       at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:925:16)
-      at Socket.stream.socket.on (internal/child_process.js:346:11)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:133413:10)
       at emitOne (events.js:116:13)
-      at Socket.emit (events.js:211:7)
-      at Pipe._handle.close [as _onclose] (net.js:567:12)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:133333:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
