@@ -8,8 +8,7 @@ import {
   IBudget,
   IBudgetCard,
   IBudgetPeriodData,
-  IBudgetViewMeta,
-  IBudgetMeta
+  IBudgetViewMeta
 } from "../../budget-tool.models";
 
 @Component({
@@ -125,17 +124,20 @@ export class BudgetCardListComponent implements OnDestroy {
     console.log("updating card list", type, data);
     const typeCards = this.NgRedux.getState().budget.meta[type];
     let allTypeCards = this.mergeCustomCards(typeCards, customCards);
-    // consumed should simply list outputs that have been produced
-    if (type == "produceConsumed") {
-      allTypeCards = this.getListOfPeriodOutputs();
-  ***REMOVED***
-    console.log("typeCards", typeCards);
-    console.log("allTypeCards", allTypeCards);
-    if (data && Object.keys(data).length > 0 && allTypeCards) {
+    if (
+      type != "produceConsumed" &&
+      data &&
+      Object.keys(data).length > 0 &&
+      allTypeCards
+    ) {
       // update cards according to what is saved
       allTypeCards = allTypeCards.map(c => {
         return data[c.id] ? data[c.id] : c;
     ***REMOVED***);
+  ***REMOVED***
+    // consumed should simply list outputs that have been produced
+    if (type == "produceConsumed") {
+      allTypeCards = this.getListOfPeriodOutputs();
   ***REMOVED***
     // use timeout so that cards can be properly destroyed and not repopulated if same field selected in different time period
     this.cards = null;

@@ -178,6 +178,7 @@ export const PB_MOCK_API_3: IBudget = {
           name: "crop",
           id: "crop",
           quantity: 5,
+          consumed: 2,
           cost: 3000,
           isSelected: true
       ***REMOVED***

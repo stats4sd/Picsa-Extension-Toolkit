@@ -47,6 +47,7 @@ export class BudgetDataCardComponent extends BudgetCardComponent
     this.selected = !this.selected;
 ***REMOVED***
   triggerUpdate(type: string) {
+    console.log("triggering update", this.card);
     this.card = this._convertStringsToNumbers(this.card);
     if (type == "inputs") {
       this.card = this._makeValuesNegative(this.card);
