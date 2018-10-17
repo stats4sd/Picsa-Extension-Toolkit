@@ -20,10 +20,16 @@ export class BudgetCellValueComponent implements OnDestroy {
     this._cost = cost;
     this.generateRepresentation();
 ***REMOVED***
+  @Input()
+  set consumed(consumed: number) {
+    this._consumed = consumed;
+    this.generateRepresentation();
+***REMOVED***
   @select(["budget", "active", "dotValues"])
   dotValues$: Observable<IBudgetDotValues>;
   _quantity: number;
   _cost: number;
+  _consumed: number;
   dotValues: IBudgetDotValues;
   dotsArray: number[];
   dotValueAllocation: any = baseAllocation;

@@ -2,11 +2,6 @@
   <div style="display: flex">
     <div style="width:100%">
       <budget-card-image [imageId]="card.id" [imageData]="card.customImg" (click)="cardClicked()" [type]="type"></budget-card-image>
-      <!-- <div *ngIf="card.custom">
-        <button ion-button icon-only>
-          <ion-icon name="create"></ion-icon>
-        </button>
-      </div> -->
     </div>
     <div *ngIf="selected">
       <div [ngSwitch]="type">
@@ -23,6 +18,7 @@
         </ion-list>
         <!-- outputs quantity and cost -->
         <ion-list *ngSwitchCase="'outputs'" class="card-inputs-list">
+          <div>Outputs</div>
           <ion-item>
             <ion-label stacked>How many units?</ion-label>
             <ion-input type="number" [(ngModel)]="card.quantity" (ionBlur)="triggerUpdate('outputs')"></ion-input>
@@ -30,6 +26,14 @@
           <ion-item>
             <ion-label stacked>Unit cost (MK)</ion-label>
             <ion-input id="unitCost" [(ngModel)]="card.cost" type="number" (ionBlur)="triggerUpdate('outputs')"></ion-input>
+          </ion-item>
+        </ion-list>
+        <!-- consumed -->
+        <ion-list *ngSwitchCase="'produceConsumed'" class="card-inputs-list">
+          <div>Consumed - You produced (x)</div>
+          <ion-item>
+            <ion-label stacked>How many consumed?</ion-label>
+            <ion-input type="number" [(ngModel)]="card.consumed" (ionBlur)="triggerUpdate('produceConsumed')"></ion-input>
           </ion-item>
         </ion-list>
         <!-- familyLabour -->
