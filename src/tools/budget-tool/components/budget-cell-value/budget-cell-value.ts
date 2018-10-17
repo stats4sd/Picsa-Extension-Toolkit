@@ -2,7 +2,6 @@ import { select } from "@angular-redux/store";
 import { Component, Input, OnDestroy } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { IBudgetDotValues } from "../../budget-tool.models";
-import { BudgetToolProvider } from "../../budget-tool.provider";
 
 @Component({
   selector: "budget-cell-value",
@@ -34,7 +33,7 @@ export class BudgetCellValueComponent implements OnDestroy {
   dotsArray: number[];
   dotValueAllocation: any = baseAllocation;
 
-  constructor(private budgetPrvdr: BudgetToolProvider) {
+  constructor() {
     this._addSubscribers();
   }
   ngOnDestroy() {
@@ -45,8 +44,12 @@ export class BudgetCellValueComponent implements OnDestroy {
   // given updates to cost or quantity split the total into components of the large, medium, small and half values
   // map these values to directed arrays to populate images in the pictorial representation
   generateRepresentation() {
+    console.log("generating representation", this._quantity, this._consumed);
     if (this._cost && this._quantity) {
-      const total = this._cost * this._quantity;
+      const quantity = this._consumed
+        ? this._quantity - this._consumed
+        : this._quantity;
+      const total = this._cost * quantity;
       const sign = total >= 0 ? "positive" : "negative";
       let toAllocate = Math.abs(total);
       // keep track of how many times each value is multiplied by to make total

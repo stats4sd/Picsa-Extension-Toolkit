@@ -71,6 +71,7 @@ export interface IBudgetCard {
   isSelected?: boolean;
   selectedIndex?: number;
   quantity?: number;
+  consumed?: number;
   cost?: number;
 }
 

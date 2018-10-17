@@ -118,7 +118,10 @@ export class BudgetOverviewComponent implements OnDestroy {
     if (cards && cards.length > 0) {
       cards.forEach(card => {
         if (card.quantity && card.cost) {
-          total = total + card.quantity * card.cost;
+          const quantity = card.consumed
+            ? card.quantity - card.consumed
+            : card.quantity;
+          total = total + quantity * card.cost;
         }
       });
     }
