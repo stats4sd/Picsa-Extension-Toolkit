@@ -37,13 +37,14 @@ export class SentryErrorHandler extends IonicErrorHandler {
       } catch (e) {}
     }
     console.error(error);
-    this.showErrorPage();
+    this.showErrorPage(error);
   }
   // show error page modal (max once if repeated errors)
-  showErrorPage() {
+  showErrorPage(error) {
     if (!this.errorDisplayOpen) {
       this.errorDisplayOpen = true;
-      const modal = this.modal.create("ErrorPage");
+      const modal = this.modal.create("ErrorPage", error);
+      modal.onDidDismiss(() => (this.errorDisplayOpen = false));
       modal.present();
     }
   }

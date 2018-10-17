@@ -24,7 +24,10 @@
       <!-- produce consumed -->
       <div *ngSwitchCase="'produceConsumed'" style="display: flex; flex-wrap: wrap">
         <div *ngFor="let card of _cellData">
-          <div>Consumed: card.id</div>
+          <div *ngIf="card.consumed">
+            <budget-card-image [class]="_cellData.length>1?'small':'medium'" [imageId]="card.id" [imageData]="card.customImg"></budget-card-image>
+            <budget-cell-value [quantity]="card.quantity" [cost]="card.cost" [consumed]="card.consumed"></budget-cell-value>
+          </div>
         </div>
       </div>
       <!-- default (activities) -->
@@ -34,7 +37,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!_cellData" class="add-cell-data">
+  <div *ngIf="!_cellData && type!='produceConsumed'" class="add-cell-data">
     <ion-icon name="add" class="add-cell-data-icon"></ion-icon>
   </div>
 </div>

@@ -8,7 +8,8 @@ import {
   IBudget,
   IBudgetCard,
   IBudgetPeriodData,
-  IBudgetViewMeta
+  IBudgetViewMeta,
+  IBudgetMeta
 } from "../../budget-tool.models";
 
 @Component({
@@ -21,6 +22,7 @@ export class BudgetCardListComponent implements OnDestroy {
   viewMeta$: Observable<IBudgetViewMeta>;
   cards: IBudgetCard[];
   periodData: IBudgetPeriodData;
+  viewMeta: IBudgetViewMeta;
   type: string;
   cardSubscriber$: Subscription;
 
@@ -34,6 +36,7 @@ export class BudgetCardListComponent implements OnDestroy {
     this._addSubscribers();
   }
   ngOnDestroy() {
+    console.log("card list destroyed");
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
   }
@@ -88,13 +91,14 @@ export class BudgetCardListComponent implements OnDestroy {
     // use events redux alone fails to trigger uipdate when period index changed
     // but type remains (e.g. activity 1 => activity 2)
     this.events.subscribe("cell:selected", meta => {
+      this.viewMeta = meta;
       console.log("cell selected", meta);
       this.cards = [];
       this._checkBudgetDataPath(meta.periodIndex, meta.type);
       // when type specified add subscriber to the list of cards (including updates to custom)
       // to generate list on update
-      console.log("building cards subscriber");
-      this.cardSubscriber$ = this.NgRedux.select(["budget", "meta", meta.type])
+      console.log("building cards subscriber", meta.type);
+      this.NgRedux.select(["budget", "meta", meta.type])
         .takeUntil(this.componentDestroyed)
         .subscribe(cards => {
           console.log("cards updated", cards);
@@ -116,14 +120,17 @@ export class BudgetCardListComponent implements OnDestroy {
   // when the related budget period is updated want to filter all cards by type and update which
   // are already selected and any other meta data (e.g. input quantities)
   updateCardList(customCards?) {
-    let type = this.type;
+    const type = this.type;
     const data = this.periodData;
-    // replace consumed cards with outputs (allow full list in case of consumption before full output harvested)
-    if (type == "produceConsumed") {
-      type = "outputs";
-    }
-    const typeCards = this.NgRedux.getState().budget.meta[this.type];
+    console.log("updating card list", type, data);
+    const typeCards = this.NgRedux.getState().budget.meta[type];
     let allTypeCards = this.mergeCustomCards(typeCards, customCards);
+    // consumed should simply list outputs that have been produced
+    if (type == "produceConsumed") {
+      allTypeCards = this.getListOfPeriodOutputs();
+    }
+    console.log("typeCards", typeCards);
+    console.log("allTypeCards", allTypeCards);
     if (data && Object.keys(data).length > 0 && allTypeCards) {
       // update cards according to what is saved
       allTypeCards = allTypeCards.map(c => {
@@ -135,6 +142,35 @@ export class BudgetCardListComponent implements OnDestroy {
     setTimeout(() => {
       this.cards = allTypeCards;
     }, 100);
+  }
+
+  // return list of outputs for current period (used for produce consumed)
+  getListOfPeriodOutputs() {
+    try {
+      const outputsJson = this.NgRedux.getState().budget.active.data[
+        this.viewMeta.periodIndex
+      ].outputs;
+      return Object.values(outputsJson);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // iterate over all budget periods and reduce any outputs to a single array
+  getListOfAllOutputs() {
+    try {
+      const budgetData: IBudgetPeriodData = this.NgRedux.getState().budget
+        .active.data;
+      console.log("values", Object.values(budgetData));
+      const outputs = Object.values(budgetData).map(v => {
+        return v.outputs ? Object.values(v.outputs) : [];
+      });
+      const list = [].concat.apply([], outputs);
+      console.log("list", list);
+      return [];
+    } catch (error) {
+      return [];
+    }
   }
 
   // merge custom type cards with hard-coded type cards

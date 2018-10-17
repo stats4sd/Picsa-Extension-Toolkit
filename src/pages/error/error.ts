@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavParams, ViewController } from "ionic-angular";
 
+/* Error handler popup page - can be tested by uncommenting Error Test button in tools page */
 @IonicPage()
 @Component({
   selector: "page-error",
@@ -8,10 +9,20 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 })
 export class ErrorPage {
   reloading: boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  errorMessage: string;
+  constructor(public navParams: NavParams, public viewCtrl: ViewController) {
+    this.errorMessage = navParams.data;
+  }
 
   reloadPage() {
     this.reloading = true;
     window.location.reload();
   }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
+  // display main message from error log to allow remote troubleshooting
+  showMoreInfo() {}
 }
