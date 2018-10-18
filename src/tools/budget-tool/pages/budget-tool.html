@@ -8,9 +8,9 @@
           [disabled]="!budget" [class.active]="(viewComponent$ | async)== view.component">
           <ion-icon [name]="view.icon" [attr.icon]="view.icon"></ion-icon>
         </button>
-        <button [disabled]="budgetDownloading" ion-button icon-left clear (click)="downloadBudget()" *ngIf="(viewComponent$ | async) =='overview'">
-          <ion-icon name="download" attr.icon="download"></ion-icon>
-          {{budgetDownloadMessage ? budgetDownloadMessage : 'Download'}}
+        <button [disabled]="shareDisabled" ion-button icon-left clear (click)="shareBudget()" *ngIf="(viewComponent$ | async) =='overview'">
+          <ion-icon name="share" attr.icon="share"></ion-icon>
+          {{budgetDownloadMessage ? budgetDownloadMessage : 'Share'}}
         </button>
         <button ion-button icon-only clear style="color: black" navPop>
           <ion-icon name="close"></ion-icon>

@@ -28,7 +28,7 @@ export class BudgetToolPage implements OnDestroy {
     { component: "settings", title: "Settings", icon: "settings" }
     // { component: "export", title: "Share Budget", icon: "share" }
   ];
-  budgetDownloading: boolean;
+  sharedDisabled: boolean;
   budgetDownloadMessage: string;
   constructor(
     private translations: TranslationsProvider,
@@ -62,16 +62,16 @@ export class BudgetToolPage implements OnDestroy {
       this.events.publish("calculate:budget");
     }
   }
-  async downloadBudget() {
-    this.budgetDownloading = true;
+  async shareBudget() {
+    this.sharedDisabled = true;
     try {
       this.budgetDownloadMessage = "preparing";
-      await this.printPrvdr.print("#budget", this.budget.title);
+      await this.printPrvdr.socialShareBudget("#budget", this.budget.title);
       this.budgetDownloadMessage = null;
     } catch (error) {
       console.error(error);
       this.budgetDownloadMessage = "error";
     }
-    this.budgetDownloading = false;
+    this.sharedDisabled = false;
   }
 }
