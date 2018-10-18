@@ -38,17 +38,17 @@ const resources: IResource[] = [
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpotential-PICSA-training-schedule.pdf?alt=media&token=618737d1-949b-467a-9f28-1dcc35ce3c8c"
 ***REMOVED***,
-  {
-    _key: "AJ8B7Ka0EaTaeWdzChac",
-    name: "Seasonal Forecast Blantyre",
-    filename: "seasonal-forecast-blantyre.pdf",
-    type: "pdf",
-    image: "assets/resources/seasonal-forecast-blantyre-cover.png",
-    group: "Documents",
-    viewableBy: ["wfp-2017"],
-    weblink:
-      "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-blantyre.pdf?alt=media&token=6ba42494-4c23-409f-ac55-f2fa8b3043ea"
-***REMOVED***,
+  // {
+  //   _key: "AJ8B7Ka0EaTaeWdzChac",
+  //   name: "Seasonal Forecast Blantyre",
+  //   filename: "seasonal-forecast-blantyre.pdf",
+  //   type: "pdf",
+  //   image: "assets/resources/seasonal-forecast-blantyre-cover.png",
+  //   group: "Documents",
+  //   viewableBy: ["wfp-2017"],
+  //   weblink:
+  //     "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-blantyre.pdf?alt=media&token=6ba42494-4c23-409f-ac55-f2fa8b3043ea"
+  // },
   {
     _key: "m6I8TfROsyr5Wp73BcAd",
     name: "RAM Refresher",
@@ -59,6 +59,16 @@ const resources: IResource[] = [
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fram-refresher.mp4?alt=media&token=27939a71-0656-440b-8407-24877acaeede",
     youtubeID: "Kw5UznKvCN8"
+***REMOVED***,
+  {
+    _key: "Yx8927IVTGyM1C4njOIv",
+    name: "Seasonal Forecast Mangochi 2017-2018",
+    filename: "seasonal-forecast-mangochi-2017-2018.pdf",
+    type: "pdf",
+    image: "assets/resources/seasonal-forecast-mangochi-2017-2018.png",
+    group: "Documents",
+    weblink:
+      "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-mangochi-2017-2018.pdf?alt=media&token=c60180cd-8dcd-4d98-aa7e-48f37dc83849"
 ***REMOVED***
 ];
 

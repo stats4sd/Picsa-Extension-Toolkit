@@ -1,7 +1,6 @@
 import { select } from "@angular-redux/store";
 import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { File } from "@ionic-native/file";
-import { FileOpener } from "@ionic-native/file-opener";
 import {
   Content,
   IonicPage,
@@ -36,7 +35,6 @@ export class ResourcesPage implements OnDestroy {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private fileOpener: FileOpener,
     private file: File,
     public platform: Platform,
     private filePrvdr: FileService,
@@ -171,40 +169,14 @@ export class ResourcesPage implements OnDestroy {
   async openResource(resource: IResource) {
     this.activeResource = resource;
     if (!this.platform.is("cordova")) {
-      return this.openWebResource(resource);
+      return window.open(resource.weblink, "_blank");
   ***REMOVED*** else {
-      this.openCordovaResource(resource);
+      return this.filePrvdr.openFileCordova(
+        `${this.externalDir}picsa/${resource.filename}`
+      );
   ***REMOVED***
 ***REMOVED***
-
-  openCordovaResource(resource) {
-    const mimetype = this._getMimetype(resource.filename);
-    const filepath = `${this.externalDir}picsa/${resource.filename}`;
-    console.log("opening resource", filepath, mimetype);
-    this.fileOpener.open(filepath, mimetype).catch(err => console.error(err));
-***REMOVED***
-
-  openWebResource(resource) {
-    // open resource for browser or simulator version. Currently files manually added to firebase storage and url copied. In future could automate.
-    // refs: https://firebase.google.com/docs/storage/web/download-files
-    window.open(resource.weblink, "_blank");
-***REMOVED***
 }
-
-//   @ViewChild(Content) content: Content;
-
-// ngAfterViewInit() {
-//   const scrollID = location.hash.split("#")[3];
-//   if (scrollID) {
-//     console.log("scrolling to id", scrollID, this.content);
-//     this._scrollTo(scrollID);
-// ***REMOVED***
-// }
-// _scrollTo(id: string) {
-//   const yOffset = document.getElementById(id).offsetTop;
-//   this.content.scrollTo(0, yOffset, 2000);
-// }
-
 function _jsonObjectValues(json: any) {
   const values = [];
   for (const key in json) {

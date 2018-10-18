@@ -26,6 +26,12 @@ set NODE_ENV="production"&& ionic cordova run android --prod )
 
 ## General
 
+### Adding Resources
+
+Hard coded resources in the assets/resources folder (include cover image png with same file name .png)
+Hard coded meta data in providers/storage.data.ts, make sure to include viewableBy if not everybody
+Also upload to firebase storage for web link and populate /Resources firestore entry
+
 ## Troubleshooting:
 
 make sure all cli=s up to date

@@ -9,6 +9,7 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 // Ionic native modules
 import { File } from "@ionic-native/file";
+import { SocialSharing } from "@ionic-native/social-sharing";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Network } from "@ionic-native/network";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
@@ -99,6 +100,7 @@ import { PrintProvider } from "../providers/print";
     Network,
     FileOpener,
     File,
+    SocialSharing,
     StatusBar,
     FileService,
     FirestoreStorageProvider,

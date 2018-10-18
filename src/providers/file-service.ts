@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file";
+import { FileOpener } from "@ionic-native/file-opener";
 import { Platform } from "ionic-angular";
+import mimetypes from "./mimetypes";
 
 @Injectable()
 export class FileService {
@@ -10,7 +12,11 @@ export class FileService {
   externalDir: string;
   externalBackupDir: string;
 
-  constructor(public platform: Platform, private file: File) {
+  constructor(
+    public platform: Platform,
+    private file: File,
+    private fileOpener: FileOpener
+  ) {
     // want to keep functions out of constructor as sometimes initialise before
     // cordova ready. Better to call init function after platform ready
 ***REMOVED***
@@ -88,6 +94,8 @@ export class FileService {
         replace: true
     ***REMOVED***);
       console.log(filename, "written successfully");
+      // return filepath
+      return `${fileBase}picsa/${filename}`;
   ***REMOVED*** catch (error) {
       console.log("could not create or write file", error);
       throw new Error("could not create file");
@@ -108,5 +116,16 @@ export class FileService {
       console.error("could not read file", error);
       return null;
   ***REMOVED***
+***REMOVED***
+
+  async openFileCordova(filePath) {
+    const mimetype = this._getMimetype(filePath);
+    this.fileOpener.open(filePath, mimetype);
+***REMOVED***
+
+  _getMimetype(filename: string) {
+    const fileNameSplit = filename.split(".");
+    const extension: string = fileNameSplit[fileNameSplit.length - 1];
+    return mimetypes[extension];
 ***REMOVED***
 }
