@@ -3,6 +3,9 @@ budget-overview {
   // $cellHeight: calc((100vh - 118px) / 6);
   // also using fixed positioning so that download export has room to populate title
   // where navbar would be
+  .scroll-content {
+    background-color: white !important;
+  }
   .budget-container {
     position: fixed;
     top: 0;

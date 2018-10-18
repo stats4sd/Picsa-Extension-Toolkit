@@ -18,7 +18,7 @@ export class ChangelogPage {
     console.log("whatsapp group", this.whatsAppGroup);
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad ChangelogPage");
+  errorTest() {
+    throw new Error('Error received from "Error Test" button');
   }
 }
