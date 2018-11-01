@@ -3,6 +3,7 @@
 ## Building:
 
 Update version number in changelog/version, package.json and config.xml
+**if updated hard resources think need to update version in storage.data.ts**
 
 _Make sure datasets and metadata.json in assets/datasets (not available on git)_
 
@@ -18,6 +19,10 @@ _Update data from firebase database to budget-tool/data.ts and storage.data.ts_
 (also automatically deploys to staging on git commit)
 
 ### android
+
+Release build
+(update version in package.json, when prompted for pw Chris has, if fail due to warning continue steps from `npm run android:zip` and `npm run android:openfolder`)
+`npm run android:release`
 
 Test production version on android
 `npm run run:android`

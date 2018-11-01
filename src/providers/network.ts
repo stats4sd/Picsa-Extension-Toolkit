@@ -1,51 +1,48 @@
 import { Injectable } from "@angular/core";
 import { Network } from "@ionic-native/network";
+import { Platform } from "ionic-angular";
 
 @Injectable()
 export class NetworkProvider {
   online: boolean;
 
-  constructor(private network: Network) {
+  constructor(private network: Network, private platform: Platform) {
     console.log("Hello NetworkProvider Provider");
+  }
+  init() {
+    this.online = this.getNetworkStatus();
+    console.log("online?", this.online);
     this.subscribeToNetworkChanges();
   }
 
-  subscribeToNetworkChanges() {
-    const disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      console.log("network was disconnected :-(");
-      this.online = false;
-    });
-    const connectSubscription = this.network.onConnect().subscribe(() => {
-      console.log("network connected!");
-      this.online = true;
-      // We just got a connection but we need to wait briefly
-      // before we determine the connection type. Might need to wait.
-      // prior to doing any api requests as well.
-      setTimeout(() => {
-        if (this.network.type === "wifi") {
-          console.log("we got a wifi connection, woohoo!");
-        }
-      }, 3000);
-    });
+  getNetworkStatus() {
+    if (this.platform.is("cordova")) {
+      return this.network.type != "none";
+    } else {
+      return navigator.onLine;
+    }
   }
-}
 
-// syncPrepare() {
-//   console.log("preparing sync checks");
-//   return new Promise((resolve, reject) => {
-//     if (navigator.onLine == false || this.network.type == "none") {
-//       console.log("offline");
-//       reject({ code: 2, message: "no internet connection" });
-//     }
-//     if (this.firebaseID) {
-//       console.log("firebase id retrieved");
-//       resolve(this.firebaseID);
-//     } else {
-//       console.log("signing in");
-//       this.afAuth.auth
-//         .signInAnonymously()
-//         .catch(err => console.log("sign in error", err));
-//       reject({ code: 1, message: "please try again" });
-//     }
-//   });
-// }
+  subscribeToNetworkChanges() {
+    console.log("subscribing to network changes");
+    if (this.platform.is("cordova")) {
+      this.network.onDisconnect().subscribe(() => {
+        this.online = false;
+      });
+      this.network.onConnect().subscribe(() => {
+        this.online = true;
+      });
+    } else {
+      window.addEventListener("online", e => this.updateOnlineStatus(e));
+      window.addEventListener("offline", e => this.updateOnlineStatus(e));
+    }
+  }
+  updateOnlineStatus(e) {
+    this.online = true;
+  }
+  updateOfflineStatus(e) {
+    this.online = false;
+  }
+
+  updateReduxOnlineStatus() {}
+}
