@@ -33,7 +33,7 @@ export class SentryErrorHandler extends IonicErrorHandler {
         Raven.setExtraContext({
           appState: this.ngRedux.getState()
       ***REMOVED***);
-        Raven.captureException(error.originalError || error);
+        Raven.captureException(JSON.stringify(error.originalError) || error);
     ***REMOVED*** catch (e) {}
   ***REMOVED***
     console.error(error);

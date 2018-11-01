@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { Events, Nav, Platform } from "ionic-angular";
-import { FileService } from "../providers/providers";
+import { FileService, NetworkProvider } from "../providers/providers";
 import { StorageProvider } from "../providers/storage";
 import { UserProvider } from "../providers/user";
 
@@ -21,7 +21,8 @@ export class MyApp {
     private statusBar: StatusBar,
     private userPrvdr: UserProvider,
     private storagePrvdr: StorageProvider,
-    private filePrvdr: FileService
+    private filePrvdr: FileService,
+    private networkPrvdr: NetworkProvider
   ) {
     platform.ready().then(() => {
       console.log("platform ready");
@@ -35,6 +36,10 @@ export class MyApp {
       if (platform.is("cordova")) {
         this.mobileInit();
     ***REMOVED***
+      // no rush to initialise network
+      setTimeout(() => {
+        this.networkPrvdr.init();
+    ***REMOVED***, 5000);
   ***REMOVED***);
 ***REMOVED***
 

@@ -1,15 +1,10 @@
 budget-overview {
   // cell height needs to accomodate header, padding and potential scrollbar
   // $cellHeight: calc((100vh - 118px) / 6);
-  // also using fixed positioning so that download export has room to populate title
-  // where navbar would be
   .scroll-content {
     background-color: white !important;
 ***REMOVED***
   .budget-container {
-    position: fixed;
-    top: 0;
-    padding-top: 56px;
     display: flex;
     overflow: auto;
     height: 100%;
@@ -17,6 +12,12 @@ budget-overview {
     color: black;
     border-top: 2px solid black;
     border-left: 2px solid black;
+***REMOVED*** //  when printing want fixed positioning and top padding so that download export 
+  //  has room to populate title where navbar would be
+  .budget-container.print-mode {
+    position: fixed;
+    top: 0;
+    padding-top: 56px;
 ***REMOVED***
   .time-period {
     display: flex;

@@ -1,7 +1,7 @@
 export const fieldVisit = {
   _key: "farmerVisit",
   name: "Farmer Visit",
-  groups: ["u3EP0KB66MDcD3Ibom0o"],
+  // groups: ["u3EP0KB66MDcD3Ibom0o"],
   isActive: true,
   icon: "farmer-visit",
   surveyJson: {

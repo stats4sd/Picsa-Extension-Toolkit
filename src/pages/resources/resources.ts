@@ -69,29 +69,42 @@ export class ResourcesPage implements OnDestroy {
   // on load copy resources from app to external directory, checking directory exists first
   async initMobileStorageDirectory() {
     await this.translations.presentTranslatedLoader({
-      content: "Preapring Resources",
-      dismissOnPageChange: true,
+      content: "Preparing Resources",
+      dismissOnPageChange: false,
       enableBackdropDismiss: false
   ***REMOVED***);
-    this.externalDir = await this.filePrvdr.checkFileDirectoryExists();
+    this.externalDir = await this.filePrvdr
+      .checkFileDirectoryExists()
+      .catch(err => {
+        throw new Error(
+          `check file directory exists error: ${JSON.stringify(err)}`
+        );
+    ***REMOVED***);
     const appDir = this.filePrvdr.appDir;
-    const hardResources = await this._listHardResources();
-    const savedResources = await this.filePrvdr.listDirectory(
-      this.externalDir,
-      "picsa"
-    );
+    const hardResources = await this._listHardResources().catch(err => {
+      throw new Error(`list hard resources error: ${JSON.stringify(err)}`);
+  ***REMOVED***);
+    const savedResources = await this.filePrvdr
+      .listDirectory(this.externalDir, "picsa")
+      .catch(err => {
+        throw new Error(`list directory error: ${JSON.stringify(err)}`);
+    ***REMOVED***);
     // copy hard resources
     if (hardResources.length != savedResources.length) {
       for (const resource of hardResources) {
         {
           try {
             console.log("copying file", resource);
-            await this.file.copyFile(
-              `${appDir}www/assets/resources`,
-              resource.name,
-              `${this.externalDir}picsa`,
-              resource.name
-            );
+            await this.file
+              .copyFile(
+                `${appDir}www/assets/resources`,
+                resource.name,
+                `${this.externalDir}picsa`,
+                resource.name
+              )
+              .catch(err => {
+                throw new Error(`copy file error: ${JSON.stringify(err)}`);
+            ***REMOVED***);
             console.log("file copied succes");
         ***REMOVED*** catch (error) {
             console.log("file not copied", error, resource.name);
