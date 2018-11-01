@@ -37,6 +37,48 @@ Hard coded resources in the assets/resources folder (include cover image png wit
 Hard coded meta data in providers/storage.data.ts, make sure to include viewableBy if not everybody
 Also upload to firebase storage for web link and populate /Resources firestore entry
 
+### Database Backups
+
+Create subfolder for date
+`firestore-backup-restore --accountCredentials backups/firebase-service-key.json --backupPath backups/{date}`
+Additional flags: --plainJSONBackup (-L) (no type info)
+
+### Merge database files
+
+Create gulp file to hanle merge, e.g.
+
+```
+var gulp = require("gulp");
+var jsonConcat = require("gulp-json-concat");
+var jsonTransform = require("gulp-json-transform");
+
+gulp.task("merge", function() {
+  return gulp
+    .src("2018-10-22-plain/forms/farmerVisit/submissions/**/*.json")
+    .pipe(
+      jsonConcat("merged.json", function(data) {
+        return new Buffer(JSON.stringify(data));
+    ***REMOVED***)
+    )
+    .pipe(
+      jsonTransform(function(data, file) {
+        var arr = [];
+        for (let key in data) {
+          data[key]._key = key;
+          arr.push(data[key]);
+      ***REMOVED***
+        return arr;
+    ***REMOVED***)
+    )
+    .pipe(gulp.dest("./"));
+});
+```
+
+_./backups/mergeFormsGulp.js_
+
+Run the file
+`gulp merge --gulpfile backups/mergeFormsGulp.js`
+
 ## Troubleshooting:
 
 make sure all cli=s up to date
