@@ -13,6 +13,7 @@ import { IResource, IResourceGroup } from "../../models/models";
 import { FileService } from "../../providers/providers";
 import { TranslationsProvider } from "../../providers/translations";
 import mimetypes from "./mimetypes";
+import { REGIONAL_SETTINGS } from "../../environments/region.mw";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -138,6 +139,9 @@ export class ResourcesPage implements OnDestroy {
     //***add trigger for group change
     resources = resources.filter(r => {
       if (r.viewableBy && !r.viewableBy.includes("EXAMPLE")) {
+        return false;
+    ***REMOVED***
+      if (r.region && REGIONAL_SETTINGS.country === r.region) {
         return false;
     ***REMOVED***
       return true;
