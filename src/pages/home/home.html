@@ -1,26 +1,38 @@
-<ion-content class='content'>
+<ion-content class="content">
   <div class="top-bar" style="display: flex; justify-content: space-between">
     <language-select></language-select>
     <div class="version-info">
       <div>
-        <span style="font-weight: bold">v{{version.text}}</span>
-        <span style="font-size:smaller; margin-left:8px">({{version.date}})</span>
+        <span style="font-weight: bold">v{{ version.text }}</span>
+        <span style="font-size:smaller; margin-left:8px"
+          >({{ version.date }})</span
+        >
       </div>
-      <button ion-button clear block navPush="ChangelogPage">{{"What's New?" | translate}}</button>
+      <button ion-button clear block navPush="ChangelogPage">
+        {{ "What's New?" | translate }}
+      </button>
     </div>
   </div>
 
-  <div class="title">{{'PICSA' | translate}}</div>
-  <div class="subtitle">{{'Extension Toolkit' | translate}}</div>
+  <div class="title">{{ "PICSA" | translate }}</div>
+  <div class="subtitle">{{ subtitle | translate }}</div>
 
   <div class="link-holder">
-    <div *ngFor="let link of links" [navPush]="link.page" color="primary" class="link">
+    <div
+      *ngFor="let link of links"
+      [navPush]="link.page"
+      color="primary"
+      class="link"
+    >
       <div class="flex">
-        <ion-icon name="{{link.icon}}" *ngIf="link.icon"></ion-icon>
-        <img class="icon img-icon" [src]="'assets/img/'+link.img+'.svg'" *ngIf="link.img">
-        <div class="button-text">{{link.name | translate}}</div>
+        <ion-icon name="{{ link.icon }}" *ngIf="link.icon"></ion-icon>
+        <img
+          class="icon img-icon"
+          [src]="'assets/img/' + link.img + '.svg'"
+          *ngIf="link.img"
+        />
+        <div class="button-text">{{ link.name | translate }}</div>
       </div>
     </div>
   </div>
-
 </ion-content>

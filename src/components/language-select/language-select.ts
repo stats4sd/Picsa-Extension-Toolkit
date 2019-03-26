@@ -3,6 +3,7 @@ import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { Select } from "ionic-angular";
 import { Observable, Subject } from "rxjs";
 import { UserActions } from "../../actions/user.actions";
+import { REGIONAL_SETTINGS } from "../../environments/region";
 
 interface ILanguage {
   label: string;
@@ -14,16 +15,14 @@ interface ILanguage {
 })
 export class LanguageSelectComponent implements OnDestroy {
   private componentDestroyed: Subject<any> = new Subject();
-  languages: ILanguage[] = [
-    { label: "English", code: "en" },
-    { label: "Chichewa", code: "ny" }
-  ];
+  languages: ILanguage[] = REGIONAL_SETTINGS.languages;
   language: ILanguage;
   @select(["user", "lang"])
   readonly langCode$: Observable<string>;
   @ViewChild(Select) select: Select;
 
   constructor(private userActions: UserActions) {
+    console.log("langagues", this.languages);
     this.langCode$.takeUntil(this.componentDestroyed).subscribe(code => {
       if (code) {
         this.setLanguage(code, "redux");
@@ -35,7 +34,7 @@ export class LanguageSelectComponent implements OnDestroy {
 ***REMOVED***
   ngOnDestroy() {
     this.componentDestroyed.next();
-    this.componentDestroyed.unsubscribe();
+    this.componentDestroyed.complete();
 ***REMOVED***
   openLanguageSelect() {
     this.select.open();

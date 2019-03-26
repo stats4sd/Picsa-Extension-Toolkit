@@ -8,6 +8,7 @@ import {
 import { StorageProvider } from "../../providers/storage";
 import { TranslationsProvider } from "../../providers/translations";
 import version from "../changelog/version";
+import { REGIONAL_SETTINGS } from "../../environments/region";
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ export class HomePage {
   links: any;
   name: string;
   version = version;
+  subtitle: string = REGIONAL_SETTINGS.subtitle;
   constructor(
     public navCtrl: NavController,
     public storagePrvdr: StorageProvider,
