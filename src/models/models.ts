@@ -77,6 +77,7 @@ export interface IResource {
   weblink: string;
   viewableBy?: string[];
   group: string;
+  region?: regions;
   description?: string;
   youtubeID?: string;
   filepath?: string;
@@ -90,3 +91,5 @@ export interface IResourceGroup {
   name: string;
   resources: IResource[] | IVideoResource[];
 }
+
+export type regions = "Malawi" | "Kenya";

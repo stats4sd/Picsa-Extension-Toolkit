@@ -11,5 +11,5 @@ Thumbs.db
 .sourcemaps/
 src/assets/admin
 src/config/
-src/environments/**
+src/environments/environment.ts
 backups/
