@@ -3,5 +3,17 @@
     "default": "extension-toolkit",
     "master": "extension-toolkit",
     "staging": "extension-toolkit-staging"
+  },
+  "targets": {
+    "extension-toolkit": {
+      "hosting": {
+        "kenya": [
+          "picsa-kenya.firebaseapp.com"
+        ],
+        "malawi": [
+          "picsa-malawi.firebaseapp.com"
+        ]
+      }
+    }
   }
 }
