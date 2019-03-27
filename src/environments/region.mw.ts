@@ -5,5 +5,11 @@ export const REGIONAL_SETTINGS = {
     { label: "Chichewa", code: "ny" }
   ],
   currency: "MK",
+  currencyCounters: {
+    large: 50000,
+    medium: 10000,
+    small: 1000,
+    half: 500
+  },
   subtitle: "Extension Toolkit"
 };
