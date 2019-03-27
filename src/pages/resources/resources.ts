@@ -141,7 +141,7 @@ export class ResourcesPage implements OnDestroy {
       if (r.viewableBy && !r.viewableBy.includes("EXAMPLE")) {
         return false;
     ***REMOVED***
-      if (r.region && REGIONAL_SETTINGS.country === r.region) {
+      if (r.region && REGIONAL_SETTINGS.country !== r.region) {
         return false;
     ***REMOVED***
       return true;
