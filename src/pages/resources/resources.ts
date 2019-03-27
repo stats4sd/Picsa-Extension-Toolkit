@@ -13,7 +13,7 @@ import { IResource, IResourceGroup } from "../../models/models";
 import { FileService } from "../../providers/providers";
 import { TranslationsProvider } from "../../providers/translations";
 import mimetypes from "./mimetypes";
-import { REGIONAL_SETTINGS } from "../../environments/region.mw";
+import { REGIONAL_SETTINGS } from "../../environments/region";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
