@@ -9,6 +9,7 @@ import { BudgetToolProvider } from "../../budget-tool.provider";
 import { BUDGET_API_VERSION, upgradeBudget } from "../../budget.upgrade";
 import { defaults } from "../../data";
 import { PB_MOCK_API_2, PB_MOCK_API_3 } from "../../mocks/budget.mocks";
+import { REGIONAL_SETTINGS } from "../../../../environments/region.ke";
 
 @Component({
   selector: "budget-load",
@@ -56,12 +57,7 @@ export class BudgetLoadComponent implements OnDestroy {
       title: null,
       scale: null,
       enterpriseType: null,
-      dotValues: {
-        large: 50000,
-        medium: 10000,
-        small: 1000,
-        half: 500
-    ***REMOVED***
+      dotValues: REGIONAL_SETTINGS.currencyCounters
   ***REMOVED***;
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({

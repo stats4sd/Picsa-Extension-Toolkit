@@ -5,5 +5,11 @@ export const REGIONAL_SETTINGS = {
     { label: "Swahili", code: "sw" }
   ],
   currency: "KSH",
+  currencyCounters: {
+    large: 5000,
+    medium: 1000,
+    small: 100,
+    half: 50
+***REMOVED***,
   subtitle: "for Financial Service Providers"
 ***REMOVED***
