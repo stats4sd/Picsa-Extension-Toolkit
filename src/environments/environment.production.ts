@@ -1,5 +1,5 @@
 const e: IEnv = process.env as any;
-
+console.log("env", e);
 export const environment = {
   production: false,
   firebase: {
