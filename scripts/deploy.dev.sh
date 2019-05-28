@@ -9,4 +9,7 @@ echo 'Preparing Staging Deploy';
 cp ./src/environments/region.staging.ts ./src/environments/region.ts;
 cp ./src/theme/variables.staging.scss ./src/theme/variables.scss;
 
-firebase deploy
+# add staging project host
+# firebase target:apply hosting picsa-staging picsa-staging
+
+firebase deploy --only hosting:picsa-staging

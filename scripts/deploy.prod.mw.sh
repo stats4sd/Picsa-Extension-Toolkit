@@ -6,8 +6,8 @@ echo 'Preparing Malawi Project Deploy';
 cp ./src/environments/region.mw.ts ./src/environments/region.ts;
 cp ./src/theme/variables.mw.scss ./src/theme/variables.scss;
 
-# set malawi project host
-firebase target:apply hosting mw picsa-malawi
+# add malawi project host
+# firebase target:apply hosting picsa-malawi picsa-malawi
 
 # deploy
-firebase deploy
+firebase deploy --only hosting:picsa-malawi
