@@ -13,3 +13,4 @@ src/assets/admin
 src/config/
 src/environments/environment.ts
 backups/
+yarn-error.log
