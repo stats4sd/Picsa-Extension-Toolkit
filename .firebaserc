@@ -1,7 +1,6 @@
 {
   "projects": {
-    "default": "extension-toolkit",
-    "master": "extension-toolkit",
+    "production": "extension-toolkit",
     "staging": "extension-toolkit-staging"
   },
   "targets": {

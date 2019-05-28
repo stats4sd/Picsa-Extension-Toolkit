@@ -14,8 +14,18 @@ script:
 - firebase use staging
 - npm run build:prod
 deploy:
-  skip_cleanup: true
-  provider: firebase
-  token: $FIREBASE_TOKEN
-  message: "Firebase deploy success"
-  project: "extension-toolkit-staging"
+  - provider: script
+    script: bash scripts/deploy.dev.sh
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: script
+    script: bash scripts/deploy.prod.mw.sh
+    skip_cleanup: true
+    on:
+      branch: production-mw
+  - provider: script
+    script: bash scripts/deploy.prod.ke.sh
+    skip_cleanup: true
+    on:
+      branch: production-ke            
