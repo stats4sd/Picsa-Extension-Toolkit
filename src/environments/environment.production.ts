@@ -1,5 +1,5 @@
 const e: IEnv = process.env as any;
-
+console.log("env", e);
 ***REMOVED***
   production: false,
 ***REMOVED***
