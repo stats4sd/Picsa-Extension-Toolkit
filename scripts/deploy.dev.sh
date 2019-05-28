@@ -12,4 +12,4 @@ cp ./src/theme/variables.staging.scss ./src/theme/variables.scss;
 # add staging project host
 # firebase target:apply hosting picsa-staging picsa-staging
 
-firebase deploy --only hosting:picsa-staging
+firebase deploy

@@ -1,16 +1,37 @@
 {
-  "hosting": {
-    "public": "www",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-    ***REMOVED***
-    ]
-***REMOVED***
+  "hosting": [
+    {
+      "target": "picsa-staging",
+      "public": "www",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+      ***REMOVED***
+      ]
+  ***REMOVED***,
+    {
+      "target": "picsa-malawi",
+      "public": "www",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+      ***REMOVED***
+      ]
+  ***REMOVED***,
+    {
+      "target": "picsa-kenya",
+      "public": "www",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+      ***REMOVED***
+      ]
+  ***REMOVED***
+  ]
 }
