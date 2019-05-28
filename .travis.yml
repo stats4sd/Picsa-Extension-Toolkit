@@ -15,6 +15,8 @@ script:
 - if [ "$TRAVIS_BRANCH" = "master" ]; then bash scripts/prepare.staging.sh; fi
 - if [ "$TRAVIS_BRANCH" = "production-mw" ]; then bash scripts/prepare.mw.sh; fi
 - if [ "$TRAVIS_BRANCH" = "production-ke" ]; then bash scripts/prepare.ke.sh; fi
+# populate src/environments/base.ts with available environment variables
+- npm run env:set
 - npm run build:prod
 deploy:
   - provider: script
