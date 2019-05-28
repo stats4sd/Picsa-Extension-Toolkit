@@ -1,26 +1,20 @@
 {
   "targets": {
-    "staging": {
-      "hosting": {
-        "picsa-staging": [
-          "picsa-staging"
-        ]
-    ***REMOVED***
-  ***REMOVED***,
     "extension-toolkit": {
       "hosting": {
-        "picsa-kenya": [
-          "picsa-kenya"
-        ],
-        "picsa-malawi": [
-          "picsa-malawi"
-        ]
+        "picsa-kenya": ["picsa-kenya"],
+        "picsa-malawi": ["picsa-malawi"]
+    ***REMOVED***
+  ***REMOVED***,
+    "extension-toolkit-staging": {
+      "hosting": {
+        "picsa-staging": ["picsa-staging"]
     ***REMOVED***
   ***REMOVED***
 ***REMOVED***,
   "projects": {
-    "production": "extension-toolkit",
     "default": "extension-toolkit-staging",
-    "staging": "extension-toolkit-staging"
+    "staging": "extension-toolkit-staging",
+    "production": "extension-toolkit"
 ***REMOVED***
 }

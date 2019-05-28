@@ -4,6 +4,9 @@ firebase use staging
 # echo "firebase conf: $(firebase functions:config:get)"
 # deploy site, functions, rules etc.
 
+# set staging environment
+cp ./src/environments/environment.staging.ts ./src/environments/environment.ts;
+
 # set staging resources
 echo 'Preparing Staging Deploy';
 cp ./src/environments/region.staging.ts ./src/environments/region.ts;
@@ -12,4 +15,4 @@ cp ./src/theme/variables.staging.scss ./src/theme/variables.scss;
 # add staging project host
 # firebase target:apply hosting picsa-staging picsa-staging
 
-firebase deploy
+firebase deploy --only hosting:picsa-staging

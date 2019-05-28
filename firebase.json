@@ -12,7 +12,7 @@
       ]
   ***REMOVED***,
     {
-      "target": "picsa-malawi",
+      "target": "picsa-kenya",
       "public": "www",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
@@ -23,7 +23,7 @@
       ]
   ***REMOVED***,
     {
-      "target": "picsa-kenya",
+      "target": "picsa-malawi",
       "public": "www",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
