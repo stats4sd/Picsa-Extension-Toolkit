@@ -1,15 +1,15 @@
 export const REGIONAL_SETTINGS = {
-  country: "Kenya",
+  country: "Malawi",
   languages: [
     { label: "English", code: "en" },
-    { label: "Swahili", code: "sw" }
+    { label: "Chichewa", code: "ny" }
   ],
-  currency: "KSH",
+  currency: "MK",
   currencyCounters: {
-    large: 5000,
-    medium: 1000,
-    small: 100,
-    half: 50
+    large: 50000,
+    medium: 10000,
+    small: 1000,
+    half: 500
   },
-  subtitle: "for Financial Service Providers"
+  subtitle: "Extension Toolkit"
 };
