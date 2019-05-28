@@ -9,6 +9,11 @@
         "picsa-kenya": ["picsa-kenya"],
         "picsa-malawi": ["picsa-malawi"]
       }
+    },
+    "extension-toolkit-staging": {
+      "hosting": {
+        "picsa-staging": ["picsa-staging"],
+      }
     }
   }
 }
