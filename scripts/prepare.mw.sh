@@ -1,3 +1,6 @@
+# note, must ensure file has execute permission in repo
+# chmod +x .scripts/prepare.mw.sh
+
 # set production environment
 cp ./src/environments/environment.production.ts ./src/environments/environment.ts;
 

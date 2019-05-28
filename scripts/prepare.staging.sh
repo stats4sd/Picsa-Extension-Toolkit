@@ -1,3 +1,6 @@
+# note, must ensure file has execute permission in repo
+# chmod +x .scripts/prepare.staging.sh
+
 # set staging environment
 cp ./src/environments/environment.staging.ts ./src/environments/environment.ts;
 

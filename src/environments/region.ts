@@ -11,5 +11,5 @@ export const REGIONAL_SETTINGS = {
     small: 1000,
     half: 500
   },
-  subtitle: "Development Preview"
+  subtitle: "Extension Toolkit"
 };
