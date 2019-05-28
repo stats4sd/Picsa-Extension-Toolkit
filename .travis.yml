@@ -11,10 +11,10 @@ addons:
 before_script:
 - npm install -g firebase-tools
 script:
-# set branch assets
-- if [ "$TRAVIS_BRANCH" = "master" ]; then ./scripts/prepare.staging.sh; fi
-- if [ "$TRAVIS_BRANCH" = "production-mw" ]; then ./scripts/prepare.mw.sh; fi
-- if [ "$TRAVIS_BRANCH" = "production-ke" ]; then ./scripts/prepare.ke.sh; fi
+# set branch assets - use bash command as .sh files may not be executable
+- if [ "$TRAVIS_BRANCH" = "master" ]; then bash scripts/prepare.staging.sh; fi
+- if [ "$TRAVIS_BRANCH" = "production-mw" ]; then bash scripts/prepare.mw.sh; fi
+- if [ "$TRAVIS_BRANCH" = "production-ke" ]; then bash scripts/prepare.ke.sh; fi
 - npm run build:prod
 deploy:
   - provider: script
