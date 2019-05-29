@@ -16,8 +16,7 @@ script:
 - if [ "$TRAVIS_BRANCH" = "production-mw" ]; then bash scripts/prepare.mw.sh; fi
 - if [ "$TRAVIS_BRANCH" = "production-ke" ]; then bash scripts/prepare.ke.sh; fi
 # populate src/environments/base.ts with available production environment variables
-- if [[ "$TRAVIS_BRANCH" = "production-*" ]]; then bash scripts/prepare.ke.sh; fi
-- npm run env:set
+- if [[ "$TRAVIS_BRANCH" = "production-*" ]]; then npm run env:set; fi
 - cat ./src/environments/base.ts
 - npm run build:prod
 deploy:
