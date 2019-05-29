@@ -14,3 +14,4 @@ src/config/
 src/environments/environment.ts
 backups/
 yarn-error.log
+bfg.jar
