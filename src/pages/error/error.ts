@@ -12,16 +12,16 @@ export class ErrorPage {
   errorMessage: string;
   constructor(public navParams: NavParams, public viewCtrl: ViewController) {
     this.errorMessage = navParams.data;
-***REMOVED***
+  }
 
   reloadPage() {
     this.reloading = true;
     window.location.reload();
-***REMOVED***
+  }
 
   dismiss() {
     this.viewCtrl.dismiss();
-***REMOVED***
+  }
 
   // display main message from error log to allow remote troubleshooting
   showMoreInfo() {}

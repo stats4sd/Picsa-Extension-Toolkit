@@ -11,5 +11,5 @@ export class TabsPage {
   tab1Root: any = HomePage;
   constructor() {
 
-***REMOVED***
+  }
 }

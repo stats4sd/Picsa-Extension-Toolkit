@@ -46,12 +46,12 @@ export class Wrapper_QandAPage {
   constructor(p0:any) {
     this.changed = false;
     this.context = new import0.QandAPage(p0);
-***REMOVED***
+  }
   detectChangesInternal(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
     return changed;
-***REMOVED***
+  }
 }
 var renderType_QandAPage_Host:import2.RenderComponentType = (null as any);
 class _View_QandAPage_Host0 extends import1.AppView<any> {
@@ -60,7 +60,7 @@ class _View_QandAPage_Host0 extends import1.AppView<any> {
   _QandAPage_0_4:Wrapper_QandAPage;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_QandAPage_Host0,renderType_QandAPage_Host,import6.ViewType.HOST,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.selectOrCreateHostElement('page-qanda',rootSelector,(null as any));
     this._appEl_0 = new import3.AppElement(0,(null as any),this,this._el_0);
@@ -70,16 +70,16 @@ class _View_QandAPage_Host0 extends import1.AppView<any> {
     compView_0.create(this._QandAPage_0_4.context,this.projectableNodes,(null as any));
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return this._appEl_0;
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import0.QandAPage) && (0 === requestNodeIndex))) { return this._QandAPage_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._QandAPage_0_4.detectChangesInternal(this,this._el_0,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_QandAPage_Host0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   if ((renderType_QandAPage_Host === (null as any))) { (renderType_QandAPage_Host = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,([] as any[]),{})); }
@@ -121,7 +121,7 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
   /*private*/ _expr_3:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_QandAPage0,renderType_QandAPage,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'ion-header',(null as any));
@@ -208,7 +208,7 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import26.ToolbarTitle) && ((4 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._ToolbarTitle_4_4.context; }
     if (((token === import27.Navbar) && ((2 <= requestNodeIndex) && (requestNodeIndex <= 6)))) { return this._Navbar_2_4.context; }
@@ -217,7 +217,7 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     if (((token === import28.NgFor) && (13 === requestNodeIndex))) { return this._NgFor_13_6.context; }
     if (((token === import29.Content) && ((9 <= requestNodeIndex) && (requestNodeIndex <= 15)))) { return this._Content_9_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
     const currVal_0:any = 'picsa-qanda';
@@ -233,23 +233,23 @@ class _View_QandAPage0 extends import1.AppView<import0.QandAPage> {
     if (import4.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     const currVal_2:any = this._Navbar_2_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
       this._expr_2 = currVal_2;
-  ***REMOVED***
+    }
     const currVal_3:any = this._Content_9_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_3,currVal_3)) {
       this.renderer.setElementClass(this._el_9,'statusbar-padding',currVal_3);
       this._expr_3 = currVal_3;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }
-***REMOVED***
+  }
   destroyInternal():void {
     this._Content_9_4.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 export function viewFactory_QandAPage0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<import0.QandAPage> {
   if ((renderType_QandAPage === (null as any))) { (renderType_QandAPage = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,styles_QandAPage,{})); }
@@ -273,7 +273,7 @@ class _View_QandAPage1 extends import1.AppView<any> {
   /*private*/ _expr_7:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_QandAPage1,renderType_QandAPage,import6.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'div',(null as any));
     this.renderer.setElementAttribute(this._el_0,'class','centre-button');
@@ -318,13 +318,13 @@ class _View_QandAPage1 extends import1.AppView<any> {
     ]
     ,[disposable_0],([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import33.Icon) && (4 === requestNodeIndex))) { return this._Icon_4_3.context; }
     if (((token === import34.Button) && ((2 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._Button_2_4.context; }
     if (((token === import35.NavPush) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 8)))) { return this._NavPush_0_3.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_1:any = this.context.$implicit.link;
     this._NavPush_0_3.check_navPush(currVal_1,throwOnChange,false);
@@ -345,22 +345,22 @@ class _View_QandAPage1 extends import1.AppView<any> {
     if (import4.checkBinding(throwOnChange,this._expr_6,currVal_6)) {
       this.renderer.setElementClass(this._el_4,'hide',currVal_6);
       this._expr_6 = currVal_6;
-  ***REMOVED***
+    }
     const currVal_7:any = import4.interpolate(1,'\n        ',this.context.$implicit.name,'\n      ');
     if (import4.checkBinding(throwOnChange,this._expr_7,currVal_7)) {
       this.renderer.setText(this._text_5,currVal_7);
       this._expr_7 = currVal_7;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_4_3.context.ngOnDestroy();
-***REMOVED***
+  }
   private _handle_click_0_0($event:any):boolean {
     this.markPathToRootAsCheckOnce();
     const pd_0:any = ((<any>this._NavPush_0_3.context.onClick()) !== false);
     return (true && pd_0);
-***REMOVED***
+  }
 }
 function viewFactory_QandAPage1(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_QandAPage1(viewUtils,parentInjector,declarationEl);

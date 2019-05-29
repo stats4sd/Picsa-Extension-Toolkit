@@ -14,5 +14,5 @@ export class UserActions {
     type: UserActions.UPDATE_USER,
     meta: null,
     payload: user
-***REMOVED***);
+  });
 }

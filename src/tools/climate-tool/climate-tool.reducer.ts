@@ -19,7 +19,7 @@ export function ClimateToolReducer(
 
     case ClimateToolActions.UPDATE_SITE:
       const updateSiteAction = action as StandardAction;
-      const updatedSite = { ...state.site, ...updateSiteAction.payload ***REMOVED***
+      const updatedSite = { ...state.site, ...updateSiteAction.payload };
       return Object.assign({}, state, { site: updatedSite });
 
     case ClimateToolActions.SELECT_CHART:
@@ -31,5 +31,5 @@ export function ClimateToolReducer(
 
     default:
       return state;
-***REMOVED***
+  }
 }

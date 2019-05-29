@@ -18,7 +18,7 @@ export class PrintProvider {
     const domEl: HTMLElement = document.querySelector(domSelector);
     const canvasElm = await html2canvas(domEl);
     this.shareCanvasImage(canvasElm, filename);
-***REMOVED***
+  }
 
   // similar method to above but add filename title to top of canvas
   async socialShareBudget(domSelector: string, title: string) {
@@ -33,7 +33,7 @@ export class PrintProvider {
     ctx.fillText(title, width / 2, 43);
     await this.shareCanvasImage(canvasElm, title);
     domEl.classList.toggle("print-mode");
-***REMOVED***
+  }
 
   async shareCanvasImage(canvasElm: HTMLCanvasElement, title: string) {
     const base64 = canvasElm.toDataURL();
@@ -41,21 +41,21 @@ export class PrintProvider {
       this.socialSharing
         .share("", title, base64)
         .then(res => console.log(res), err => console.error(err));
-  ***REMOVED*** else {
+    } else {
       this.downloadCanvasImage(canvasElm, title);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   async downloadCanvasImage(canvasElm: HTMLCanvasElement, filename: string) {
     canvasElm.toBlob(blob => {
       // on error null blob created
       if (blob) {
         saveAs(blob, `${filename}.png`);
-    ***REMOVED*** else {
+      } else {
         throw new Error("could not create download");
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
   // if (this.platform.is("cordova")) {
   //   // *** not working, blob seems correct but writes empty json
   //   // similarly 'saveAs' function says downloading but no file generated
@@ -69,7 +69,7 @@ export class PrintProvider {
   //     );
   //     console.log("file created", filePath);
   //     this.filePrvdr.openFileCordova(filePath);
-  // ***REMOVED***);
+  //   });
   // }
   // }
   // }

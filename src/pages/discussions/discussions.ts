@@ -15,11 +15,11 @@ export class DiscussionsPage {
       label: "App Feedback",
       description: "Give your suggestions or ask for help using the PICSA app",
       link: "https://chat.whatsapp.com/8wEc1tjLRqI7XyU4Lv5OLk"
-  ***REMOVED***
+    }
   ];
   constructor() {}
 
   ngOnInit() {
     console.log("groups", this.groups);
-***REMOVED***
+  }
 }

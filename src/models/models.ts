@@ -7,7 +7,7 @@ export interface IUser {
   name?: string;
   type?: string;
   id?: string;
-  budgets?: { ["key"]?: IBudget ***REMOVED***
+  budgets?: { ["key"]?: IBudget };
   budgetCustomCards?: IBudgetMeta;
   submittedForms?: any;
   email?: string;

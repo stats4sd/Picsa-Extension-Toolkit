@@ -18,9 +18,9 @@ export class AdminPage {
   updateHardcodedData() {
     this.firestorePrvdr.populateDB();
     this.updated = true;
-***REMOVED***
+  }
   updateBudgetData() {
     this.budgetPrvdr.populateDB();
     this.updated = true;
-***REMOVED***
+  }
 }

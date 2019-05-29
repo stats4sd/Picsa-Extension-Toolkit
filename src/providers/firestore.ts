@@ -22,50 +22,50 @@ export class FirestoreStorageProvider {
           if (data && data.length > 0) {
             this.storagePrvdr.set(key, data);
             this.actions.syncData({ [key]: data }, "firestore");
-        ***REMOVED***
-      ***REMOVED***);
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+          }
+        });
+      }
+    }
+  }
 
   getCollection(path) {
     // return collection observable
     return this.db.collection(path).valueChanges();
-***REMOVED***
+  }
 
   getDocument(path) {
     return this.db.doc(path).valueChanges();
-***REMOVED***
+  }
 
   updateDoc(path, data) {
     return this.db.doc(path).update(this._cleanData(data));
-***REMOVED***
+  }
 
   setDoc(path: string, data) {
     return this.db.doc(path).set(this._cleanData(data));
-***REMOVED***
+  }
 
   // clean data to remove undefined values
   _cleanData(data) {
     Object.keys(data).forEach(key => {
       if (typeof data[key] == "undefined") {
         data[key] = null;
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     return data;
-***REMOVED***
+  }
 
   addToCollection(path: string, data, key?) {
     // update existing by providing key, set key in meta
     if (key == undefined) {
       key = this.db.createId();
-  ***REMOVED***
+    }
     data._key = key;
     return this.db
       .collection(path)
       .doc(key)
       .set(data);
-***REMOVED***
+  }
 
   // instead of usual sync from db to local, this can be used to populate the main db from local
   // NOTE, THIS OVERRIDES EXISTING DATA ON MATCH, ONLY USE IF YOU KNOW WHAT YOU ARE DOING
@@ -76,8 +76,8 @@ export class FirestoreStorageProvider {
         console.log("data", data);
         data.forEach(datum => {
           this.addToCollection(collection, datum, datum._key);
-      ***REMOVED***);
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+        });
+      }
+    }
+  }
 }

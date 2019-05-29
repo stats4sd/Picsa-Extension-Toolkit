@@ -5,34 +5,34 @@ page-error {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-***REMOVED***
+  }
   .error-image {
     object-fit: contain;
     max-height: 200px;
-***REMOVED***
+  }
   .reload-button {
     margin-top: 2em;
-***REMOVED***
+  }
   .dismiss-button {
     float: right;
-***REMOVED***
+  }
   .error-message {
     overflow: auto;
     max-height: 6em;
     opacity: 0.4;
     margin-bottom: 2em;
-***REMOVED***
+  }
   .top-content,
   .bottom-content,
   .central-content {
     flex: 1;
-***REMOVED***
+  }
   .central-content {
     height: 700px;
-***REMOVED***
+  }
   .bottom-content {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-***REMOVED***
+  }
 }

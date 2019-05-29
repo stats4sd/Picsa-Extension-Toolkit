@@ -36,12 +36,12 @@ export class Wrapper_ViewDataPage {
   constructor(p0:any) {
     this.changed = false;
     this.context = new import0.ViewDataPage(p0);
-***REMOVED***
+  }
   detectChangesInternal(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
     return changed;
-***REMOVED***
+  }
 }
 var renderType_ViewDataPage_Host:import2.RenderComponentType = (null as any);
 class _View_ViewDataPage_Host0 extends import1.AppView<any> {
@@ -50,7 +50,7 @@ class _View_ViewDataPage_Host0 extends import1.AppView<any> {
   _ViewDataPage_0_4:Wrapper_ViewDataPage;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_ViewDataPage_Host0,renderType_ViewDataPage_Host,import6.ViewType.HOST,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.selectOrCreateHostElement('page-view-data',rootSelector,(null as any));
     this._appEl_0 = new import3.AppElement(0,(null as any),this,this._el_0);
@@ -60,16 +60,16 @@ class _View_ViewDataPage_Host0 extends import1.AppView<any> {
     compView_0.create(this._ViewDataPage_0_4.context,this.projectableNodes,(null as any));
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return this._appEl_0;
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import0.ViewDataPage) && (0 === requestNodeIndex))) { return this._ViewDataPage_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._ViewDataPage_0_4.detectChangesInternal(this,this._el_0,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_ViewDataPage_Host0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   if ((renderType_ViewDataPage_Host === (null as any))) { (renderType_ViewDataPage_Host = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,([] as any[]),{})); }
@@ -106,7 +106,7 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
   /*private*/ _expr_3:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_ViewDataPage0,renderType_ViewDataPage,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'ion-header',(null as any));
@@ -187,14 +187,14 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import23.ToolbarTitle) && ((4 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._ToolbarTitle_4_4.context; }
     if (((token === import24.Navbar) && ((2 <= requestNodeIndex) && (requestNodeIndex <= 6)))) { return this._Navbar_2_4.context; }
     if (((token === import19.Header) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 7)))) { return this._Header_0_3.context; }
     if (((token === import25.Content) && ((9 <= requestNodeIndex) && (requestNodeIndex <= 13)))) { return this._Content_9_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
     const currVal_0:any = 'picsa-view';
@@ -207,23 +207,23 @@ class _View_ViewDataPage0 extends import1.AppView<import0.ViewDataPage> {
     if (import4.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     const currVal_2:any = this._Navbar_2_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
       this._expr_2 = currVal_2;
-  ***REMOVED***
+    }
     const currVal_3:any = this._Content_9_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_3,currVal_3)) {
       this.renderer.setElementClass(this._el_9,'statusbar-padding',currVal_3);
       this._expr_3 = currVal_3;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }
-***REMOVED***
+  }
   destroyInternal():void {
     this._Content_9_4.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 export function viewFactory_ViewDataPage0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<import0.ViewDataPage> {
   if ((renderType_ViewDataPage === (null as any))) { (renderType_ViewDataPage = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,styles_ViewDataPage,{})); }

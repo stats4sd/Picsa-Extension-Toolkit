@@ -10,6 +10,6 @@ export const REGIONAL_SETTINGS = {
     medium: 10000,
     small: 1000,
     half: 500
-***REMOVED***,
+  },
   subtitle: "Development Preview"
-***REMOVED***
+};

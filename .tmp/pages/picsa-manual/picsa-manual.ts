@@ -21,13 +21,13 @@ export class PicsaManualPage {
   constructor(public navCtrl: NavController) {
     this.chapters={
       
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   ionViewDidLoad() {
     console.log('Hello PicsaManualPage Page');
     console.log('test 2')
-***REMOVED***
+  }
 
   openPdf(): void {
     var _self = this;
@@ -36,23 +36,23 @@ export class PicsaManualPage {
       if (this.pdfjsframe != null) {
         this.pdfjsframe.onload = function () {
           _self.loadPdfDocument();
-      ***REMOVED***;
-    ***REMOVED***
-  ***REMOVED***, 0);
-***REMOVED***
+        };
+      }
+    }, 0);
+  }
 
   loadPdfDocument() {
     var pdfData = this.base64ToUint8Array(this.fileBase64);
     this.pdfjsframe.contentWindow.PDFViewerApplication.open(pdfData);
-***REMOVED***
+  }
 
   base64ToUint8Array(base64) {
     var raw = atob(base64);
     var uint8Array = new Uint8Array(raw.length);
     for (var i = 0; i < raw.length; i++) {
       uint8Array[i] = raw.charCodeAt(i);
-  ***REMOVED***
+    }
     return uint8Array;
-***REMOVED***
+  }
 
 }

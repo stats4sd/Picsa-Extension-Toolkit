@@ -24,9 +24,9 @@ export const INITIAL_STATE: AppState = {
   budget: {
     active: null,
     meta: null
-***REMOVED***,
+  },
   data: null
-***REMOVED***
+};
 
 export const rootReducer: Reducer<AppState> = combineReducers({
   user: UserReducer,

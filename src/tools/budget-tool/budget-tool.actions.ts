@@ -17,7 +17,7 @@ export class BudgetToolActions {
     type: BudgetToolActions.SET_ACTIVE_BUDGET,
     meta: null,
     payload: budget
-***REMOVED***);
+  });
 
   // set the value of specific meta fields (multiple)
   @dispatch()
@@ -25,7 +25,7 @@ export class BudgetToolActions {
     type: BudgetToolActions.SET_BUDGET_META,
     meta: null,
     payload: meta
-***REMOVED***);
+  });
 
   // patch a single meta value to combine existing with new fields
   // used to update hardcoded meta with custom
@@ -34,12 +34,12 @@ export class BudgetToolActions {
     type: BudgetToolActions.PATCH_BUDGET_META,
     meta: null,
     payload: meta
-***REMOVED***);
+  });
 
   @dispatch()
   setBudgetView = (view: IBudgetView): StandardAction => ({
     type: BudgetToolActions.SET_BUDGET_VIEW,
     meta: null,
     payload: view
-***REMOVED***);
+  });
 }

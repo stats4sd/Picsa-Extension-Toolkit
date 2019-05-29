@@ -15,12 +15,12 @@ export class DataActions {
     type: DataActions.LOAD_DATA,
     meta: src,
     payload: data
-***REMOVED***);
+  });
 
   @dispatch()
   syncData = (data: IData, src: string): DataAction => ({
     type: DataActions.SYNC_DATA,
     meta: src,
     payload: data
-***REMOVED***);
+  });
 }

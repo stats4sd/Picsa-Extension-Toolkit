@@ -39,7 +39,7 @@ export interface IChartMeta {
   cropTableValue?: string;
   y: string;
   yFormat: string;
-  tools: { line: boolean ***REMOVED***
+  tools: { line: boolean };
   units: string;
   definition: string;
 }

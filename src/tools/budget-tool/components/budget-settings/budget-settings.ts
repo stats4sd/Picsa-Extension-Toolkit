@@ -56,18 +56,18 @@ export class BudgetSettingsComponent implements OnDestroy {
 
   ngOnInit() {
     this._addSubscribers();
-***REMOVED***
+  }
 
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   // various listeners for budget change actions
   _addSubscribers() {
     this.enterpriseType$.takeUntil(this.componentDestroyed).subscribe(type => {
       this._filterEnterprises(type, this.allEnterprises);
-  ***REMOVED***);
+    });
     // update enterprise types and filter list when enterprises changes
     this.enterprises$
       .takeUntil(this.componentDestroyed)
@@ -75,47 +75,47 @@ export class BudgetSettingsComponent implements OnDestroy {
         if (enterprises) {
           this.metaEnterprises = enterprises;
           this.enterprisesInit();
-      ***REMOVED***
-    ***REMOVED***);
+        }
+      });
     this.customEnterprises$
       .takeUntil(this.componentDestroyed)
       .subscribe(enterprises => {
         if (enterprises) {
           this.customEnterprises = enterprises;
           this.enterprisesInit();
-      ***REMOVED***
-    ***REMOVED***);
+        }
+      });
     // *** including event subscriber as redux doesn't seem to update - need to resolve why
     this.events.subscribe("customCards:updated", customCards => {
       if (customCards && customCards.enterprises) {
         this.customEnterprises = customCards.enterprises;
         this.enterprisesInit();
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     // calculate time periods when new timescale specified
     this.timescale$.takeUntil(this.componentDestroyed).subscribe(scale => {
       if (scale) {
         this.calculatePeriod(scale);
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     this.budget$.takeUntil(this.componentDestroyed).subscribe(budget => {
       this.budget = budget;
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
   enterprisesInit() {
     this.allEnterprises = this.metaEnterprises.concat(this.customEnterprises);
     this.enterpriseTypes = this._generateEnterpriseTypes(this.allEnterprises);
     const type = this.budget ? this.budget.enterpriseType : null;
     this._filterEnterprises(type, this.allEnterprises);
-***REMOVED***
+  }
 
   // iterate over enterprises and populate groups that exist
   // always populate the 'other/custom' group
   _generateEnterpriseTypes(enterprises: IBudgetCard[]) {
-    const groups: any = { other: true ***REMOVED***
+    const groups: any = { other: true };
     enterprises.forEach(enterprise => {
       groups[enterprise.group] = true;
-  ***REMOVED***);
+    });
     // convert to array, sort alphabetically and move 'other' group to end
     let types: string[] = Object.keys(groups);
     types = this._sortAlphabetcially(types);
@@ -125,10 +125,10 @@ export class BudgetSettingsComponent implements OnDestroy {
       return {
         id: type,
         name: type
-    ***REMOVED***;
-  ***REMOVED***);
+      };
+    });
     return typeCards;
-***REMOVED***
+  }
   // when enterprise type changed only show relevant enterprises
   // if there is only one sub type assume that is the one selected (unless other/custom)
   _filterEnterprises(type: string, enterprises: IBudgetCard[]) {
@@ -136,41 +136,41 @@ export class BudgetSettingsComponent implements OnDestroy {
     if (type) {
       enterprises = enterprises.filter(e => {
         return e.group === type;
-    ***REMOVED***);
+      });
       this.filteredEnterprises = this._sortByField(enterprises, "name");
       if (type == "other") {
         this.showIndividualEnterprises = true;
-    ***REMOVED*** else {
+      } else {
         // when only one result set it as type
         if (enterprises.length == 1) {
           this.budgetPrvdr.patchBudget("enterprise", enterprises[0].id);
-      ***REMOVED*** else {
+        } else {
           // otherwise set enterprise as null (if not already defined)
           this.showIndividualEnterprises = true;
           if (!this.budget || !this.budget.enterprise) {
             this.budgetPrvdr.patchBudget("enterprise", null);
-        ***REMOVED***
-      ***REMOVED***
-    ***REMOVED***
-  ***REMOVED*** else {
+          }
+        }
+      }
+    } else {
       this.budgetPrvdr.patchBudget("enterprise", null);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   _sortAlphabetcially(arr: string[]) {
     return arr.sort((a, b) => {
       return a > b ? 1 : -1;
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
 
   _sortByField(arr: any[], field) {
     return arr.sort((a, b) => {
       return a[field] > b[field] ? 1 : -1;
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
 
   nextSlide() {
     this.slides.slideNext();
-***REMOVED***
+  }
 
   viewBudget() {
     console.log("view budget");
@@ -178,8 +178,8 @@ export class BudgetSettingsComponent implements OnDestroy {
     this.actions.setBudgetView({
       component: "overview",
       title: this.budget.title
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
 
   calculatePeriod(timescale?) {
     const budget = this.ngRedux.getState().budget.active;
@@ -188,7 +188,7 @@ export class BudgetSettingsComponent implements OnDestroy {
     const total = budget.periods.total;
     if (!timescale) {
       timescale = budget.periods.scale;
-  ***REMOVED***
+    }
     console.log("calculate period", timescale);
     let arr = [];
     if (timescale == "Months") {
@@ -197,64 +197,64 @@ export class BudgetSettingsComponent implements OnDestroy {
         ? starting
         : MONTHS[0];
       arr = this.calculatePeriodMonths(total, starting);
-  ***REMOVED***
+    }
     if (timescale == "Days") {
       budget.periods.starting = DAYS.includes(starting) ? starting : "Monday";
       budget.periods.total = total ? total : 7;
       arr = this.calculatePeriodDays(total, starting);
-  ***REMOVED***
+    }
     if (timescale == "Weeks") {
       budget.periods.starting = null;
       budget.periods.total = 4;
       arr = this.calculatePeriodConsecutive(total, "week");
-  ***REMOVED***
+    }
     if (timescale == "none") {
       arr = this.calculatePeriodConsecutive(total);
-  ***REMOVED***
+    }
     budget.periods.labels = arr;
-***REMOVED***
+  }
   calculatePeriodConsecutive(total, prefix?) {
     if (!prefix) {
       prefix = "";
-  ***REMOVED***
+    }
     const arr = [];
     for (let i = 1; i <= total; i++) {
       arr.push(prefix + i);
-  ***REMOVED***
+    }
     return arr;
-***REMOVED***
+  }
   calculatePeriodMonths(total, starting) {
     let array = MONTHS;
     if (starting) {
       const startIndex = MONTHS.indexOf(starting);
       for (let i = 0; i < startIndex; i++) {
         array.push(array.shift());
-    ***REMOVED***
-  ***REMOVED***
+      }
+    }
     if (total > array.length) {
       for (let i = 0; i < Math.ceil(total / array.length); i++) {
         array = array.concat(array);
-    ***REMOVED***
-  ***REMOVED***
+      }
+    }
     return array.slice(0, total);
-***REMOVED***
+  }
   calculatePeriodDays(total, starting) {
     let array = DAYS;
     if (starting) {
       const startIndex = DAYS.indexOf(starting);
       for (let i = 0; i < startIndex; i++) {
         array.push(array.shift());
-    ***REMOVED***
-  ***REMOVED***
+      }
+    }
     if (total > array.length) {
       for (let i = 0; i < Math.ceil(total / array.length); i++) {
         array = array.concat(array);
-    ***REMOVED***
-  ***REMOVED***
+      }
+    }
     return array.slice(0, total);
-***REMOVED***
+  }
 
   clearPeriodInput() {
     this.budget.periods.total = null;
-***REMOVED***
+  }
 }

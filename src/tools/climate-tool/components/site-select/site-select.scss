@@ -4,7 +4,7 @@ site-select {
     height: 100%;
     width: 100%;
     border: 1px solid black;
-***REMOVED***
+  }
   .countryLabel {
     fill: transparent;
     background: rgba(255, 255, 255, 0);
@@ -15,26 +15,26 @@ site-select {
     box-shadow: 0 0px 0px;
     color: black;
     text-shadow: 0 0 0.2em #f87;
-***REMOVED***
+  }
   .site-select-button {
     cursor: pointer;
     padding: 10px;
     color: white;
-***REMOVED***
+  }
   .leaflet-popup-content {
     margin: 0;
     padding: 5px;
-***REMOVED***
+  }
   button {
     background-color: transparent;
     padding: 0;
-***REMOVED***
+  }
   .leaflet-popup-content-wrapper,
   .leaflet-popup-tip {
     background-color: color($colors, primary);
-***REMOVED***
+  }
   .leaflet-popup-close-button {
     pointer-events: none;
     display: none;
-***REMOVED***
+  }
 }

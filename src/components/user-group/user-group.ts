@@ -24,38 +24,38 @@ export class UserGroupComponent implements OnDestroy {
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   ngOnInit(): void {
     // subscrib after group input bind so can use group key
     this.user$.takeUntil(this.componentDestroyed).subscribe(user => {
       if (user) {
         this.userUpdate(user);
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
 
   userUpdate(user: IUser) {
     // set joined status
     this.joined = user && user.groups && user.groups.includes(this.group._key);
     console.log("user updated", user);
     this.user = user;
-***REMOVED***
+  }
 
   joinGroup() {
     if (!this.user.groups) {
       this.user.groups = [];
-  ***REMOVED***
+    }
     if (!this.user.groups.includes(this.group._key)) {
       this.user.groups.push(this.group._key);
-  ***REMOVED***
+    }
     this.user.authenticated = true;
     this.actions.updateUser(this.user);
     // set user as authenticated if not
     // add group to joined groups
     // apply any settings (country, language, available pages etc.)
     // join notifications channels
-***REMOVED***
+  }
 
   joinGroupClicked() {
     console.log("joining group", this.group);
@@ -66,7 +66,7 @@ export class UserGroupComponent implements OnDestroy {
           name: "key",
           placeholder: "Access Key",
           type: "password"
-      ***REMOVED***
+        }
       ],
       buttons: [
         {
@@ -74,8 +74,8 @@ export class UserGroupComponent implements OnDestroy {
           role: "cancel",
           handler: data => {
             console.log("Cancel clicked");
-        ***REMOVED***
-      ***REMOVED***,
+          }
+        },
         {
           text: "Join",
           handler: data => {
@@ -83,15 +83,15 @@ export class UserGroupComponent implements OnDestroy {
             if (data.key == this.group.accessKey) {
               // logged in!
               this.joinGroup();
-          ***REMOVED*** else {
+            } else {
               // invalid login
               alert.data.message = `<div class="invalid-key">Invalid access key</div>`;
               return false;
-          ***REMOVED***
-        ***REMOVED***
-      ***REMOVED***
+            }
+          }
+        }
       ]
-  ***REMOVED***);
+    });
     alert.present();
-***REMOVED***
+  }
 }

@@ -18,7 +18,7 @@ export class FormPopup {
     //use sanitizer to avoid error unsafe resource url (trusted)
     this.enketoLink=this.sanitizer.bypassSecurityTrustResourceUrl(this.form.enketoLink);
     console.log(this.form);
-***REMOVED***
+  }
   close(){
     //attempts to retrieve info from loaded iframe .... not working - need to access iframe.contents which requires same domain (check on mobile?)
    /* var iframe:any = document.getElementById('form-iframe');
@@ -29,7 +29,7 @@ export class FormPopup {
     this.viewCtrl.dismiss(pending)
     */
     this.viewCtrl.dismiss()
-***REMOVED***
+  }
 
 
 

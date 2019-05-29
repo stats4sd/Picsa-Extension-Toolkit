@@ -6,5 +6,5 @@ module.exports = {
       "./node_modules/workbox-precaching/build/workbox-precaching.prod.js"
     ],
     dest: "{{WWW}}/workbox-3.2.0"
-***REMOVED***
-***REMOVED***
+  }
+};

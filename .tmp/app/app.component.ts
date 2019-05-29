@@ -22,14 +22,14 @@ export class MyApp {
           function(token){
             console.log('subscribing to fcm topic "chris"')
             FCMPlugin.subscribeToTopic('chris');
-        ***REMOVED***,
+          },
           function(err){
             console.log('error retrieving token: ' + err);
-        ***REMOVED***
+          }
       )    
-    ***REMOVED***
+      }
     
 
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
 }

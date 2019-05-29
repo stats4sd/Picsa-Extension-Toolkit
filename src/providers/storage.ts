@@ -19,24 +19,24 @@ export class StorageProvider {
     console.log("current data version:", currentDataVersion);
     console.log("storage data version:", storageData._version);
     this.loadData();
-***REMOVED***
+  }
   // attempt to load data from cache, if doesn't exist fallback to file
   async loadData() {
     for (const key of Object.keys(storageData)) {
       const data = await this.storage.get(key);
       if (data && data.length > 0) {
         this.actions.loadData({ [key]: data }, "storage");
-    ***REMOVED*** else {
+      } else {
         this.actions.loadData({ [key]: storageData[key] }, "file");
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+      }
+    }
+  }
   // standard storage methods
   async get(storageKey: string) {
     return this.storage.get(storageKey);
-***REMOVED***
+  }
 
   async set(storageKey: string, data: any) {
     return this.storage.set(storageKey, data);
-***REMOVED***
+  }
 }

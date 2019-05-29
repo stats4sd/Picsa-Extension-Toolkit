@@ -13,7 +13,7 @@ export const registration = {
             name: "Name",
             title: "Name",
             isRequired: true
-        ***REMOVED***,
+          },
           {
             type: "radiogroup",
             name: "Role",
@@ -23,23 +23,23 @@ export const registration = {
               {
                 value: "AEDO",
                 text: "AEDO"
-            ***REMOVED***,
+              },
               {
                 value: "AEDC",
                 text: "AEDC"
-            ***REMOVED***,
+              },
               {
                 value: "Other",
                 text: "Other"
-            ***REMOVED***
+              }
             ]
-        ***REMOVED***,
+          },
           {
             type: "text",
             name: "OtherRole",
             visibleIf: "{Role} = 'Other'",
             title: "Please specify"
-        ***REMOVED***,
+          },
           {
             type: "checkbox",
             name: "Gender",
@@ -48,16 +48,16 @@ export const registration = {
               {
                 value: "item1",
                 text: "Male"
-            ***REMOVED***,
+              },
               {
                 value: "item2",
                 text: "Female"
-            ***REMOVED***
+              }
             ]
-        ***REMOVED***
+          }
         ],
         title: "Device Registration"
-    ***REMOVED***
+      }
     ]
-***REMOVED***
-***REMOVED***
+  }
+};

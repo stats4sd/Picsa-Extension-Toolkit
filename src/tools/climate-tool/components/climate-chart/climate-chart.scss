@@ -2,33 +2,33 @@
 climate-chart {
   #chart {
     height: 320px;
-***REMOVED***
+  }
   .chart-title {
     text-align: center;
-***REMOVED***
+  }
   .c3-line {
     stroke-width: 2px;
-***REMOVED***
+  }
   .c3-line-LineTool {
     stroke-width: 3px !important;
     stroke: black !important;
-***REMOVED***
+  }
   .c3-circles-LineTool {
     display: none;
-***REMOVED***
+  }
   .c3 text {
     font-size: larger;
-***REMOVED***
+  }
   /*expanded circle fill, outline (stroke) and outline width*/
   .c3-circle._expanded_ {
     /*fill: rgb(90, 50, 50)!important;*/
     stroke: #000000 !important;
     stroke-width: 2;
-***REMOVED***
+  }
   .c3-tooltip th {
     font-size: x-large;
-***REMOVED***
+  }
   .c3-tooltip td {
     font-size: x-large;
-***REMOVED***
+  }
 }

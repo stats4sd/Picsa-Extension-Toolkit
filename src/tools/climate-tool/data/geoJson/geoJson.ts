@@ -4,4 +4,4 @@ import { malawiBlantyre } from "./malawi-blantyre";
 export const GEOJSON = {
   malawiAdmin: malawiAdmin,
   malawiBlantyre: malawiBlantyre
-***REMOVED***
+};

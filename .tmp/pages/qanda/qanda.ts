@@ -15,6 +15,6 @@ export class QandAPage {
       {name:'Forum', color:'picsa-manual', icon:'list',link:ForumPage, text:''},
       {name:'Videos', color:'picsa-manual', icon:'video',link:VideosPage, text:''},
     ]
-***REMOVED***
+  }
 
 }

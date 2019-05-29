@@ -25,13 +25,13 @@ export class RecordDataPage {
     this.storage.get('forms').then((forms)=> {
         if (forms) {
             this.forms = (JSON.parse(forms))
-      ***REMOVED***
+        }
         else {
             this.finished = false;
             this.getForms()
-      ***REMOVED***
-  ***REMOVED***)
-***REMOVED***
+        }
+    })
+  }
 
   getForms(){
     this.anyErrors=false;
@@ -41,7 +41,7 @@ export class RecordDataPage {
           console.log(error);
           this.anyErrors = true;
           this.finished = true;
-      ***REMOVED***,
+        },
         () => {
           this.finished = true;
           let i=0;
@@ -49,39 +49,39 @@ export class RecordDataPage {
           for(let form of this.forms){
             this.getLinks(form, i);
             i++
-        ***REMOVED***}
+          }}
     );
-***REMOVED***
+  }
 
   getLinks(form, index){
     this.koboApi.koboRequest(form.url + '/enketo').subscribe(
         //**need to also save link to cache
         result =>{
           this.forms[index].enketoLink = result['enketo_url'].replace('https://','http://')
-      ***REMOVED***,
+        },
         error =>{console.log(error)},
         () => {
           this.storage.set('forms',JSON.stringify(this.forms));
-      ***REMOVED***)
-***REMOVED***
+        })
+  }
 
   openForm(form) {
     let modal = this.modal.create(FormPopup, {form: form}, {
       showBackdrop: false,
       enableBackdropDismiss: false
-  ***REMOVED***);
+    });
     modal.onDidDismiss(data=> {
       console.log(data)
-  ***REMOVED***);
+    });
     modal.present();
-***REMOVED***
+  }
 
 
   refresh(){
     console.log('refreshing');
     this.finished=false;
     this.getForms();
-***REMOVED***
+  }
 
 
 

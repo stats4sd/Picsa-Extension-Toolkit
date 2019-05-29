@@ -21,28 +21,28 @@ export class ToolsPage {
         name: "Climate Tool",
         image: "assets/img/climate-tool.svg",
         page: "ClimateToolPage"
-    ***REMOVED***,
+      },
       {
         name: "Budget Tool",
         image: "assets/img/budget-tool.svg",
         page: "BudgetToolPage"
-    ***REMOVED***
+      }
     ];
-***REMOVED***
+  }
 
   async loadTool(tool) {
     await this.translations.presentTranslatedLoader({
       content: `Loading...`,
       dismissOnPageChange: true
-  ***REMOVED***);
+    });
     if (tool.page) {
       this.navCtrl.push(tool.page);
-  ***REMOVED*** else {
+    } else {
       this.navCtrl.push("IframePage", tool);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   _ADMIN_errorTest() {
     throw new Error("Example error");
-***REMOVED***
+  }
 }

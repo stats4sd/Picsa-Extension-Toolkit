@@ -12,7 +12,7 @@
             "cwd": "${workspaceRoot}",
             "outFiles": [],
             "sourceMaps": true
-      ***REMOVED***,
+        },
         {
             "type": "node",
             "request": "attach",
@@ -20,6 +20,6 @@
             "port": 5858,
             "outFiles": [],
             "sourceMaps": true
-      ***REMOVED***
+        }
     ]
 }

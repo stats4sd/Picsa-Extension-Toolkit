@@ -10,6 +10,6 @@ export const REGIONAL_SETTINGS = {
     medium: 1000,
     small: 100,
     half: 50
-***REMOVED***,
+  },
   subtitle: "for Financial Service Providers"
-***REMOVED***
+};

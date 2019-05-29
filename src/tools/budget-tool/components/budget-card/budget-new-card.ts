@@ -21,16 +21,16 @@ export class BudgetNewCardComponent extends BudgetCardComponent {
     private modalCtrl: ModalController
   ) {
     super(ngRedux, actions);
-***REMOVED***
+  }
 
   // as no card is input instead create placeholder
   ngOnInit() {
     this.card = {
       id: "add",
       name: "Add New"
-  ***REMOVED***;
+    };
     this.type = "new";
-***REMOVED***
+  }
   // when adding a new card opens modal
   // *** note, this should be changed to use view meta instead and load as component instead of page
   cardClicked() {
@@ -38,7 +38,7 @@ export class BudgetNewCardComponent extends BudgetCardComponent {
     this.modalCtrl
       .create("BudgetNewCardPage", {
         type: this.newCardType
-    ***REMOVED***)
+      })
       .present();
-***REMOVED***
+  }
 }

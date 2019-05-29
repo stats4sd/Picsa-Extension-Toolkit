@@ -53,7 +53,7 @@ export const firebaseConfig = {
   databaseURL: "https://extension-toolkit.firebaseio.com",
   storageBucket: "extension-toolkit.appspot.com",
   messagingSenderId: "249750594240"
-***REMOVED***
+};
 // error handling
 import { SentryErrorHandler } from "../providers/error-handler";
 import { TranslationsProvider } from "../providers/translations";
@@ -77,7 +77,7 @@ import { PrintProvider } from "../providers/print";
     AngularFireAuthModule,
     IonicStorageModule.forRoot({
       name: "__picsa"
-  ***REMOVED***),
+    }),
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -85,8 +85,8 @@ import { PrintProvider } from "../providers/print";
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-    ***REMOVED***
-  ***REMOVED***),
+      }
+    }),
     CanvasWhiteboardModule,
     NgReduxModule
   ],
@@ -127,7 +127,7 @@ export class AppModule {
       // [reduxLogger.createLogger()],
       devTools.isEnabled() ? [devTools.enhancer()] : []
     );
-***REMOVED***
+  }
 }
 
 export function HttpLoaderFactory(http: HttpClient) {

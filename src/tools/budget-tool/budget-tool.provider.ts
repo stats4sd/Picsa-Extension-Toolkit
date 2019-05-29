@@ -32,12 +32,12 @@ export class BudgetToolProvider implements OnDestroy {
     this.init();
     // this.syncData();
     this.enableAutoSave();
-***REMOVED***
+  }
 
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   // automatically populate data from storage
   // if first load, populate storage with hardcoded data
@@ -46,11 +46,11 @@ export class BudgetToolProvider implements OnDestroy {
     if (!budgetData) {
       await this.storagePrvdr.storage.set("_budgetMeta", budgetMeta);
       this.init();
-  ***REMOVED*** else {
+    } else {
       console.log("setting budget meta", budgetMeta);
       this.actions.setBudgetMeta(budgetMeta);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   // automatically save any changes to the active budget
   enableAutoSave() {
@@ -58,20 +58,20 @@ export class BudgetToolProvider implements OnDestroy {
       if (budget && budget.title) {
         if (!budget._key) {
           budget._key = this.firestorePrvdr.db.createId();
-      ***REMOVED***
+        }
         this.saveBudget(budget);
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
 
   async saveBudget(budget: IBudget) {
     let savedBudgets = await this.userPrvdr.user.budgets;
     if (!savedBudgets) {
-      savedBudgets = {***REMOVED***
-  ***REMOVED***
+      savedBudgets = {};
+    }
     savedBudgets[budget._key] = budget;
     this.userPrvdr.updateUser("budgets", savedBudgets);
-***REMOVED***
+  }
 
   // change single budget key/value
   patchBudget(key, val) {
@@ -80,9 +80,9 @@ export class BudgetToolProvider implements OnDestroy {
       if (budget) {
         budget[key] = val;
         this.actions.setActiveBudget(budget);
-    ***REMOVED***
-  ***REMOVED***, 150);
-***REMOVED***
+      }
+    }, 150);
+  }
 
   /*
       The methods below are used to keep firebase data sync'd locally when internet available
@@ -106,26 +106,26 @@ export class BudgetToolProvider implements OnDestroy {
           // const meta = this.ngRedux.getState().budget.meta;
           // meta[endpoint] = orderedData;
           // this.storagePrvdr.storage.set("_budgetMeta", meta);
-      ***REMOVED***
-    ***REMOVED***);
-  ***REMOVED***
-***REMOVED***
+        }
+      });
+    }
+  }
 
   _sortData(collection: ICustomBudgetCard[]) {
     try {
       // want to first sort alphabetically
       collection = collection.sort((a, b) => {
         return a.name > b.name ? 1 : -1;
-    ***REMOVED***);
+      });
       // then demote cards which are 'custom:true'
       collection = collection.sort((a, b) => {
         return !a.custom ? -1 : !b.custom ? 1 : -1;
-    ***REMOVED***);
+      });
       return collection;
-  ***REMOVED*** catch (error) {
+    } catch (error) {
       return collection;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   // instead of usual sync from db to local, this can be used to populate the main db from local
   // NOTE, THIS OVERRIDES EXISTING DATA ON MATCH, ONLY USE IF YOU KNOW WHAT YOU ARE DOING
@@ -138,7 +138,7 @@ export class BudgetToolProvider implements OnDestroy {
           `budgetTool/meta/${endpoint}/${docId}`,
           datum
         );
-    ***REMOVED***);
-  ***REMOVED***
-***REMOVED***
+      });
+    }
+  }
 }

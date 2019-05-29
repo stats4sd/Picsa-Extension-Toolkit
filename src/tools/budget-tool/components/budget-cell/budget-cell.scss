@@ -4,7 +4,7 @@ budget-cell {
     overflow: auto;
     display: flex;
     flex-direction: column;
-***REMOVED***
+  }
   .add-cell-data {
     cursor: pointer;
     display: flex;
@@ -12,12 +12,12 @@ budget-cell {
     justify-content: center;
     text-align: center;
     height: 100%;
-***REMOVED***
+  }
   .add-cell-data-icon {
     font-size: 36px;
     color: color($colors, primary);
     opacity: 0.3;
-***REMOVED***
+  }
   .badge {
     position: relative;
     left: -10px;
@@ -25,13 +25,13 @@ budget-cell {
     padding: 3px 5px;
     border-radius: 50%;
     z-index: 2;
-***REMOVED***
+  }
   .consumed-badge {
     background-color: #5062bd;
     color: rgba(255, 255, 255, 0.9);
-***REMOVED***
+  }
   .output-badge {
     background-color: #bc9b06;
     color: rgba(255, 255, 255, 0.9);
-***REMOVED***
+  }
 }

@@ -26,19 +26,19 @@ export class LanguageSelectComponent implements OnDestroy {
     this.langCode$.takeUntil(this.componentDestroyed).subscribe(code => {
       if (code) {
         this.setLanguage(code, "redux");
-    ***REMOVED*** else {
+      } else {
         console.log("no language specified, setting default");
         this.language = this.languages[0];
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.complete();
-***REMOVED***
+  }
   openLanguageSelect() {
     this.select.open();
-***REMOVED***
+  }
 
   // send language update to redux or update local ngmodel depending on source of update
   setLanguage(code: string, source: "redux" | "home") {
@@ -46,12 +46,12 @@ export class LanguageSelectComponent implements OnDestroy {
       if (code && this.language && this.language.code != code) {
         this.language = this.languages.filter(l => {
           return l.code === code;
-      ***REMOVED***)[0];
-    ***REMOVED***
-  ***REMOVED*** else {
+        })[0];
+      }
+    } else {
       this.userActions.updateUser({
         lang: this.language.code
-    ***REMOVED***);
-  ***REMOVED***
-***REMOVED***
+      });
+    }
+  }
 }

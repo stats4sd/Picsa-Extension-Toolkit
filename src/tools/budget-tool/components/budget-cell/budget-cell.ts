@@ -21,8 +21,8 @@ export class BudgetCellComponent {
     if (cellData && cellData.toString() != this._oldCellData.toString()) {
       this._oldCellData = cellData;
       this.setCellData(cellData);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   _oldCellData: any = [];
   _cellData: IBudgetCard[];
 
@@ -34,18 +34,18 @@ export class BudgetCellComponent {
       cellData.length > 0 &&
       cellData.toString != this._oldCellData.toString()
     );
-***REMOVED***
+  }
 
   setCellData(data: IBudgetPeriodData) {
     const cards = _jsonObjectValues(data);
     if (cards.length > 0) {
       this._cellData = cards;
-  ***REMOVED*** else {
+    } else {
       // empty should be treated as null (cell has been entered but no data selected)
       this._cellData = null;
-  ***REMOVED***
+    }
     console.log("cell data set", cards);
-***REMOVED***
+  }
 
   editCell() {
     // use both events and redux as redux alone fails to trigger uipdate when period index changed
@@ -55,8 +55,8 @@ export class BudgetCellComponent {
       type: this.type,
       periodIndex: this.periodIndex,
       title: `${this.rowLabel} ${this.typeLabel}`
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
 }
 
 function _jsonObjectValues(json: any) {
@@ -64,7 +64,7 @@ function _jsonObjectValues(json: any) {
   for (const key in json) {
     if (json.hasOwnProperty(key)) {
       values.push(json[key]);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   return values;
 }

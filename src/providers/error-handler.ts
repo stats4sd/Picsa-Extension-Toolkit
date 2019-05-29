@@ -12,7 +12,7 @@ import { AppState } from "../reducers/reducers";
 Raven.config("https://68f91fcd849a436193d615bc943c0259@sentry.io/1249964", {
   autoBreadcrumbs: {
     console: false
-***REMOVED***
+  }
 }).install();
 
 @Injectable()
@@ -23,22 +23,22 @@ export class SentryErrorHandler extends IonicErrorHandler {
     public modal: ModalController
   ) {
     super();
-***REMOVED***
+  }
   handleError(error: any) {
     if (window.location.hostname == "localhost") {
       // super.handleError(error);
-  ***REMOVED*** else {
+    } else {
       console.error(error);
       try {
         Raven.setExtraContext({
           appState: this.ngRedux.getState()
-      ***REMOVED***);
+        });
         Raven.captureException(JSON.stringify(error.originalError) || error);
-    ***REMOVED*** catch (e) {}
-  ***REMOVED***
+      } catch (e) {}
+    }
     console.error(error);
     this.showErrorPage(error);
-***REMOVED***
+  }
   // show error page modal (max once if repeated errors)
   showErrorPage(error) {
     if (!this.errorDisplayOpen) {
@@ -46,6 +46,6 @@ export class SentryErrorHandler extends IonicErrorHandler {
       const modal = this.modal.create("ErrorPage", error);
       modal.onDidDismiss(() => (this.errorDisplayOpen = false));
       modal.present();
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 }

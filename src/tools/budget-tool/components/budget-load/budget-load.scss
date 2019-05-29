@@ -5,20 +5,20 @@ budget-load {
     color: black;
     display: flex;
     flex-direction: column;
-***REMOVED***
+  }
   .saved-budgets-container {
     overflow: auto;
     max-height: 66vh;
-***REMOVED***
+  }
   .saved-details:hover {
     font-weight: bold;
-***REMOVED***
+  }
   .item {
     cursor: pointer;
-***REMOVED***
+  }
   #createNewBudget {
     margin-top: 2em;
     align-self: center;
     min-width: 33%;
-***REMOVED***
+  }
 }

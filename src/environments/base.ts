@@ -9,7 +9,7 @@ export const sharedEnvironment: IEnv = {
   firebaseStorageBucket: "extension-toolkit-staging.appspot.com",
   firebaseMessagingSenderId: "621985864882",
   firebaseAppId: "1:621985864882:web:a19ebe2425f632b6"
-***REMOVED***
+};
 interface IEnv {
   firebaseApiKey: string;
   firebaseAuthDomain: string;

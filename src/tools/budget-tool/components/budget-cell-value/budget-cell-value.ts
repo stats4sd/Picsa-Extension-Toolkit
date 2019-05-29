@@ -13,17 +13,17 @@ export class BudgetCellValueComponent implements OnDestroy {
   set quantity(quantity: number) {
     this._quantity = quantity;
     this.generateRepresentation();
-***REMOVED***
+  }
   @Input()
   set cost(cost: number) {
     this._cost = cost;
     this.generateRepresentation();
-***REMOVED***
+  }
   @Input()
   set consumed(consumed: number) {
     this._consumed = consumed;
     this.generateRepresentation();
-***REMOVED***
+  }
   @select(["budget", "active", "dotValues"])
   dotValues$: Observable<IBudgetDotValues>;
   _quantity: number;
@@ -35,11 +35,11 @@ export class BudgetCellValueComponent implements OnDestroy {
 
   constructor() {
     this._addSubscribers();
-***REMOVED***
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   // given updates to cost or quantity split the total into components of the large, medium, small and half values
   // map these values to directed arrays to populate images in the pictorial representation
@@ -60,25 +60,25 @@ export class BudgetCellValueComponent implements OnDestroy {
           const multiples = Math.floor(toAllocate / divisor);
           toAllocate = toAllocate - divisor * multiples;
           dotAllocation[dotType] = this._createArray(multiples, sign);
-      ***REMOVED***
-    ***REMOVED***
+        }
+      }
       this.dotValueAllocation = dotAllocation;
-  ***REMOVED*** else {
+    } else {
       this.dotValueAllocation = baseAllocation;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   _createArray(length: number, sign: "positive" | "negative") {
     return new Array(length).fill(sign);
-***REMOVED***
+  }
 
   _addSubscribers() {
     this.dotValues$.takeUntil(this.componentDestroyed).subscribe(values => {
       if (values) {
         this.dotValues = values;
         this.generateRepresentation();
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
 }
 
 const baseAllocation = {
@@ -86,4 +86,4 @@ const baseAllocation = {
   medium: [],
   small: [],
   half: []
-***REMOVED***
+};

@@ -4,32 +4,32 @@ page-resources {
     display: inline-block;
     cursor: pointer;
     padding: 2px;
-***REMOVED***
+  }
   .resource:hover {
     font-weight: bold;
-***REMOVED***
+  }
   .resource-name {
     width: 200px;
     text-align: center;
-***REMOVED***
+  }
   img {
     height: 250px;
     width: 200px;
     object-fit: cover;
-***REMOVED***
+  }
   ion-card.resource {
     width: unset;
     margin: 10px;
-***REMOVED***
+  }
   .resource-group-container {
     margin-top: 2em;
-***REMOVED***
+  }
   .resource-group-heading {
     margin: 0;
     padding: 5px;
     background-color: color($colors, primary);
     color: rgba(255, 255, 255, 0.95);
-***REMOVED***
+  }
   .video-resource-container {
     display: none;
     position: fixed;
@@ -41,7 +41,7 @@ page-resources {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.7);
-***REMOVED***
+  }
   .video-resource-content {
     position: relative;
     margin: auto;
@@ -49,7 +49,7 @@ page-resources {
     width: 90%;
     max-width: 1200px;
     text-align: center;
-***REMOVED***
+  }
   .video-close-button {
     color: white;
     text-align: right;
@@ -59,10 +59,10 @@ page-resources {
     font-weight: bold;
     button {
       margin-right: 0;
-  ***REMOVED***
+    }
     ion-icon {
       color: white;
       padding: 0;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 }

@@ -5,7 +5,7 @@ useDefaultConfig.prod.output.filename = "[name].[chunkhash:10].js";
 useDefaultConfig.prod.plugins.push(
   new ManifestPlugin({
     fileName: "../../build-manifest.json"
-***REMOVED***)
+  })
 );
 useDefaultConfig.prod.plugins.push(new webpack.EnvironmentPlugin(["NODE_ENV"]));
 module.exports = useDefaultConfig;

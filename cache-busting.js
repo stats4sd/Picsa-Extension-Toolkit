@@ -19,7 +19,7 @@ fs.readdirSync(buildDir).forEach(file => {
     const newFilePath = path.join(buildDir, newFileName);
     fs.renameSync(filePath, newFilePath);
     manifestJSON[file] = `build/${newFileName}`;
-***REMOVED***
+  }
 });
 let indexContent = fs.readFileSync(indexPath).toString("utf8");
 Object.keys(manifestJSON).forEach(key => {

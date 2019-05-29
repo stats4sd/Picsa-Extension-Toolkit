@@ -29,32 +29,32 @@ export class ClimateChartComponent implements OnDestroy {
     private translationsPrvdr: TranslationsProvider
   ) {
     this._addSubscriptions();
-***REMOVED***
+  }
   ngOnDestroy() {
     // want to remove subscriptions on destroy (note automatically handled for @select bound to async pipe in html)
     // using subject emits value manually (like event emitter) by calling the 'next()' function
     // on destroy we want to emit any value so that the takeUntil subscription records it no longer needs to subscribe
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   _addSubscriptions() {
     this.chartData$.takeUntil(this.componentDestroyed).subscribe(data => {
       if (data) {
         this.dataUpdated(data);
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     this.lineToolValue$.takeUntil(this.componentDestroyed).subscribe(v => {
       if (v) {
         this.setLineToolValue(v);
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     this.activeChart$.takeUntil(this.componentDestroyed).subscribe(chart => {
       if (chart) {
         this.setChart(chart);
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
 
   // when new data columns specified redraw any graphs
   // if no graph previously specified, default to rainfall
@@ -63,9 +63,9 @@ export class ClimateChartComponent implements OnDestroy {
     let view = "Rainfall";
     try {
       view = this.ngRedux.getState().climate.site.view;
-  ***REMOVED*** catch (error) {}
+    } catch (error) {}
     this.generateChart(data, view);
-***REMOVED***
+  }
 
   // create chart given columns of data and a particular key to make visible
   generateChart(data: IChartSummary[], yAxis: string) {
@@ -74,75 +74,75 @@ export class ClimateChartComponent implements OnDestroy {
     const keys = [];
     for (const key in data[0]) {
       keys.push(key);
-  ***REMOVED***
+    }
     // generate chart
     this.chart = c3.generate({
       bindto: "#chart",
       size: {
         height: 320
-    ***REMOVED***,
+      },
       padding: {
         right: 10
-    ***REMOVED***,
+      },
       data: {
         json: data,
         hide: true,
         keys: {
           value: keys
-      ***REMOVED***,
+        },
         x: "Year",
         classes: { LineTool: "LineTool" },
         color: (color, d) => {
           if (d.value >= this.lineToolValue) {
             return "#739B65";
-        ***REMOVED***
+          }
           if (d.value < this.lineToolValue) {
             return "#BF7720";
-        ***REMOVED***
+          }
           // default return color for series key, attached to d.id
           return seriesColors[d.id];
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       tooltip: {
         grouped: false,
         format: {
           value: function(value, ratio, id) {
             if (this.activeChart.yFormat == "value") {
               return `${parseInt(value).toString()} ${this.activeChart.units}`;
-          ***REMOVED*** else {
+            } else {
               return `${this.formatAxis(value, this.activeChart.yFormat)} ${
                 this.activeChart.units
-            ***REMOVED***`;
-          ***REMOVED***
-        ***REMOVED***.bind(this)
-      ***REMOVED***
-    ***REMOVED***,
+              }`;
+            }
+          }.bind(this)
+        }
+      },
       axis: {
         x: {
           label: "Year"
-      ***REMOVED***,
+        },
         y: {
           tick: {
             format: function(d) {
               return this.formatAxis(d, this.activeChart.yFormat);
-          ***REMOVED***.bind(this)
-        ***REMOVED***
+            }.bind(this)
+          }
           // label: `${this.activeChart.name} (${this.activeChart.units})`
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       legend: {
         hide: true
-    ***REMOVED***,
+      },
       point: {
         r: d => {
           return 5;
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       onrendered: () => {
         this.firstRenderComplete();
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
 
   firstRenderComplete() {
     if (this.isFirstRender) {
@@ -150,15 +150,15 @@ export class ClimateChartComponent implements OnDestroy {
       // set rainfall chart to initially show
       // this.actions.selectChart(this.activeChart);
       this.isFirstRender = false;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   resize(size) {
     this.chart.resize({
       height: size.height,
       width: size.width
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
 
   setLineToolValue(value) {
     const data = this.ngRedux.getState().climate.site.summaries;
@@ -169,14 +169,14 @@ export class ClimateChartComponent implements OnDestroy {
     this.chart.load({
       columns: [lineArray],
       classes: { LineTool: "LineTool" }
-  ***REMOVED***);
+    });
     this.chart.show("LineTool", { withLegend: true });
-***REMOVED***
+  }
 
   async setChart(chart: IChartMeta) {
     await this.translationsPrvdr.presentTranslatedLoader({
       content: "Loading..."
-  ***REMOVED***);
+    });
     this.activeChart = chart;
     console.log("activeChart", chart);
     this.chart.hide();
@@ -186,8 +186,8 @@ export class ClimateChartComponent implements OnDestroy {
     // reload new line tool value
     if (this.lineToolValue && chart.tools.line) {
       this.setLineToolValue(this.lineToolValue);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   formatAxis(value, type) {
     if (type == "date-from-July") {
@@ -204,12 +204,12 @@ export class ClimateChartComponent implements OnDestroy {
         3
       )}`;
       return string;
-  ***REMOVED*** else if (type == "value") {
+    } else if (type == "value") {
       return value;
-  ***REMOVED*** else {
+    } else {
       return value;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 }
 
 const seriesColors = {
@@ -217,4 +217,4 @@ const seriesColors = {
   Start: "#e41a1c",
   End: "#984ea3",
   Length: "#4daf4a"
-***REMOVED***
+};

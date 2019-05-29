@@ -5,7 +5,7 @@ page-view-data {
     .icon{
       width:20px;
       margin:0;}
-***REMOVED***
+  }
   .status-message{
     font-size: x-small;
     padding:2px;
@@ -15,15 +15,15 @@ page-view-data {
     color:rgba(255,255,255,0.9);
     text-align: center;
     text-transform: uppercase;
-***REMOVED***
+  }
   .submitted{
     background-color: color($colors,load)
-***REMOVED***
+  }
   .pending{
     background-color: color($colors,new)
-***REMOVED***
+  }
   .list-header{
     margin:0;
-***REMOVED***
+  }
 }
 

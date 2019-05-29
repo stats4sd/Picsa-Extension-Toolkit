@@ -34,12 +34,12 @@ export class Wrapper_MyApp {
   constructor(p0:any) {
     this.changed = false;
     this.context = new import0.MyApp(p0);
-***REMOVED***
+  }
   detectChangesInternal(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
     return changed;
-***REMOVED***
+  }
 }
 var renderType_MyApp_Host:import2.RenderComponentType = (null as any);
 class _View_MyApp_Host0 extends import1.AppView<any> {
@@ -48,7 +48,7 @@ class _View_MyApp_Host0 extends import1.AppView<any> {
   _MyApp_0_4:Wrapper_MyApp;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_MyApp_Host0,renderType_MyApp_Host,import6.ViewType.HOST,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.selectOrCreateHostElement('ng-component',rootSelector,(null as any));
     this._appEl_0 = new import3.AppElement(0,(null as any),this,this._el_0);
@@ -58,16 +58,16 @@ class _View_MyApp_Host0 extends import1.AppView<any> {
     compView_0.create(this._MyApp_0_4.context,this.projectableNodes,(null as any));
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return this._appEl_0;
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import0.MyApp) && (0 === requestNodeIndex))) { return this._MyApp_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._MyApp_0_4.detectChangesInternal(this,this._el_0,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_MyApp_Host0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   if ((renderType_MyApp_Host === (null as any))) { (renderType_MyApp_Host = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,([] as any[]),{})); }
@@ -83,7 +83,7 @@ class _View_MyApp0 extends import1.AppView<import0.MyApp> {
   _text_1:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_MyApp0,renderType_MyApp,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'ion-nav',(null as any));
@@ -99,11 +99,11 @@ class _View_MyApp0 extends import1.AppView<import0.MyApp> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import23.Nav) && (0 === requestNodeIndex))) { return this._Nav_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_0:any = this.context.rootPage;
     this._Nav_0_4.check_root(currVal_0,throwOnChange,false);
@@ -111,7 +111,7 @@ class _View_MyApp0 extends import1.AppView<import0.MyApp> {
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Nav_0_4.context.ngAfterViewInit(); } }
-***REMOVED***
+  }
 }
 export function viewFactory_MyApp0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<import0.MyApp> {
   if ((renderType_MyApp === (null as any))) { (renderType_MyApp = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,styles_MyApp,{})); }

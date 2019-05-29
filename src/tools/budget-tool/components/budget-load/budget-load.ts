@@ -37,13 +37,13 @@ export class BudgetLoadComponent implements OnDestroy {
       if (budgets) {
         this.savedBudgets = _jsonObjectValues(budgets);
         console.log("saved budgets", budgets);
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
   startNew() {
     const budget: IBudget = {
       apiVersion: BUDGET_API_VERSION,
@@ -58,67 +58,67 @@ export class BudgetLoadComponent implements OnDestroy {
       scale: null,
       enterpriseType: null,
       dotValues: REGIONAL_SETTINGS.currencyCounters
-  ***REMOVED***;
+    };
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
       component: "settings",
       title: "Settings"
-  ***REMOVED***);
+    });
     // publish event to force card list update
     this.events.publish("load:budget");
-***REMOVED***
+  }
   async loadBudget(budget: IBudget) {
     await this.translations.presentTranslatedLoader({
       content: "Preparing budget"
-  ***REMOVED***);
+    });
     budget = this.checkForBudgetUpgrades(budget);
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
       component: "overview",
       title: budget.title
-  ***REMOVED***);
+    });
     this.events.publish("calculate:budget");
     // publish event to force card list update
     this.events.publish("load:budget");
     // give small timeout to give appearance of smoother rendering
     setTimeout(() => {
       this.translations.dismissLoader();
-  ***REMOVED***, 1000);
-***REMOVED***
+    }, 1000);
+  }
   // recursively go through budget and if api version less than current perform incremental upgrade
   checkForBudgetUpgrades(budget: IBudget) {
     console.log("checking for upgrade", budget.apiVersion, this.apiVersion);
     if (budget.apiVersion < this.apiVersion) {
       budget = upgradeBudget(budget);
       return this.checkForBudgetUpgrades(budget);
-  ***REMOVED*** else {
+    } else {
       console.log("budget up to date");
       return budget;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   archiveBudget(budget: IBudget) {
     budget.archived = true;
     this.translations.presentTranslatedToast({
       message: "Budget archived",
       duration: 3000
-  ***REMOVED***);
+    });
     this.budgetPrvdr.saveBudget(budget);
-***REMOVED***
+  }
   restoreBudget(budget: IBudget) {
     budget.archived = false;
     this.translations.presentTranslatedToast({
       message: "Budget restored",
       duration: 3000
-  ***REMOVED***);
+    });
     this.budgetPrvdr.saveBudget(budget);
-***REMOVED***
+  }
   showArchivedBudgets() {
     this.showArchived = true;
-***REMOVED***
+  }
   _ADMIN_LoadBudgetMocks() {
     console.log("loading admin budget", this._adminBudgets);
     this.loadBudget(this._adminBudgets[0]);
-***REMOVED***
+  }
 }
 
 function _jsonObjectValues(json: any) {
@@ -126,7 +126,7 @@ function _jsonObjectValues(json: any) {
   for (const key in json) {
     if (json.hasOwnProperty(key)) {
       values.push(json[key]);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   return values;
 }

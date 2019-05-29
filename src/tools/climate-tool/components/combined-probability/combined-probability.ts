@@ -9,14 +9,14 @@ export class CombinedProbabilityComponent {
   plantDate: any;
   labels: any;
   crops: any;
-  startProbability: any = { reversePercentage: null ***REMOVED***
-  lengthProbability: any = { reversePercentage: null ***REMOVED***
-  selectedCrop: any = {***REMOVED***
+  startProbability: any = { reversePercentage: null };
+  lengthProbability: any = { reversePercentage: null };
+  selectedCrop: any = {};
   dayValue: number;
   test: string = "red";
 
   constructor(public climatePrvdr: ClimateToolProvider) {
-    this.plantDate = { min: 1, max: 8, value: 3, step: 1 ***REMOVED***
+    this.plantDate = { min: 1, max: 8, value: 3, step: 1 };
     this.labels = {
       1: "Week 1, November",
       2: "Week 2, November",
@@ -26,13 +26,13 @@ export class CombinedProbabilityComponent {
       6: "Week 2, December",
       7: "Week 3, December",
       8: "Week 4, December"
-  ***REMOVED***;
+    };
     // this.crops = this.c3Provider.crops;
     // for (const crop of this.crops) {
-    //   this.crops[crop.index].lengthProbability = { reversePercentage: null ***REMOVED***
-    //   this.crops[crop.index].rainfallProbability = { reversePercentage: null ***REMOVED***
+    //   this.crops[crop.index].lengthProbability = { reversePercentage: null };
+    //   this.crops[crop.index].rainfallProbability = { reversePercentage: null };
     // }
-***REMOVED***
+  }
   plantDateChange(e) {
     //manually set 1 October as day 274 and multiple by 7.6 (rough number of days in 1/4 month)
     this.dayValue = 305 + (365 / 48) * this.plantDate.value;
@@ -42,7 +42,7 @@ export class CombinedProbabilityComponent {
     this.calculateCropProbabilities();
     console.log("start probability", this.startProbability);
     console.log("day value", this.dayValue);
-***REMOVED***
+  }
   calculateCropProbabilities() {
     for (const crop of this.crops) {
       this.crops[
@@ -52,7 +52,7 @@ export class CombinedProbabilityComponent {
           key: "End",
           value: (this.dayValue + crop.lengthAvg) % 366,
           operator: ">="
-      ***REMOVED***
+        }
       ]);
       this.crops[
         crop.index
@@ -61,9 +61,9 @@ export class CombinedProbabilityComponent {
           key: "Rainfall",
           value: crop.waterAvg * (1 + this.plantDate.value / 16),
           operator: ">="
-      ***REMOVED***
+        }
       ]);
-  ***REMOVED***
+    }
     console.log("this.crops", this.crops);
-***REMOVED***
+  }
 }

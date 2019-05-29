@@ -4,17 +4,17 @@
       "hosting": {
         "picsa-kenya": ["picsa-kenya"],
         "picsa-malawi": ["picsa-malawi"]
-    ***REMOVED***
-  ***REMOVED***,
+      }
+    },
     "extension-toolkit-staging": {
       "hosting": {
         "picsa-staging": ["picsa-staging"]
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***,
+      }
+    }
+  },
   "projects": {
     "default": "extension-toolkit-staging",
     "staging": "extension-toolkit-staging",
     "production": "extension-toolkit"
-***REMOVED***
+  }
 }

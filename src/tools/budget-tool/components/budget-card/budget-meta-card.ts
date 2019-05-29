@@ -22,15 +22,15 @@ export class BudgetMetaCardComponent extends BudgetCardComponent
     public actions: BudgetToolActions
   ) {
     super(ngRedux, actions);
-***REMOVED***
+  }
 
   ngOnInit() {
     this._addValueSubscriber();
-***REMOVED***
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   // budget meta cards listen directly to their corresponding value field and update isselected property on change
   // *** note - this could all be done through budget-card-list element to avoid so many subscriptions, but assumed fine for now)
@@ -41,18 +41,18 @@ export class BudgetMetaCardComponent extends BudgetCardComponent
       .subscribe(v => {
         this.card.isSelected = v === this.card.id;
         this.selected = this.card.isSelected;
-    ***REMOVED***);
-***REMOVED***
+      });
+  }
 
   // assign card id to value path on select (and remove if already selected)
   cardClicked() {
     const budget = this.ngRedux.getState().budget.active;
     if (budget[this.valuePath] == this.card.id) {
       budget[this.valuePath] = null;
-  ***REMOVED*** else {
+    } else {
       budget[this.valuePath] = this.card.id;
-  ***REMOVED***
+    }
     this.selected = !this.selected;
     this.actions.setActiveBudget(budget);
-***REMOVED***
+  }
 }

@@ -58,7 +58,7 @@ gulp.task("merge", function() {
     .pipe(
       jsonConcat("merged.json", function(data) {
         return new Buffer(JSON.stringify(data));
-    ***REMOVED***)
+      })
     )
     .pipe(
       jsonTransform(function(data, file) {
@@ -66,9 +66,9 @@ gulp.task("merge", function() {
         for (let key in data) {
           data[key]._key = key;
           arr.push(data[key]);
-      ***REMOVED***
+        }
         return arr;
-    ***REMOVED***)
+      })
     )
     .pipe(gulp.dest("./"));
 });

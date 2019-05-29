@@ -21,7 +21,7 @@ export class HomePage {
       {name:' Record Data', color:'picsa-record', icon:'create', link:RecordDataPage},
       {name:' View Data', color:'picsa-view', icon:'stats', link:ViewDataPage},
     ]
-***REMOVED***
+  }
 
 
 }

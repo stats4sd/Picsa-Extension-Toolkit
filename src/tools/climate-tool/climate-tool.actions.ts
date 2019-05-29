@@ -17,23 +17,23 @@ export class ClimateToolActions {
     type: ClimateToolActions.SELECT_SITE,
     meta: null,
     payload: site
-***REMOVED***);
+  });
   @dispatch()
   updateSite = (sitePartial): StandardAction => ({
     type: ClimateToolActions.UPDATE_SITE,
     meta: null,
     payload: sitePartial
-***REMOVED***);
+  });
   @dispatch()
   selectChart = (chart: IChartMeta): StandardAction => ({
     type: ClimateToolActions.SELECT_CHART,
     meta: null,
     payload: chart
-***REMOVED***);
+  });
   @dispatch()
   resetState = (): StandardAction => ({
     type: ClimateToolActions.RESET_STATE,
     meta: null,
     payload: null
-***REMOVED***);
+  });
 }

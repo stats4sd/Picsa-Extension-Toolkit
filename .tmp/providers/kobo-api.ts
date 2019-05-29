@@ -17,7 +17,7 @@ export class KoboApi {
     console.log('kobo api provider loaded');
     console.log(this.platform);
     console.log(this.platform.is('cordova'))
-***REMOVED***
+  }
 
   //perform get request for mobile, or post for browser
   koboRequest(url):Observable<any> {
@@ -37,21 +37,21 @@ export class KoboApi {
             let result = JSON.parse(res['_body']);
             console.log(result);
             return result
-        ***REMOVED***)
+          })
           .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
-  ***REMOVED***
+    }
     else {
       console.log('getting via stats4sd kobo api post');
-      let body = {url: url***REMOVED***
+      let body = {url: url};
         return this.http.post('http://kobo-api.stats4sd.org', body, options)
           .map(function (res) {
             let result = JSON.parse(res['_body']);
             console.log(result);
             return result
-        ***REMOVED***)
+          })
           .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
 
 

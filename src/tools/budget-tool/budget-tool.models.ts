@@ -9,7 +9,7 @@ export interface IBudget {
   scale: "Days" | "Months" | "Weeks";
   dotValues: IBudgetDotValues;
   created: string;
-  data: { [index: string]: IBudgetPeriodData ***REMOVED***
+  data: { [index: string]: IBudgetPeriodData };
   apiVersion: number;
 }
 
@@ -22,9 +22,9 @@ export interface IBudgetMeta {
 }
 
 export interface IBudgetPeriodData {
-  activities?: { [index: string]: IActivityCard ***REMOVED***
-  inputs?: { [index: string]: IInputCard ***REMOVED***
-  outputs?: { [index: string]: IOutputCard ***REMOVED***
+  activities?: { [index: string]: IActivityCard };
+  inputs?: { [index: string]: IInputCard };
+  outputs?: { [index: string]: IOutputCard };
   familyLabour?: any;
   produceConsumed?: any;
   // balance?: IBudgetBalance;
@@ -125,6 +125,6 @@ interface IBudgetBalance {
 }
 
 export interface IBudgetPublicData {
-  customCards?: { ["id"]: ICustomBudgetCard ***REMOVED***
-  templates?: { ["id"]: IBudget ***REMOVED***
+  customCards?: { ["id"]: ICustomBudgetCard };
+  templates?: { ["id"]: IBudget };
 }

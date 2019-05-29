@@ -48,30 +48,30 @@ export class BudgetOverviewComponent implements OnDestroy {
         this.budget = budget;
         setTimeout(() => {
           this.budgetUpdated = true;
-      ***REMOVED***, 50);
-    ***REMOVED***);
+        }, 50);
+      });
     this.dotValues$.takeUntil(this.componentDestroyed).subscribe(values => {
       if (values) {
         this.dotsLegend = this._objectToArray(values);
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     this.events.subscribe("calculate:budget", () => {
       this.calculateBalance();
-  ***REMOVED***);
-***REMOVED***
+    });
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
   _objectToArray(json) {
     const array = [];
     for (const key in json) {
       if (json.hasOwnProperty(key)) {
         array.push({ key: key, value: json[key] });
-    ***REMOVED***
-  ***REMOVED***
+      }
+    }
     return array;
-***REMOVED***
+  }
 
   getIndex(array, card) {
     let index: number = -1;
@@ -79,16 +79,16 @@ export class BudgetOverviewComponent implements OnDestroy {
     for (const item of array) {
       if (item.ID == card.ID) {
         index = i;
-    ***REMOVED***
+      }
       i++;
-  ***REMOVED***
+    }
     return index;
-***REMOVED***
+  }
 
   calculateBalance() {
     // total for current period
     const data = this.ngRedux.getState().budget.active.data;
-    const totals = {***REMOVED***
+    const totals = {};
     let runningTotal = 0;
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
@@ -97,11 +97,11 @@ export class BudgetOverviewComponent implements OnDestroy {
         totals[key] = {
           period: periodTotal,
           running: runningTotal
-      ***REMOVED***;
-    ***REMOVED***
-  ***REMOVED***
+        };
+      }
+    }
     this.balance = totals;
-***REMOVED***
+  }
   _calculatePeriodTotal(period: IBudgetPeriodData) {
     let balance = 0;
     if (period) {
@@ -110,9 +110,9 @@ export class BudgetOverviewComponent implements OnDestroy {
       const outputCards = _jsonObjectValues(period.outputs);
       const outputsBalance = this._calculatePeriodCardTotals(outputCards);
       balance = inputsBalance + outputsBalance;
-  ***REMOVED***
+    }
     return balance;
-***REMOVED***
+  }
   _calculatePeriodCardTotals(cards: IBudgetCard[]) {
     let total = 0;
     if (cards && cards.length > 0) {
@@ -122,18 +122,18 @@ export class BudgetOverviewComponent implements OnDestroy {
             ? card.quantity - card.consumed
             : card.quantity;
           total = total + quantity * card.cost;
-      ***REMOVED***
-    ***REMOVED***);
-  ***REMOVED***
+        }
+      });
+    }
     return total;
-***REMOVED***
+  }
 }
 function _jsonObjectValues(json: any) {
   const values = [];
   for (const key in json) {
     if (json.hasOwnProperty(key)) {
       values.push(json[key]);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   return values;
 }

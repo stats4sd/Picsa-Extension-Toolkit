@@ -2,31 +2,31 @@ page-home {
   ion-content {
     height: 100%;
     overflow: hidden;
-***REMOVED***
+  }
   .content,
   .scroll-content {
     background-color: color($colors, primary);
     overflow: hidden;
-***REMOVED***
+  }
   .scroll-content {
     display: flex;
     flex-direction: column;
-***REMOVED***
+  }
   .title,
   .subtitle {
     color: white;
     text-align: center;
-***REMOVED***
+  }
   .title {
     height: 15vh;
     font-size: 13vh;
     padding: 0;
-***REMOVED***
+  }
   .subtitle {
     height: 5vh;
     font-size: 4vh;
     margin-bottom: 5vh;
-***REMOVED***
+  }
   .version-info {
     position: absolute;
     right: 16px;
@@ -38,13 +38,13 @@ page-home {
       margin: 0;
       color: rgba(255, 255, 255, 0.9);
       height: 1.5em;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   .link-holder {
     flex: 1;
     display: flex;
     flex-direction: column;
-***REMOVED***
+  }
   .link {
     // height: calc(100% / 5 - 5px) !important;
     flex: 1;
@@ -58,35 +58,35 @@ page-home {
     color: white;
     opacity: 0.95;
     cursor: pointer;
-***REMOVED***
+  }
   .link:hover {
     font-weight: bold;
-***REMOVED***
+  }
   .flex {
     display: flex;
     height: 100%;
     align-items: center;
-***REMOVED***
+  }
   .button-text {
     font-size: larger;
     font-family: Helvetica, Arial, sans-serif;
     padding-left: 10px;
-***REMOVED***
+  }
   ion-icon {
     font-size: xx-large;
-***REMOVED***
+  }
   .top-bar {
     padding: 16px;
-***REMOVED***
+  }
   ion-icon {
     padding-right: 5px;
-***REMOVED***
+  }
   .img-icon {
     width: 32px;
-***REMOVED***
+  }
   @media only screen and (max-width: 400px) {
     .version-info {
       display: block;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 }

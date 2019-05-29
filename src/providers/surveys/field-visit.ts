@@ -16,36 +16,36 @@ export const fieldVisit = {
             title: "Date",
             isRequired: true,
             inputType: "date"
-        ***REMOVED***,
+          },
           {
             type: "text",
             name: "location",
             title: "Location",
             isRequired: true
-        ***REMOVED***,
+          },
           {
             type: "text",
             name: "name",
             title: "Name of Extension Worker",
             isRequired: true
-        ***REMOVED***,
+          },
           {
             type: "text",
             name: "male",
             title: "Number of Male Farmers Present",
             isRequired: true,
             inputType: "number"
-        ***REMOVED***,
+          },
           {
             type: "text",
             name: "female",
             title: "Number of Female Farmers Present",
             isRequired: true,
             inputType: "number"
-        ***REMOVED***
+          }
         ],
         title: "Details of visit"
-    ***REMOVED***,
+      },
       {
         name: "Feedback",
         elements: [
@@ -56,7 +56,7 @@ export const fieldVisit = {
               "Describe what training activities you conducted with the farmers today",
             rows: 3,
             placeHolder: "Please give details"
-        ***REMOVED***,
+          },
           {
             type: "comment",
             name: "trainingReaction",
@@ -65,7 +65,7 @@ export const fieldVisit = {
             rows: 3,
             placeHolder:
               "E.g. exercises / activities farmers found useful? anything you observed that you think is interesting? do you see farmers linking picsa with ffa or other services / activities? if yes, how?"
-        ***REMOVED***,
+          },
           {
             type: "comment",
             name: "tabletReaction",
@@ -74,7 +74,7 @@ export const fieldVisit = {
             rows: 3,
             placeHolder:
               "E.g. did they seem comfortable with using the tablet/app, how did men react compared to women, older farmers compared to younger farmers?"
-        ***REMOVED***,
+          },
           {
             type: "comment",
             name: "tabletPositives",
@@ -82,7 +82,7 @@ export const fieldVisit = {
               "Do you think that the use of the tablet and the app helped the training session in any way? ",
             rows: 3,
             placeHolder: "If so, please can you explain how they helped ."
-        ***REMOVED***,
+          },
           {
             type: "comment",
             name: "tabletNegatives",
@@ -91,7 +91,7 @@ export const fieldVisit = {
             rows: 3,
             placeHolder:
               "If so, please can you explain what these negative effects were."
-        ***REMOVED***,
+          },
           {
             type: "comment",
             name: "infoShared",
@@ -100,10 +100,10 @@ export const fieldVisit = {
             rows: 3,
             placeHolder:
               "If yes please give details including date, how many farmers you think may have benefited from this"
-        ***REMOVED***
+          }
         ],
         title: "Feedback"
-    ***REMOVED***
+      }
     ]
-***REMOVED***
-***REMOVED***
+  }
+};

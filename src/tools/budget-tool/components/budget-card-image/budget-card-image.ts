@@ -12,26 +12,26 @@ export class BudgetCardImageComponent {
 
   ngOnInit() {
     this.source = this._selectImageExtension(this.type);
-***REMOVED***
+  }
 
   // svg automatically fallsback to png on error, but optionally
   // png can be put first for specific card types
   _selectImageExtension(cardType: string) {
     if (cardType && defaultExtensions[cardType]) {
       return defaultExtensions[cardType];
-  ***REMOVED*** else {
+    } else {
       return "png";
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   svgError() {
     this.source = "png";
-***REMOVED***
+  }
   pngError() {
     this.source = "fallback";
-***REMOVED***
+  }
 }
 const defaultExtensions = {
   enterprise: "svg",
   new: "svg"
-***REMOVED***
+};

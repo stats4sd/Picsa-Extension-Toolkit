@@ -36,12 +36,12 @@ export class Wrapper_TabsPage {
   constructor() {
     this.changed = false;
     this.context = new import0.TabsPage();
-***REMOVED***
+  }
   detectChangesInternal(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
     return changed;
-***REMOVED***
+  }
 }
 var renderType_TabsPage_Host:import2.RenderComponentType = (null as any);
 class _View_TabsPage_Host0 extends import1.AppView<any> {
@@ -50,7 +50,7 @@ class _View_TabsPage_Host0 extends import1.AppView<any> {
   _TabsPage_0_4:Wrapper_TabsPage;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_TabsPage_Host0,renderType_TabsPage_Host,import6.ViewType.HOST,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.selectOrCreateHostElement('ng-component',rootSelector,(null as any));
     this._appEl_0 = new import3.AppElement(0,(null as any),this,this._el_0);
@@ -60,16 +60,16 @@ class _View_TabsPage_Host0 extends import1.AppView<any> {
     compView_0.create(this._TabsPage_0_4.context,this.projectableNodes,(null as any));
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return this._appEl_0;
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import0.TabsPage) && (0 === requestNodeIndex))) { return this._TabsPage_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._TabsPage_0_4.detectChangesInternal(this,this._el_0,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_TabsPage_Host0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   if ((renderType_TabsPage_Host === (null as any))) { (renderType_TabsPage_Host = viewUtils.createRenderComponentType('',0,import8.ViewEncapsulation.None,([] as any[]),{})); }
@@ -93,7 +93,7 @@ class _View_TabsPage0 extends import1.AppView<import0.TabsPage> {
   /*private*/ _expr_4:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_TabsPage0,renderType_TabsPage,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'ion-tabs',(null as any));
@@ -133,12 +133,12 @@ class _View_TabsPage0 extends import1.AppView<import0.TabsPage> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import24.Tab) && (2 === requestNodeIndex))) { return this._Tab_2_4.context; }
     if (((token === import25.Tabs) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 4)))) { return this._Tabs_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Tabs_0_4.detectChangesInternal(this,this._el_0,throwOnChange);
     const currVal_0:any = this.context.tab1Root;
@@ -153,18 +153,18 @@ class _View_TabsPage0 extends import1.AppView<import0.TabsPage> {
     if (import4.checkBinding(throwOnChange,this._expr_3,currVal_3)) {
       this.renderer.setElementAttribute(this._el_2,'id',((currVal_3 == (null as any))? (null as any): currVal_3.toString()));
       this._expr_3 = currVal_3;
-  ***REMOVED***
+    }
     const currVal_4:any = this._Tab_2_4.context._btnId;
     if (import4.checkBinding(throwOnChange,this._expr_4,currVal_4)) {
       this.renderer.setElementAttribute(this._el_2,'aria-labelledby',((currVal_4 == (null as any))? (null as any): currVal_4.toString()));
       this._expr_4 = currVal_4;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Tabs_0_4.context.ngAfterViewInit(); } }
-***REMOVED***
+  }
   destroyInternal():void {
     this._Tabs_0_4.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 export function viewFactory_TabsPage0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<import0.TabsPage> {
   if ((renderType_TabsPage === (null as any))) { (renderType_TabsPage = viewUtils.createRenderComponentType('',0,import8.ViewEncapsulation.None,styles_TabsPage,{})); }

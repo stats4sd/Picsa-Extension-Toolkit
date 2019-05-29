@@ -12,7 +12,7 @@ export class ViewDataPage {
 
   constructor(public navCtrl: NavController) {
 
-***REMOVED***
+  }
 
   ionViewDidLoad() {
     this.map=L.map('mapid');
@@ -22,6 +22,6 @@ export class ViewDataPage {
     // start the map in South-East England
     this.map.setView(new L.LatLng(51.3, 0.7),9);
     this.map.addLayer(osm);
-***REMOVED***
+  }
 
 }

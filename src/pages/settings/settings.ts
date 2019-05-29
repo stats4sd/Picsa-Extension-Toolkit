@@ -31,16 +31,16 @@ export class SettingsPage implements OnDestroy {
     this.user$
       .takeUntil(this.componentDestroyed)
       .subscribe(user => (this.user = user));
-***REMOVED***
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   async getLastBackup() {
     const backup: string = await this.storagePrvdr.get("_lastBackup");
     this.lastBackup = backup;
-***REMOVED***
+  }
 
   userEdit(field) {
     const prompt = this.alertCtrl.create({
@@ -50,28 +50,28 @@ export class SettingsPage implements OnDestroy {
           name: "val",
           placeholder: field,
           type: "text"
-      ***REMOVED***
+        }
       ],
       buttons: [
         {
           text: "Cancel",
           handler: data => {}
-      ***REMOVED***,
+        },
         {
           text: "Save",
           handler: data => {
             this.updateUser(field, data.val);
-        ***REMOVED***
-      ***REMOVED***
+          }
+        }
       ]
-  ***REMOVED***);
+    });
     prompt.present();
-***REMOVED***
+  }
 
   // }
   updateUser(key, val) {
     console.log(key, val);
     this.user[key] = val;
     this.actions.updateUser(this.user);
-***REMOVED***
+  }
 }

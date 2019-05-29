@@ -11,5 +11,5 @@ export class CardSelectComponent {
   currency = REGIONAL_SETTINGS.currency;
   constructor() {
     console.log("currency", this.currency);
-***REMOVED***
+  }
 }

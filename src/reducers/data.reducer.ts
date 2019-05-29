@@ -15,5 +15,5 @@ export function DataReducer(state: IData = INITIAL_STATE.data, action: Action) {
 
     default:
       return state;
-***REMOVED***
+  }
 }

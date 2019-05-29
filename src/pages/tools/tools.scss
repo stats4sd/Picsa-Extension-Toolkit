@@ -2,29 +2,29 @@ page-tools {
   .flex {
     display: flex;
     flex-wrap: wrap;
-***REMOVED***
+  }
   .tool {
     cursor: pointer;
     border: 5px solid black;
     margin: 5px;
-***REMOVED***
+  }
   .tool:hover {
     font-weight: bold; // background: color($colors, primary);
     border: 5px solid color($colors, primary); // color: white;
-***REMOVED***
+  }
   .tool:hover>img {
     // filter: invert(100%);
-***REMOVED***
+  }
   .tool-icon {
     padding: 20px;
-***REMOVED***
+  }
   .tool-text {
     font-size: x-large;
     text-align: center;
     margin-top: 5px;
-***REMOVED***
+  }
   img {
     height: 140px;
     width: 140px;
-***REMOVED***
+  }
 }

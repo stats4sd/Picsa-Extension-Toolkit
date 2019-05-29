@@ -130,7 +130,7 @@ module.exports = function(context) {
     setTimeout(function(){
     	console.log('hook.js>> end');
 		deferral.resolve();
-  ***REMOVED***, 1000);
+    }, 1000);
 
     return deferral.promise;
 }

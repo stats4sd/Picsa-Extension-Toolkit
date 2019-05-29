@@ -39,7 +39,7 @@ npm manifest:
       "android:zip": "%npm_package_config_zipalignpath% -v -p 4 %npm_package_config_androidunsignedpath% %npm_package_config_androidreleasepath%/%npm_package_version%.signed.apk",
       "android:openfolder": "%SystemRoot%/explorer.exe C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\platforms\\android\\app\\build\\outputs\\apk\\armv7\\release",
       "android:release": "npm run android:build && npm run android:sign && android:zip && android:openfolder"
-  ***REMOVED***,
+    },
     "config": {
       "ionic_copy": "./config/copy.config.js",
       "ionic_webpack": "./config/webpack.config.js",
@@ -51,7 +51,7 @@ npm manifest:
       "androidunsignedpath": "platforms/android/app/build/outputs/apk/armv7/release/app-armv7-release-unsigned.apk",
       "androidreleasepath": "platforms/android/app/build/outputs/apk/armv7/release",
       "aliasname": "picsaextensiontoolkit"
-  ***REMOVED***,
+    },
     "dependencies": {
       "@angular-redux/store": "9",
       "@angular/common": "6.0.4",
@@ -112,7 +112,7 @@ npm manifest:
       "survey-angular": "^1.0.33",
       "workbox-sw": "3.2.0",
       "zone.js": "0.8.26"
-  ***REMOVED***,
+    },
     "devDependencies": {
       "@ionic/app-scripts": "^3.1.10",
       "@types/c3": "^0.6.0",
@@ -137,7 +137,7 @@ npm manifest:
       "webpack-manifest-plugin": "^2.0.3",
       "workbox-cli": "3.2.0",
       "workbox-webpack-plugin": "^3.2.0"
-  ***REMOVED***,
+    },
     "description": "picsa-extension-toolkit: For use by extension training with PICSA",
     "cordova": {
       "platforms": [
@@ -153,13 +153,13 @@ npm manifest:
         "cordova-plugin-file-opener2": {},
         "cordova-android-support-gradle-release": {
           "ANDROID_SUPPORT_VERSION": "26.+"
-      ***REMOVED***,
+        },
         "cordova-plugin-crosswalk-webview": {},
         "cordova-plugin-file": {},
         "cordova-plugin-x-socialsharing": {}
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+      }
+    }
+  }
 
 yarn manifest: 
   No manifest

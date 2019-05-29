@@ -25,12 +25,12 @@ export const firebaseConfig = {
   databaseURL: "https://extension-toolkit.firebaseio.com",
   storageBucket: "extension-toolkit.appspot.com",
   messagingSenderId: "249750594240"
-***REMOVED***
+};
 
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Password,
   method: AuthMethods.Password
-***REMOVED***
+};
 
 @NgModule({
   declarations: [

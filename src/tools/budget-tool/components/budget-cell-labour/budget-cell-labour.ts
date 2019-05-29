@@ -10,12 +10,12 @@ export class BudgetCellLabourComponent {
   set days(days: number) {
     this._days = days;
     this.generateRepresentation();
-***REMOVED***
+  }
   @Input()
   set people(people: number) {
     this._people = people;
     this.generateRepresentation();
-***REMOVED***
+  }
   _days: number;
   _people: number;
   daysArray: number[][];
@@ -29,17 +29,17 @@ export class BudgetCellLabourComponent {
     if (this._people && this._days) {
       for (let i = 0; i < this._days; i++) {
         daysArray.push(this._createArray(this._people, 1));
-    ***REMOVED***
-  ***REMOVED***
+      }
+    }
     console.log("daysArray", daysArray);
     this.daysArray = daysArray;
-***REMOVED***
+  }
   _createArray(length: number, value: any) {
     return new Array(length).fill(value);
-***REMOVED***
+  }
 }
 
 const baseAllocation = {
   days: [],
   people: []
-***REMOVED***
+};

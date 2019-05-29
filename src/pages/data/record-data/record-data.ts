@@ -25,11 +25,11 @@ export class RecordDataPage implements OnDestroy {
     this.user$
       .takeUntil(this.componentDestroyed)
       .subscribe(user => this.init(user));
-***REMOVED***
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   // when user updated check for available forms (given user group access permissions) and updated submissions
   // only show forms which are marked as active
@@ -42,24 +42,24 @@ export class RecordDataPage implements OnDestroy {
         // only filter forms which has groups specified (otherwise assume available to all)
         if (form.groups) {
           return this._containsCommonElement(form.groups, this.user.groups);
-      ***REMOVED*** else {
+        } else {
           return true;
-      ***REMOVED***
-    ***REMOVED***);
+        }
+      });
       // also filter out inactive
       forms = forms.filter(form => {
         return form.isActive;
-    ***REMOVED***);
+      });
       this.forms = forms;
       console.log("forms", this.forms);
-  ***REMOVED*** catch (error) {
+    } catch (error) {
       console.error(error);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   openForm(form: IForm) {
     this.modalCtrl.create("FormViewPage", { form: form }).present();
-***REMOVED***
+  }
 
   // take 2 string arrays and return whether at least one element is shared between them
   _containsCommonElement(arr1: string[], arr2: string[] = []) {
@@ -68,9 +68,9 @@ export class RecordDataPage implements OnDestroy {
     arr1.forEach(el => {
       if (arr2.includes(el)) {
         common = true;
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
     console.log("common?", common);
     return common;
-***REMOVED***
+  }
 }

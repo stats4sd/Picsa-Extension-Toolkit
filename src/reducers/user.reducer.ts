@@ -11,5 +11,5 @@ export function UserReducer(state: IUser = INITIAL_STATE.user, action: Action) {
 
     default:
       return state;
-***REMOVED***
+  }
 }

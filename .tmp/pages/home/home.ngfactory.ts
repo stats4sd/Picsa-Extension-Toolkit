@@ -49,12 +49,12 @@ export class Wrapper_HomePage {
   constructor(p0:any) {
     this.changed = false;
     this.context = new import0.HomePage(p0);
-***REMOVED***
+  }
   detectChangesInternal(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
     return changed;
-***REMOVED***
+  }
 }
 var renderType_HomePage_Host:import2.RenderComponentType = (null as any);
 class _View_HomePage_Host0 extends import1.AppView<any> {
@@ -63,7 +63,7 @@ class _View_HomePage_Host0 extends import1.AppView<any> {
   _HomePage_0_4:Wrapper_HomePage;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_HomePage_Host0,renderType_HomePage_Host,import6.ViewType.HOST,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.selectOrCreateHostElement('page-home',rootSelector,(null as any));
     this._appEl_0 = new import3.AppElement(0,(null as any),this,this._el_0);
@@ -73,16 +73,16 @@ class _View_HomePage_Host0 extends import1.AppView<any> {
     compView_0.create(this._HomePage_0_4.context,this.projectableNodes,(null as any));
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return this._appEl_0;
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import0.HomePage) && (0 === requestNodeIndex))) { return this._HomePage_0_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._HomePage_0_4.detectChangesInternal(this,this._el_0,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_HomePage_Host0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   if ((renderType_HomePage_Host === (null as any))) { (renderType_HomePage_Host = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,([] as any[]),{})); }
@@ -144,7 +144,7 @@ class _View_HomePage0 extends import1.AppView<import0.HomePage> {
   /*private*/ _expr_8:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_HomePage0,renderType_HomePage,import6.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'ion-header',(null as any));
@@ -276,7 +276,7 @@ class _View_HomePage0 extends import1.AppView<import0.HomePage> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import30.ToolbarTitle) && ((4 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._ToolbarTitle_4_4.context; }
     if (((token === import31.Icon) && (10 === requestNodeIndex))) { return this._Icon_10_3.context; }
@@ -289,7 +289,7 @@ class _View_HomePage0 extends import1.AppView<import0.HomePage> {
     if (((token === import31.Icon) && ((23 <= requestNodeIndex) && (requestNodeIndex <= 24)))) { return this._Icon_23_3.context; }
     if (((token === import36.Content) && ((15 <= requestNodeIndex) && (requestNodeIndex <= 27)))) { return this._Content_15_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
     const currVal_0:any = 'picsa-dark';
@@ -314,42 +314,42 @@ class _View_HomePage0 extends import1.AppView<import0.HomePage> {
         this._query_Button_7_0.reset([this._Button_9_4.context]);
         this._ToolbarItem_7_3.context._buttons = this._query_Button_7_0;
         this._query_Button_7_0.notifyOnChanges();
-    ***REMOVED***
+      }
       if ((this.numberOfChecks === 0)) { this._Button_9_4.context.ngAfterContentInit(); }
-  ***REMOVED***
+    }
     const currVal_1:any = this._Navbar_2_4.context._hidden;
     if (import4.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     const currVal_2:any = this._Navbar_2_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
       this._expr_2 = currVal_2;
-  ***REMOVED***
+    }
     const currVal_4:any = this._Icon_10_3.context._hidden;
     if (import4.checkBinding(throwOnChange,this._expr_4,currVal_4)) {
       this.renderer.setElementClass(this._el_10,'hide',currVal_4);
       this._expr_4 = currVal_4;
-  ***REMOVED***
+    }
     const currVal_5:any = this._Content_15_4.context._sbPadding;
     if (import4.checkBinding(throwOnChange,this._expr_5,currVal_5)) {
       this.renderer.setElementClass(this._el_15,'statusbar-padding',currVal_5);
       this._expr_5 = currVal_5;
-  ***REMOVED***
+    }
     const currVal_8:any = this._Icon_23_3.context._hidden;
     if (import4.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
       this.renderer.setElementClass(this._el_23,'hide',currVal_8);
       this._expr_8 = currVal_8;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_10_3.context.ngOnDestroy();
     this._Icon_23_3.context.ngOnDestroy();
     this._Content_15_4.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 export function viewFactory_HomePage0(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<import0.HomePage> {
   if ((renderType_HomePage === (null as any))) { (renderType_HomePage = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,styles_HomePage,{})); }
@@ -373,7 +373,7 @@ class _View_HomePage1 extends import1.AppView<any> {
   /*private*/ _expr_7:any;
   constructor(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement) {
     super(_View_HomePage1,renderType_HomePage,import6.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import7.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'div',(null as any));
     this.renderer.setElementAttribute(this._el_0,'class','centre-button');
@@ -418,13 +418,13 @@ class _View_HomePage1 extends import1.AppView<any> {
     ]
     ,[disposable_0],([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import31.Icon) && (4 === requestNodeIndex))) { return this._Icon_4_3.context; }
     if (((token === import32.Button) && ((2 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._Button_2_4.context; }
     if (((token === import38.NavPush) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 8)))) { return this._NavPush_0_3.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_1:any = this.context.$implicit.link;
     this._NavPush_0_3.check_navPush(currVal_1,throwOnChange,false);
@@ -445,22 +445,22 @@ class _View_HomePage1 extends import1.AppView<any> {
     if (import4.checkBinding(throwOnChange,this._expr_6,currVal_6)) {
       this.renderer.setElementClass(this._el_4,'hide',currVal_6);
       this._expr_6 = currVal_6;
-  ***REMOVED***
+    }
     const currVal_7:any = import4.interpolate(1,'\n        ',this.context.$implicit.name,'\n      ');
     if (import4.checkBinding(throwOnChange,this._expr_7,currVal_7)) {
       this.renderer.setText(this._text_5,currVal_7);
       this._expr_7 = currVal_7;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_4_3.context.ngOnDestroy();
-***REMOVED***
+  }
   private _handle_click_0_0($event:any):boolean {
     this.markPathToRootAsCheckOnce();
     const pd_0:any = ((<any>this._NavPush_0_3.context.onClick()) !== false);
     return (true && pd_0);
-***REMOVED***
+  }
 }
 function viewFactory_HomePage1(viewUtils:import4.ViewUtils,parentInjector:import5.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_HomePage1(viewUtils,parentInjector,declarationEl);

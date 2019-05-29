@@ -32,7 +32,7 @@ export class UserProvider implements OnDestroy {
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
   async init() {
     console.log("user init");
     this.initTranslate();
@@ -40,16 +40,16 @@ export class UserProvider implements OnDestroy {
     await this.enableUserSync();
     this.firestorePrvdr.syncCollections();
     this.subscribeToFirebaseChanges();
-***REMOVED***
+  }
 
   initTranslate() {
     this.translate.setDefaultLang("en");
     this.lang$.takeUntil(this.componentDestroyed).subscribe(lang => {
       if (lang) {
         this.changeLanguage(lang);
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+      }
+    });
+  }
 
   // load user doc from storage on init and reflect to redux
   // additionally checks for user backup
@@ -59,7 +59,7 @@ export class UserProvider implements OnDestroy {
     if (user) {
       this.setUser(user);
       this.presentToast("user loaded successfully");
-  ***REMOVED*** else {
+    } else {
       // no user, see if a backup exists on file if using mobile
       if (this.filePrvdr.isCordova) {
         const userBackup = await this._checkIfUserBackupExists();
@@ -67,32 +67,32 @@ export class UserProvider implements OnDestroy {
           this.setUser(userBackup);
           this.presentToast("user restored successfully");
           return;
-      ***REMOVED***
+        }
         // if no backup let's initialise a new user so that user object exists to store data on
         else {
           this.createNewUser();
-      ***REMOVED***
-    ***REMOVED*** else {
+        }
+      } else {
         this.createNewUser();
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+      }
+    }
+  }
 
   // additional set user used primarly during user load and backup
   setUser(user: IUser) {
     this.user = user;
     this.storagePrvdr.set("user", user);
     this.actions.updateUser(user);
-***REMOVED***
+  }
 
   createNewUser() {
     const user: IUser = {
       lang: "en",
       appVersion: version.text
-  ***REMOVED***;
+    };
     this.setUser(user);
     this.presentToast("user profile created");
-***REMOVED***
+  }
 
   // automatically reflect changes to user to local storage and firebase
   // note - only want to sync if user authenticated (i.e logged in via email or joined group)
@@ -103,13 +103,13 @@ export class UserProvider implements OnDestroy {
         await this.storagePrvdr.set("user", user);
         if (user && user.authenticated) {
           this.firestorePrvdr.setDoc(`users/${user.id}`, user);
-      ***REMOVED***
+        }
         if (this.filePrvdr.isCordova) {
           this._backupUserToDisk();
-      ***REMOVED***
-    ***REMOVED***
-  ***REMOVED***);
-***REMOVED***
+        }
+      }
+    });
+  }
 
   async _backupUserToDisk() {
     await this.filePrvdr.createFile(
@@ -119,7 +119,7 @@ export class UserProvider implements OnDestroy {
       true
     );
     return;
-***REMOVED***
+  }
 
   async _checkIfUserBackupExists() {
     const fileTxt = await this.filePrvdr.readTextFile(
@@ -129,9 +129,9 @@ export class UserProvider implements OnDestroy {
     if (fileTxt) {
       const user: IUser = JSON.parse(fileTxt);
       return user;
-  ***REMOVED***
+    }
     return null;
-***REMOVED***
+  }
 
   // present toast with timeout to allow content to be fully registered
   presentToast(msg: string) {
@@ -141,14 +141,14 @@ export class UserProvider implements OnDestroy {
         dismissOnPageChange: true,
         position: "bottom",
         message: msg
-    ***REMOVED***,
+      },
       500
     );
-***REMOVED***
+  }
 
   changeLanguage(code: string) {
     this.translate.use(code);
-***REMOVED***
+  }
 
   // joinGroup() {}
 
@@ -157,19 +157,19 @@ export class UserProvider implements OnDestroy {
     const user = this.user;
     user[userFieldKey] = value;
     this.actions.updateUser(user);
-***REMOVED***
+  }
 
   saveFormResponse(formID: string, response: IFormResponse) {
     const user = this.user;
     if (!user.submittedForms) {
-      user.submittedForms = {***REMOVED***
-  ***REMOVED***
+      user.submittedForms = {};
+    }
     if (!user.submittedForms[formID]) {
-      user.submittedForms[formID] = {***REMOVED***
-  ***REMOVED***
+      user.submittedForms[formID] = {};
+    }
     user.submittedForms[formID][response._key] = response;
     this.actions.updateUser(user);
-***REMOVED***
+  }
 
   subscribeToFirebaseChanges() {
     // wrap in try-catch as sometimes throws error if offline and trying to refresh token
@@ -181,13 +181,13 @@ export class UserProvider implements OnDestroy {
             id: user.uid,
             email: user.email,
             verified: user.emailVerified
-        ***REMOVED***);
-      ***REMOVED*** else {
+          });
+        } else {
           // User is signed out.
-      ***REMOVED***
-    ***REMOVED***);
-  ***REMOVED*** catch (error) {
+        }
+      });
+    } catch (error) {
       console.error(error);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 }

@@ -17,12 +17,12 @@ export class SiteSelectComponent {
   ngOnInit() {
     this.mapInit();
     this.sitesInit();
-***REMOVED***
+  }
   // create map base layers and set malawi geojson
   mapInit() {
     this.map = L.map("siteSelect", {
       attributionControl: false
-  ***REMOVED***);
+    });
     const osmUrl = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     const osmAttrib =
       'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -30,29 +30,29 @@ export class SiteSelectComponent {
       minZoom: 1,
       maxZoom: 15,
       attribution: osmAttrib
-  ***REMOVED***);
+    });
     this.map.setView(new L.LatLng(-13.7, 34.9), 6);
     const geojsonLayer = L.geoJSON(GEOJSON.malawiAdmin, {
       onEachFeature: this.setFeature.bind(this),
       middleware: function(data) {
         return data;
-    ***REMOVED***,
+      },
       style: this._getStyle()
-  ***REMOVED***);
+    });
     geojsonLayer.addTo(this.map);
     // *** ADD METHOD TO CALCULATE AND AUTO FIT BOUNDS DEPENDENT ON USER
     this.map.fitBounds([[-13.4787, 35.77], [-14.797, 34.7358]]);
     // this.map.on('click',function(e){
     //   console.log('clicked')
     // })
-***REMOVED***
+  }
 
   sitesInit() {
     for (const site of SITES) {
       console.log("site", site);
       const marker = L.marker([site.latitude, site.longitude], {
         icon: weatherIcon
-    ***REMOVED***);
+      });
       const container = L.DomUtil.create("div");
       const btn = L.DomUtil.create("button", "", container);
       btn.setAttribute("type", "button");
@@ -60,27 +60,27 @@ export class SiteSelectComponent {
       const popup = L.popup().setContent(btn);
       L.DomEvent.on(btn, "click", btn => {
         this.selectSite(site);
-    ***REMOVED***);
+      });
       marker.bindPopup(popup);
       marker.addTo(this.map);
       marker.on({
         click: function(e) {
           console.log("marker clicked", e);
-      ***REMOVED***.bind(this)
-    ***REMOVED***);
-  ***REMOVED***
-***REMOVED***
+        }.bind(this)
+      });
+    }
+  }
 
   setFeature(feature, layer) {
     const exceptions = {
       "TA Kapeni": [-15.60583, 35.00381],
       "TA Machinjili": [-15.67858, 35.07111]
-  ***REMOVED***;
+    };
     layer.on({
       click: function(e) {
         this.layerClick(e.target);
-    ***REMOVED***.bind(this)
-  ***REMOVED***);
+      }.bind(this)
+    });
 
     //automatically bind tooltips to centre of feature, unless want to manually specify from exceptions
     if (!exceptions[feature.properties.NAME_1]) {
@@ -88,22 +88,22 @@ export class SiteSelectComponent {
         permanent: true,
         direction: "center",
         className: "countryLabel"
-    ***REMOVED***);
-  ***REMOVED*** else {
+      });
+    } else {
       const latLon = exceptions[feature.properties.NAME_1];
       const label = L.marker(latLon, {
         icon: L.divIcon({
           html: "",
           iconSize: [0, 0]
-      ***REMOVED***)
-    ***REMOVED***).addTo(this.map);
+        })
+      }).addTo(this.map);
       label.bindTooltip(feature.properties.NAME_1, {
         permanent: true,
         direction: "center",
         className: "countryLabel"
-    ***REMOVED***);
-  ***REMOVED***
-***REMOVED***
+      });
+    }
+  }
 
   layerClick(layer) {
     console.log("layer", layer);
@@ -112,10 +112,10 @@ export class SiteSelectComponent {
       const SWBounds = _jsonObjectValues(layer._bounds._southWest);
       console.log("fitting bounds", NEBounds, SWBounds);
       this.map.fitBounds([NEBounds, SWBounds]);
-  ***REMOVED*** catch (error) {
+    } catch (error) {
       console.error("could not fit bounds", error);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   _getStyle() {
     return {
@@ -124,11 +124,11 @@ export class SiteSelectComponent {
       color: "#000000",
       opacity: 1,
       weight: 2
-  ***REMOVED***;
-***REMOVED***
+    };
+  }
   selectSite(site: ISite) {
     this.actions.selectSite(site);
-***REMOVED***
+  }
 }
 
 const weatherIcon = L.icon({
@@ -147,7 +147,7 @@ function _jsonObjectValues(json: any) {
   for (const key in json) {
     if (json.hasOwnProperty(key)) {
       values.push(json[key]);
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   return values;
 }

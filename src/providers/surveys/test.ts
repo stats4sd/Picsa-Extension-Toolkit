@@ -11,9 +11,9 @@ export const test = {
           {
             type: "text",
             name: "question1"
-        ***REMOVED***
+          }
         ]
-    ***REMOVED***
+      }
     ]
-***REMOVED***
-***REMOVED***
+  }
+};

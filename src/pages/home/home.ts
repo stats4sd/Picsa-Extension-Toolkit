@@ -32,34 +32,34 @@ export class HomePage {
         name: "Resources",
         icon: "book",
         page: "ResourcesPage"
-    ***REMOVED***,
+      },
       {
         name: "Tools",
         icon: "tablet-portrait",
         page: "ToolsPage"
-    ***REMOVED***,
+      },
       {
         name: "Discussions",
         icon: "chatbubbles",
         page: "DiscussionsPage"
-    ***REMOVED***,
+      },
       {
         name: "Data Collection",
         img: "data-collection",
         page: "RecordDataPage"
-    ***REMOVED***,
+      },
       {
         name: "Settings",
         icon: "settings",
         page: "SettingsPage"
-    ***REMOVED***
+      }
     ];
-***REMOVED***
+  }
   ionViewDidEnter() {
     if (!this.platform.is("cordova")) {
       this.checkForSWUpdates();
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 
   async checkForSWUpdates() {
     // https://medium.com/progressive-web-apps/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
@@ -77,17 +77,17 @@ export class HomePage {
               position: "bottom",
               showCloseButton: true,
               closeButtonText: "Reload"
-          ***REMOVED***);
+            });
             toast.onDidDismiss(() => {
               location.reload();
-          ***REMOVED***);
+            });
             toast.present();
-        ***REMOVED***
-      ***REMOVED***,
+          }
+        },
         notAvailable => {
           console.log("no update available");
-      ***REMOVED***
+        }
       )
       .catch(err => console.error(err));
-***REMOVED***
+  }
 }

@@ -42,11 +42,11 @@ export class BudgetToolPage implements OnDestroy {
     this.budget$
       .takeUntil(this.componentDestroyed)
       .subscribe(budget => (this.budget = budget));
-***REMOVED***
+  }
   ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-***REMOVED***
+  }
 
   async setView(view: IBudgetView) {
     console.log("setting view", view);
@@ -57,21 +57,21 @@ export class BudgetToolPage implements OnDestroy {
       component: view.component,
       title: title,
       meta: null
-  ***REMOVED***);
+    });
     if (view.component == "overview") {
       this.events.publish("calculate:budget");
-  ***REMOVED***
-***REMOVED***
+    }
+  }
   async shareBudget() {
     this.sharedDisabled = true;
     try {
       this.budgetDownloadMessage = "preparing";
       await this.printPrvdr.socialShareBudget("#budget", this.budget.title);
       this.budgetDownloadMessage = null;
-  ***REMOVED*** catch (error) {
+    } catch (error) {
       console.error(error);
       this.budgetDownloadMessage = "error";
-  ***REMOVED***
+    }
     this.sharedDisabled = false;
-***REMOVED***
+  }
 }

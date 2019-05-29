@@ -3,15 +3,15 @@ page-budget-tool {
     background-color: color($colors, primary);
     height: 100%;
     color: white;
-***REMOVED***
+  }
   .toolbar-title {
     padding: 0 0 0 12px;
     width: unset;
-***REMOVED***
+  }
   .title-bar {
     display: flex;
     align-items: center;
-***REMOVED***
+  }
   .budget-title {
     color: #424242;
     font-size: 2rem;
@@ -21,14 +21,14 @@ page-budget-tool {
     text-overflow: ellipsis;
     flex: 1;
     white-space: nowrap;
-***REMOVED***
+  }
   .nav-icon {
     opacity: 0.4;
-***REMOVED***
+  }
   .nav-icon.active {
     opacity: 1;
-***REMOVED***
+  }
   button.nav-icon[disabled] {
     opacity: 0;
-***REMOVED***
+  }
 }

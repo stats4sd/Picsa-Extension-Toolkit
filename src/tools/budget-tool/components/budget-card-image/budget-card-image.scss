@@ -5,21 +5,21 @@ budget-card-image {
     width: 100px;
     object-fit: contain;
     margin: auto;
-***REMOVED***
+  }
   img.card-image.add {
     height: 60px;
     width: 60px;
     margin-top: 20px;
-***REMOVED***
+  }
   .card-image-holder {
     margin: 2px;
-***REMOVED***
+  }
   img.error-not-fixed {
     opacity: 0;
-***REMOVED***
+  }
   img.error-fixed {
     opacity: 1;
-***REMOVED***
+  }
 }
 
 budget-card-image.small {
@@ -27,7 +27,7 @@ budget-card-image.small {
   .card-image-holder {
     height: 45px;
     width: 45px;
-***REMOVED***
+  }
 }
 
 budget-card-image.medium {
@@ -36,5 +36,5 @@ budget-card-image.medium {
     height: 70px;
     width: 70px;
     margin: auto;
-***REMOVED***
+  }
 }

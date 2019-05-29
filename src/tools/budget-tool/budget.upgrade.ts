@@ -15,18 +15,18 @@ export const upgradeBudget = (budget: IBudget) => {
       return v2Upgrade(budget);
     default:
       throw new Error(`could not upgrade budget: ${JSON.stringify(budget)}`);
-***REMOVED***
-***REMOVED***
+  }
+};
 
 // Legacy upgrade, not expected to find any budgets in this format and upgrade method not known
 // as budget type might have changed need to also type as any
 const v1Upgrade = (budget: IBudget | any) => {
   try {
-***REMOVED*** catch (error) {
+  } catch (error) {
     budget.apiVersion = -1;
-***REMOVED***
+  }
   return budget;
-***REMOVED***
+};
 
 // 15/10/2018
 // recast budget period data period from string to number and capitlise scale
@@ -38,11 +38,11 @@ const v2Upgrade = (budget: IBudget | any) => {
       const upperSacle: string =
         lowerScale.charAt(0).toUpperCase() + lowerScale.substring(1);
       budget.periods.scale = upperSacle;
-  ***REMOVED***
+    }
     budget.apiVersion = 3;
     console.log("v2 upgrade successful");
-***REMOVED*** catch (error) {
+  } catch (error) {
     budget.apiVersion = -1;
-***REMOVED***
+  }
   return budget;
-***REMOVED***
+};

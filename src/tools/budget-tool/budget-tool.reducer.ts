@@ -26,52 +26,52 @@ export function BudgetToolReducer(
       const updatedBudget = action as StandardAction;
       // want to be able to set null to clear budget
       if (!updatedBudget.payload) {
-        return { ...state, active: null ***REMOVED***
-    ***REMOVED***
-      const newBudget = { ...state.active, ...updatedBudget.payload ***REMOVED***
-      return { ...state, active: newBudget ***REMOVED***
+        return { ...state, active: null };
+      }
+      const newBudget = { ...state.active, ...updatedBudget.payload };
+      return { ...state, active: newBudget };
 
     case BudgetToolActions.SET_BUDGET_META:
       const budgetMeta = action as StandardAction;
-      const newMeta = { ...state.meta, ...budgetMeta.payload ***REMOVED***
-      return { ...state, meta: newMeta ***REMOVED***
+      const newMeta = { ...state.meta, ...budgetMeta.payload };
+      return { ...state, meta: newMeta };
 
     // merge arrays of existing and incoming meta, overwriting duplicates
     // e.g. hard-coded activities and custom cards
     case BudgetToolActions.PATCH_BUDGET_META:
       const budgetMetaPatch = action as StandardAction;
-      const meta = { ...state.meta ***REMOVED***
+      const meta = { ...state.meta };
       Object.keys(budgetMetaPatch.payload).forEach(key => {
         meta[key] = _mergeBudgetCardsArrays(
           state.meta[key],
           budgetMetaPatch.payload[key]
         );
-    ***REMOVED***);
-      return { ...state, meta: meta ***REMOVED***
+      });
+      return { ...state, meta: meta };
 
     case BudgetToolActions.SET_BUDGET_VIEW:
       const budgetView = action as StandardAction;
-      return { ...state, view: budgetView.payload ***REMOVED***
+      return { ...state, view: budgetView.payload };
 
     default:
       return state;
-***REMOVED***
+  }
 }
 
 //
 function _mergeBudgetCardsArrays(arr1: IBudgetCard[], arr2: IBudgetCard[]) {
-  const json = {***REMOVED***
+  const json = {};
   arr1.forEach(el => {
     json[el.id] = el;
-***REMOVED***);
+  });
   arr2.forEach(el => {
     json[el.id] = el;
-***REMOVED***);
+  });
   // convert json back to array
   const arr = [];
   Object.keys(json).forEach(key => {
     if (json.hasOwnProperty(key)) {
       arr.push(json[key]);
-  ***REMOVED***
-***REMOVED***);
+    }
+  });
 }

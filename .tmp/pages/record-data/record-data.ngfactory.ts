@@ -61,12 +61,12 @@ export class Wrapper_RecordDataPage {
   constructor(p0:any,p1:any,p2:any,p3:any) {
     this.changed = false;
     this.context = new import0.RecordDataPage(p0,p1,p2,p3);
-***REMOVED***
+  }
   detectChangesInternal(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
     return changed;
-***REMOVED***
+  }
 }
 var renderType_RecordDataPage_Host:import2.RenderComponentType = (null as any);
 class _View_RecordDataPage_Host0 extends import1.AppView<any> {
@@ -77,7 +77,7 @@ class _View_RecordDataPage_Host0 extends import1.AppView<any> {
   _RecordDataPage_0_6:Wrapper_RecordDataPage;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage_Host0,renderType_RecordDataPage_Host,import8.ViewType.HOST,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.selectOrCreateHostElement('page-record-data',rootSelector,(null as any));
     this._appEl_0 = new import3.AppElement(0,(null as any),this,this._el_0);
@@ -89,18 +89,18 @@ class _View_RecordDataPage_Host0 extends import1.AppView<any> {
     compView_0.create(this._RecordDataPage_0_6.context,this.projectableNodes,(null as any));
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return this._appEl_0;
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import4.KoboApi) && (0 === requestNodeIndex))) { return this._KoboApi_0_4; }
     if (((token === import5.Storage) && (0 === requestNodeIndex))) { return this._Storage_0_5; }
     if (((token === import0.RecordDataPage) && (0 === requestNodeIndex))) { return this._RecordDataPage_0_6.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._RecordDataPage_0_6.detectChangesInternal(this,this._el_0,throwOnChange);
     this.detectContentChildrenChanges(throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage_Host0(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   if ((renderType_RecordDataPage_Host === (null as any))) { (renderType_RecordDataPage_Host = viewUtils.createRenderComponentType('',0,import14.ViewEncapsulation.None,([] as any[]),{})); }
@@ -187,7 +187,7 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
   _pipe_date_0:import25.DatePipe;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage0,renderType_RecordDataPage,import8.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'ion-header',(null as any));
@@ -357,7 +357,7 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
     ]
     ,[disposable_0],([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import38.ToolbarTitle) && ((4 <= requestNodeIndex) && (requestNodeIndex <= 5)))) { return this._ToolbarTitle_4_4.context; }
     if (((token === import31.TemplateRef) && (11 === requestNodeIndex))) { return this._TemplateRef_11_5; }
@@ -376,7 +376,7 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
     if (((token === import43.List) && ((28 <= requestNodeIndex) && (requestNodeIndex <= 31)))) { return this._List_28_3.context; }
     if (((token === import44.Content) && ((23 <= requestNodeIndex) && (requestNodeIndex <= 44)))) { return this._Content_23_4.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     this._Header_0_3.detectChangesInternal(this,this._el_0,throwOnChange);
     const currVal_0:any = 'picsa-record';
@@ -406,33 +406,33 @@ class _View_RecordDataPage0 extends import1.AppView<import0.RecordDataPage> {
       this._query_Button_7_0.reset(([] as any[]));
       this._ToolbarItem_7_3.context._buttons = this._query_Button_7_0;
       this._query_Button_7_0.notifyOnChanges();
-  ***REMOVED*** }
+    } }
     const currVal_1:any = this._Navbar_2_4.context._hidden;
     if (import6.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementProperty(this._el_2,'hidden',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     const currVal_2:any = this._Navbar_2_4.context._sbPadding;
     if (import6.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setElementClass(this._el_2,'statusbar-padding',currVal_2);
       this._expr_2 = currVal_2;
-  ***REMOVED***
+    }
     const currVal_8:any = this._Content_23_4.context._sbPadding;
     if (import6.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
       this.renderer.setElementClass(this._el_23,'statusbar-padding',currVal_8);
       this._expr_8 = currVal_8;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._Navbar_2_4.context.ngAfterViewInit(); } }
-***REMOVED***
+  }
   destroyInternal():void {
     this._Content_23_4.context.ngOnDestroy();
-***REMOVED***
+  }
   private _handle_click_9_0($event:any):boolean {
     this.markPathToRootAsCheckOnce();
     const pd_0:any = ((<any>this.context.refresh()) !== false);
     return (true && pd_0);
-***REMOVED***
+  }
 }
 export function viewFactory_RecordDataPage0(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<import0.RecordDataPage> {
   if ((renderType_RecordDataPage === (null as any))) { (renderType_RecordDataPage = viewUtils.createRenderComponentType('',0,import14.ViewEncapsulation.None,styles_RecordDataPage,{})); }
@@ -443,7 +443,7 @@ class _View_RecordDataPage1 extends import1.AppView<any> {
   _text_1:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage1,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'span',(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'Refreshing forms...',(null as any));
@@ -453,7 +453,7 @@ class _View_RecordDataPage1 extends import1.AppView<any> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage1(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage1(viewUtils,parentInjector,declarationEl);
@@ -463,7 +463,7 @@ class _View_RecordDataPage2 extends import1.AppView<any> {
   _text_1:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage2,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'span',(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'Error',(null as any));
@@ -473,7 +473,7 @@ class _View_RecordDataPage2 extends import1.AppView<any> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage2(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage2(viewUtils,parentInjector,declarationEl);
@@ -483,7 +483,7 @@ class _View_RecordDataPage3 extends import1.AppView<any> {
   _text_1:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage3,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'span',(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'Refresh',(null as any));
@@ -493,7 +493,7 @@ class _View_RecordDataPage3 extends import1.AppView<any> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage3(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage3(viewUtils,parentInjector,declarationEl);
@@ -504,7 +504,7 @@ class _View_RecordDataPage4 extends import1.AppView<any> {
   /*private*/ _expr_1:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage4,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'ion-icon',(null as any));
     this.renderer.setElementAttribute(this._el_0,'name','refresh');
@@ -513,11 +513,11 @@ class _View_RecordDataPage4 extends import1.AppView<any> {
     this._expr_1 = import9.UNINITIALIZED;
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import46.Icon) && (0 === requestNodeIndex))) { return this._Icon_0_3.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_0:any = 'refresh';
     this._Icon_0_3.check_name(currVal_0,throwOnChange,false);
@@ -527,12 +527,12 @@ class _View_RecordDataPage4 extends import1.AppView<any> {
     if (import6.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementClass(this._el_0,'hide',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_0_3.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage4(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage4(viewUtils,parentInjector,declarationEl);
@@ -572,7 +572,7 @@ class _View_RecordDataPage5 extends import1.AppView<any> {
   /*private*/ _expr_3:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage5,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'ion-item',(null as any));
     this.renderer.setElementAttribute(this._el_0,'class','item item-block');
@@ -651,7 +651,7 @@ class _View_RecordDataPage5 extends import1.AppView<any> {
     ]
     ,([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import31.TemplateRef) && (2 === requestNodeIndex))) { return this._TemplateRef_2_5; }
     if (((token === import39.NgIf) && (2 === requestNodeIndex))) { return this._NgIf_2_6.context; }
@@ -662,7 +662,7 @@ class _View_RecordDataPage5 extends import1.AppView<any> {
     if (((token === import50.Item) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 13)))) { return this._Item_0_4.context; }
     if (((token === import50.ItemContent) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 13)))) { return this._ItemContent_0_5.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const valUnwrapper:any = new import9.ValueUnwrapper();
     if (this._Item_0_4.detectChangesInternal(this,this._el_0,throwOnChange)) { this._appEl_0.componentView.markAsCheckOnce(); }
@@ -682,38 +682,38 @@ class _View_RecordDataPage5 extends import1.AppView<any> {
         this._query_Button_0_1.reset(([] as any[]));
         this._Item_0_4.context._buttons = this._query_Button_0_1;
         this._query_Button_0_1.notifyOnChanges();
-    ***REMOVED***
+      }
       if (this._query_Icon_0_2.dirty) {
         this._query_Icon_0_2.reset([
           this._appEl_2.mapNestedViews(_View_RecordDataPage6,(nestedView:_View_RecordDataPage6):any => {
             return [nestedView._Icon_0_3.context];
-        ***REMOVED***),
+          }),
           this._appEl_4.mapNestedViews(_View_RecordDataPage7,(nestedView:_View_RecordDataPage7):any => {
             return [nestedView._Icon_0_3.context];
-        ***REMOVED***),
+          }),
           this._appEl_12.mapNestedViews(_View_RecordDataPage8,(nestedView:_View_RecordDataPage8):any => {
             return [nestedView._Icon_2_3.context];
-        ***REMOVED***)
+          })
         ]
         );
         this._Item_0_4.context._icons = this._query_Icon_0_2;
         this._query_Icon_0_2.notifyOnChanges();
-    ***REMOVED***
+      }
       if ((this.numberOfChecks === 0)) { this._Item_0_4.context.ngAfterContentInit(); }
-  ***REMOVED***
+    }
     const currVal_2:any = import6.interpolate(1,'',this.context.$implicit.title,'');
     if (import6.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setText(this._text_7,currVal_2);
       this._expr_2 = currVal_2;
-  ***REMOVED***
+    }
     valUnwrapper.reset();
     const currVal_3:any = import6.interpolate(1,'',valUnwrapper.unwrap(import6.castByValue(this._pipe_date_0_0,(<_View_RecordDataPage0>this.parent)._pipe_date_0.transform)(this.context.$implicit.date_modified,'medium')),'');
     if ((valUnwrapper.hasWrappedValue || import6.checkBinding(throwOnChange,this._expr_3,currVal_3))) {
       this.renderer.setText(this._text_10,currVal_3);
       this._expr_3 = currVal_3;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage5(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage5(viewUtils,parentInjector,declarationEl);
@@ -724,7 +724,7 @@ class _View_RecordDataPage6 extends import1.AppView<any> {
   /*private*/ _expr_1:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage6,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'ion-icon',(null as any));
     this.renderer.setElementAttribute(this._el_0,'item-left','');
@@ -734,11 +734,11 @@ class _View_RecordDataPage6 extends import1.AppView<any> {
     this._expr_1 = import9.UNINITIALIZED;
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import46.Icon) && (0 === requestNodeIndex))) { return this._Icon_0_3.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_0:any = 'clipboard';
     this._Icon_0_3.check_name(currVal_0,throwOnChange,false);
@@ -748,15 +748,15 @@ class _View_RecordDataPage6 extends import1.AppView<any> {
     if (import6.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementClass(this._el_0,'hide',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
   dirtyParentQueriesInternal():void {
     (<_View_RecordDataPage5>this.parent)._query_Icon_0_2.setDirty();
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_0_3.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage6(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage6(viewUtils,parentInjector,declarationEl);
@@ -767,7 +767,7 @@ class _View_RecordDataPage7 extends import1.AppView<any> {
   /*private*/ _expr_1:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage7,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'ion-icon',(null as any));
     this.renderer.setElementAttribute(this._el_0,'item-left','');
@@ -778,11 +778,11 @@ class _View_RecordDataPage7 extends import1.AppView<any> {
     this._expr_1 = import9.UNINITIALIZED;
     this.init(([] as any[]).concat([this._el_0]),[this._el_0],([] as any[]),([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import46.Icon) && (0 === requestNodeIndex))) { return this._Icon_0_3.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_0:any = 'clipboard';
     this._Icon_0_3.check_name(currVal_0,throwOnChange,false);
@@ -792,15 +792,15 @@ class _View_RecordDataPage7 extends import1.AppView<any> {
     if (import6.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this.renderer.setElementClass(this._el_0,'hide',currVal_1);
       this._expr_1 = currVal_1;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
   dirtyParentQueriesInternal():void {
     (<_View_RecordDataPage5>this.parent)._query_Icon_0_2.setDirty();
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_0_3.context.ngOnDestroy();
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage7(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage7(viewUtils,parentInjector,declarationEl);
@@ -814,7 +814,7 @@ class _View_RecordDataPage8 extends import1.AppView<any> {
   /*private*/ _expr_2:any;
   constructor(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement) {
     super(_View_RecordDataPage8,renderType_RecordDataPage,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import9.ChangeDetectorStatus.CheckAlways);
-***REMOVED***
+  }
   createInternal(rootSelector:string):import3.AppElement {
     this._el_0 = this.renderer.createElement((null as any),'button',(null as any));
     this.renderer.setElementAttribute(this._el_0,'clear','');
@@ -835,11 +835,11 @@ class _View_RecordDataPage8 extends import1.AppView<any> {
     ]
     ,[disposable_0],([] as any[]));
     return (null as any);
-***REMOVED***
+  }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import46.Icon) && (2 === requestNodeIndex))) { return this._Icon_2_3.context; }
     return notFoundResult;
-***REMOVED***
+  }
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_1:any = 'open';
     this._Icon_2_3.check_name(currVal_1,throwOnChange,false);
@@ -849,20 +849,20 @@ class _View_RecordDataPage8 extends import1.AppView<any> {
     if (import6.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setElementClass(this._el_2,'hide',currVal_2);
       this._expr_2 = currVal_2;
-  ***REMOVED***
+    }
     this.detectViewChildrenChanges(throwOnChange);
-***REMOVED***
+  }
   dirtyParentQueriesInternal():void {
     (<_View_RecordDataPage5>this.parent)._query_Icon_0_2.setDirty();
-***REMOVED***
+  }
   destroyInternal():void {
     this._Icon_2_3.context.ngOnDestroy();
-***REMOVED***
+  }
   private _handle_click_0_0($event:any):boolean {
     this.markPathToRootAsCheckOnce();
     const pd_0:any = ((<any>this.parent.parent.context.openForm(this.parent.context.$implicit)) !== false);
     return (true && pd_0);
-***REMOVED***
+  }
 }
 function viewFactory_RecordDataPage8(viewUtils:import6.ViewUtils,parentInjector:import7.Injector,declarationEl:import3.AppElement):import1.AppView<any> {
   return new _View_RecordDataPage8(viewUtils,parentInjector,declarationEl);

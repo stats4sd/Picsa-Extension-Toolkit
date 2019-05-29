@@ -3,7 +3,7 @@
 
 <head>
   <!-- <script>
-    (function (w) { var i = w.SENTRY_RELEASE = w.SENTRY_RELEASE || {***REMOVED*** i.id = '96c66edea1c7af63ae4a'; })(this);
+    (function (w) { var i = w.SENTRY_RELEASE = w.SENTRY_RELEASE || {}; i.id = '96c66edea1c7af63ae4a'; })(this);
   </script> -->
   <!-- sentry-cordova -->
   <meta charset="UTF-8">
@@ -37,25 +37,25 @@
                       if (navigator.serviceWorker.controller) {
                         // new update available
                         resolve(true);
-                    ***REMOVED*** else {
+                      } else {
                         // no update available
                         resolve(false);
-                    ***REMOVED***
+                      }
                       break;
-                ***REMOVED***
-              ***REMOVED***;
-            ***REMOVED***;
-          ***REMOVED***,
+                  }
+                };
+              };
+            },
           )
             .catch(err => console.error('[SW ERROR]', err));
-      ***REMOVED***
+        }
         // register service worker file
-    ***REMOVED***
+      }
       else {
         console.log('disabling service worker for local')
         resolve(false)
-    ***REMOVED***
-  ***REMOVED***);
+      }
+    });
   </script>
 
 

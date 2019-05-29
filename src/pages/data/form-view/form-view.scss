@@ -1,29 +1,29 @@
 page-form-view {
   .sv_complete_btn {
     margin-top: 2em;
-***REMOVED***
+  }
   textarea,
   input {
     color: color($colors, primary) !important;
-***REMOVED***
+  }
   input[type="button"] {
     color: white !important;
-***REMOVED***
+  }
   textarea::-webkit-input-placeholder {
     color: #7e7e7e;
-***REMOVED***
+  }
 
   textarea:-moz-placeholder {
     /* Firefox 18- */
     color: #7e7e7e;
-***REMOVED***
+  }
 
   textarea::-moz-placeholder {
     /* Firefox 19+ */
     color: #7e7e7e;
-***REMOVED***
+  }
 
   textarea:-ms-input-placeholder {
     color: #7e7e7e;
-***REMOVED***
+  }
 }

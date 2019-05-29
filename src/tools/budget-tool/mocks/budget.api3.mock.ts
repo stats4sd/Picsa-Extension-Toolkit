@@ -11,13 +11,13 @@ export const PB_MOCK_API_3: IBudget = {
           name: "land clearing",
           id: "land-clearing",
           isSelected: true
-      ***REMOVED***,
+        },
         ploughing: {
           name: "ploughing",
           id: "ploughing",
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       inputs: {
         "tractor-hire": {
           name: "tractor hire",
@@ -25,15 +25,15 @@ export const PB_MOCK_API_3: IBudget = {
           quantity: 1,
           cost: -5000,
           isSelected: true
-      ***REMOVED***,
+        },
         "labour---paid": {
           name: "labour - paid",
           id: "labour---paid",
           quantity: 1,
           cost: -500,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       familyLabour: {
         "family-labour": {
           name: "family labour",
@@ -41,19 +41,19 @@ export const PB_MOCK_API_3: IBudget = {
           people: 2,
           days: 3,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       outputs: {},
       produceConsumed: {}
-  ***REMOVED***,
+    },
     "1": {
       activities: {
         sowing: {
           name: "sowing",
           id: "sowing",
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       inputs: {
         seeds: {
           name: "seeds",
@@ -61,8 +61,8 @@ export const PB_MOCK_API_3: IBudget = {
           quantity: 4,
           cost: -500,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       familyLabour: {
         "family-labour": {
           name: "family labour",
@@ -70,22 +70,22 @@ export const PB_MOCK_API_3: IBudget = {
           people: 1,
           days: 2,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***
-  ***REMOVED***,
+        }
+      }
+    },
     "2": {
       activities: {
         weeding: {
           name: "weeding",
           id: "weeding",
           isSelected: true
-      ***REMOVED***,
+        },
         "apply-fertiliser": {
           name: "apply fertiliser",
           id: "apply-fertiliser",
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       inputs: {
         fertiliser: {
           name: "fertiliser",
@@ -93,8 +93,8 @@ export const PB_MOCK_API_3: IBudget = {
           quantity: 1,
           cost: -1000,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       familyLabour: {
         "family-labour": {
           name: "family labour",
@@ -102,17 +102,17 @@ export const PB_MOCK_API_3: IBudget = {
           people: 2,
           days: 2,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***
-  ***REMOVED***,
+        }
+      }
+    },
     "3": {
       activities: {
         weeding: {
           name: "weeding",
           id: "weeding",
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       inputs: {},
       familyLabour: {
         "family-labour": {
@@ -121,17 +121,17 @@ export const PB_MOCK_API_3: IBudget = {
           people: 2,
           days: 1,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***
-  ***REMOVED***,
+        }
+      }
+    },
     "4": {
       activities: {
         "apply-fertiliser": {
           name: "apply fertiliser",
           id: "apply-fertiliser",
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       inputs: {
         fertiliser: {
           name: "fertiliser",
@@ -139,8 +139,8 @@ export const PB_MOCK_API_3: IBudget = {
           quantity: 1,
           cost: -500,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       familyLabour: {
         "family-labour": {
           name: "family labour",
@@ -148,22 +148,22 @@ export const PB_MOCK_API_3: IBudget = {
           people: 1,
           days: 2,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***
-  ***REMOVED***,
+        }
+      }
+    },
     "5": {
       activities: {
         harvesting: {
           name: "harvesting",
           id: "harvesting",
           isSelected: true
-      ***REMOVED***,
+        },
         "marketing-and-selling": {
           name: "marketing and selling",
           id: "marketing-and-selling",
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       inputs: {
         "transportation-hire": {
           name: "transportation hire",
@@ -171,8 +171,8 @@ export const PB_MOCK_API_3: IBudget = {
           quantity: 1,
           cost: -2000,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       outputs: {
         crop: {
           name: "crop",
@@ -181,8 +181,8 @@ export const PB_MOCK_API_3: IBudget = {
           consumed: 2,
           cost: 3000,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       familyLabour: {
         "family-labour": {
           name: "family labour",
@@ -190,11 +190,11 @@ export const PB_MOCK_API_3: IBudget = {
           people: 4,
           days: 5,
           isSelected: true
-      ***REMOVED***
-    ***REMOVED***,
+        }
+      },
       produceConsumed: {}
-  ***REMOVED***
-***REMOVED***,
+    }
+  },
   description: "Example by Chris to test Maize budget",
   enterprise: null,
   _key: "_v3_Demo_Maize",
@@ -203,7 +203,7 @@ export const PB_MOCK_API_3: IBudget = {
     starting: "Oct",
     scale: "Months",
     total: 6
-***REMOVED***,
+  },
   title: "Maize Demo (v3)",
   scale: null,
   enterpriseType: "crop",
@@ -212,5 +212,5 @@ export const PB_MOCK_API_3: IBudget = {
     medium: 10000,
     small: 1000,
     half: 500
-***REMOVED***
-***REMOVED***
+  }
+};

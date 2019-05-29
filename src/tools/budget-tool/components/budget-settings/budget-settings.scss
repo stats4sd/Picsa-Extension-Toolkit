@@ -2,40 +2,40 @@ budget-settings {
   // fix slide formatting
   ion-slide.budget-slide {
     align-items: flex-start;
-***REMOVED***
+  }
   .slide-zoom {
     height: 100%;
     overflow: auto;
-***REMOVED***
+  }
   .saved-budgets {
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: white;
     color: black;
-***REMOVED***
+  }
   .large-icon {
     font-size: xx-large;
     font-weight: 700;
-***REMOVED***
+  }
   .item-inner {
     font-size: larger;
-***REMOVED***
+  }
   .label {
     color: #656464;
-***REMOVED***
+  }
   .column-button {
     max-width: 400px;
     margin: auto;
-***REMOVED***
+  }
   .button {
     height: 7rem;
-***REMOVED***
+  }
   .select,
   .text-input {
     font-size: x-large;
     color: #1f867d;
-***REMOVED***
+  }
   .time-period-table {
     display: flex;
     margin: auto;
@@ -46,7 +46,7 @@ budget-settings {
     text-align: center;
     border-left: 2px white solid;
     border-top: 2px white solid;
-***REMOVED***
+  }
   .time-period {
     flex-grow: 1;
     border-right: 2px white solid;
@@ -54,10 +54,10 @@ budget-settings {
     border-collapse: collapse;
     padding: 2px;
     text-align: center;
-***REMOVED***
+  }
   .input-right {
     input {
       text-align: right;
-  ***REMOVED***
-***REMOVED***
+    }
+  }
 }

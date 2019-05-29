@@ -16,7 +16,7 @@ const resources: IResource[] = [
     group: "PICSA Manual",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpicsa-field-manual.pdf?alt=media&token=c394b68a-3f67-4494-8620-c35d65151c45"
-***REMOVED***,
+  },
   {
     _key: "9Pkro1VYBUlwuNg5oHok",
     name: "Crop Information - Chileka",
@@ -28,7 +28,7 @@ const resources: IResource[] = [
     region: "Malawi",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fcrop-info-sheet-chileka.pdf?alt=media&token=cb8a6243-1d37-43f6-a97c-a0a7bc0f11f2"
-***REMOVED***,
+  },
   {
     _key: "6VjjF3yZJejFigwDIPr8",
     name: "Potential Training Schedule",
@@ -38,7 +38,7 @@ const resources: IResource[] = [
     group: "Documents",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fpotential-PICSA-training-schedule.pdf?alt=media&token=618737d1-949b-467a-9f28-1dcc35ce3c8c"
-***REMOVED***,
+  },
   {
     _key: "m6I8TfROsyr5Wp73BcAd",
     name: "RAM Refresher",
@@ -49,7 +49,7 @@ const resources: IResource[] = [
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fram-refresher.mp4?alt=media&token=27939a71-0656-440b-8407-24877acaeede",
     youtubeID: "Kw5UznKvCN8"
-***REMOVED***,
+  },
   {
     _key: "Yx8927IVTGyM1C4njOIv",
     name: "Seasonal Forecast Mangochi 2017-2018",
@@ -59,7 +59,7 @@ const resources: IResource[] = [
     group: "Documents",
     weblink:
       "https://firebasestorage.googleapis.com/v0/b/extension-toolkit.appspot.com/o/Resources%2Fseasonal-forecast-mangochi-2017-2018.pdf?alt=media&token=c60180cd-8dcd-4d98-aa7e-48f37dc83849"
-***REMOVED***
+  }
 ];
 
 const groups = [
@@ -69,7 +69,7 @@ const groups = [
     accessKey: "picsa",
     defaults: null,
     order: 10
-***REMOVED***
+  }
 ];
 
 const whatsappGroups = [];
@@ -83,5 +83,5 @@ const data: IData = {
   resources: resources,
   groups: groups,
   whatsappGroups: whatsappGroups
-***REMOVED***
+};
 export default data;

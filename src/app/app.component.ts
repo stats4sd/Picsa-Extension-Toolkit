@@ -35,13 +35,13 @@ export class MyApp {
       console.log("platforms", platform.platforms());
       if (platform.is("cordova")) {
         this.mobileInit();
-    ***REMOVED***
+      }
       // no rush to initialise network
       setTimeout(() => {
         this.networkPrvdr.init();
-    ***REMOVED***, 5000);
-  ***REMOVED***);
-***REMOVED***
+      }, 5000);
+    });
+  }
 
   mobileInit() {
     // hide splash
@@ -49,10 +49,10 @@ export class MyApp {
       this.splashScreen.hide();
       // default status bar style, could be changed
       this.statusBar.styleDefault();
-  ***REMOVED***, 100);
-***REMOVED***
+    }, 100);
+  }
 
   isHomePage() {
     return this.nav.getActive().component.name == "HomePage";
-***REMOVED***
+  }
 }

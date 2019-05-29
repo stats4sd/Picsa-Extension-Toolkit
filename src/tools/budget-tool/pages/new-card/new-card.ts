@@ -40,7 +40,7 @@ export class BudgetNewCardPage {
       customImg: this.saveCanvasImage(),
       created: new Date().toString(),
       createdBy: "*** get by redux ***"
-  ***REMOVED***;
+    };
     console.log("custom budget card created", card);
     const allCustomCards = Object.assign(
       {},
@@ -48,20 +48,20 @@ export class BudgetNewCardPage {
     );
     if (!allCustomCards[type]) {
       allCustomCards[type] = [];
-  ***REMOVED***
+    }
     allCustomCards[type].push(card);
     this.userActions.updateUser({ budgetCustomCards: allCustomCards });
     // publish notification for budget card list to repopulate with new cards
     this.events.publish("customCards:updated", allCustomCards);
     this.viewCtrl.dismiss();
-***REMOVED***
+  }
 
   saveCanvasImage() {
     const img = this.canvasWhiteboard.generateCanvasDataUrl("image/png", 0.3);
     return img;
-***REMOVED***
+  }
 
   dismiss() {
     this.viewCtrl.dismiss();
-***REMOVED***
+  }
 }

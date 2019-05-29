@@ -11,4 +11,4 @@ module.exports = {
   maximumFileSizeToCacheInBytes: 10000000,
   swSrc: "src/service-worker.js",
   swDest: "www/service-worker.js"
-***REMOVED***
+};
