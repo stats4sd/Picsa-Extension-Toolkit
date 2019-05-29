@@ -108,6 +108,7 @@
     "gulp-json2csv": "^1.1.0",
     "gulp-rename": "^1.4.0",
     "http-server": "^0.11.1",
+    "ng-node-environment": "^1.1.1",
     "prettier": "^1.13.5",
     "rev-hash": "^2.0.0",
     "shx": "^0.3.0",
