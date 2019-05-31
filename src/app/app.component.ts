@@ -1,58 +1,51 @@
-import { Component, ViewChild } from "@angular/core";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { StatusBar } from "@ionic-native/status-bar";
-import { Events, Nav, Platform } from "ionic-angular";
-import { FileService, NetworkProvider } from "../providers/providers";
-import { StorageProvider } from "../providers/storage";
-import { UserProvider } from "../providers/user";
+import { Component } from "@angular/core";
+
+import { Platform } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { TranslateService } from "@ngx-translate/core";
+import { ServiceWorkerService } from "src/providers/ngsw.service";
+import { ENVIRONMENT } from "src/environments/environment";
+import { UserProvider } from "src/providers/user";
+import { StorageProvider } from "src/providers/storage";
+import { FileService } from "src/providers/file-service";
+import { NetworkProvider } from "src/providers/network";
 
 @Component({
-  templateUrl: "app.html"
+  selector: "app-root",
+  templateUrl: "app.component.html"
 })
-export class MyApp {
-  rootPage = "HomePage";
-  // showSplitPane: boolean = false;
-  @ViewChild(Nav) nav: Nav;
-
+export class AppComponent {
   constructor(
-    platform: Platform,
-    public events: Events,
-    public splashScreen: SplashScreen,
+    private platform: Platform,
+    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private translate: TranslateService,
+    private sw: ServiceWorkerService,
     private userPrvdr: UserProvider,
     private storagePrvdr: StorageProvider,
     private filePrvdr: FileService,
     private networkPrvdr: NetworkProvider
   ) {
-    platform.ready().then(() => {
-      console.log("platform ready");
-      // load user
-      console.log("user init");
-      this.userPrvdr.init();
-      this.storagePrvdr.dataInit();
-      this.filePrvdr.init();
-      // mobile init
-      console.log("platforms", platform.platforms());
-      if (platform.is("cordova")) {
-        this.mobileInit();
-      }
-      // no rush to initialise network
-      setTimeout(() => {
-        this.networkPrvdr.init();
-      }, 5000);
-    });
+    this.initializeApp();
   }
 
-  mobileInit() {
-    // hide splash
-    setTimeout(() => {
-      this.splashScreen.hide();
-      // default status bar style, could be changed
+  async initializeApp() {
+    await this.platform.ready();
+    if (ENVIRONMENT.usesCordova) {
       this.statusBar.styleDefault();
-    }, 100);
+      this.splashScreen.hide();
+    }
+    this.translate.setDefaultLang("en");
+    this.sw.init();
+    this.userPrvdr.init();
+    this.storagePrvdr.dataInit();
+    this.filePrvdr.init();
   }
 
-  isHomePage() {
-    return this.nav.getActive().component.name == "HomePage";
+  async initDeferred() {
+    setTimeout(() => {
+      this.networkPrvdr.init();
+    }, 5000);
   }
 }

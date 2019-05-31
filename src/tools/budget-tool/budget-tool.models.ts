@@ -1,3 +1,10 @@
+export interface BudgetToolState {
+  active: IBudget;
+  meta: IBudgetMeta;
+  view?: IBudgetView;
+  // no additional parameters currently specified (may change)
+}
+
 export interface IBudget {
   _key: string;
   title: string;

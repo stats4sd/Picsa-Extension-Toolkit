@@ -2,10 +2,11 @@ import { select } from "@angular-redux/store";
 import { Injectable, OnDestroy } from "@angular/core";
 import * as Papa from "papaparse";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { ClimateToolActions } from "./climate-tool.actions";
 import { IChartMeta, ISite } from "./climate-tool.models";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class ClimateToolProvider implements OnDestroy {
   private componentDestroyed: Subject<any> = new Subject();
   @select(["climate", "site"])
@@ -160,13 +161,15 @@ export class ClimateToolProvider implements OnDestroy {
   }
 
   _addSubscriptions() {
-    this.activeChart$.takeUntil(this.componentDestroyed).subscribe(chart => {
-      if (chart) {
-        this.activeChart = chart;
-        this._chartChanged(chart);
-      }
-    });
-    this.site$.takeUntil(this.componentDestroyed).subscribe(site => {
+    this.activeChart$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(chart => {
+        if (chart) {
+          this.activeChart = chart;
+          this._chartChanged(chart);
+        }
+      });
+    this.site$.pipe(takeUntil(this.componentDestroyed)).subscribe(site => {
       if (site) {
         this.activeSite = site;
         this._siteChanged(site);

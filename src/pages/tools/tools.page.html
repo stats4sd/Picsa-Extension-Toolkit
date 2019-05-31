@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="Back" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ "Tools" | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="flex">
+    <div *ngFor="let tool of tools" (click)="loadTool(tool)" class="tool">
+      <div class="tool-icon">
+        <img [src]="tool.image" />
+        <div class="tool-text">{{ tool.name | translate }}</div>
+      </div>
+    </div>
+  </div></ion-content
+>

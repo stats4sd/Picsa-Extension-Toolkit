@@ -1,7 +1,8 @@
 import { NgRedux } from "@angular-redux/store";
 import { Component, Input, OnDestroy } from "@angular/core";
 import { Subject } from "rxjs";
-import { AppState } from "../../../../reducers/reducers";
+import { takeUntil } from "rxjs/operators";
+import { AppState } from "src/app/store/store.model";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { BudgetCardComponent } from "./budget-card";
 
@@ -37,7 +38,7 @@ export class BudgetMetaCardComponent extends BudgetCardComponent
   _addValueSubscriber() {
     this.ngRedux
       .select(["budget", "active", this.valuePath])
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(v => {
         this.card.isSelected = v === this.card.id;
         this.selected = this.card.isSelected;

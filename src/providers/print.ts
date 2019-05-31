@@ -1,17 +1,19 @@
 import { Injectable } from "@angular/core";
-import { SocialSharing } from "@ionic-native/social-sharing";
+import { SocialSharing } from "@ionic-native/social-sharing/ngx";
+import { Platform } from "@ionic/angular";
 import { saveAs } from "file-saver";
-import * as html2canvas from "html2canvas";
-import { Platform } from "ionic-angular";
-import { FileService } from "./providers";
+// note, import not working so loading from assets in index.html
+// import * as html2canvas from "html2canvas";
+declare var html2canvas: any;
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class PrintProvider {
   constructor(
-    private filePrvdr: FileService,
     private platform: Platform,
     private socialSharing: SocialSharing
-  ) {}
+  ) {
+    console.log("html2canvas", html2canvas);
+  }
 
   // convert a dom selector to canvas and share as image using social sharing
   async socialShare(domSelector: string, filename: string) {

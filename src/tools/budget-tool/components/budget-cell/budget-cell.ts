@@ -1,6 +1,6 @@
 import { NgRedux } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
-import { Events } from "ionic-angular";
+import { Events } from "@ionic/angular";
 import { IBudgetCard, IBudgetPeriodData } from "../../budget-tool.models";
 
 @Component({

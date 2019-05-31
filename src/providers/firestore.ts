@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { DataActions } from "../actions/data.actions";
 import { StorageProvider } from "./storage";
 import storageCollections from "./storage.data";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class FirestoreStorageProvider {
   constructor(
     public db: AngularFirestore,

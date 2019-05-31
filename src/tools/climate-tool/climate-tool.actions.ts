@@ -3,9 +3,9 @@ import { Injectable } from "@angular/core";
 import { FluxStandardAction } from "flux-standard-action";
 import { IChartMeta, ISite } from "./climate-tool.models";
 
-type StandardAction = FluxStandardAction<any, null>;
+type StandardAction = FluxStandardAction<string, ISite | IChartMeta>;
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class ClimateToolActions {
   static readonly SELECT_SITE = "SELECT_SITE";
   static readonly UPDATE_SITE = "UPDATE_SITE";
@@ -15,20 +15,20 @@ export class ClimateToolActions {
   @dispatch()
   selectSite = (site: ISite): StandardAction => ({
     type: ClimateToolActions.SELECT_SITE,
-    meta: null,
-    payload: site
+    payload: site,
+    meta: null
   });
   @dispatch()
   updateSite = (sitePartial): StandardAction => ({
     type: ClimateToolActions.UPDATE_SITE,
-    meta: null,
-    payload: sitePartial
+    payload: sitePartial,
+    meta: null
   });
   @dispatch()
   selectChart = (chart: IChartMeta): StandardAction => ({
     type: ClimateToolActions.SELECT_CHART,
-    meta: null,
-    payload: chart
+    payload: chart,
+    meta: null
   });
   @dispatch()
   resetState = (): StandardAction => ({

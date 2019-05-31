@@ -1,9 +1,10 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { Events, Slides } from "ionic-angular";
+import { Events, IonSlides } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { DAYS, MONTHS } from "../../../../providers/translations";
-import { AppState } from "../../../../reducers/reducers";
+import { AppState } from "src/app/store/store.model";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import {
   IBudget,
@@ -45,7 +46,7 @@ export class BudgetSettingsComponent implements OnDestroy {
   months = MONTHS;
   enterpriseTypes: IBudgetCard[] = [];
   budget: IBudget;
-  @ViewChild(Slides) slides: Slides;
+  @ViewChild(IonSlides) slides: IonSlides;
 
   constructor(
     public actions: BudgetToolActions,
@@ -65,12 +66,14 @@ export class BudgetSettingsComponent implements OnDestroy {
 
   // various listeners for budget change actions
   _addSubscribers() {
-    this.enterpriseType$.takeUntil(this.componentDestroyed).subscribe(type => {
-      this._filterEnterprises(type, this.allEnterprises);
-    });
+    this.enterpriseType$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(type => {
+        this._filterEnterprises(type, this.allEnterprises);
+      });
     // update enterprise types and filter list when enterprises changes
     this.enterprises$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(enterprises => {
         if (enterprises) {
           this.metaEnterprises = enterprises;
@@ -78,7 +81,7 @@ export class BudgetSettingsComponent implements OnDestroy {
         }
       });
     this.customEnterprises$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(enterprises => {
         if (enterprises) {
           this.customEnterprises = enterprises;
@@ -93,12 +96,14 @@ export class BudgetSettingsComponent implements OnDestroy {
       }
     });
     // calculate time periods when new timescale specified
-    this.timescale$.takeUntil(this.componentDestroyed).subscribe(scale => {
-      if (scale) {
-        this.calculatePeriod(scale);
-      }
-    });
-    this.budget$.takeUntil(this.componentDestroyed).subscribe(budget => {
+    this.timescale$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(scale => {
+        if (scale) {
+          this.calculatePeriod(scale);
+        }
+      });
+    this.budget$.pipe(takeUntil(this.componentDestroyed)).subscribe(budget => {
       this.budget = budget;
     });
   }

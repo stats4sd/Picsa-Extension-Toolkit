@@ -1,17 +1,30 @@
 import { NgModule } from "@angular/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { IonicPageModule } from "ionic-angular";
-import { YoutubePlayerModule } from "ngx-youtube-player";
-import { ComponentsModule } from "../../components/components.module";
-import { ChangelogPage } from "./changelog";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Routes, RouterModule } from "@angular/router";
+import { NgxYoutubePlayerModule } from "ngx-youtube-player";
+import { IonicModule } from "@ionic/angular";
+import { ChangelogPage } from "./changelog.page";
+import { ComponentsModule } from "src/components/components.module";
+import { TranslateSharedLazyModuleModule } from "src/app/shared/translate-shared-lazy-module.module";
+
+const routes: Routes = [
+  {
+    path: "",
+    component: ChangelogPage
+  }
+];
 
 @NgModule({
-  declarations: [ChangelogPage],
   imports: [
-    IonicPageModule.forChild(ChangelogPage),
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
     ComponentsModule,
-    TranslateModule.forChild(),
-    YoutubePlayerModule
-  ]
+    TranslateSharedLazyModuleModule,
+    NgxYoutubePlayerModule
+  ],
+  declarations: [ChangelogPage]
 })
 export class ChangelogPageModule {}

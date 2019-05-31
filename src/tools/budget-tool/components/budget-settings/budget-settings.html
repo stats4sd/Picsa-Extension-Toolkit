@@ -12,10 +12,10 @@
             type="enterprise"></budget-meta-card>
           <budget-new-card *ngIf="(enterpriseType$ | async) =='other'" newCardType="enterprises" type="enterprise"></budget-new-card>
         </div>
-        <button ion-button color="primary-inverse" [disabled]="!(enterprise$ | async) || !(enterpriseType$ | async)"
-          block outline icon-right round (click)="nextSlide()">{{'Continue' | translate}}
+        <ion-button color="primary-inverse" [disabled]="!(enterprise$ | async) || !(enterpriseType$ | async)"
+          expand="block" fill="outline" slot="end" shape="round" (click)="nextSlide()">{{'Continue' | translate}}
           <ion-icon name="arrow-round-forward"></ion-icon>
-        </button>
+        </ion-button>
       </div>
     </ion-slide>
     <!-- time periods select slide *** could be tidies or split *** -->
@@ -33,7 +33,7 @@
             {{'Measured in' | translate}}
           </ion-label>
           <ion-select [(ngModel)]="budget.periods.scale" (ionChange)="calculatePeriod()">
-            <ion-option *ngFor="let scale of timescales" [value]="scale">{{scale | translate}}</ion-option>
+            <ion-select-option *ngFor="let scale of timescales" [value]="scale">{{scale | translate}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item *ngIf="budget.periods.scale=='Days' || budget.periods.scale=='Months'">
@@ -42,10 +42,10 @@
             {{'Starting' | translate}}
           </ion-label>
           <ion-select *ngIf="budget.periods.scale=='Days'" (ionChange)="calculatePeriod('Days')" [(ngModel)]="budget.periods.starting">
-            <ion-option *ngFor="let day of days" [value]="day">{{day | translate}}</ion-option>
+            <ion-select-option *ngFor="let day of days" [value]="day">{{day | translate}}</ion-select-option>
           </ion-select>
           <ion-select *ngIf="budget.periods.scale=='Months'" (ionChange)="calculatePeriod('Months')" [(ngModel)]="budget.periods.starting">
-            <ion-option *ngFor="let month of months" [value]="month">{{month | translate}}</ion-option>
+            <ion-select-option *ngFor="let month of months" [value]="month">{{month | translate}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
@@ -57,24 +57,24 @@
             class="input-right"></ion-input>
         </ion-item>
       </ion-list>
-      <button ion-button color="primary-inverse" [disabled]="!(enterprise$ | async)" block outline icon-right round
+      <ion-button color="primary-inverse" [disabled]="!(enterprise$ | async)" expand="block" fill="outline" slot="end" shape="round"
         (click)="nextSlide()">{{'Continue' | translate}}
         <ion-icon name="arrow-round-forward"></ion-icon>
-      </button>
+      </ion-button>
     </ion-slide>
     <!-- budget title slide -->
     <ion-slide padding class="budget-slide" *ngIf="(timescale$ | async)">
       <h2>{{'Budget Title' | translate}}</h2>
       <ion-list>
         <ion-item>
-          <ion-label floating icon-left>
+          <ion-label position="floating" icon-left>
             <ion-icon name="bookmark"></ion-icon>
             {{'Enter a name for your budget' | translate}}
           </ion-label>
           <ion-input type="text" [(ngModel)]="budget.title"></ion-input>
         </ion-item>
         <ion-item style="margin-top:1em">
-          <ion-label floating icon-left>
+          <ion-label position="floating" icon-left>
             <ion-icon name="create"></ion-icon>
             {{'(optional) Description' | translate}}
           </ion-label>
@@ -92,9 +92,9 @@
             placeholder="please describe in words (e.g. number of shops, beehives etc.)" class="input-right"></ion-textarea>
         </ion-item> -->
       </ion-list>
-      <button ion-button color="primary-inverse" [disabled]="!budget.title" block outline icon-right round (click)="viewBudget()">
+      <ion-button color="primary-inverse" [disabled]="!budget.title" expand="block" fill="outline" slot="end" shape="round" (click)="viewBudget()">
         {{'View Budget' | translate}}
-      </button>
+      </ion-button>
     </ion-slide>
   </ion-slides>
 </div>

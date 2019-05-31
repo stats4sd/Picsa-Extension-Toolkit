@@ -1,9 +1,10 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component, OnDestroy } from "@angular/core";
-import { Events } from "ionic-angular";
+import { Events } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { debounceTime } from "rxjs/operators";
-import { AppState } from "../../../../reducers/reducers";
+import { AppState } from "src/app/store/store.model";
 import {
   IBudget,
   IBudgetCard,
@@ -41,7 +42,7 @@ export class BudgetOverviewComponent implements OnDestroy {
     // on child components but again was tempermental
     this.budget$
       .pipe(debounceTime(250))
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(budget => {
         console.log("budget updated");
         this.budgetUpdated = false;
@@ -50,11 +51,13 @@ export class BudgetOverviewComponent implements OnDestroy {
           this.budgetUpdated = true;
         }, 50);
       });
-    this.dotValues$.takeUntil(this.componentDestroyed).subscribe(values => {
-      if (values) {
-        this.dotsLegend = this._objectToArray(values);
-      }
-    });
+    this.dotValues$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(values => {
+        if (values) {
+          this.dotsLegend = this._objectToArray(values);
+        }
+      });
     this.events.subscribe("calculate:budget", () => {
       this.calculateBalance();
     });

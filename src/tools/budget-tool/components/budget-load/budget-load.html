@@ -9,9 +9,9 @@
               <div>{{budget.title}}</div>
               <div>{{budget.created | date:'mediumDate'}}</div>
             </div>
-            <button ion-button (click)="archiveBudget(budget)" icon-only clear color="danger">
+            <ion-button (click)="archiveBudget(budget)" icon-only fill="clear" color="danger">
               <ion-icon name="trash"></ion-icon>
-            </button>
+            </ion-button>
           </div>
         </ion-item>
       </div>
@@ -24,20 +24,20 @@
                 <div>{{budget.title}}</div>
                 <div>{{budget.created | date:'mediumDate'}}</div>
               </div>
-              <button ion-button clear (click)="restoreBudget(budget)">{{'Restore' | translate}}</button>
+              <ion-button fill="clear" (click)="restoreBudget(budget)">{{'Restore' | translate}}</ion-button>
             </div>
           </ion-item>
         </div>
       </div>
     </ion-list>
-    <button *ngIf="!showArchived" ion-button clear (click)="showArchivedBudgets()">{{'Show archived' | translate}}</button>
+    <ion-button *ngIf="!showArchived" fill="clear" (click)="showArchivedBudgets()">{{'Show archived' | translate}}</ion-button>
     <div *ngIf="!savedBudgets">
       <p>{{'There are no saved budgets' | translate}}</p>
     </div>
   </div>
-  <button ion-button (click)="startNew()" color="primary" id="createNewBudget" style="max-width: 400px">
+  <ion-button (click)="startNew()" color="primary" id="createNewBudget" style="max-width: 400px">
     <ion-icon name="add" class="large-icon"></ion-icon>
     <span style="margin-left:10px">{{'Create a new budget' | translate}}</span>
-  </button>
+  </ion-button>
   <!-- <button ion-button (click)="_ADMIN_LoadBudgetMocks()">Admin Load Budgets</button> -->
 </div>

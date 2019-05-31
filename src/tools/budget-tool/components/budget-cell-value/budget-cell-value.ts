@@ -1,6 +1,7 @@
 import { select } from "@angular-redux/store";
 import { Component, Input, OnDestroy } from "@angular/core";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { IBudgetDotValues } from "../../budget-tool.models";
 
 @Component({
@@ -72,12 +73,14 @@ export class BudgetCellValueComponent implements OnDestroy {
   }
 
   _addSubscribers() {
-    this.dotValues$.takeUntil(this.componentDestroyed).subscribe(values => {
-      if (values) {
-        this.dotValues = values;
-        this.generateRepresentation();
-      }
-    });
+    this.dotValues$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(values => {
+        if (values) {
+          this.dotValues = values;
+          this.generateRepresentation();
+        }
+      });
   }
 }
 

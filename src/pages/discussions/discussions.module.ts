@@ -1,16 +1,30 @@
 import { NgModule } from "@angular/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { IonicPageModule } from "ionic-angular";
-import { ComponentsModule } from "../../components/components.module";
-import { DiscussionsPage } from "./discussions";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Routes, RouterModule } from "@angular/router";
+
+import { IonicModule } from "@ionic/angular";
+
+import { DiscussionsPage } from "./discussions.page";
+import { TranslateSharedLazyModuleModule } from "src/app/shared/translate-shared-lazy-module.module";
+import { ComponentsModule } from "src/components/components.module";
+
+const routes: Routes = [
+  {
+    path: "",
+    component: DiscussionsPage
+  }
+];
 
 @NgModule({
-  declarations: [DiscussionsPage],
   imports: [
-    IonicPageModule.forChild(DiscussionsPage),
+    CommonModule,
+    FormsModule,
+    IonicModule,
     ComponentsModule,
-    TranslateModule.forChild()
+    RouterModule.forChild(routes),
+    TranslateSharedLazyModuleModule
   ],
-  exports: [DiscussionsPage]
+  declarations: [DiscussionsPage]
 })
-export class ForumPageModule {}
+export class DiscussionsPageModule {}

@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { File } from "@ionic-native/file";
-import { FileOpener } from "@ionic-native/file-opener";
-import { Platform } from "ionic-angular";
+import { File } from "@ionic-native/file/ngx";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
+import { Platform } from "@ionic/angular";
 import mimetypes from "./mimetypes";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class FileService {
   platforms: any;
   isCordova: boolean;

@@ -1,4 +1,4 @@
-export const REGIONAL_SETTINGS = {
+export default {
   country: "Malawi",
   languages: [
     { label: "English", code: "en" },

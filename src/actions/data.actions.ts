@@ -3,9 +3,9 @@ import { Injectable } from "@angular/core";
 import { FluxStandardAction } from "flux-standard-action";
 import { IData } from "../models/models";
 
-export type DataAction = FluxStandardAction<any, string>;
+export type DataAction = FluxStandardAction<string, IData, any>;
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class DataActions {
   static readonly LOAD_DATA = "[data] load";
   static readonly SYNC_DATA = "[data] sync";
@@ -13,14 +13,14 @@ export class DataActions {
   @dispatch()
   loadData = (data: IData, src: string): DataAction => ({
     type: DataActions.LOAD_DATA,
-    meta: src,
-    payload: data
+    payload: data,
+    meta: src
   });
 
   @dispatch()
   syncData = (data: IData, src: string): DataAction => ({
     type: DataActions.SYNC_DATA,
-    meta: src,
-    payload: data
+    payload: data,
+    meta: src
   });
 }

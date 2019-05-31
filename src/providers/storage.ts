@@ -8,7 +8,7 @@ import { Storage } from "@ionic/storage";
 import { DataActions } from "../actions/data.actions";
 import storageData from "./storage.data";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class StorageProvider {
   constructor(public storage: Storage, private actions: DataActions) {}
 

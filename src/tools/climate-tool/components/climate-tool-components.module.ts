@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
+import { IonicModule } from "@ionic/angular";
 import { TranslateModule } from "@ngx-translate/core";
-import { IonicModule } from "ionic-angular";
 import { ClimateChartComponent } from "./climate-chart/climate-chart";
 import { CombinedProbabilityComponent } from "./combined-probability/combined-probability";
 import { SiteSelectComponent } from "./site-select/site-select";

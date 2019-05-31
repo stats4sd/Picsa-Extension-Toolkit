@@ -1,9 +1,10 @@
 import { select } from "@angular-redux/store";
-import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { Select } from "ionic-angular";
+import { Component, OnDestroy, ViewChild, OnInit } from "@angular/core";
+import { IonSelect } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { UserActions } from "../../actions/user.actions";
-import { REGIONAL_SETTINGS } from "../../environments/region";
+import REGIONAL_SETTINGS from "src/environments/region";
 
 interface ILanguage {
   label: string;
@@ -13,17 +14,17 @@ interface ILanguage {
   selector: "language-select",
   templateUrl: "language-select.html"
 })
-export class LanguageSelectComponent implements OnDestroy {
+export class LanguageSelectComponent implements OnDestroy, OnInit {
   private componentDestroyed: Subject<any> = new Subject();
   languages: ILanguage[] = REGIONAL_SETTINGS.languages;
   language: ILanguage;
-  @select(["user", "lang"])
-  readonly langCode$: Observable<string>;
-  @ViewChild(Select) select: Select;
+  @select(["user", "lang"]) readonly langCode$: Observable<string>;
+  @ViewChild(IonSelect) select: IonSelect;
 
-  constructor(private userActions: UserActions) {
-    console.log("langagues", this.languages);
-    this.langCode$.takeUntil(this.componentDestroyed).subscribe(code => {
+  constructor(private userActions: UserActions) {}
+  ngOnInit() {
+    console.log("langCode", this.langCode$);
+    this.langCode$.pipe(takeUntil(this.componentDestroyed)).subscribe(code => {
       if (code) {
         this.setLanguage(code, "redux");
       } else {

@@ -3,6 +3,10 @@ export interface IClimateState {
   chart?: IChartMeta;
 }
 
+export interface ClimateToolState {
+  site: ISite;
+}
+
 export interface ICropRequirement {
   crop: string;
   variety: string;

@@ -1,0 +1,65 @@
+{
+  "name": "picsa-extension-toolkit",
+  "scripts": {
+    "build:prod": "shx rm -rf www/* && npm run build --prod && node ./cache-busting.js && workbox injectManifest",
+    "run:android": "ionic cordova run android --prod",
+    "serve:prod": "npm run build:prod && firebase serve",
+    "open": "http-server www -o -a localhost -p 1234",
+    "android:build": "npm run build:prod && cordova build android --prod --release",
+    "android:sign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore  %npm_package_config_keystorePath% %npm_package_config_androidunsignedpath%  %npm_package_config_aliasname%",
+    "android:zip": "%npm_package_config_zipalignpath% -v -p 4 %npm_package_config_androidunsignedpath% %npm_package_config_androidreleasepath%/%npm_package_version%.signed.apk",
+    "android:openfolder": "%SystemRoot%/explorer.exe C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\platforms\\android\\app\\build\\outputs\\apk\\armv7\\release",
+    "android:release": "npm run android:build && npm run android:sign && android:zip && android:openfolder"
+  },
+  "config": {
+    "ionic_copy": "./config/copy.config.js",
+    "ionic_webpack": "./config/webpack.config.js",
+    "ionic_generate_source_map": "true",
+    "release_path": "platforms/android/app/build/outputs/apk/armv7/release",
+    "zipalignpath": "C:\\Users\\chris\\AppData\\Local\\Android\\sdk\\build-tools\\26.0.2\\zipalign",
+    "appPath": "C:\\Apps\\stats4sd\\Picsa-Extension-Toolkit\\platforms\\android\\app\\build\\outputs\\apk\\armv7\\release",
+    "keystorePath": "picsaextensiontoolkit.keystore",
+    "androidunsignedpath": "platforms/android/app/build/outputs/apk/armv7/release/app-armv7-release-unsigned.apk",
+    "androidreleasepath": "platforms/android/app/build/outputs/apk/armv7/release",
+    "aliasname": "picsaextensiontoolkit"
+  },
+  "dependencies": {
+    "@ngx-translate/http-loader": "^3.0.1",
+    "cordova-android": "~7.0.0",
+    "cordova-android-support-gradle-release": "^1.4.4",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-crosswalk-webview": "^2.4.0",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-file-opener2": "^2.0.19",
+    "cordova-plugin-network-information": "^2.0.1",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-plugin-x-socialsharing": "^5.4.1",
+    "es6-promise-plugin": "^4.2.2",
+    "file": "^0.2.2",
+    "file-saver": "^2.0.0-rc.3"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-console": {},
+      "cordova-plugin-file-opener2": {},
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "26.+"
+      },
+      "cordova-plugin-crosswalk-webview": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-x-socialsharing": {}
+    }
+  }
+}

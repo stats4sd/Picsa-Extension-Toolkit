@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="Back" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ "Settings" | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="user">
+    <ion-list-header icon-left>
+      <ion-icon name="person"></ion-icon>
+      User Profile
+    </ion-list-header>
+    <ion-item>
+      <div class="flex">
+        <div class="flex-basis-100 list-title">
+          Name:
+          <span class="list-value" *ngIf="user.name">{{ user.name }}</span>
+          <button
+            ion-button
+            outline
+            icon-left
+            *ngIf="!user.name"
+            (click)="userEdit('name')"
+          >
+            <ion-icon name="add"></ion-icon>Set user name
+          </button>
+        </div>
+        <div *ngIf="user.name">
+          <button ion-button icon-only clear (click)="userEdit('name')">
+            <ion-icon name="create"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </ion-item>
+    <ion-item>
+      <div class="flex">
+        <div class="flex-basis-100 list-title" style="margin-bottom:1em">
+          Groups:
+        </div>
+      </div>
+      <user-group
+        [group]="group"
+        *ngFor="let group of userGroups$ | async"
+      ></user-group>
+    </ion-item>
+  </ion-list>
+  <br />
+</ion-content>
