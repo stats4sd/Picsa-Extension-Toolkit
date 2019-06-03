@@ -51,7 +51,7 @@ export class BudgetDataCardComponent extends BudgetCardComponent
     console.log("triggering update", this.card);
     this.card = this._convertStringsToNumbers(this.card);
     if (type == "inputs") {
-      this.card = this._makeValuesNegative(this.card);
+      this.card = this._makeValuesNegative(this.card as IBudgetCard);
     }
     const budget = this.ngRedux.getState().budget.active;
     this.updateCard(budget);

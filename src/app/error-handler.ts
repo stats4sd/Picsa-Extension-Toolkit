@@ -3,7 +3,7 @@ import { ErrorHandler, Injectable } from "@angular/core";
 import * as Sentry from "@sentry/browser";
 import { AppState } from "src/app/store/store.model";
 import { PlatformActions } from "src/actions/platform.actions";
-import { ENVIRONMENT } from "src/environments/environment";
+import ENVIRONMENT from "src/environments/environment";
 
 // https://docs.sentry.io/clients/cordova/ionic/
 // localhost errors ignored automatically from console

@@ -7,6 +7,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { BudgetToolPage } from "./budget-tool.page";
 import { BudgetToolComponentsModule } from "../components/budget-tool.components";
+import { TranslateSharedLazyModuleModule } from "src/app/shared/translate-shared-lazy-module.module";
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     BudgetToolComponentsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateSharedLazyModuleModule
   ],
   declarations: [BudgetToolPage]
 })

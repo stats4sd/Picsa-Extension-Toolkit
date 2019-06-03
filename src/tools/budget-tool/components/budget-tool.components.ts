@@ -15,6 +15,8 @@ import { BudgetLoadComponent } from "./budget-load/budget-load";
 import { BudgetOverviewComponent } from "./budget-overview/budget-overview";
 import { BudgetSettingsComponent } from "./budget-settings/budget-settings";
 import { CardSelectComponent } from "./card-select/card-select";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,13 @@ import { CardSelectComponent } from "./card-select/card-select";
     BudgetSettingsComponent,
     CardSelectComponent
   ],
-  imports: [IonicModule, TranslateModule.forChild(), CanvasWhiteboardModule],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    TranslateModule.forChild(),
+    CanvasWhiteboardModule
+  ],
   exports: [
     BudgetCardComponent,
     BudgetNewCardComponent,

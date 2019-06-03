@@ -28,7 +28,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
 import { SentryErrorHandler } from "src/app/error-handler";
 import { ServiceWorkerModule } from "@angular/service-worker";
-import { ENVIRONMENT } from "src/environments/environment";
+import ENVIRONMENT from "src/environments/environment";
 import { MobxAngularModule } from "mobx-angular";
 
 // configure translation from file

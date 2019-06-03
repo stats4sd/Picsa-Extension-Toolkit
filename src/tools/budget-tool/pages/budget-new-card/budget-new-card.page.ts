@@ -15,7 +15,8 @@ import { ICustomBudgetCard } from "../../budget-tool.models";
 export class BudgetNewCardPage {
   cardName: string;
 
-  @ViewChild("canvasWhiteboard") canvasWhiteboard: CanvasWhiteboardComponent;
+  @ViewChild("canvasWhiteboard", { static: false })
+  canvasWhiteboard: CanvasWhiteboardComponent;
   constructor(
     private modalCtrl: ModalController,
     private budgetToolProvider: BudgetToolProvider,
