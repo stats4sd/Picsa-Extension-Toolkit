@@ -12,7 +12,8 @@ interface ILanguage {
 }
 @Component({
   selector: "language-select",
-  templateUrl: "language-select.html"
+  templateUrl: "language-select.html",
+  styleUrls: ["./language-select.scss"]
 })
 export class LanguageSelectComponent implements OnDestroy, OnInit {
   private componentDestroyed: Subject<any> = new Subject();
