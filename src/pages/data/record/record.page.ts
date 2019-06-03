@@ -3,8 +3,8 @@ import { Subject, Observable } from "rxjs";
 import { IUser, IForm } from "src/models/models";
 import { select, NgRedux } from "@angular-redux/store";
 import { AppState } from "src/app/store/store.model";
-import { ModalController } from "@ionic/angular";
 import { takeUntil } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-record",
@@ -17,10 +17,7 @@ export class RecordPage {
   user: IUser;
   forms: IForm[];
   @select("user") user$: Observable<IUser>;
-  constructor(
-    private ngRedux: NgRedux<AppState>,
-    public modalCtrl: ModalController
-  ) {
+  constructor(private ngRedux: NgRedux<AppState>, private router: Router) {
     this.user$
       .pipe(takeUntil(this.componentDestroyed))
       .subscribe(user => this.init(user));
@@ -32,7 +29,7 @@ export class RecordPage {
 
   // when user updated check for available forms (given user group access permissions) and updated submissions
   // only show forms which are marked as active
-  init(user) {
+  init(user: IUser) {
     this.user = user;
     try {
       const allForms: IForm[] = this.ngRedux.getState().data.forms;
@@ -57,11 +54,7 @@ export class RecordPage {
   }
 
   async openForm(form: IForm) {
-    const modal = await this.modalCtrl.create({
-      component: "FormViewPage",
-      componentProps: { form: form }
-    });
-    await modal.present();
+    this.router.navigate(["/data/record", form._key]);
   }
 
   // take 2 string arrays and return whether at least one element is shared between them

@@ -16,12 +16,12 @@ const routes: Routes = [
   },
   { path: "data", loadChildren: "src/pages/data/data.module#DataPageModule" },
   {
-    path: "data/form-view",
-    loadChildren: "src/pages/data/formView/formView.module#FormViewPageModule"
-  },
-  {
     path: "data/record",
     loadChildren: "src/pages/data/record/record.module#RecordPageModule"
+  },
+  {
+    path: "data/record/:formid",
+    loadChildren: "src/pages/data/formView/formView.module#FormViewPageModule"
   },
   {
     path: "discussions",

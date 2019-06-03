@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Subject, Observable } from "rxjs";
 import { select } from "@angular-redux/store";
 import { IResource, IResourceGroup } from "src/models/models";
-import { IonContent, NavController, NavParams, Platform } from "@ionic/angular";
+import { IonContent, Platform } from "@ionic/angular";
 import { FileService } from "src/providers/file-service";
 import { TranslationsProvider } from "src/providers/translations";
 import { takeUntil } from "rxjs/operators";
@@ -27,8 +27,6 @@ export class ResourcesPage implements OnInit, OnDestroy {
   platformIsWeb = false;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     private file: File,
     public platform: Platform,
     private filePrvdr: FileService,

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { NavParams, Events, ModalController } from "@ionic/angular";
+import { Events, ModalController } from "@ionic/angular";
 import { BudgetToolProvider } from "../../budget-tool.provider";
 import { AppState } from "src/app/store/store.model";
 import { NgRedux } from "@angular-redux/store";
@@ -17,7 +17,6 @@ export class BudgetNewCardPage {
 
   @ViewChild("canvasWhiteboard") canvasWhiteboard: CanvasWhiteboardComponent;
   constructor(
-    private navParams: NavParams,
     private modalCtrl: ModalController,
     private budgetToolProvider: BudgetToolProvider,
     private events: Events,
@@ -26,7 +25,8 @@ export class BudgetNewCardPage {
   ) {}
 
   saveCard() {
-    const type = this.navParams.data.type;
+    // *** TODO - get type from query params
+    const type = "TODO";
     const id = `_custom_${this.budgetToolProvider.firestorePrvdr.db.createId()}`;
     // *** should add check for uniqueness and possibly strip any other special characters
     // *** need createdBy but won't be populated if firebase never initialised (could use a second local id)

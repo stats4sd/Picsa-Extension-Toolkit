@@ -3,7 +3,7 @@ import { Observable, Subject } from "rxjs";
 import { ISite, IChartMeta, ICropRequirement } from "../climate-tool.models";
 import { select } from "@angular-redux/store";
 import * as DATA from "../climate-tool.data";
-import { NavController, NavParams, MenuController } from "@ionic/angular";
+import { MenuController } from "@ionic/angular";
 import { ClimateToolProvider } from "../climate-tool.provider";
 import { ClimateToolActions } from "../climate-tool.actions";
 import { takeUntil } from "rxjs/operators";
@@ -34,8 +34,6 @@ export class ClimateToolPage implements OnDestroy {
   columns = [];
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     public menuCtrl: MenuController,
     public climatePrvdr: ClimateToolProvider,
     private actions: ClimateToolActions
@@ -77,9 +75,7 @@ export class ClimateToolPage implements OnDestroy {
   showAllCharts() {
     this.activeChart = null;
   }
-  close() {
-    this.navCtrl.pop();
-  }
+
   selectSite() {
     this.actions.selectSite(null);
   }

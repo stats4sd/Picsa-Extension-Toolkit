@@ -7,6 +7,8 @@ import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
 import { DataActions } from "../actions/data.actions";
 import storageData from "./storage.data";
+import { DataStore } from "src/stores/data.store";
+import { IData } from "src/models/models";
 
 @Injectable({ providedIn: "root" })
 export class StorageProvider {
@@ -20,11 +22,12 @@ export class StorageProvider {
     console.log("storage data version:", storageData._version);
     this.loadData();
   }
-  // attempt to load data from cache, if doesn't exist fallback to file
+  // attempt to load data from cache, if doesn't exist fallback to imported
   async loadData() {
     for (const key of Object.keys(storageData)) {
       const data = await this.storage.get(key);
       if (data && data.length > 0) {
+        // currently populating both mobx and redux stores
         this.actions.loadData({ [key]: data }, "storage");
       } else {
         this.actions.loadData({ [key]: storageData[key] }, "file");

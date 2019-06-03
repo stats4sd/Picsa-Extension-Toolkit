@@ -23,6 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateSharedLazyModuleModule
   ],
-  declarations: [RecordPage]
+  declarations: [RecordPage],
+  entryComponents: []
 })
 export class RecordPageModule {}

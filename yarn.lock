@@ -5639,6 +5639,16 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
+mobx-angular@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mobx-angular/-/mobx-angular-3.0.1.tgz#881379acea563c0767550d1f7801ab3434449bb1"
+  integrity sha512-PoEUEw74LoR7Ib6iGGCqvw8xMlmA/Zr5/0TVyhshq4kuzA8pHdvtCiE5AeyRK0w4LhyS7J0Qt0GboTgdhuys+A==
+
+mobx@^5.9.4:
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.9.4.tgz#1dee92aba33f67b7baeeb679e3bd376a12e55812"
+  integrity sha512-L9JjTX2rtQUAhCIgnHokfntNOsF14uioT9LqStf6Mya+16j56ZBe21E8Y9V59tfr2aH2kLQPD10qtCJXBuTAxw==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
