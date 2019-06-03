@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Http, Response, URLSearchParams } from "@angular/http";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class YoutubeService {
   youtube: any = {
     ready: false,

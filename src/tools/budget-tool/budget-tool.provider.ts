@@ -1,12 +1,7 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Injectable, OnDestroy } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import {
-  FirestoreStorageProvider,
-  StorageProvider,
-  UserProvider
-} from "../../providers/providers";
-import { AppState } from "../../reducers/reducers";
+import { takeUntil } from "rxjs/operators";
 import { BudgetToolActions } from "./budget-tool.actions";
 import {
   IBudget,
@@ -15,8 +10,12 @@ import {
   ICustomBudgetCard
 } from "./budget-tool.models";
 import { budgetMeta } from "./data";
+import { AppState } from "src/app/store/store.model";
+import { FirestoreStorageProvider } from "src/providers/firestore";
+import { StorageProvider } from "src/providers/storage";
+import { UserProvider } from "src/providers/user";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class BudgetToolProvider implements OnDestroy {
   private componentDestroyed: Subject<any> = new Subject();
   @select(["budget", "active"])
@@ -54,7 +53,7 @@ export class BudgetToolProvider implements OnDestroy {
 
   // automatically save any changes to the active budget
   enableAutoSave() {
-    this.budget$.takeUntil(this.componentDestroyed).subscribe(budget => {
+    this.budget$.pipe(takeUntil(this.componentDestroyed)).subscribe(budget => {
       if (budget && budget.title) {
         if (!budget._key) {
           budget._key = this.firestorePrvdr.db.createId();

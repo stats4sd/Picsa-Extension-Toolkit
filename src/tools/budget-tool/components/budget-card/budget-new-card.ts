@@ -1,7 +1,7 @@
 import { NgRedux } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
-import { ModalController } from "ionic-angular";
-import { AppState } from "../../../../reducers/reducers";
+import { ModalController } from "@ionic/angular";
+import { AppState } from "src/app/store/store.model";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { BudgetCardComponent } from "./budget-card";
 
@@ -33,12 +33,14 @@ export class BudgetNewCardComponent extends BudgetCardComponent {
   }
   // when adding a new card opens modal
   // *** note, this should be changed to use view meta instead and load as component instead of page
-  cardClicked() {
+  async cardClicked() {
     console.log("new card type", this.newCardType);
-    this.modalCtrl
-      .create("BudgetNewCardPage", {
+    const modal = await this.modalCtrl.create({
+      component: "BudgetNewCardPage",
+      componentProps: {
         type: this.newCardType
-      })
-      .present();
+      }
+    });
+    await modal.present();
   }
 }

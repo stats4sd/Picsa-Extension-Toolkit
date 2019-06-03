@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
-import { IonicModule } from "ionic-angular";
+import { IonicModule } from "@ionic/angular";
 import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
 import { BudgetCardImageComponent } from "./budget-card-image/budget-card-image";
 import { BudgetCardListComponent } from "./budget-card-list/budget-card-list";

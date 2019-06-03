@@ -3,9 +3,9 @@ import { Injectable } from "@angular/core";
 import { FluxStandardAction } from "flux-standard-action";
 import { IBudget, IBudgetView } from "./budget-tool.models";
 
-type StandardAction = FluxStandardAction<any, null>;
+type StandardAction = FluxStandardAction<string, IBudget | IBudgetView>;
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class BudgetToolActions {
   static readonly SET_ACTIVE_BUDGET = "SET_ACTIVE_BUDGET";
   static readonly SET_BUDGET_META = "SET_BUDGET_META";
@@ -15,8 +15,8 @@ export class BudgetToolActions {
   @dispatch()
   setActiveBudget = (budget: IBudget): StandardAction => ({
     type: BudgetToolActions.SET_ACTIVE_BUDGET,
-    meta: null,
-    payload: budget
+    payload: budget,
+    meta: null
   });
 
   // set the value of specific meta fields (multiple)

@@ -1,16 +1,11 @@
 import { Injectable, OnDestroy } from "@angular/core";
+import { LoadingController, ToastController } from "@ionic/angular";
+import { LoadingOptions, ToastOptions } from "@ionic/core";
 import { TranslateService } from "@ngx-translate/core";
-import {
-  Loading,
-  LoadingController,
-  LoadingOptions,
-  ToastController,
-  ToastOptions
-} from "ionic-angular";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class TranslationsProvider implements OnDestroy {
-  loader: Loading;
+  loader: HTMLIonLoadingElement;
   monthNames: string[] = MONTHS;
   constructor(
     public toastCtrl: ToastController,
@@ -30,27 +25,20 @@ export class TranslationsProvider implements OnDestroy {
   }
 
   // simple wrapper for ionic toast to allow text translation
-  async presentTranslatedToast(config: ToastOptions, timeout?: number) {
+  async createTranslatedToast(config: ToastOptions, timeout?: number) {
     config.message = await this.translateText(config.message);
     if (timeout) {
       await _wait(timeout);
     }
-    this.toastCtrl.create(config).present();
+    return await this.toastCtrl.create(config);
   }
 
-  async presentTranslatedLoader(config: LoadingOptions) {
-    config.content = await this.translateText(config.content);
+  async createTranslatedLoader(config: LoadingOptions) {
+    config.message = await this.translateText(config.message);
     if (this.loader) {
       await this.loader.dismiss();
     }
-    this.loader = this.loadingCtrl.create(config);
-    await this.loader.present();
-  }
-
-  async dismissLoader() {
-    if (this.loader) {
-      await this.loader.dismiss();
-    }
+    return this.loadingCtrl.create(config);
   }
 
   // use translate service to translate strings that will be displayed

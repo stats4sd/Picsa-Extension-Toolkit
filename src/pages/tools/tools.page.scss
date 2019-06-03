@@ -1,0 +1,25 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tool {
+  cursor: pointer;
+  border: 5px solid black;
+  margin: 5px;
+}
+.tool:hover {
+  font-weight: bold;
+  border: 5px solid var(--ion-color-primary);
+}
+.tool-icon {
+  padding: 20px;
+}
+.tool-text {
+  font-size: x-large;
+  text-align: center;
+  margin-top: 5px;
+}
+img {
+  height: 140px;
+  width: 140px;
+}

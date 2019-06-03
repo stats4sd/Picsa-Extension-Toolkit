@@ -1,8 +1,9 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component, OnDestroy } from "@angular/core";
-import { Events } from "ionic-angular";
+import { Events } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
-import { AppState } from "../../../../reducers/reducers";
+import { takeUntil } from "rxjs/operators";
+import { AppState } from "src/app/store/store.model";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudgetCard, IBudgetViewMeta } from "../../budget-tool.models";
 import { BudgetCardComponent } from "./budget-card";
@@ -31,7 +32,7 @@ export class BudgetDataCardComponent extends BudgetCardComponent
 
   ngOnInit() {
     this.viewMeta$
-      .takeUntil(this.componentDestroyed)
+      .pipe(takeUntil(this.componentDestroyed))
       .subscribe(meta => (this.viewMeta = meta));
     this.viewMeta = this.ngRedux.getState().budget.view.meta;
     this.selected = this.card.isSelected;

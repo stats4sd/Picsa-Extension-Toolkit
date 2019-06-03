@@ -18,7 +18,7 @@ budget-new-card {
   ion-card.budget-card[selected="true"],
   ion-card.budget-card.enterprise[selected="true"] {
     font-weight: bold;
-    background: color($colors, selected);
+    background: var(--ion-color-selected);
   }
   ion-card.budget-card.inputs[selected="true"],
   ion-card.budget-card.outputs[selected="true"],

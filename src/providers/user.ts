@@ -1,18 +1,19 @@
 import { select } from "@angular-redux/store";
 import { Injectable, OnDestroy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireAuth } from "@angular/fire/auth";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { UserActions } from "../actions/user.actions";
 import { IFormResponse, IUser } from "../models/models";
-import version from "../pages/changelog/version";
+import { APP_VERSION } from "src/environments/version";
 // unsure why, but can't import both from ./providers - not a big issue
 import { FileService } from "./file-service";
 import { FirestoreStorageProvider } from "./firestore";
 import { StorageProvider } from "./storage";
 import { TranslationsProvider } from "./translations";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class UserProvider implements OnDestroy {
   private componentDestroyed: Subject<any> = new Subject();
   user: IUser;
@@ -44,7 +45,7 @@ export class UserProvider implements OnDestroy {
 
   initTranslate() {
     this.translate.setDefaultLang("en");
-    this.lang$.takeUntil(this.componentDestroyed).subscribe(lang => {
+    this.lang$.pipe(takeUntil(this.componentDestroyed)).subscribe(lang => {
       if (lang) {
         this.changeLanguage(lang);
       }
@@ -88,7 +89,7 @@ export class UserProvider implements OnDestroy {
   createNewUser() {
     const user: IUser = {
       lang: "en",
-      appVersion: version.text
+      appVersion: APP_VERSION.text
     };
     this.setUser(user);
     this.presentToast("user profile created");
@@ -97,18 +98,20 @@ export class UserProvider implements OnDestroy {
   // automatically reflect changes to user to local storage and firebase
   // note - only want to sync if user authenticated (i.e logged in via email or joined group)
   async enableUserSync() {
-    this.user$.takeUntil(this.componentDestroyed).subscribe(async user => {
-      this.user = user;
-      if (user) {
-        await this.storagePrvdr.set("user", user);
-        if (user && user.authenticated) {
-          this.firestorePrvdr.setDoc(`users/${user.id}`, user);
+    this.user$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(async user => {
+        this.user = user;
+        if (user) {
+          await this.storagePrvdr.set("user", user);
+          if (user && user.authenticated) {
+            this.firestorePrvdr.setDoc(`users/${user.id}`, user);
+          }
+          if (this.filePrvdr.isCordova) {
+            this._backupUserToDisk();
+          }
         }
-        if (this.filePrvdr.isCordova) {
-          this._backupUserToDisk();
-        }
-      }
-    });
+      });
   }
 
   async _backupUserToDisk() {
@@ -134,16 +137,16 @@ export class UserProvider implements OnDestroy {
   }
 
   // present toast with timeout to allow content to be fully registered
-  presentToast(msg: string) {
-    this.utils.presentTranslatedToast(
+  async presentToast(msg: string) {
+    const toast = await this.utils.createTranslatedToast(
       {
         duration: 2000,
-        dismissOnPageChange: true,
         position: "bottom",
         message: msg
       },
       500
     );
+    await toast.present();
   }
 
   changeLanguage(code: string) {

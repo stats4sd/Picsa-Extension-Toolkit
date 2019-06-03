@@ -3,16 +3,16 @@ import { Injectable } from "@angular/core";
 import { FluxStandardAction } from "flux-standard-action";
 import { IUser } from "../models/models";
 
-export type UserAction = FluxStandardAction<any, null>;
+export type UserAction = FluxStandardAction<string, IUser>;
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class UserActions {
   static readonly UPDATE_USER = "UPDATE_USER";
 
   @dispatch()
   updateUser = (user: IUser): UserAction => ({
     type: UserActions.UPDATE_USER,
-    meta: null,
-    payload: user
+    payload: user,
+    meta: null
   });
 }

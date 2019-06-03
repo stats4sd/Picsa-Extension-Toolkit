@@ -2,8 +2,9 @@ import { NgRedux, select } from "@angular-redux/store";
 import { Component, OnDestroy } from "@angular/core";
 import * as c3 from "c3";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { TranslationsProvider } from "../../../../providers/translations";
-import { AppState } from "../../../../reducers/reducers";
+import { AppState } from "src/app/store/store.model";
 import { IChartMeta, IChartSummary } from "../../climate-tool.models";
 import { availableCharts } from "../../data/availableCharts";
 
@@ -33,27 +34,31 @@ export class ClimateChartComponent implements OnDestroy {
   ngOnDestroy() {
     // want to remove subscriptions on destroy (note automatically handled for @select bound to async pipe in html)
     // using subject emits value manually (like event emitter) by calling the 'next()' function
-    // on destroy we want to emit any value so that the takeUntil subscription records it no longer needs to subscribe
+    // on destroy we want to emit any value so that the .pipe(takeUntil subscription records it no longer needs to subscribe
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
   }
 
   _addSubscriptions() {
-    this.chartData$.takeUntil(this.componentDestroyed).subscribe(data => {
+    this.chartData$.pipe(takeUntil(this.componentDestroyed)).subscribe(data => {
       if (data) {
         this.dataUpdated(data);
       }
     });
-    this.lineToolValue$.takeUntil(this.componentDestroyed).subscribe(v => {
-      if (v) {
-        this.setLineToolValue(v);
-      }
-    });
-    this.activeChart$.takeUntil(this.componentDestroyed).subscribe(chart => {
-      if (chart) {
-        this.setChart(chart);
-      }
-    });
+    this.lineToolValue$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(v => {
+        if (v) {
+          this.setLineToolValue(v);
+        }
+      });
+    this.activeChart$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(chart => {
+        if (chart) {
+          this.setChart(chart);
+        }
+      });
   }
 
   // when new data columns specified redraw any graphs
@@ -174,19 +179,21 @@ export class ClimateChartComponent implements OnDestroy {
   }
 
   async setChart(chart: IChartMeta) {
-    await this.translationsPrvdr.presentTranslatedLoader({
-      content: "Loading..."
+    const loader = await this.translationsPrvdr.createTranslatedLoader({
+      message: "Loading..."
     });
+    await loader.present();
     this.activeChart = chart;
     console.log("activeChart", chart);
     this.chart.hide();
     this.chart.legend.hide();
     this.chart.show(chart.y, { withLegend: true });
-    this.translationsPrvdr.dismissLoader();
+
     // reload new line tool value
     if (this.lineToolValue && chart.tools.line) {
       this.setLineToolValue(this.lineToolValue);
     }
+    await loader.dismiss();
   }
 
   formatAxis(value, type) {

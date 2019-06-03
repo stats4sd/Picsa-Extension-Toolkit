@@ -3,9 +3,9 @@
 <br>
 <div>{{labels[plantDate.value]}}</div>
 <ion-range [(ngModel)]="plantDate.value" [min]="plantDate.min" [max]="plantDate.max" snaps='true' color="brown" (ionChange)="plantDateChange($event)">
-  <ion-label range-left>Early</ion-label>
-  <ion-label range-right>Late</ion-label>
-  <ion-icon range-left name="calendar"></ion-icon>
+  <ion-label slot="start">Early</ion-label>
+  <ion-label slot="end">Late</ion-label>
+  <ion-icon slot="start" name="calendar"></ion-icon>
   <!--<ion-icon range-right name="calendar"></ion-icon>-->
 </ion-range>
 <div *ngIf="startProbability.reversePercentage>-1" [style.background-color]="startProbability.color">Rain has started in <strong>{{startProbability.percentage | percent:'1.0-0'}}</strong> of years by this time</div>

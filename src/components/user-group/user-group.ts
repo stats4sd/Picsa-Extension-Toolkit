@@ -1,7 +1,8 @@
 import { select } from "@angular-redux/store";
 import { Component, Input, OnDestroy } from "@angular/core";
-import { AlertController } from "ionic-angular";
+import { AlertController } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { UserActions } from "../../actions/user.actions";
 import { IUser, IUserGroup } from "../../models/models";
 
@@ -28,7 +29,7 @@ export class UserGroupComponent implements OnDestroy {
 
   ngOnInit(): void {
     // subscrib after group input bind so can use group key
-    this.user$.takeUntil(this.componentDestroyed).subscribe(user => {
+    this.user$.pipe(takeUntil(this.componentDestroyed)).subscribe(user => {
       if (user) {
         this.userUpdate(user);
       }
@@ -57,10 +58,10 @@ export class UserGroupComponent implements OnDestroy {
     // join notifications channels
   }
 
-  joinGroupClicked() {
+  async joinGroupClicked() {
     console.log("joining group", this.group);
-    const alert = this.alertCtrl.create({
-      title: `Join ${this.group.name}`,
+    const alert = await this.alertCtrl.create({
+      header: `Join ${this.group.name}`,
       inputs: [
         {
           name: "key",
@@ -84,14 +85,14 @@ export class UserGroupComponent implements OnDestroy {
               // logged in!
               this.joinGroup();
             } else {
-              // invalid login
-              alert.data.message = `<div class="invalid-key">Invalid access key</div>`;
+              // *** TODO - invalid login
+              // alert.data.message = `<div class="invalid-key">Invalid access key</div>`;
               return false;
             }
           }
         }
       ]
     });
-    alert.present();
+    await alert.present();
   }
 }

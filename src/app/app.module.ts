@@ -1,135 +1,83 @@
-/* tslint:disable:ordered-imports */
-console.log("app module.ts");
 import { NgModule, ErrorHandler } from "@angular/core";
-import { IonicApp, IonicModule } from "ionic-angular";
 import { BrowserModule } from "@angular/platform-browser";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { RouteReuseStrategy } from "@angular/router";
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { IonicStorageModule } from "@ionic/storage";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+// native
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { SocialSharing } from "@ionic-native/social-sharing/ngx";
+import { Network } from "@ionic-native/network/ngx";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
+// translate
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-// Ionic native modules
-import { File } from "@ionic-native/file";
-import { SocialSharing } from "@ionic-native/social-sharing";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { Network } from "@ionic-native/network";
-import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
-import { FileOpener } from "@ionic-native/file-opener";
-import { StatusBar } from "@ionic-native/status-bar";
-// Angular firestore
-import { AngularFireModule } from "angularfire2";
-import { AngularFirestoreModule } from "angularfire2/firestore";
-import { AngularFireAuthModule } from "angularfire2/auth";
-import { environment } from "../environments/environment";
-// App entry component
-import { MyApp } from "./app.component";
-// Providers
-import {
-  FileService,
-  FirestoreStorageProvider,
-  NetworkProvider,
-  StorageProvider,
-  UserProvider,
-  YoutubeService
-} from "../providers/providers";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
 // redux
-import {
-  NgRedux,
-  DevToolsExtension,
-  NgReduxModule
-} from "@angular-redux/store";
-import { AppState, INITIAL_STATE, rootReducer } from "../reducers/reducers";
-import { UserActions } from "../actions/user.actions";
-import { DataActions } from "../actions/data.actions";
-// Tools
-import { BudgetToolActions } from "../tools/budget-tool/budget-tool.actions";
-import { BudgetToolProvider } from "../tools/budget-tool/budget-tool.provider";
-import { ClimateToolActions } from "../tools/climate-tool/climate-tool.actions";
-import { ClimateToolProvider } from "../tools/climate-tool/climate-tool.provider";
+import { NgReduxModule } from "@angular-redux/store";
+import { NgReduxRouterModule } from "@angular-redux/router";
+import { StoreModule } from "./store/store.module";
+// angular firestore
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+// misc
+import { CanvasWhiteboardModule } from "ng2-canvas-whiteboard";
+import { SentryErrorHandler } from "src/app/error-handler";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { ENVIRONMENT } from "src/environments/environment";
+import { MobxAngularModule } from "mobx-angular";
 
-// AF2 Settings
-export const firebaseConfig = {
-  apiKey: "AIzaSyCHzsaVc4TuG3QMFjI_SKP1Px-E5QRglcM",
-  authDomain: "extension-toolkit.firebaseapp.com",
-  databaseURL: "https://extension-toolkit.firebaseio.com",
-  storageBucket: "extension-toolkit.appspot.com",
-  messagingSenderId: "249750594240"
-};
-// error handling
-import { SentryErrorHandler } from "../providers/error-handler";
-import { TranslationsProvider } from "../providers/translations";
-import { PrintProvider } from "../providers/print";
-
-// want to use sentry-cordova, but fails when cordova not available...
-// *** should link to mobile init app component call... still seems to have issues
-// stick to raven as captures js errors fine (no device info from cordova)
-
-// Sentry.init({
-//   dsn: "https://68f91fcd849a436193d615bc943c0259@sentry.io/1249964"
-// });
+// configure translation from file
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
+}
 
 @NgModule({
-  declarations: [MyApp],
+  declarations: [AppComponent],
+  entryComponents: [],
   imports: [
-    IonicModule.forRoot(MyApp, { preloadModules: true }),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
-    AngularFireAuthModule,
+    BrowserModule,
+    IonicModule.forRoot(),
     IonicStorageModule.forRoot({
       name: "__picsa"
     }),
-    BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: createTranslateLoader,
         deps: [HttpClient]
-      }
+      },
+      isolate: false
     }),
+    AppRoutingModule,
+    AngularFireModule.initializeApp(ENVIRONMENT.firebase),
+    AngularFirestoreModule.enablePersistence(),
+    AngularFireAuthModule,
+    NgReduxModule,
+    NgReduxRouterModule.forRoot(),
+    MobxAngularModule,
+    StoreModule,
     CanvasWhiteboardModule,
-    NgReduxModule
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: ENVIRONMENT.production && !ENVIRONMENT.usesCordova
+    })
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [MyApp],
-
+  exports: [TranslateModule],
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    StatusBar,
     SplashScreen,
-    ClimateToolProvider,
-    Network,
-    FileOpener,
     File,
     SocialSharing,
-    StatusBar,
-    FileService,
-    FirestoreStorageProvider,
-    NetworkProvider,
-    StorageProvider,
-    UserProvider,
-    YoutubeService,
-    UserActions,
-    ClimateToolActions,
-    BudgetToolActions,
-    BudgetToolProvider,
-    DataActions,
-    TranslationsProvider,
-    PrintProvider
-  ]
+    Network,
+    FileOpener,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: ErrorHandler, useClass: SentryErrorHandler }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-  // configure redux
-  constructor(store: NgRedux<AppState>, devTools: DevToolsExtension) {
-    store.configureStore(
-      rootReducer,
-      INITIAL_STATE,
-      [],
-      // [reduxLogger.createLogger()],
-      devTools.isEnabled() ? [devTools.enhancer()] : []
-    );
-  }
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
-}
+export class AppModule {}

@@ -1,7 +1,8 @@
 import { select } from "@angular-redux/store";
 import { Component, OnDestroy } from "@angular/core";
-import { Events } from "ionic-angular";
+import { Events } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { TranslationsProvider } from "../../../../providers/translations";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import { IBudget } from "../../budget-tool.models";
@@ -9,7 +10,7 @@ import { BudgetToolProvider } from "../../budget-tool.provider";
 import { BUDGET_API_VERSION, upgradeBudget } from "../../budget.upgrade";
 import { defaults } from "../../data";
 import { PB_MOCK_API_2, PB_MOCK_API_3 } from "../../mocks/budget.mocks";
-import { REGIONAL_SETTINGS } from "../../../../environments/region.ke";
+import REGIONAL_SETTINGS from "src/environments/region";
 
 @Component({
   selector: "budget-load",
@@ -33,12 +34,14 @@ export class BudgetLoadComponent implements OnDestroy {
   ) {}
   ngOnInit() {
     console.log("api version", this.apiVersion);
-    this.savedBudgets$.takeUntil(this.componentDestroyed).subscribe(budgets => {
-      if (budgets) {
-        this.savedBudgets = _jsonObjectValues(budgets);
-        console.log("saved budgets", budgets);
-      }
-    });
+    this.savedBudgets$
+      .pipe(takeUntil(this.componentDestroyed))
+      .subscribe(budgets => {
+        if (budgets) {
+          this.savedBudgets = _jsonObjectValues(budgets);
+          console.log("saved budgets", budgets);
+        }
+      });
   }
   ngOnDestroy() {
     this.componentDestroyed.next();
@@ -68,9 +71,10 @@ export class BudgetLoadComponent implements OnDestroy {
     this.events.publish("load:budget");
   }
   async loadBudget(budget: IBudget) {
-    await this.translations.presentTranslatedLoader({
-      content: "Preparing budget"
+    const loader = await this.translations.createTranslatedLoader({
+      message: "Preparing budget"
     });
+    await loader.present();
     budget = this.checkForBudgetUpgrades(budget);
     this.actions.setActiveBudget(budget);
     this.actions.setBudgetView({
@@ -81,8 +85,8 @@ export class BudgetLoadComponent implements OnDestroy {
     // publish event to force card list update
     this.events.publish("load:budget");
     // give small timeout to give appearance of smoother rendering
-    setTimeout(() => {
-      this.translations.dismissLoader();
+    setTimeout(async () => {
+      await loader.dismiss();
     }, 1000);
   }
   // recursively go through budget and if api version less than current perform incremental upgrade
@@ -96,21 +100,23 @@ export class BudgetLoadComponent implements OnDestroy {
       return budget;
     }
   }
-  archiveBudget(budget: IBudget) {
+  async archiveBudget(budget: IBudget) {
     budget.archived = true;
-    this.translations.presentTranslatedToast({
+    const toast = await this.translations.createTranslatedToast({
       message: "Budget archived",
       duration: 3000
     });
-    this.budgetPrvdr.saveBudget(budget);
+    await this.budgetPrvdr.saveBudget(budget);
+    await toast.present();
   }
-  restoreBudget(budget: IBudget) {
+  async restoreBudget(budget: IBudget) {
     budget.archived = false;
-    this.translations.presentTranslatedToast({
+    const toast = await this.translations.createTranslatedToast({
       message: "Budget restored",
       duration: 3000
     });
-    this.budgetPrvdr.saveBudget(budget);
+    await this.budgetPrvdr.saveBudget(budget);
+    await toast.present();
   }
   showArchivedBudgets() {
     this.showArchived = true;

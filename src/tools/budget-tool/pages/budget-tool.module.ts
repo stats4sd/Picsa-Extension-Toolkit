@@ -1,16 +1,28 @@
 import { NgModule } from "@angular/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { IonicPageModule } from "ionic-angular";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Routes, RouterModule } from "@angular/router";
+
+import { IonicModule } from "@ionic/angular";
+
+import { BudgetToolPage } from "./budget-tool.page";
 import { BudgetToolComponentsModule } from "../components/budget-tool.components";
-import { BudgetToolPage } from "./budget-tool";
+
+const routes: Routes = [
+  {
+    path: "",
+    component: BudgetToolPage
+  }
+];
 
 @NgModule({
-  declarations: [BudgetToolPage],
   imports: [
-    IonicPageModule.forChild(BudgetToolPage),
+    CommonModule,
+    FormsModule,
+    IonicModule,
     BudgetToolComponentsModule,
-    TranslateModule.forChild()
+    RouterModule.forChild(routes)
   ],
-  exports: [BudgetToolPage]
+  declarations: [BudgetToolPage]
 })
 export class BudgetToolPageModule {}

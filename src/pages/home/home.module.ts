@@ -1,16 +1,30 @@
 import { NgModule } from "@angular/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { IonicPageModule } from "ionic-angular";
-import { ComponentsModule } from "../../components/components.module";
-import { HomePage } from "./home";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Routes, RouterModule } from "@angular/router";
+
+import { IonicModule } from "@ionic/angular";
+
+import { HomePage } from "./home.page";
+import { ComponentsModule } from "src/components/components.module";
+import { TranslateSharedLazyModuleModule } from "src/app/shared/translate-shared-lazy-module.module";
+
+const routes: Routes = [
+  {
+    path: "",
+    component: HomePage
+  }
+];
 
 @NgModule({
-  declarations: [HomePage],
   imports: [
-    IonicPageModule.forChild(HomePage),
-    TranslateModule.forChild(),
-    ComponentsModule
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    ComponentsModule,
+    TranslateSharedLazyModuleModule
   ],
-  exports: [HomePage]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

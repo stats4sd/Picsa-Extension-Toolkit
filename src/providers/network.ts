@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Network } from "@ionic-native/network";
-import { Platform } from "ionic-angular";
+import { Network } from "@ionic-native/network/ngx";
+import { Platform } from "@ionic/angular";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class NetworkProvider {
   online: boolean;
 

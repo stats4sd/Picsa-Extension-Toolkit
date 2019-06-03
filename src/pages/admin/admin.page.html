@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="Back" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ "Admin" | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button (click)="updateHardcodedData()" [disabled]="updated">
+    Update hardcoded data
+  </ion-button>
+  <ion-button (click)="updateBudgetData()" [disabled]="updated">
+    Update budget data
+  </ion-button>
+</ion-content>

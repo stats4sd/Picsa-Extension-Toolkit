@@ -1,8 +1,9 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { Component, OnDestroy } from "@angular/core";
-import { Events } from "ionic-angular";
+import { Events } from "@ionic/angular";
 import { Observable, Subject, Subscription } from "rxjs";
-import { AppState } from "../../../../reducers/reducers";
+import { takeUntil } from "rxjs/operators";
+import { AppState } from "src/app/store/store.model";
 import { BudgetToolActions } from "../../budget-tool.actions";
 import {
   IBudget,
@@ -98,7 +99,7 @@ export class BudgetCardListComponent implements OnDestroy {
       // to generate list on update
       console.log("building cards subscriber", meta.type);
       this.NgRedux.select(["budget", "meta", meta.type])
-        .takeUntil(this.componentDestroyed)
+        .pipe(takeUntil(this.componentDestroyed))
         .subscribe(cards => {
           console.log("cards updated", cards);
           this._generateCardList(meta.type, meta.periodIndex);

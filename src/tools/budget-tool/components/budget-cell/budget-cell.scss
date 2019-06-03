@@ -15,7 +15,7 @@ budget-cell {
   }
   .add-cell-data-icon {
     font-size: 36px;
-    color: color($colors, primary);
+    color: var(--ion-color-primary);
     opacity: 0.3;
   }
   .badge {

@@ -1,21 +1,8 @@
 import { Action } from "redux";
 import { StandardAction } from "../../actions/actions";
-import { INITIAL_STATE } from "../../reducers/reducers";
 import { BudgetToolActions } from "./budget-tool.actions";
-import {
-  IBudget,
-  IBudgetCard,
-  IBudgetMeta,
-  IBudgetView
-} from "./budget-tool.models";
-
-export interface BudgetToolState {
-  active: IBudget;
-  meta: IBudgetMeta;
-  view?: IBudgetView;
-
-  // no additional parameters currently specified (may change)
-}
+import { IBudgetCard, BudgetToolState } from "./budget-tool.models";
+import { INITIAL_STATE } from "src/app/store/store.model";
 
 export function BudgetToolReducer(
   state: BudgetToolState = INITIAL_STATE.budget,

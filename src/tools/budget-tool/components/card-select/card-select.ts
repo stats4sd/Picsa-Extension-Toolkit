@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
-import { REGIONAL_SETTINGS } from "../../../../environments/region";
+import REGIONAL_SETTINGS from "src/environments/region";
 
 @Component({
   selector: "card-select",

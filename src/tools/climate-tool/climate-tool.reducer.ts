@@ -1,12 +1,8 @@
 import { Action } from "redux";
 import { StandardAction } from "../../actions/actions";
-import { INITIAL_STATE } from "../../reducers/reducers";
+import { INITIAL_STATE } from "src/app/store/store.model";
 import { ClimateToolActions } from "./climate-tool.actions";
-import { ISite } from "./climate-tool.models";
-
-export interface ClimateToolState {
-  site: ISite;
-}
+import { ClimateToolState } from "./climate-tool.models";
 
 export function ClimateToolReducer(
   state: ClimateToolState = INITIAL_STATE.climate,

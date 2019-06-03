@@ -1,81 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PICSA Extension Toolkit</title>
 
-<head>
-  <!-- <script>
-    (function (w) { var i = w.SENTRY_RELEASE = w.SENTRY_RELEASE || {}; i.id = '96c66edea1c7af63ae4a'; })(this);
-  </script> -->
-  <!-- sentry-cordova -->
-  <meta charset="UTF-8">
-  <title>PICSA Extension Toolkit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
+    <base href="/" />
 
-  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4e8ef7">
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
 
-  <script src="cordova.js"></script>
-  <script>
-    // register service worker promise to window, listen in home component after init
-    window.isUpdateAvailable = () => new Promise(function (resolve, reject) {
-      if ('serviceWorker' in navigator) {
-        // disable for localhost (except firebase serve)
-        if (location.hostname.indexOf('localhost') == -1 || location.port == 5000) {
-          navigator.serviceWorker.register('service-worker.js')
-            .then(reg => {
-              console.log('worker registered with scope', reg.scope)
-              console.log('reg.installing', reg.installing)
-              reg.onupdatefound = () => {
-                console.log('onupdatefound')
-                const installingWorker = reg.installing;
-                installingWorker.onstatechange = () => {
-                  console.log('installing worker stage', installingWorker.state)
-                  switch (installingWorker.state) {
-                    case 'installed':
-                      if (navigator.serviceWorker.controller) {
-                        // new update available
-                        resolve(true);
-                      } else {
-                        // no update available
-                        resolve(false);
-                      }
-                      break;
-                  }
-                };
-              };
-            },
-          )
-            .catch(err => console.error('[SW ERROR]', err));
-        }
-        // register service worker file
-      }
-      else {
-        console.log('disabling service worker for local')
-        resolve(false)
-      }
-    });
-  </script>
+    <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#4e8ef7" />
+    <link href="assets/leaflet/leaflet.css" rel="stylesheet" />
+    <link href="assets/c3.css" rel="stylesheet" />
+  </head>
 
-  <link href="build/main.css" rel="stylesheet">
-  <link href="assets/leaflet/leaflet.css" rel="stylesheet">
-  <link href="assets/c3.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-  <!-- Ionic's root component and where the app will load -->
-  <ion-app></ion-app>
-
-  <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
-  <script src="build/vendor.js"></script>
-  <!-- The bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
-
-</body>
-
+  <body>
+    <app-root></app-root>
+    <noscript
+      >Please enable JavaScript to continue using this application.</noscript
+    >
+    <script type="text/javascript" src="./assets/html2canvas.min.js"></script>
+  </body>
 </html>

@@ -1,7 +1,8 @@
-// As angular can't pick up process.env variables ng-node-environment is used to repopulate
-// this file on production config (see https://github.com/angular/angular-cli/issues/4318)
+// As angular can't pick up process.env variables ng-node-environment is used to repopulate during CI
+// (see https://github.com/angular/angular-cli/issues/4318)
 
-export const sharedEnvironment: IEnv = {
+// note, the key below is intentionally exposed and simply provides limited access to the staging/development site resources
+export const sharedEnvironment: ISharedEnv = {
   firebaseApiKey: "AIzaSyCjVzdn5WTQKSDqGw9F0nNbhtdCDcPYP3I",
   firebaseAuthDomain: "extension-toolkit-staging.firebaseapp.com",
   firebaseDatabaseUrl: "https://extension-toolkit-staging.firebaseio.com",
@@ -10,7 +11,7 @@ export const sharedEnvironment: IEnv = {
   firebaseMessagingSenderId: "621985864882",
   firebaseAppId: "1:621985864882:web:a19ebe2425f632b6"
 };
-interface IEnv {
+interface ISharedEnv {
   firebaseApiKey: string;
   firebaseAuthDomain: string;
   firebaseDatabaseUrl: string;
