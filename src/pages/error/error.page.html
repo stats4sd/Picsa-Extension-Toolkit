@@ -9,11 +9,9 @@
         <ion-button
           [disabled]="reloading"
           class="reload-button"
-         
-          icon-left
           (click)="reloadPage()"
         >
-          <ion-icon name="refresh"></ion-icon>
+          <ion-icon name="refresh" slot="start"></ion-icon>
           {{ "Reload" | translate }}
         </ion-button>
       </div>

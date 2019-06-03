@@ -41,6 +41,6 @@ export class BudgetNewCardComponent extends BudgetCardComponent {
         type: this.newCardType
       }
     });
-    modal.present();
+    await modal.present();
   }
 }

@@ -9,9 +9,9 @@
 
 <ion-content padding>
   <ion-list *ngIf="user">
-    <ion-list-header icon-left>
-      <ion-icon name="person"></ion-icon>
-      User Profile
+    <ion-list-header>
+      <ion-label>User Profile</ion-label>
+      <ion-icon name="person" slot="start"></ion-icon>
     </ion-list-header>
     <ion-item>
       <div class="flex">
@@ -19,17 +19,15 @@
           Name:
           <span class="list-value" *ngIf="user.name">{{ user.name }}</span>
           <ion-button
-           
-            outline
-            icon-left
+            fill="outline"
             *ngIf="!user.name"
             (click)="userEdit('name')"
           >
-            <ion-icon name="add"></ion-icon>Set user name
+            <ion-icon name="add" slot="start"></ion-icon>Set user name
           </ion-button>
         </div>
         <div *ngIf="user.name">
-          <ion-button icon-only clear (click)="userEdit('name')">
+          <ion-button icon-only fill="clear" (click)="userEdit('name')">
             <ion-icon name="create"></ion-icon>
           </ion-button>
         </div>
