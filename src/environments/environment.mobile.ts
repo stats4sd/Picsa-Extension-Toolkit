@@ -1,7 +1,7 @@
 import { sharedEnvironment as env } from "./base";
-import { IEnvironment } from "./environment";
+import { IEnvironment } from "src/models/models";
 
-export const ENVIRONMENT: IEnvironment = {
+const ENVIRONMENT: IEnvironment = {
   // During build on mobile want to inform environment that cordova is in use so that service worker not loaded
   // and native platform apis used
   production: true,
@@ -16,3 +16,5 @@ export const ENVIRONMENT: IEnvironment = {
     appId: env.firebaseAppId
   }
 };
+
+export default ENVIRONMENT;

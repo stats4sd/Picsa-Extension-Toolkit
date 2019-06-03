@@ -4,8 +4,9 @@
 // sharedEnvironment passes process.env variables from the build pipeline, used to provide
 // the production database for production deployments and staging database for all others
 import { sharedEnvironment as env } from "./base";
+import { IEnvironment } from "src/models/models";
 
-export const ENVIRONMENT: IEnvironment = {
+const ENVIRONMENT: IEnvironment = {
   // For localhost set production to false to prevent service-worker registration and sentry error logs
   production: false,
   usesCordova: false,
@@ -20,16 +21,4 @@ export const ENVIRONMENT: IEnvironment = {
   }
 };
 
-export interface IEnvironment {
-  production: boolean;
-  usesCordova: boolean;
-  firebase: {
-    apiKey: string;
-    authDomain: string;
-    databaseURL: string;
-    projectId: string;
-    storageBucket: string;
-    messagingSenderId: string;
-    appId: string;
-  };
-}
+export default ENVIRONMENT;

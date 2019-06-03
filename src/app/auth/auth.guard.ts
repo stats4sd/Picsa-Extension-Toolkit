@@ -6,7 +6,7 @@ import {
   UrlTree
 } from "@angular/router";
 import { Observable } from "rxjs";
-import { ENVIRONMENT } from "src/environments/environment";
+import ENVIRONMENT from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"

@@ -46,7 +46,7 @@ export class BudgetSettingsComponent implements OnDestroy {
   months = MONTHS;
   enterpriseTypes: IBudgetCard[] = [];
   budget: IBudget;
-  @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild(IonSlides, { static: false }) slides: IonSlides;
 
   constructor(
     public actions: BudgetToolActions,

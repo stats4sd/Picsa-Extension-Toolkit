@@ -7,6 +7,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { SettingsPage } from "./settings.page";
 import { TranslateSharedLazyModuleModule } from "src/app/shared/translate-shared-lazy-module.module";
+import { ComponentsModule } from "src/components/components.module";
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateSharedLazyModuleModule
+    TranslateSharedLazyModuleModule,
+    ComponentsModule
   ],
   declarations: [SettingsPage]
 })

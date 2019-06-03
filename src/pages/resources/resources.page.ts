@@ -19,7 +19,6 @@ export class ResourcesPage implements OnInit, OnDestroy {
   private componentDestroyed: Subject<any> = new Subject();
   @select(["data", "resources"])
   resources$: Observable<IResource[]>;
-  @ViewChild(IonContent) content: IonContent;
   resourceGroups: IResourceGroup[];
   activeResource: IResource;
   playerWidth: number;

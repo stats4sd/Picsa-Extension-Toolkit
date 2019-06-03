@@ -5,7 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { TranslateService } from "@ngx-translate/core";
 import { ServiceWorkerService } from "src/providers/ngsw.service";
-import { ENVIRONMENT } from "src/environments/environment";
+import ENVIRONMENT from "src/environments/environment";
 import { UserProvider } from "src/providers/user";
 import { StorageProvider } from "src/providers/storage";
 import { FileService } from "src/providers/file-service";

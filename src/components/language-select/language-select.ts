@@ -20,7 +20,7 @@ export class LanguageSelectComponent implements OnDestroy, OnInit {
   languages: ILanguage[] = REGIONAL_SETTINGS.languages;
   language: ILanguage;
   @select(["user", "lang"]) readonly langCode$: Observable<string>;
-  @ViewChild(IonSelect) select: IonSelect;
+  @ViewChild(IonSelect, { static: false }) select: IonSelect;
 
   constructor(private userActions: UserActions) {}
   ngOnInit() {

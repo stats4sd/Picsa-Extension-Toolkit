@@ -1,7 +1,7 @@
 import { sharedEnvironment as env } from "./base";
-import { IEnvironment } from "./environment";
+import { IEnvironment } from "src/models/models";
 
-export const ENVIRONMENT: IEnvironment = {
+const ENVIRONMENT: IEnvironment = {
   // During production builds this file replaces default environment to indicate we have a production build
   production: true,
   usesCordova: false,
@@ -15,3 +15,5 @@ export const ENVIRONMENT: IEnvironment = {
     appId: env.firebaseAppId
   }
 };
+
+export default ENVIRONMENT;
