@@ -12,4 +12,12 @@ export class CardSelectComponent {
   constructor() {
     console.log("currency", this.currency);
   }
+
+  // *** TODO - figure out why these methods exist in template and complete
+  showNewCard() {}
+  showNewCardMeta() {}
+  showCards() {}
+  showValues() {}
+  showFamilyLabour() {}
+  showConsumed() {}
 }

@@ -7744,10 +7744,10 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
-survey-angular@^1.0.89:
-  version "1.0.89"
-  resolved "https://registry.yarnpkg.com/survey-angular/-/survey-angular-1.0.89.tgz#eb31cba8b11c0128a354be696860187c90b94c0a"
-  integrity sha512-Zd+VMWTqnFD5KzmBpeSi6pQXOMNAAXIGiq/0o/BLE/ZOIyaKLPy/D3IjFjQ1eZjl4lam24Pc1uOqaaZBXLAbEg==
+survey-angular@1.0.81:
+  version "1.0.81"
+  resolved "https://registry.yarnpkg.com/survey-angular/-/survey-angular-1.0.81.tgz#bd9e7758f6604f2f79498f8d55f1c96f4e610a2b"
+  integrity sha512-S+XAGkOVzQ/PLIFy0Iy7JPT+OjGPaiUrYWA9npgiQnBhh8D2UFd9XgFmIiQuD8Hr0Q4UxBQOEyp7RhHmStHObA==
   dependencies:
     "@types/knockout" "3.4.46"
 

@@ -10,7 +10,8 @@ import REGIONAL_SETTINGS from "src/environments/region";
   templateUrl: "budget-card.html"
 })
 export class BudgetCardComponent {
-  @Input("card") card: ICustomBudgetCard | IBudgetCard;
+  // use partial as not sure whether will be budget card or custom budget card
+  @Input("card") card: Partial<ICustomBudgetCard>;
   @Input("type") type: string;
   selected: boolean;
   currency = REGIONAL_SETTINGS.currency;
@@ -19,4 +20,9 @@ export class BudgetCardComponent {
     public ngRedux: NgRedux<AppState>,
     public actions: BudgetToolActions
   ) {}
+
+  cardClicked() {
+    // *** TODO - figure out what wanted handler to do
+    console.log("card clicked");
+  }
 }
