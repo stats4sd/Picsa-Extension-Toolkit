@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Add New Card</ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="dismiss()" icon-left>
+      <ion-button (click)="dismiss()" slot="start">
         <ion-icon name="close"></ion-icon>
         Close
       </ion-button>
@@ -43,7 +43,7 @@
     </div>
   </div>
   <ion-item>
-    <ion-button icon-left block (click)="saveCard()" [disabled]="!cardName">
+    <ion-button slot="start" expand="block" (click)="saveCard()" [disabled]="!cardName">
       <ion-icon name="add"></ion-icon>Save Card</ion-button
     >
   </ion-item>

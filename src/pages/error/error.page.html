@@ -6,16 +6,16 @@
       <div style="margin-top:2em">
         <h2>{{ "Something went wrong..." | translate }}</h2>
         <div>{{ "Click on the button below to retry" | translate }}</div>
-        <button
+        <ion-button
           [disabled]="reloading"
           class="reload-button"
-          ion-button
+         
           icon-left
           (click)="reloadPage()"
         >
           <ion-icon name="refresh"></ion-icon>
           {{ "Reload" | translate }}
-        </button>
+        </ion-button>
       </div>
     </div>
     <div class="bottom-content">

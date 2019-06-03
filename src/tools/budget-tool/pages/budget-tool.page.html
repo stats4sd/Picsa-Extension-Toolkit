@@ -7,7 +7,7 @@
         <ion-button
           class="nav-icon"
           icon-only
-          clear
+          fill="clear"
           (click)="setView(view)"
           *ngFor="let view of views"
           [disabled]="!budget"
@@ -17,21 +17,21 @@
         </ion-button>
         <ion-button
           [disabled]="shareDisabled"
-          icon-left
-          clear
+          slot="start"
+          fill="clear"
           (click)="shareBudget()"
           *ngIf="(viewComponent$ | async) == 'overview'"
         >
           <ion-icon name="share" attr.icon="share"></ion-icon>
           {{ budgetDownloadMessage ? budgetDownloadMessage : "Share" }}
         </ion-button>
-        <ion-button icon-only clear style="color: black" navPop>
+        <ion-button icon-only fill="clear" style="color: black" navPop>
           <ion-icon name="close"></ion-icon>
         </ion-button>
       </div>
       <!-- nav bar for cell edit mode -->
       <div *ngIf="(viewComponent$ | async) == 'cell-edit'">
-        <ion-button outline icon-right (click)="setView(views[0])">
+        <ion-button fill="outline" slot="end" (click)="setView(views[0])">
           {{ "Continue" | translate }}
           <ion-icon name="checkmark"></ion-icon>
         </ion-button>
