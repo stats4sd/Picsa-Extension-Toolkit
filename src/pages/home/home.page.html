@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content padding>
   <div class="main-container">
     <div class="top-bar" style="display: flex; justify-content: space-between">
       <language-select></language-select>
@@ -6,7 +6,7 @@
         <div>
           <span style="font-weight: bold">v{{ version.text }}</span>
         </div>
-        <ion-button clear block [routerLink]="['/ChangelogPage']">
+        <ion-button clear block [routerLink]="['/changelog']">
           {{ "What's New?" | translate }}
         </ion-button>
       </div>

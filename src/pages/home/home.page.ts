@@ -34,7 +34,7 @@ export class HomePage {
       {
         name: "Data Collection",
         img: "data-collection",
-        url: "/data"
+        url: "/data/record"
       },
       {
         name: "Settings",
