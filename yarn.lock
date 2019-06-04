@@ -2893,6 +2893,11 @@ cyclist@~0.2.2:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
 
+cypress-daywalker@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/cypress-daywalker/-/cypress-daywalker-0.1.1.tgz#b93027f41c03a668a85b88a467fcabb08c0032ca"
+  integrity sha512-p7JejsgdIZdP1wbzxT/X+nCdC+qI98d65hYm7BJyge2XxBa+WTPj58lxB3/AE5Usj60J2s16dsd9vtFITSuf5Q==
+
 cypress@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-3.3.1.tgz#8a127b1d9fa74bff21f111705abfef58d595fdef"
