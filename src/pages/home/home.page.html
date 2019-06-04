@@ -12,11 +12,16 @@
       </div>
     </div>
 
-    <div class="title">{{ "PICSA" | translate }}</div>
+    <div class="title" data-cy="title">{{ "PICSA" | translate }}</div>
     <div class="subtitle">{{ subtitle | translate }}</div>
 
     <div class="link-holder">
-      <a *ngFor="let link of links" (click)="linkClicked(link)" class="navlink">
+      <a
+        *ngFor="let link of links"
+        (click)="linkClicked(link)"
+        class="navlink"
+        data-cy="link"
+      >
         <div class="flex">
           <ion-icon name="{{ link.icon }}" *ngIf="link.icon"></ion-icon>
           <img
