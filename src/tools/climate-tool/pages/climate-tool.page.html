@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title *ngIf="!selectedSite">{{
       "Select a site" | translate
-    }}</ion-title>
-    <ion-title *ngIf="selectedSite">{{ selectedSite.name }}</ion-title>
+    }}</ion-title data-cy="title">
+    <ion-title *ngIf="selectedSite">{{ selectedSite.name }}</ion-title data-cy="title">
   </ion-toolbar>
 </ion-header>
 
