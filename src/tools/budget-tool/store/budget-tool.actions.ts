@@ -1,7 +1,7 @@
 import { dispatch } from "@angular-redux/store";
 import { Injectable } from "@angular/core";
 import { FluxStandardAction } from "flux-standard-action";
-import { IBudget, IBudgetView } from "./budget-tool.models";
+import { IBudget, IBudgetView } from "../models/budget-tool.models";
 
 type StandardAction = FluxStandardAction<string, IBudget | IBudgetView>;
 

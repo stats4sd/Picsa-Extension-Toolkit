@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { AppState } from "src/app/store/store.model";
-import { BudgetToolActions } from "../../budget-tool.actions";
+import { BudgetToolActions } from "../../store/budget-tool.actions";
 import { BudgetCardComponent } from "./budget-card";
 
 /*

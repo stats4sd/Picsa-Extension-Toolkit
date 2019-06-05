@@ -4,8 +4,8 @@ import { Events } from "@ionic/angular";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { AppState } from "src/app/store/store.model";
-import { BudgetToolActions } from "../../budget-tool.actions";
-import { IBudgetCard, IBudgetViewMeta } from "../../budget-tool.models";
+import { BudgetToolActions } from "../../store/budget-tool.actions";
+import { IBudgetCard, IBudgetViewMeta } from "../../models/budget-tool.models";
 import { BudgetCardComponent } from "./budget-card";
 
 /*

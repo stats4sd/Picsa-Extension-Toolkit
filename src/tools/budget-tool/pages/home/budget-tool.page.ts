@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Subject, Observable } from "rxjs";
 import { select } from "@angular-redux/store";
-import { IBudget, IBudgetView } from "../budget-tool.models";
+import { IBudget, IBudgetView } from "../../models/budget-tool.models";
 import { TranslationsProvider } from "src/providers/translations";
-import { BudgetToolActions } from "../budget-tool.actions";
+import { BudgetToolActions } from "../../store/budget-tool.actions";
 import { Events } from "@ionic/angular";
 import { PrintProvider } from "src/providers/print";
 import { takeUntil } from "rxjs/operators";

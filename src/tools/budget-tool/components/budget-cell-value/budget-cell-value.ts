@@ -2,7 +2,7 @@ import { select } from "@angular-redux/store";
 import { Component, Input, OnDestroy } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { IBudgetDotValues } from "../../budget-tool.models";
+import { IBudgetDotValues } from "../../models/budget-tool.models";
 
 @Component({
   selector: "budget-cell-value",

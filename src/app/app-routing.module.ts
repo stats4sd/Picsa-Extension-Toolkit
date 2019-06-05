@@ -57,13 +57,7 @@ const routes: Routes = [
   },
   {
     path: "tools/budget",
-    loadChildren:
-      "src/tools/budget-tool/pages/budget-tool.module#BudgetToolPageModule"
-  },
-  {
-    path: "tools/budget/new-card",
-    loadChildren:
-      "src/tools/budget-tool/pages/budget-new-card/budget-new-card.module#BudgetNewCardPageModule"
+    loadChildren: "src/tools/budget-tool/budget-tool.module#BudgetToolModule"
   }
 ];
 

@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { BudgetToolProvider } from "../../budget-tool.provider";
+import { BudgetToolProvider } from "../../store/budget-tool.provider";
 
 @Component({
   selector: "budget-cell-labour",

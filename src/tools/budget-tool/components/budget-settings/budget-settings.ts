@@ -5,13 +5,13 @@ import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { DAYS, MONTHS } from "../../../../providers/translations";
 import { AppState } from "src/app/store/store.model";
-import { BudgetToolActions } from "../../budget-tool.actions";
+import { BudgetToolActions } from "../../store/budget-tool.actions";
 import {
   IBudget,
   IBudgetCard,
   ICustomBudgetCard
-} from "../../budget-tool.models";
-import { BudgetToolProvider } from "../../budget-tool.provider";
+} from "../../models/budget-tool.models";
+import { BudgetToolProvider } from "../../store/budget-tool.provider";
 
 @Component({
   selector: "budget-settings",

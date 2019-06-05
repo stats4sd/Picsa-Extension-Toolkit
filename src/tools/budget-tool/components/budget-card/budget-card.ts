@@ -1,8 +1,8 @@
 import { NgRedux } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
 import { AppState } from "src/app/store/store.model";
-import { BudgetToolActions } from "../../budget-tool.actions";
-import { IBudgetCard, ICustomBudgetCard } from "../../budget-tool.models";
+import { BudgetToolActions } from "../../store/budget-tool.actions";
+import { IBudgetCard, ICustomBudgetCard } from "../../models/budget-tool.models";
 import REGIONAL_SETTINGS from "src/environments/region";
 
 @Component({

@@ -10,7 +10,7 @@ import {
   IBudgetCard,
   IBudgetDotValues,
   IBudgetPeriodData
-} from "../../budget-tool.models";
+} from "../../models/budget-tool.models";
 
 @Component({
   selector: "budget-overview",

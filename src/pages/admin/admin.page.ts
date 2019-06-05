@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FirestoreStorageProvider } from "src/providers/firestore";
-import { BudgetToolProvider } from "src/tools/budget-tool/budget-tool.provider";
+import { BudgetToolProvider } from "src/tools/budget-tool/store/budget-tool.provider";
 
 @Component({
   selector: "app-admin",

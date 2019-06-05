@@ -1,8 +1,8 @@
 import { Action } from "redux";
-import { StandardAction } from "../../actions/actions";
+import { StandardAction } from "../../../actions/actions";
 import { BudgetToolActions } from "./budget-tool.actions";
-import { IBudgetCard, BudgetToolState } from "./budget-tool.models";
 import { INITIAL_STATE } from "src/app/store/store.model";
+import { BudgetToolState, IBudgetCard } from "../models/budget-tool.models";
 
 export function BudgetToolReducer(
   state: BudgetToolState = INITIAL_STATE.budget,

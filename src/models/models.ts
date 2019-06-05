@@ -1,5 +1,8 @@
 import { IWhatsAppGroup } from "../components/whatsapp-group/whatsapp-group";
-import { IBudget, IBudgetMeta } from "../tools/budget-tool/budget-tool.models";
+import {
+  IBudget,
+  IBudgetMeta
+} from "../tools/budget-tool/models/budget-tool.models";
 
 // user doc format stored locally under 'user' key and reflected to firebase
 export interface IUser {

@@ -1,4 +1,4 @@
-import { IBudget } from "../budget-tool.models";
+import { IBudget } from "../models/budget-tool.models";
 
 export const PB_MOCK_API_3: IBudget = {
   apiVersion: 3,

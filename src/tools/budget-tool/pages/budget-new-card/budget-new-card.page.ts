@@ -1,11 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
 import { CanvasWhiteboardComponent } from "ng2-canvas-whiteboard";
 import { Events, ModalController } from "@ionic/angular";
-import { BudgetToolProvider } from "../../budget-tool.provider";
+import { BudgetToolProvider } from "../../store/budget-tool.provider";
 import { AppState } from "src/app/store/store.model";
 import { NgRedux } from "@angular-redux/store";
 import { UserActions } from "src/actions/user.actions";
-import { ICustomBudgetCard } from "../../budget-tool.models";
+import { ICustomBudgetCard } from "../../models/budget-tool.models";
 
 @Component({
   selector: "app-budget-new-card",

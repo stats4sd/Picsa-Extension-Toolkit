@@ -8,7 +8,7 @@ import {
   IBudgetCard,
   IBudgetDotValues,
   ICustomBudgetCard
-} from "./budget-tool.models";
+} from "../models/budget-tool.models";
 import { budgetMeta } from "./data";
 import { AppState } from "src/app/store/store.model";
 import { FirestoreStorageProvider } from "src/providers/firestore";

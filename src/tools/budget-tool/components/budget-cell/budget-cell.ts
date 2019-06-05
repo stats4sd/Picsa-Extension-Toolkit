@@ -1,7 +1,7 @@
 import { NgRedux } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
 import { Events } from "@ionic/angular";
-import { IBudgetCard, IBudgetPeriodData } from "../../budget-tool.models";
+import { IBudgetCard, IBudgetPeriodData } from "../../models/budget-tool.models";
 
 @Component({
   selector: "budget-cell",

@@ -18,12 +18,12 @@ export class ToolsPage {
       {
         name: "Climate Tool",
         image: "assets/img/climate-tool.svg",
-        page: "ClimateToolPage"
+        url: "/tools/climate"
       },
       {
         name: "Budget Tool",
         image: "assets/img/budget-tool.svg",
-        page: "BudgetToolPage"
+        url: "/tools/budget"
       }
     ];
   }
@@ -33,7 +33,7 @@ export class ToolsPage {
       message: `Loading...`
     });
     await loader.present();
-    this.router.navigate([`/${tool.page}`]);
+    this.router.navigate([tool.url]);
     loader.dismiss();
   }
 }
@@ -41,5 +41,5 @@ export class ToolsPage {
 interface ITool {
   name: string;
   image: string;
-  page: string;
+  url: string;
 }

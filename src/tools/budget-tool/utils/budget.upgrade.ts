@@ -1,4 +1,4 @@
-import { IBudget } from "./budget-tool.models";
+import { IBudget } from "../models/budget-tool.models";
 
 /*  this file contains methods to make incremental changes to budgets 
     to upgrade for api changes

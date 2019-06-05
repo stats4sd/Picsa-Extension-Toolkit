@@ -2,7 +2,7 @@ import { NgRedux } from "@angular-redux/store";
 import { Component, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { AppState } from "src/app/store/store.model";
-import { BudgetToolActions } from "../../budget-tool.actions";
+import { BudgetToolActions } from "../../store/budget-tool.actions";
 import { BudgetCardComponent } from "./budget-card";
 
 /*

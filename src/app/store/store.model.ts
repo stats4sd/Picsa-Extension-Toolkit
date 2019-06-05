@@ -1,6 +1,6 @@
 import { IUser, IData } from "src/models/models";
 import { ClimateToolState } from "src/tools/climate-tool/climate-tool.models";
-import { BudgetToolState } from "src/tools/budget-tool/budget-tool.models";
+import { BudgetToolState } from "src/tools/budget-tool/models/budget-tool.models";
 
 export const INITIAL_STATE: AppState = {
   user: null,
