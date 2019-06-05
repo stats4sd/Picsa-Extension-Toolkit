@@ -1,6 +1,6 @@
 {
   "name": "picsa-extension-toolkit",
-  "version": "2.0.0alpha1",
+  "version": "2.0.0alpha2",
   "author": "C2Dev",
   "homepage": "https://picsa.app",
   "scripts": {
@@ -12,7 +12,8 @@
     "e2e": "cypress open",
     "test": "concurrently \"ng serve\" \"cypress open\"",
     "lint": "ng lint",
-    "env:set": "node ./node_modules/ng-node-environment/index.js"
+    "env:set": "node ./node_modules/ng-node-environment/index.js",
+    "analyze": "ng build --prod --stats-json & webpack-bundle-analyzer ./www/stats-es2015.json"
   },
   "config": {
     "ionic_generate_source_map": "true"
@@ -101,7 +102,8 @@
     "ts-node": "~8.1.0",
     "tslint": "~5.16.0",
     "tslint-config-prettier": "^1.13.0",
-    "typescript": "~3.4.5"
+    "typescript": "~3.4.5",
+    "webpack-bundle-analyzer": "^3.3.2"
   },
   "description": "picsa-extension-toolkit: For use by extension training with PICSA"
 }
