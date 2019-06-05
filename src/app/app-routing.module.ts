@@ -57,7 +57,8 @@ const routes: Routes = [
   },
   {
     path: "tools/budget",
-    loadChildren: "src/tools/budget-tool/budget-tool.module#BudgetToolModule"
+    loadChildren:
+      "src/tools/budget-tool/app/budget-tool.module#BudgetToolModule"
   }
 ];
 

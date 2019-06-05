@@ -1,14 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
-
-import { BudgetHomePage } from "./pages/budget-home/budget-home.page";
 import { BudgetToolRoutingModule } from "./budget-tool-routing.module";
+import { BudgetToolComponent } from "./budget-tool.component";
 
 @NgModule({
   imports: [CommonModule, IonicModule, BudgetToolRoutingModule],
-  declarations: [BudgetHomePage],
+  declarations: [BudgetToolComponent],
   entryComponents: [],
-  bootstrap: [BudgetHomePage]
+  bootstrap: [BudgetToolComponent]
 })
 export class BudgetToolModule {}

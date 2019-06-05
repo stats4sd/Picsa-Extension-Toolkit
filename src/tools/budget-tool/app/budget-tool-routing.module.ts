@@ -5,16 +5,16 @@ import { RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "",
-    loadChildren: "./pages/budget-home/budget-home.module#BudgetHomePageModule"
+    loadChildren: "../pages/budget-home/budget-home.module#BudgetHomePageModule"
   },
   {
     path: "create",
     loadChildren:
-      "./pages/budget-create/budget-create.module#BudgetCreatePageModule"
+      "../pages/budget-create/budget-create.module#BudgetCreatePageModule"
   },
   {
     path: "view",
-    loadChildren: "./pages/budget-view/budget-view.module#BudgetViewPageModule"
+    loadChildren: "../pages/budget-view/budget-view.module#BudgetViewPageModule"
   }
 ];
 

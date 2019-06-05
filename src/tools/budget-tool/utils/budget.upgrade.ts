@@ -5,6 +5,18 @@ import { IBudget } from "../models/budget-tool.models";
 */
 export const BUDGET_API_VERSION = 3;
 
+// recursively go through budget and if api version less than current perform incremental upgrade
+export const checkForBudgetUpgrades = (budget: IBudget) => {
+  console.log("checking for upgrade", budget.apiVersion, this.apiVersion);
+  if (budget.apiVersion < this.apiVersion) {
+    budget = upgradeBudget(budget);
+    return this.checkForBudgetUpgrades(budget);
+  } else {
+    console.log("budget up to date");
+    return budget;
+  }
+};
+
 export const upgradeBudget = (budget: IBudget) => {
   const version = budget.apiVersion;
   console.log(`upgrading budget from v${version}`);
