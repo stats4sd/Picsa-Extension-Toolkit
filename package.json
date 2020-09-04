@@ -54,7 +54,7 @@
     "mobx-angular": "^3.0.1",
     "ng2-canvas-whiteboard": "3.0.4",
     "ngx-youtube-player": "^7.1.1",
-    "papaparse": "^4.5.0",
+    "papaparse": "^5.2.0",
     "pdfjs-dist": "^2.0.489",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.8",
